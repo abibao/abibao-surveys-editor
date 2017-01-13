@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    privileged: true
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: abibao
+      PMA_PASSWORD: abibao
+    ports:
+      - 8006:80
+
+  mysql:
+    image: library/mariadb:latest
+    privileged: true
+    environment:
+      MYSQL_ROOT_PASSWORD: abibao
+      MYSQL_DATABASE: abibao
+      MYSQL_USER: abibao
+      MYSQL_PASSWORD: abibao
+    volumes:
+      - ./volumes/databases/mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
