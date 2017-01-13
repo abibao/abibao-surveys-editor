@@ -3,28 +3,29 @@ version: '2'
 services:
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
+    image: thajeztah/pgadmin4
     privileged: true
     depends_on:
       - mysql
     links:
       - mysql
     environment:
-      PMA_HOST: mysql
-      PMA_USER: abibao
-      PMA_PASSWORD: abibao
+      POSTGRES_HOST: mysql
+      POSTGRES_DEFAULTDB: abibao
+    volumes:
+      - ./volumes/pgadmin4/config:/pgadmin/config
+      - ./volumes/pgadmin4/storage:/pgadmin/storage
     ports:
-      - 8006:80
+      - 5050:5050
 
   mysql:
-    image: library/mariadb:latest
+    image: library/postgres:9.6-alpine
     privileged: true
     environment:
-      MYSQL_ROOT_PASSWORD: abibao
-      MYSQL_DATABASE: abibao
-      MYSQL_USER: abibao
-      MYSQL_PASSWORD: abibao
+      POSTGRES_DB: abibao
+      POSTGRES_USER: abibao
+      POSTGRES_PASSWORD: abibao
     volumes:
-      - ./volumes/databases/mysql:/var/lib/mysql
+      - ./volumes/databases/postgresql/data:/var/lib/postgresql/data
     ports:
-      - 3306:3306
+      - 5432:5432
