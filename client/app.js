@@ -10,7 +10,7 @@ import 'survey-knockout/dist/survey.ko.js'
 import 'surveyjs-editor/dist/surveyeditor.css'
 
 // abibao
-import './styles/style.css'
+// import './styles/style.css'
 
 const editorOptions = {showEmbededSurveyTab: true}
 const editor = new SurveyEditor.SurveyEditor('surveyEditorContainer', editorOptions)
