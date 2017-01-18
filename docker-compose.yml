@@ -13,8 +13,7 @@ services:
       POSTGRES_HOST: mysql
       POSTGRES_DEFAULTDB: abibao
     volumes:
-      - ./volumes/pgadmin4/config:/pgadmin/config
-      - ./volumes/pgadmin4/storage:/pgadmin/storage
+      - ./volumes/pgadmin4:/pgadmin
     ports:
       - 5050:5050
 

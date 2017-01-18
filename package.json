@@ -12,11 +12,17 @@
   "dependencies": {
     "feathers": "2.0.3",
     "feathers-configuration": "0.4.1",
+    "feathers-errors": "2.5.0",
+    "feathers-hooks": "1.7.1",
+    "feathers-rest": "1.6.0",
+    "feathers-sequelize": "1.4.0",
+    "feathers-socketio": "1.4.2",
     "nconf": "0.8.4",
     "pg": "6.1.2",
     "pg-hstore": "2.3.2",
     "sequelize": "3.29.0",
-    "surveyjs-editor": "0.10.3"
+    "surveyjs-editor": "0.10.3",
+    "uuid": "3.0.1"
   },
   "devDependencies": {
     "babel-core": "6.21.0",
@@ -34,9 +40,12 @@
     "eslint-plugin-riot": "0.1.6",
     "file-loader": "0.9.0",
     "jquery": "3.1.1",
-    "knockout": "^3.4.1",
+    "knockout": "3.4.1",
     "postcss": "5.2.10",
     "postcss-loader": "1.2.2",
+    "riot": "3.0.7",
+    "riot-routehandler": "3.0.1",
+    "riotjs-loader": "3.0.0",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
     "webpack": "1.14.0"
