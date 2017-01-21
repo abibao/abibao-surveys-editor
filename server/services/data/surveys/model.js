@@ -10,6 +10,10 @@ module.exports = function (app) {
       unique: true,
       defaultValue: Sequelize.UUIDV4
     },
+    name: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
     data: {
       type: Sequelize.JSON,
       allowNull: false

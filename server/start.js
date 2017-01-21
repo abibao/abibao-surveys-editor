@@ -6,7 +6,6 @@ const configuration = require('feathers-configuration')
 const socketio = require('feathers-socketio')
 const hooks = require('feathers-hooks')
 const rest = require('feathers-rest')
-const serveStatic = require('feathers').static
 const services = require('./services')
 const middlewares = require('./middlewares')
 
@@ -22,8 +21,6 @@ app.sequelize = new Sequelize(app.get('postgres').database, app.get('postgres').
 })
 
 app
-  .use('/', serveStatic(app.get('public')))
-  .use('/editor/:id', serveStatic(app.get('public')))
   .configure(rest())
   .configure(socketio())
   .configure(hooks())
