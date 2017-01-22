@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="//getbootstrap.com/dist/css/bootstrap.css" type="text/css" rel="stylesheet" />
+    <link href="surveyjs.editor/surveyeditor.css" type="text/css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="surveyEditorContainer"></div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
+    <script src="//cdn.rawgit.com/feathersjs/feathers-client/v1.1.0/dist/feathers.js"></script>
+    <script src="surveyjs/survey.ko.min.js"></script>
+    <script src="surveyjs.editor/surveyeditor.min.js"></script>
+    <script type="text/javascript">
+      var surveyId = window.location.search.substring(1)
+      var survey = {}
+      var socket = io('http://localhost:8000')
+      var client = feathers()
+        .configure(feathers.hooks())
+        .configure(feathers.socketio(socket))
+      var surveysService = client.service('api/surveys')
+      surveysService.get(surveyId).then((loaded) => {
+        survey = loaded
+        var editorOptions = {showEmbededSurveyTab: true, showOptions: true}
+        var editor = new SurveyEditor.SurveyEditor("surveyEditorContainer", editorOptions)
+        editor.text = survey.data
+        editor.saveSurveyFunc = () => {
+          survey.data = JSON.parse(editor.text)
+          surveysService.update(surveyId, survey).then((updated) => {
+            console.log(updated)
+          }).catch(console.log)
+        }
+      }).catch(console.log)
+    </script>
+  </body>
+</html>

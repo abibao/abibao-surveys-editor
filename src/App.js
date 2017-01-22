@@ -25,27 +25,41 @@ class App extends Reflux.Component {
   }
 
   render () {
-    // default
-    let iconSurveysWall = <FontIcon className="material-icons">view_quilt</FontIcon>
-    let iconMySurveys = <FontIcon className="material-icons">view_list</FontIcon>
-    let iconClose = <IconButton><FontIcon className="material-icons">close</FontIcon></IconButton>
-    let iconNetwork = <IconButton><FontIcon className="material-icons">cloud_off</FontIcon></IconButton>
+    // style
+    const style = {
+      drawer: {position: 'absolute', zIndex: 9999}
+    }
+    // elements
+    let iconSurveysWall = () => (
+      <FontIcon className="material-icons">view_quilt</FontIcon>
+    )
+    let iconMySurveys = () => (
+      <FontIcon className="material-icons">view_list</FontIcon>
+    )
+    let iconClose = () => (
+      <IconButton><FontIcon className="material-icons">close</FontIcon></IconButton>
+    )
+    let iconNetwork = () => (
+      <IconButton><FontIcon className="material-icons">cloud_off</FontIcon></IconButton>
+    )
     // override
     if (this.state.connected) {
-      iconNetwork = <IconButton><FontIcon className="material-icons">cloud</FontIcon></IconButton>
+      iconNetwork = () => (
+        <IconButton><FontIcon className="material-icons">cloud</FontIcon></IconButton>
+      )
     }
     // renderer
     return <MuiThemeProvider>
-            <Paper zDepth={0}>
-              <AppBar title="Abibao" onLeftIconButtonTouchTap={this.handleToggle} iconElementRight={iconNetwork} />
-              {this.props.children}
-              <Drawer open={this.state.open}>
-                <AppBar title="Abibao" iconElementLeft={iconClose} onLeftIconButtonTouchTap={this.handleToggle} />
-                <Link to="/surveyswall"><MenuItem leftIcon={iconSurveysWall}>Surveys wall</MenuItem></Link>
-                <Link to="/surveys"><MenuItem leftIcon={iconMySurveys}>My surveys</MenuItem></Link>
-              </Drawer>
-            </Paper>
-          </MuiThemeProvider>
+      <Paper zDepth={0}>
+        <AppBar title="Abibao" onLeftIconButtonTouchTap={this.handleToggle} iconElementRight={iconNetwork()} />
+        <Drawer open={this.state.open} style={style.drawer}>
+          <AppBar title="Abibao" iconElementLeft={iconClose()} onLeftIconButtonTouchTap={this.handleToggle} />
+          <Link to="/surveyswall"><MenuItem leftIcon={iconSurveysWall()}>Surveys wall</MenuItem></Link>
+          <Link to="/surveys"><MenuItem leftIcon={iconMySurveys()}>My surveys</MenuItem></Link>
+        </Drawer>
+        {this.props.children}
+      </Paper>
+    </MuiThemeProvider>
   }
 }
 

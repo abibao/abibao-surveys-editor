@@ -6,6 +6,7 @@ import { Router, Route, browserHistory } from 'react-router'
 import App from './App'
 import SurveysWall from './components/SurveysWall'
 import Surveys from './components/Surveys'
+import SurveyEditor from './components/SurveyEditor'
 
 import './index.css'
 
@@ -24,6 +25,7 @@ render((
     <Route path="/" component={App}>
       <Route path="/surveyswall" component={SurveysWall} />
       <Route path="/surveys" component={Surveys} />
+      <Route path="/surveys/:id" component={SurveyEditor} />
     </Route>
     <Route path="*" component={NoMatch} />
   </Router>

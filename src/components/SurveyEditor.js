@@ -3,7 +3,9 @@ import Reflux from 'reflux'
 
 import FeathersStore from './../stores/FeathersStore'
 
-class SurveysWall extends Reflux.Component {
+import Paper from 'material-ui/Paper'
+
+class SurveyEditor extends Reflux.Component {
   constructor (props) {
     super(props)
     this.stores = [FeathersStore]
@@ -11,13 +13,15 @@ class SurveysWall extends Reflux.Component {
   }
 
   render () {
-    // override
     // renderer
     const renderer = () => (
-      <h2>Surveys Wall</h2>
+      <Paper zDepth={0}>
+        <h2>Survey Editor</h2>
+        <iframe src="//localhost:3000/editor.html" width="100%" height="100%"></iframe>
+      </Paper>
     )
     return renderer()
   }
 }
 
-export default SurveysWall
+export default SurveyEditor

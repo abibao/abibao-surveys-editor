@@ -13,7 +13,11 @@ class FeathersStore extends Reflux.Store {
     super()
     this.state = {
       connected: false,
-      socket: null
+      socket: null,
+      surveys: {
+        total: 0,
+        data: []
+      }
     }
     this.listenables = Actions
     // feathers
@@ -47,7 +51,7 @@ class FeathersStore extends Reflux.Store {
     console.log('store, create a survey')
     this.app.service('api/surveys').create({
       name: 'This is a new survey',
-      data: {}
+      data: {pages: [{name: 'page1'}]}
     }).then((result) => {
       this.getListSurveys()
       Actions.surveyCreated()
