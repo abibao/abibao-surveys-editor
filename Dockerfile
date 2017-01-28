@@ -6,11 +6,11 @@ RUN mkdir -p /usr/app
 WORKDIR /usr/app
 
 COPY package.json /usr/app/package.json
-COPY .env.production /usr/app/.env
-ADD src /usr/app/src
-ADD config /usr/app/config
-ADD server /usr/app/server
-ADD public /usr/app/public
+COPY production.env /usr/app/.env
+COPY src /usr/app/src
+COPY config /usr/app/config
+COPY server /usr/app/server
+COPY public /usr/app/public
 
 RUN apk add --update make gcc g++ python git
 
