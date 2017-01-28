@@ -5,7 +5,8 @@ MAINTAINER Gilles Perreymond <gperreymond@gmail.com>
 RUN mkdir -p /usr/app
 WORKDIR /usr/app
 
-COPY package.json /usr/app
+COPY package.json /usr/app/package.json
+COPY .env.production /usr/app/.env
 ADD src /usr/app/src
 ADD config /usr/app/config
 ADD server /usr/app/server
@@ -20,11 +21,6 @@ RUN npm install  && \
 
 RUN apk del make gcc g++ python git && \
     rm -rf /tmp/* /var/cache/apk/* /root/.npm /root/.node-gyp
-
-COPY public/editor.html /usr/app/build
-ADD public/surveyjs /usr/app/build/surveyjs
-ADD public/surveyjs.editor /usr/app/build/surveyjs.editor
-COPY robot.txt /usr/app/build
 
 EXPOSE 80
 CMD ["node", "server/start"]
