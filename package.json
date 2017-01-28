@@ -1,6 +1,6 @@
 {
   "name": "abibao-surveys-editor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Frontend surveys editor",
   "author": "Gilles Perreymond",
   "scripts": {
@@ -11,6 +11,7 @@
     "start:server": "DEBUG=feathers* node server/start.js"
   },
   "dependencies": {
+    "body-parser": "1.16.0",
     "feathers": "2.0.3",
     "feathers-configuration": "0.4.1",
     "feathers-errors": "2.5.0",
@@ -21,7 +22,8 @@
     "nconf": "0.8.4",
     "pg": "6.1.2",
     "pg-hstore": "2.3.2",
-    "sequelize": "3.29.0",
+    "sequelize": "3.30.0",
+    "serve-favicon": "2.3.2",
     "uuid": "3.0.1"
   },
   "devDependencies": {
@@ -30,6 +32,7 @@
     "eslint-plugin-promise": "3.4.0",
     "eslint-plugin-react": "6.9.0",
     "eslint-plugin-standard": "2.0.1",
+    "feathers-authentication-client": "0.1.6",
     "material-ui": "0.16.7",
     "react": "15.4.2",
     "react-dom": "15.4.2",

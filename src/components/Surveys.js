@@ -1,8 +1,6 @@
 import React from 'react'
 import Reflux from 'reflux'
 
-import { Link } from 'react-router'
-
 import Paper from 'material-ui/Paper'
 import {grey300, grey900, white, cyan500} from 'material-ui/styles/colors'
 import {Tabs, Tab} from 'material-ui/Tabs'
@@ -44,11 +42,11 @@ class Surveys extends Reflux.Component {
     }
     // elements
     let iconSurveyEdit = (url) => (
-      <Link to={url}>
+      <a href={url} target="_new">
         <IconButton tooltip="Edit this survey" tooltipPosition="top-center">
           <FontIcon color={cyan500} className="material-icons">mode_edit</FontIcon>
         </IconButton>
-      </Link>
+      </a>
     )
     let tabComponent = () => (
       <Paper style={style.papers.content} zDepth={0}>
@@ -60,7 +58,7 @@ class Surveys extends Reflux.Component {
                 <div style={{background: 'url(images/574efe952775faef68604ffc1480273149476.png) center center / cover', width: '300px', height: '200px'}} />
               </CardMedia>
               <CardActions>
-                {iconSurveyEdit('surveys/' + survey.id)}
+                {iconSurveyEdit('editor.html?' + survey.id)}
               </CardActions>
             </Card>
           ))}

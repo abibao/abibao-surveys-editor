@@ -28,11 +28,10 @@
         survey = loaded
         var editorOptions = {showEmbededSurveyTab: true, showOptions: true}
         var editor = new SurveyEditor.SurveyEditor("surveyEditorContainer", editorOptions)
-        editor.text = survey.data
+        editor.text = JSON.stringify(survey.data)
         editor.saveSurveyFunc = () => {
           survey.data = JSON.parse(editor.text)
           surveysService.update(surveyId, survey).then((updated) => {
-            console.log(updated)
           }).catch(console.log)
         }
       }).catch(console.log)

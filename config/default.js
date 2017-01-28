@@ -19,7 +19,7 @@ module.exports = {
     username: nconf.get('ABIBAO_POSTGRES_USER') || 'abibao',
     password: nconf.get('ABIBAO_POSTGRES_PASSWORD') || 'abibao'
   },
-  public: path.resolve(__dirname, '../dist'),
+  public: path.resolve(__dirname, '../build'),
   corsWhitelist: ['localhost'],
   auth: {
     token: {

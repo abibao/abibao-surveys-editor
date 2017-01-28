@@ -1,7 +1,11 @@
 'use strict'
 
+const path = require('path')
 const Sequelize = require('sequelize')
 const feathers = require('feathers')
+const serveStatic = require('feathers').static
+const favicon = require('serve-favicon')
+const bodyParser = require('body-parser')
 const configuration = require('feathers-configuration')
 const socketio = require('feathers-socketio')
 const hooks = require('feathers-hooks')
@@ -21,6 +25,10 @@ app.sequelize = new Sequelize(app.get('postgres').database, app.get('postgres').
 })
 
 app
+  .use(favicon(path.join(app.get('public'), 'favicon.ico')))
+  .use('/', serveStatic(app.get('public')))
+  .use(bodyParser.json())
+  .use(bodyParser.urlencoded({ extended: true }))
   .configure(rest())
   .configure(socketio())
   .configure(hooks())
