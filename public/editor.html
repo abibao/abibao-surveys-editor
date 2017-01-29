@@ -19,7 +19,7 @@
     <script type="text/javascript">
       var surveyId = window.location.search.substring(1)
       var survey = {}
-      var socket = io('http://localhost:8000')
+      var socket = io(window.location.origin)
       var client = feathers()
         .configure(feathers.hooks())
         .configure(feathers.socketio(socket))

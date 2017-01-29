@@ -4,6 +4,7 @@ import { render } from 'react-dom'
 import { Router, Route, browserHistory } from 'react-router'
 
 import App from './App'
+import Login from './components/Login'
 import SurveysWall from './components/SurveysWall'
 import Surveys from './components/Surveys'
 
@@ -22,6 +23,7 @@ const NoMatch = React.createClass({
 render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
+      <Route path="/login" component={Login} />
       <Route path="/surveyswall" component={SurveysWall} />
       <Route path="/surveys" component={Surveys} />
     </Route>

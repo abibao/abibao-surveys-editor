@@ -26,7 +26,6 @@ class FeathersStore extends Reflux.Store {
     }
     this.listenables = Actions
     // feathers
-    console.log(process.env)
     const host = process.env.REACT_APP_IO_HOST
     const socket = io(host)
     this.app = feathers()
