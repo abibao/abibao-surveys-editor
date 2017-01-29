@@ -17,16 +17,20 @@ class SurveysWall extends Reflux.Component {
   render () {
     // style
     const style = {
-      tabs: {width: '200px'},
+      tabs: {width: '100%'},
       tab: {backgroundColor: white, color: grey900, fontWeight: 'bold'},
       papers: {
         tabs: {position: 'relative', zIndex: 9000, backgroundColor: white},
-        content: {padding: '1rem', backgroundColor: grey300}
+        content: {padding: '1rem', backgroundColor: grey300, width: '100%', height: '400px'},
+        empty: {background: 'url(images/7d14672328d13e06dab71c249e3826b0.png) no-repeat center / contain', width: '100%', height: '100%'}
       }
     }
     // elements
     let tabComponent = () => (
-      <Paper style={style.papers.content} zDepth={0} />
+      <Paper style={style.papers.content} zDepth={0}>
+        <div style={style.papers.empty}>&nbsp;</div>
+        <h4 style={{textAlign: 'center', width: '100%'}}>No surveys for the moment!</h4>
+      </Paper>
     )
     // override
     // renderer
@@ -35,6 +39,8 @@ class SurveysWall extends Reflux.Component {
         <Paper style={style.papers.tabs} zDepth={1}>
           <Tabs style={style.tabs}>
             <Tab label="All surveys" style={style.tab} data-route="/list_all" onActive={this.handleActive} />
+            <Tab label="Progress" style={style.tab} data-route="/list_progress" onActive={this.handleActive} />
+            <Tab label="Complete" style={style.tab} data-route="/list_complete" onActive={this.handleActive} />
           </Tabs>
         </Paper>
         {tabComponent()}

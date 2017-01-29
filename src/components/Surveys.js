@@ -31,7 +31,7 @@ class Surveys extends Reflux.Component {
   render () {
     // style
     const style = {
-      tabs: {width: '200px'},
+      tabs: {width: '100%'},
       tab: {backgroundColor: white, color: grey900, fontWeight: 'bold'},
       papers: {
         tabs: {position: 'relative', zIndex: 9000, backgroundColor: white},
@@ -57,7 +57,7 @@ class Surveys extends Reflux.Component {
             <Card style={style.card} key={survey.id}>
               <CardTitle title={survey.name} titleStyle={style.titleStyle} subtitle="Abibao" />
               <CardMedia>
-                <div style={{background: 'url(images/574efe952775faef68604ffc1480273149476.png) center center / cover', width: '300px', height: '200px'}} />
+                <div style={{background: 'url(images/574efe952775faef68604ffc1480273149476.png) no-repeat center / cover', width: '300px', height: '200px'}} />
               </CardMedia>
               <CardActions>
                 {iconSurveyEdit('editor.html?' + survey.id)}
