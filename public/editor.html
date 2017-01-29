@@ -26,8 +26,9 @@
       var surveysService = client.service('api/surveys')
       surveysService.get(surveyId).then((loaded) => {
         survey = loaded
-        var editorOptions = {showEmbededSurveyTab: true, showOptions: true}
+        var editorOptions = {showEmbededSurveyTab: true, showOptions: false}
         var editor = new SurveyEditor.SurveyEditor("surveyEditorContainer", editorOptions)
+        editor.options.generateValidJSON = true
         editor.text = JSON.stringify(survey.data)
         editor.saveSurveyFunc = () => {
           survey.data = JSON.parse(editor.text)

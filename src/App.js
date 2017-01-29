@@ -27,7 +27,8 @@ class App extends Reflux.Component {
   render () {
     // style
     const style = {
-      drawer: {position: 'absolute', zIndex: 9999}
+      drawer: {position: 'absolute', zIndex: 9999},
+      link: {textDecoration: 'none'}
     }
     // elements
     let iconSurveysWall = () => (
@@ -54,8 +55,8 @@ class App extends Reflux.Component {
         <AppBar title="Abibao" onLeftIconButtonTouchTap={this.handleToggle} iconElementRight={iconNetwork()} />
         <Drawer open={this.state.open} style={style.drawer}>
           <AppBar title="Abibao" iconElementLeft={iconClose()} onLeftIconButtonTouchTap={this.handleToggle} />
-          <Link to="/surveyswall"><MenuItem leftIcon={iconSurveysWall()}>Surveys wall</MenuItem></Link>
-          <Link to="/surveys"><MenuItem leftIcon={iconMySurveys()}>My surveys</MenuItem></Link>
+          <Link to="/surveyswall" style={style.link}><MenuItem leftIcon={iconSurveysWall()}>Surveys wall</MenuItem></Link>
+          <Link to="/surveys" style={style.link}><MenuItem leftIcon={iconMySurveys()}>My surveys</MenuItem></Link>
         </Drawer>
         {this.props.children}
       </Paper>

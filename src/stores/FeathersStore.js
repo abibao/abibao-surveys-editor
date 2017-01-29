@@ -6,7 +6,12 @@ import hooks from 'feathers-hooks'
 import auth from 'feathers-authentication-client'
 import io from 'socket.io-client'
 
-const Actions = Reflux.createActions(['connected', 'disconnected', 'surveyCreated', 'surveysLoaded'])
+const Actions = Reflux.createActions([
+  'connected',
+  'disconnected',
+  'surveyCreated',
+  'surveyUpdated',
+  'surveysLoaded'])
 
 class FeathersStore extends Reflux.Store {
   constructor () {
@@ -57,6 +62,18 @@ class FeathersStore extends Reflux.Store {
       this.getListSurveys()
       Actions.surveyCreated()
     }).catch(console.error)
+  }
+
+  updateSurvey (data) {
+    console.log('store, update a survey')
+    this.app.service('api/surveys').update(data.id, data).then((result) => {
+      this.getListSurveys()
+      Actions.surveyUpdated()
+    }).catch(console.error)
+  }
+
+  onSurveyUpdated () {
+    console.log('action, update a survey')
   }
 
   onSurveyCreated () {

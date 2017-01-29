@@ -2,15 +2,16 @@ import React from 'react'
 import Reflux from 'reflux'
 
 import Paper from 'material-ui/Paper'
-import {grey300, grey900, white, cyan500} from 'material-ui/styles/colors'
+import {grey300, grey900, white} from 'material-ui/styles/colors'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import {Card, CardMedia, CardTitle, CardActions} from 'material-ui/Card'
-import IconButton from 'material-ui/IconButton'
-import FontIcon from 'material-ui/FontIcon'
+import RaisedButton from 'material-ui/RaisedButton'
 
 import FeathersStore from './../stores/FeathersStore'
+
+import EditSurveyDialog from './../elements/EditSurveyDialog'
 
 class Surveys extends Reflux.Component {
   constructor (props) {
@@ -38,14 +39,15 @@ class Surveys extends Reflux.Component {
       },
       floating: {position: 'fixed', right: '1rem', bottom: '1rem', zIndex: 9999},
       gridList: {flexWrap: 'wrap', display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center'},
-      card: {width: '300px', margin: '10px'}
+      card: {width: '300px', margin: '10px'},
+      cardActionsLeft: {float: 'left'},
+      cardActionsRight: {float: 'right', marginRight: 0},
+      titleStyle: {overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}
     }
     // elements
     let iconSurveyEdit = (url) => (
-      <a href={url} target="_new">
-        <IconButton tooltip="Edit this survey" tooltipPosition="top-center">
-          <FontIcon color={cyan500} className="material-icons">mode_edit</FontIcon>
-        </IconButton>
+      <a style={style.cardActionsRight} href={url} target="_new">
+        <RaisedButton label="Editor" primary />
       </a>
     )
     let tabComponent = () => (
@@ -53,12 +55,13 @@ class Surveys extends Reflux.Component {
         <div style={style.gridList}>
           {this.state.surveys.data.map((survey) => (
             <Card style={style.card} key={survey.id}>
-              <CardTitle title={survey.name} subtitle="Abibao" />
+              <CardTitle title={survey.name} titleStyle={style.titleStyle} subtitle="Abibao" />
               <CardMedia>
                 <div style={{background: 'url(images/574efe952775faef68604ffc1480273149476.png) center center / cover', width: '300px', height: '200px'}} />
               </CardMedia>
               <CardActions>
                 {iconSurveyEdit('editor.html?' + survey.id)}
+                <EditSurveyDialog style={style.cardActionsLeft} survey={survey} />
               </CardActions>
             </Card>
           ))}
