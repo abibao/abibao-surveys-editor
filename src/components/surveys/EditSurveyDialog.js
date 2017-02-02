@@ -6,7 +6,7 @@ import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
 
-import FeathersStore from './../stores/FeathersStore'
+import FeathersStore from './../../stores/FeathersStore'
 
 export default class EditSurveyDialog extends Reflux.Component {
   constructor (props) {

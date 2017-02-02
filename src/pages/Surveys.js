@@ -9,14 +9,14 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import {Card, CardMedia, CardTitle, CardActions} from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 
-import FeathersStore from './../stores/FeathersStore'
+// import FeathersStore from './../stores/FeathersStore'
 
-import EditSurveyDialog from './../elements/EditSurveyDialog'
+import EditSurveyDialog from './../components/surveys/EditSurveyDialog'
 
 class Surveys extends Reflux.Component {
   constructor (props) {
     super(props)
-    this.stores = [FeathersStore]
+    // this.stores = [FeathersStore]
     this.state = {tab: '/list'}
     this.handleActive = (tab) => {
       this.setState({tab: tab.props['data-route']})
@@ -78,7 +78,7 @@ class Surveys extends Reflux.Component {
           </Tabs>
         </Paper>
         {tabComponent()}
-        <a href="#" onClick={this.handleCreateSurvey}>
+        <a href="#" onTouchTap={this.handleCreateSurvey}>
           <FloatingActionButton style={style.floating} secondary zDepth={1}>
             <ContentAdd />
           </FloatingActionButton>

@@ -12,6 +12,9 @@ class SurveysWall extends Reflux.Component {
     super(props)
     this.stores = [FeathersStore]
     this.state = {}
+    this.handleActive = (tab) => {
+      this.setState({tab: tab.props['data-route']})
+    }
   }
 
   render () {
@@ -26,13 +29,32 @@ class SurveysWall extends Reflux.Component {
       }
     }
     // elements
-    let tabComponent = () => (
+    let tabComponentListAll = () => (
       <Paper style={style.papers.content} zDepth={0}>
         <div style={style.papers.empty}>&nbsp;</div>
         <h4 style={{textAlign: 'center', width: '100%'}}>No surveys for the moment!</h4>
       </Paper>
     )
+    let tabComponentListProgess = () => (
+      <Paper style={style.papers.content} zDepth={0}>
+        <div style={style.papers.empty}>&nbsp;</div>
+        <h4 style={{textAlign: 'center', width: '100%'}}>No surveys in progress!</h4>
+      </Paper>
+    )
+    let tabComponentListComplete = () => (
+      <Paper style={style.papers.content} zDepth={0}>
+        <div style={style.papers.empty}>&nbsp;</div>
+        <h4 style={{textAlign: 'center', width: '100%'}}>No surveys completed!</h4>
+      </Paper>
+    )
+    let tabComponent = tabComponentListAll
     // override
+    if (this.state.tab === '/list_progress') {
+      tabComponent = tabComponentListProgess
+    }
+    if (this.state.tab === '/list_complete') {
+      tabComponent = tabComponentListComplete
+    }
     // renderer
     const renderer = () => (
       <Paper zDepth={0}>

@@ -22,9 +22,11 @@ module.exports = {
   public: path.resolve(__dirname, '../build'),
   corsWhitelist: ['localhost'],
   auth: {
+    secret: nconf.get('ABIBAO_AUTH_TOKEN_SECRET') || 'secret key',
     token: {
       secret: nconf.get('ABIBAO_AUTH_TOKEN_SECRET') || 'secret key'
     },
+    local: {},
     cookie: {
       enabled: true,
       name: nconf.get('ABIBAO_AUTH_COOKIE_NAME') || 'rememberMe'
