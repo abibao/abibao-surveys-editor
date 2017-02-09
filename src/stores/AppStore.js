@@ -13,7 +13,11 @@ class AppStore extends Reflux.Store {
     this.state = {
       accessToken: null,
       networkOnline: false,
-      socket: null
+      socket: null,
+      error: {
+        message: '',
+        open: false
+      }
     }
     Feathers.io.on('connect', () => {
       Actions.networkOnline(Feathers.io)
@@ -36,8 +40,11 @@ class AppStore extends Reflux.Store {
       this.setState({accessToken: result.accessToken})
       browserHistory.push('/')
     }).catch(error => {
-      console.log(error)
-      this.setState({accessToken: null})
+      let message = {
+        open: true,
+        message: error.message
+      }
+      this.setState({accessToken: null, error: message})
     })
   }
 
@@ -47,7 +54,6 @@ class AppStore extends Reflux.Store {
   }
 
   checkUser (callback) {
-    console.log(callback)
     Feathers.authenticate().then((result) => {
       if (callback) { return callback(null, result.accessToken) }
       this.setState({accessToken: result.accessToken})

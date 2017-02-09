@@ -9,14 +9,27 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import {Card, CardMedia, CardTitle, CardActions} from 'material-ui/Card'
 import RaisedButton from 'material-ui/RaisedButton'
 
-// import FeathersStore from './../stores/FeathersStore'
-
 import EditSurveyDialog from './../components/surveys/EditSurveyDialog'
+
+const style = {
+  tabs: {width: '100%'},
+  tab: {backgroundColor: white, color: grey900, fontWeight: 'bold'},
+  papers: {
+    tabs: {position: 'relative', zIndex: 9000, backgroundColor: white},
+    content: {padding: '1rem', backgroundColor: grey300}
+  },
+  floating: {position: 'fixed', right: '1rem', bottom: '1rem', zIndex: 9999},
+  gridList: {flexWrap: 'wrap', display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center'},
+  card: {width: '300px', margin: '10px'},
+  cardActionsLeft: {float: 'left'},
+  cardActionsRight: {float: 'right', marginRight: 0},
+  titleStyle: {overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}
+}
 
 class Surveys extends Reflux.Component {
   constructor (props) {
     super(props)
-    // this.stores = [FeathersStore]
+    this.stores = []
     this.state = {tab: '/list'}
     this.handleActive = (tab) => {
       this.setState({tab: tab.props['data-route']})
@@ -29,21 +42,6 @@ class Surveys extends Reflux.Component {
   }
 
   render () {
-    // style
-    const style = {
-      tabs: {width: '100%'},
-      tab: {backgroundColor: white, color: grey900, fontWeight: 'bold'},
-      papers: {
-        tabs: {position: 'relative', zIndex: 9000, backgroundColor: white},
-        content: {padding: '1rem', backgroundColor: grey300}
-      },
-      floating: {position: 'fixed', right: '1rem', bottom: '1rem', zIndex: 9999},
-      gridList: {flexWrap: 'wrap', display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center'},
-      card: {width: '300px', margin: '10px'},
-      cardActionsLeft: {float: 'left'},
-      cardActionsRight: {float: 'right', marginRight: 0},
-      titleStyle: {overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'}
-    }
     // elements
     let iconSurveyEdit = (url) => (
       <a style={style.cardActionsRight} href={url} target="_new">
