@@ -1,7 +1,7 @@
 import React from 'react'
 import Reflux from 'reflux'
 
-import { grey300, orange800, white } from 'material-ui/styles/colors'
+import {grey300, orange800, white} from 'material-ui/styles/colors'
 import Paper from 'material-ui/Paper'
 import CircularProgress from 'material-ui/CircularProgress'
 import TextField from 'material-ui/TextField'

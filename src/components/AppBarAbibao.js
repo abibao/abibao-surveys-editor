@@ -1,12 +1,16 @@
 import React from 'react'
 import Reflux from 'reflux'
 
-import {orange800, white} from 'material-ui/styles/colors'
+import {browserHistory} from 'react-router'
+
+import {orange800, white, lightGreen800} from 'material-ui/styles/colors'
 import IconButton from 'material-ui/IconButton'
+import HomeIcon from 'material-ui/svg-icons/action/home'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import MenuIcon from 'material-ui/svg-icons/navigation/menu'
 import CloseIcon from 'material-ui/svg-icons/navigation/close'
-import CampaignsIcon from 'material-ui/svg-icons/editor/insert-drive-file'
+import CampaignsIcon from 'material-ui/svg-icons/action/assignment'
+import SurveysIcon from 'material-ui/svg-icons/action/assignment-ind'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import Divider from 'material-ui/Divider'
@@ -35,13 +39,23 @@ class AppBarAbibao extends Reflux.Component {
       open: false
     }
     this.handleToggle = () => this.setState({open: !this.state.open})
+    this.handleHomepage = () => {
+      browserHistory.push('/')
+    }
+    this.handleCampaigns = () => {
+      browserHistory.push('/campaigns')
+    }
   }
   render () {
     const LeftDrawer = (props) => (
       <div>
         <Drawer width={320} open={this.state.open}>
           <AppBar onLeftIconButtonTouchTap={this.handleToggle} title={<img src="images/abibao-logo-gris-jaune.png" role="presentation" />} style={styles.appbar} titleStyle={styles.appbarTitle} iconElementLeft={<CloseMenu />} />
-          <MenuItem primaryText="Campagnes" leftIcon={<CampaignsIcon />} />
+          <MenuItem onTouchTap={this.handleHomepage} primaryText="Accueil" leftIcon={<HomeIcon color={orange800} />} />
+          <Divider />
+          <MenuItem onTouchTap={this.handleCampaigns} primaryText="Les Campagnes" leftIcon={<CampaignsIcon color={lightGreen800} />} />
+          <MenuItem primaryText="Les Sondages" leftIcon={<SurveysIcon color={lightGreen800} />} disabled />
+          <Divider />
         </Drawer>
       </div>
     )

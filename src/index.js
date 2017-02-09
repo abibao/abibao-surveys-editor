@@ -8,7 +8,7 @@ import Feathers from './libs/Feathers'
 import App from './containers/App'
 import Homepage from './pages/Homepage'
 import Login from './pages/Login'
-import SurveysWall from './pages/SurveysWall'
+import Campaigns from './pages/Campaigns'
 
 import './index.css'
 
@@ -30,7 +30,7 @@ Feathers.io.on('connect', () => {
         <Route path="/" component={App}>
           <IndexRoute component={Homepage} onEnter={requireAuth} />
           <Route path="login" component={Login} />
-          <Route path="surveyswall" component={SurveysWall} onEnter={requireAuth} />
+          <Route path="campaigns" component={Campaigns} onEnter={requireAuth} />
         </Route>
       </Router>
     ), document.getElementById('root'))
