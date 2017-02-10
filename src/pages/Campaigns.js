@@ -20,7 +20,7 @@ const styles = {
     width: '100%'
   },
   floating: {position: 'fixed', right: '1rem', bottom: '1rem', zIndex: 9999},
-  card: {width: 'auto', margin: '0.5rem'},
+  card: {width: 'auto', margin: '0'},
   cardTitle: {overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis'},
   grid: {
     container: {
@@ -30,6 +30,8 @@ const styles = {
     },
     row: {
       padding: '0',
+      paddingLeft: '1rem',
+      paddingRight: '1rem',
       margin: '0'
     },
     col: {
@@ -78,17 +80,18 @@ class Campaigns extends Reflux.Component {
         <div style={styles.box}>
           <AppBarAbibao />
           <Container fluid style={styles.grid.container}>
-            <Row>
-              <Col xs={12}>
+            <Row style={styles.grid.row}>
+              <Col xs={12} style={styles.grid.col}>
                 <h2>Campaigns</h2>
               </Col>
               {this.state.campaigns.data.map((campaign) => (
-                <Col key={campaign.id} sm={4}>
+                <Col key={campaign.id} xs={12} sm={6} md={4} lg={3} style={styles.grid.col}>
                   <Card style={styles.card}>
                     <CardTitle title={campaign.name} titleStyle={styles.cardTitle} subtitle="Abibao" />
                     <CardMedia>
-                      <div style={{background: 'url(images/574efe952775faef68604ffc1480273149476.png) no-repeat center / cover', width: 'auto', height: '200px'}} />
+                      <div style={{background: 'url(images/574efe952775faef68604ffc1480273149476.png) no-repeat center / cover', width: 'auto', height: '150px'}} />
                     </CardMedia>
+                    <CardActions />
                   </Card>
                 </Col>
               ))}
