@@ -3,7 +3,7 @@
 const Sequelize = require('sequelize')
 
 module.exports = function (app) {
-  const Survey = app.sequelize.define('Survey', {
+  const Campaign = app.sequelize.define('Campaign', {
     id: {
       type: Sequelize.STRING,
       primaryKey: true,
@@ -23,8 +23,8 @@ module.exports = function (app) {
     paranoid: true,
     underscored: false,
     freezeTableName: true,
-    tableName: 'surveys'
+    tableName: 'campaigns'
   })
-  Survey.sync()
-  return Survey
+  Campaign.sync()
+  return Campaign
 }

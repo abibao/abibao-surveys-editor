@@ -2,11 +2,11 @@
 
 const authentication = require('./authentication')
 const users = require('./memory/users')
-const surveys = require('./data/surveys')
+const campaigns = require('./data/campaigns')
 
 module.exports = function () {
   const app = this
   app.configure(authentication)
   app.configure(users)
-  app.configure(surveys)
+  app.configure(campaigns)
 }
