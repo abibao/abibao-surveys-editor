@@ -34,6 +34,7 @@ const styles = {
     container: {
       padding: '0',
       margin: '0',
+      marginTop: 64,
       background: grey300
     },
     row: {

@@ -18,9 +18,7 @@ import Drawer from 'material-ui/Drawer'
 import AppBar from 'material-ui/AppBar'
 
 const styles = {
-  appbar: {
-    background: white
-  },
+  appbar: {backgroundColor: white, position: 'fixed', top: 0, left: 0},
   appbarTitle: {
     color: orange800
   }
@@ -51,11 +49,13 @@ class AppBarAbibao extends Reflux.Component {
       <div>
         <Drawer width={320} open={this.state.open}>
           <AppBar onLeftIconButtonTouchTap={this.handleToggle} title={<img src="images/abibao-logo-gris-jaune.png" role="presentation" />} style={styles.appbar} titleStyle={styles.appbarTitle} iconElementLeft={<CloseMenu />} />
-          <MenuItem onTouchTap={this.handleHomepage} primaryText="Accueil" leftIcon={<HomeIcon color={orange800} />} />
-          <Divider />
-          <MenuItem onTouchTap={this.handleCampaigns} primaryText="Les Campagnes" leftIcon={<CampaignsIcon color={lightGreen800} />} />
-          <MenuItem primaryText="Les Sondages" leftIcon={<SurveysIcon color={lightGreen800} />} disabled />
-          <Divider />
+          <div style={{marginTop: 64}}>
+            <MenuItem onTouchTap={this.handleHomepage} primaryText="Accueil" leftIcon={<HomeIcon color={orange800} />} />
+            <Divider />
+            <MenuItem onTouchTap={this.handleCampaigns} primaryText="Les Campagnes" leftIcon={<CampaignsIcon color={lightGreen800} />} />
+            <MenuItem primaryText="Les Sondages" leftIcon={<SurveysIcon color={lightGreen800} />} disabled />
+            <Divider />
+          </div>
         </Drawer>
       </div>
     )

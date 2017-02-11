@@ -32,7 +32,6 @@ class CampaignStore extends Reflux.Store {
     const reader = new FileReader()
     reader.readAsDataURL(filepath)
     reader.addEventListener('load', () => {
-      console.log('file encoded')
       this.uploadService
         .create({uri: reader.result})
         .then((response) => {
@@ -76,7 +75,6 @@ class CampaignStore extends Reflux.Store {
   }
 
   onCreateData (item) {
-    console.log('campaign created')
     let campaigns = this.state.dataProviderCampaigns
     campaigns.data.push(item)
     campaigns.total += 1
@@ -84,7 +82,6 @@ class CampaignStore extends Reflux.Store {
   }
 
   onUpdateData (item) {
-    console.log('campaign updated')
     let campaigns = this.state.dataProviderCampaigns
     let i = findIndex(campaigns.data, function (o) { return o.id === item.id })
     if (i === -1) { return false }

@@ -22,5 +22,7 @@ RUN npm install  && \
 RUN apk del make gcc g++ python git && \
     rm -rf /tmp/* /var/cache/apk/* /root/.npm /root/.node-gyp
 
+VOLUME /usr/app/server/uploads
+
 EXPOSE 80
 CMD ["node", "server/start"]

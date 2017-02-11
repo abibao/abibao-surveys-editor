@@ -1,7 +1,7 @@
 import React from 'react'
 import Reflux from 'reflux'
 
-import {grey800, white, orange800, lightGreen800} from 'material-ui/styles/colors'
+import {grey800, grey100, white, orange800, lightGreen800} from 'material-ui/styles/colors'
 import Dialog from 'material-ui/Dialog'
 import SettingsIcon from 'material-ui/svg-icons/action/settings'
 import ImageIcon from 'material-ui/svg-icons/image/image'
@@ -10,9 +10,13 @@ import PlayIcon from 'material-ui/svg-icons/av/play-arrow'
 import FlatButton from 'material-ui/FlatButton'
 import IconButton from 'material-ui/IconButton'
 import TextField from 'material-ui/TextField'
+import Paper from 'material-ui/Paper'
 import Dropzone from 'react-dropzone'
 
 import CampaignStore from './../../stores/CampaignStore'
+
+const host = process.env.REACT_APP_IO_HOST
+const reader = process.env.REACT_APP_SURVEY_READER
 
 const styles = {
   smallIcon: {
@@ -42,6 +46,13 @@ const styles = {
     padding: '0.5rem',
     paddingBottom: 0,
     paddingTop: 0
+  },
+  paper: {
+    line: {
+      padding: '0.5rem',
+      marginBottom: '0.5rem',
+      backgroundColor: grey100
+    }
   }
 }
 
@@ -70,7 +81,6 @@ class SettingsButton extends Reflux.Component {
       this.refs.dropzone.open()
     }
     this.handleOnDrop = (files) => {
-      console.log('upload image...')
       const store = this.stores[0]
       store.upload(this.props.campaign.id, files[0])
     }
@@ -86,11 +96,17 @@ class SettingsButton extends Reflux.Component {
         <Dropzone style={{display: 'none'}} ref="dropzone" multiple={false} onDrop={this.handleOnDrop} />
         <IconButton tooltipStyles={styles.tooltip} tooltip="Editer les metadata" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><SettingsIcon color={lightGreen800} onTouchTap={this.handleOpen} /></IconButton>
         <IconButton tooltipStyles={styles.tooltip} tooltip="Editer l'image" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><ImageIcon color={lightGreen800} onTouchTap={this.handleOpenDropzone} /></IconButton>
-        <IconButton tooltipStyles={styles.tooltip} tooltip="Editer le sondage" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><EditIcon color={lightGreen800} /></IconButton>
+        <a href={host + '/editor.html?' + this.props.campaign.id} target="_blank"><IconButton tooltipStyles={styles.tooltip} tooltip="Editer le sondage" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><EditIcon color={lightGreen800} /></IconButton></a>
         <IconButton tooltipStyles={styles.tooltip} tooltip="Tester le sondage" tooltipPosition="top-center" iconStyle={styles.mediumIcon} style={styles.mediumRight}><PlayIcon color={orange800} /></IconButton>
         <Dialog title="Edition des metadata" tooltipPosition="top-center" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}>
-          Nom : <br />
-          <TextField id="inputName" onChange={this.handleChangeName} defaultValue={this.props.campaign.name} /><br />
+          <div>
+            <Paper style={styles.paper.line} zDepth={0}>
+              <TextField id="inputUrl" floatingLabelText="URL du sondage" floatingLabelFixed fullWidth disabled defaultValue={reader + '/' + this.props.campaign.id} /><br />
+            </Paper>
+            <Paper style={styles.paper.line} zDepth={0}>
+              <TextField id="inputName" floatingLabelText="Nom de la campage" floatingLabelFixed fullWidth onChange={this.handleChangeName} defaultValue={this.props.campaign.name} />
+            </Paper>
+          </div>
         </Dialog>
       </div>
     )

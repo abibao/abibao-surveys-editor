@@ -23,8 +23,8 @@
       var client = feathers()
         .configure(feathers.hooks())
         .configure(feathers.socketio(socket))
-      var surveysService = client.service('api/surveys')
-      surveysService.get(surveyId).then((loaded) => {
+      var service = client.service('api/campaigns')
+      service.get(surveyId).then((loaded) => {
         survey = loaded
         var editorOptions = {showEmbededSurveyTab: true, showOptions: false}
         var editor = new SurveyEditor.SurveyEditor("surveyEditorContainer", editorOptions)
@@ -32,7 +32,7 @@
         editor.text = JSON.stringify(survey.data)
         editor.saveSurveyFunc = () => {
           survey.data = JSON.parse(editor.text)
-          surveysService.update(surveyId, survey).then((updated) => {
+          service.update(surveyId, survey).then((updated) => {
           }).catch(console.log)
         }
       }).catch(console.log)
