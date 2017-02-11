@@ -1,3 +1,4 @@
+/* global FileReader */
 import Reflux from 'reflux'
 
 import {findIndex} from 'lodash'
@@ -18,6 +19,7 @@ class CampaignStore extends Reflux.Store {
       }
     }
     this.listenables = Actions
+    this.uploadService = Feathers.service('uploads')
     this.service = Feathers.service('api/campaigns')
     this.service.on('created', Actions.createData)
     this.service.on('patched', Actions.updateData)
@@ -26,6 +28,21 @@ class CampaignStore extends Reflux.Store {
   /*
     ACTIONS
   */
+  upload (id, filepath) {
+    const reader = new FileReader()
+    reader.readAsDataURL(filepath)
+    reader.addEventListener('load', () => {
+      console.log('file encoded')
+      this.uploadService
+        .create({uri: reader.result})
+        .then((response) => {
+          this.update({
+            id,
+            picture: 'wp_content/' + response.id
+          })
+        }).catch(console.error)
+    }, false)
+  }
   find (params = {}) {
     this.service.find(params).then((result) => {
       let dataProvider = []
@@ -44,6 +61,7 @@ class CampaignStore extends Reflux.Store {
   create () {
     let data = {
       name: 'Nouvelle campagne',
+      picture: 'wp_content/default/campaign.png',
       data: {pages: [{name: 'page1'}]}
     }
     this.service.create(data).then(() => {
@@ -61,7 +79,8 @@ class CampaignStore extends Reflux.Store {
     console.log('campaign created')
     let campaigns = this.state.dataProviderCampaigns
     campaigns.data.push(item)
-    this.setState({dataProviderCampaigns: item})
+    campaigns.total += 1
+    this.setState({dataProviderCampaigns: campaigns})
   }
 
   onUpdateData (item) {

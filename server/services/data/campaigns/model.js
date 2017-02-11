@@ -14,6 +14,10 @@ module.exports = function (app) {
       type: Sequelize.STRING,
       allowNull: false
     },
+    picture: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
     data: {
       type: Sequelize.JSON,
       allowNull: false

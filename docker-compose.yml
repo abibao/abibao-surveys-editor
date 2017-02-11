@@ -5,26 +5,7 @@ services:
   phpmyadmin:
     image: thajeztah/pgadmin4
     privileged: true
-    depends_on:
-      - mysql
-    links:
-      - mysql
-    environment:
-      POSTGRES_HOST: mysql
-      POSTGRES_DEFAULTDB: abibao
     volumes:
       - ./volumes/pgadmin4:/pgadmin
     ports:
       - 5050:5050
-
-  mysql:
-    image: library/postgres:9.6-alpine
-    privileged: true
-    environment:
-      POSTGRES_DB: abibao
-      POSTGRES_USER: abibao
-      POSTGRES_PASSWORD: abibao
-    volumes:
-      - ./volumes/databases/postgresql/data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432

@@ -17,6 +17,10 @@ const socketio = require('feathers-socketio')
 const middlewares = require('./middlewares')
 const services = require('./services')
 
+const blobService = require('feathers-blob')
+const fs = require('fs-blob-store')
+const blobStorage = fs(path.resolve(__dirname, 'uploads'))
+
 const app = feathers()
 
 app.configure(configuration(path.join(__dirname, '..')))
@@ -42,6 +46,7 @@ app.use(compress())
   .use('/', serveStatic(app.get('public')))
   .use('/login', serveStatic(app.get('public')))
   .use('/campaigns', serveStatic(app.get('public')))
+  .use('/wp_content', serveStatic(path.resolve(__dirname, 'uploads')))
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
   .configure(rest())
@@ -69,16 +74,19 @@ app.use(compress())
   .configure(services)
   .configure(middlewares)
 
-// Create a user that we can use to log in
+// Upload Service
+app.use('/uploads', blobService({Model: blobStorage}))
+
+// User service
 const newUser = {
   email: app.get('superu').email,
   password: app.get('superu').password,
   permissions: ['*']
 }
-
 app.service('users').create(newUser).then(user => {
   console.log('Created default user', user)
 }).catch(console.error)
 
+// Start server
 app.listen(app.get('port'), app.get('host'), () => {
 })

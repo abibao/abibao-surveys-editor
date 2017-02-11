@@ -8,10 +8,12 @@ import AddIcon from 'material-ui/svg-icons/content/add'
 import {Container, Row, Col} from 'react-grid-system'
 
 import AppBarAbibao from './../components/AppBarAbibao'
-import SettingsButton from './../components/campaigns/SettingsButton'
+import CardActionsButtons from './../components/campaigns/CardActionsButtons'
 
 import AppStore from './../stores/AppStore'
 import CampaignStore from './../stores/CampaignStore'
+
+const host = process.env.REACT_APP_IO_HOST
 
 const styles = {
   container: {
@@ -53,7 +55,6 @@ class Campaigns extends Reflux.Component {
     store.find()
   }
   componentWillUnmount () {
-    console.log('componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
   }
@@ -67,7 +68,7 @@ class Campaigns extends Reflux.Component {
     }
   }
   render () {
-    // components
+    // renderer
     let renderer = () => (
       <div style={styles.container}>
         <div style={styles.box}>
@@ -75,17 +76,18 @@ class Campaigns extends Reflux.Component {
           <Container fluid style={styles.grid.container}>
             <Row style={styles.grid.row}>
               <Col xs={12} style={styles.grid.col}>
-                <h2>Campaigns</h2>
+                <h2>Les campagnes</h2>
+                <p>Il y a actuellement {this.state.dataProviderCampaigns.total} campagnes en lignes.</p>
               </Col>
               {this.state.dataProviderCampaigns.data.map((campaign) => (
                 <Col key={campaign.id} xs={12} sm={6} md={4} lg={3} style={styles.grid.col}>
                   <Card style={styles.card}>
                     <CardTitle title={campaign.name} titleStyle={styles.cardTitle} subtitle="Abibao" />
                     <CardMedia>
-                      <div style={{background: 'url(images/574efe952775faef68604ffc1480273149476.png) no-repeat center / cover', width: 'auto', height: '150px'}} />
+                      <div style={{background: 'url(' + host + '/' + campaign.picture + ') no-repeat center / cover', width: 'auto', height: '150px'}} />
                     </CardMedia>
                     <CardActions style={styles.cardActions}>
-                      <SettingsButton style={styles.cardActionLeft} campaign={campaign} />
+                      <CardActionsButtons style={styles.cardActionLeft} campaign={campaign} />
                     </CardActions>
                   </Card>
                 </Col>
