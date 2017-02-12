@@ -10,6 +10,7 @@ import Homepage from './pages/Homepage'
 import Login from './pages/Login'
 import Campaigns from './pages/Campaigns'
 import Editor from './pages/Editor'
+import Reader from './pages/Reader'
 
 import './index.css'
 
@@ -33,6 +34,7 @@ Feathers.io.on('connect', () => {
           <Route path="login" component={Login} />
           <Route path="campaigns" component={Campaigns} onEnter={requireAuth} />
           <Route path="editor/:id" component={Editor} onEnter={requireAuth} />
+          <Route path="reader/:id" component={Reader} />
         </Route>
       </Router>
     ), document.getElementById('root'))

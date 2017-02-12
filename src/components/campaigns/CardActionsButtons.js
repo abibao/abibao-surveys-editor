@@ -81,6 +81,9 @@ class SettingsButton extends Reflux.Component {
     this.handleOpenEditor = (e) => {
       browserHistory.push('/editor/' + this.props.campaign.id)
     }
+    this.handleOpenReader = (e) => {
+      browserHistory.push('/reader/' + this.props.campaign.id)
+    }
     this.handleOpenDropzone = (e) => {
       this.refs.dropzone.open()
     }
@@ -101,7 +104,7 @@ class SettingsButton extends Reflux.Component {
         <IconButton tooltipStyles={styles.tooltip} tooltip="Editer les metadata" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><SettingsIcon color={lightGreen800} onTouchTap={this.handleOpen} /></IconButton>
         <IconButton tooltipStyles={styles.tooltip} tooltip="Editer l'image" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><ImageIcon color={lightGreen800} onTouchTap={this.handleOpenDropzone} /></IconButton>
         <IconButton tooltipStyles={styles.tooltip} tooltip="Editer le sondage" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><EditIcon color={lightGreen800} onTouchTap={this.handleOpenEditor} /></IconButton>
-        <IconButton tooltipStyles={styles.tooltip} tooltip="Tester le sondage" tooltipPosition="top-center" iconStyle={styles.mediumIcon} style={styles.mediumRight}><PlayIcon color={orange800} /></IconButton>
+        <IconButton tooltipStyles={styles.tooltip} tooltip="Tester le sondage" tooltipPosition="top-center" iconStyle={styles.mediumIcon} style={styles.mediumRight}><PlayIcon color={orange800} onTouchTap={this.handleOpenReader} /></IconButton>
         <Dialog title="Edition des metadata" tooltipPosition="top-center" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}>
           <div>
             <Paper style={styles.paper.line} zDepth={0}>

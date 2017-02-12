@@ -1,0 +1,29 @@
+@media screen and (min-width: 200px) and (max-width: 600px) {
+  .reader {
+    background: #ffffff;
+    padding: 10px;
+    margin: 0;
+    width: calc(100% -20px);
+    max-width: 100%;
+  }
+  .panel-heading {
+    font-size: 1.5rem;
+  }
+  .panel-heading h3 {
+    font-size: 1.5rem;
+    padding: 10px;
+    padding-bottom: 0;
+  }
+  h4.page-title {
+    padding: 10px;
+    padding-top: 0;
+    font-size: 1.35rem;
+  }
+  .question {
+    padding: 20px;
+    width: calc(100% - 20px) !important;
+  }
+  .question-title {
+    font-size: 1.25rem;
+  }
+}

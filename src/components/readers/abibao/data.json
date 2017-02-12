@@ -1,0 +1,39 @@
+{
+ "locale": "fr",
+ "pages": [
+  {
+   "name": "page1",
+   "questions": [
+    {
+     "type": "text",
+     "name": "EMAIL",
+     "title": "Pour être alerté, laissez nous votre e-mail :",
+     "isRequired": true,
+     "validators": [
+      {
+       "type": "email",
+       "text": "Email non valide..."
+      }
+     ],
+     "inputType": "email"
+    }
+   ],
+   "title": "Vous êtes quelqu'un d'incroyable"
+  },
+  {
+   "name": "page2",
+   "questions": [
+    {
+     "type": "comment",
+     "name": "IDEA",
+     "title": "C'est le moment de vous exprimer",
+     "isRequired": true
+    }
+   ],
+   "title": "Vous êtes quelqu'un d'écouté"
+  }
+ ],
+ "showProgressBar": "bottom",
+ "showQuestionNumbers": "off",
+ "title": "Sondage profilage 1"
+}
