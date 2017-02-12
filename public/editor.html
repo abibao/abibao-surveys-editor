@@ -12,30 +12,21 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
-    <script src="//cdn.rawgit.com/feathersjs/feathers-client/v1.1.0/dist/feathers.js"></script>
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
+    <script src="//cdn.rawgit.com/feathersjs/feathers-client/v1.1.0/dist/feathers.js"></script> -->
     <script src="surveyjs/survey.ko.min.js"></script>
     <script src="surveyjs.editor/surveyeditor.min.js"></script>
     <script type="text/javascript">
-      var surveyId = window.location.search.substring(1)
-      var survey = {}
-      var socket = io(window.location.origin)
-      var client = feathers()
-        .configure(feathers.hooks())
-        .configure(feathers.socketio(socket))
-      var service = client.service('api/campaigns')
-      service.get(surveyId).then((loaded) => {
-        survey = loaded
-        var editorOptions = {showEmbededSurveyTab: true, showOptions: false}
+      var editorOptions = {showEmbededSurveyTab: true, showOptions: false}
+      var campaignId = window.location.search.substring(1)
+      parent.handleLoadData(campaignId).then((campaign) => {
         var editor = new SurveyEditor.SurveyEditor("surveyEditorContainer", editorOptions)
         editor.options.generateValidJSON = true
-        editor.text = JSON.stringify(survey.data)
+        editor.text = JSON.stringify(campaign.data)
         editor.saveSurveyFunc = () => {
-          survey.data = JSON.parse(editor.text)
-          service.update(surveyId, survey).then((updated) => {
-          }).catch(console.log)
+          parent.handleSaveData(editor.text)
         }
-      }).catch(console.log)
+      }).catch(console.error)
     </script>
   </body>
 </html>

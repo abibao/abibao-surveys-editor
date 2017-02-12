@@ -52,8 +52,6 @@ const styles = {
 
 class Campaigns extends Reflux.Component {
   componentDidMount () {
-    let store = this.stores[1]
-    store.find()
   }
   componentWillUnmount () {
   }
@@ -78,7 +76,7 @@ class Campaigns extends Reflux.Component {
             <Row style={styles.grid.row}>
               <Col xs={12} style={styles.grid.col}>
                 <h2>Les campagnes</h2>
-                <p>Il y a actuellement {this.state.dataProviderCampaigns.total} campagnes en lignes.</p>
+                <p>Il y a actuellement {this.state.dataProviderCampaigns.total} campagnes en ligne.</p>
               </Col>
               {this.state.dataProviderCampaigns.data.map((campaign) => (
                 <Col key={campaign.id} xs={12} sm={6} md={4} lg={3} style={styles.grid.col}>
@@ -101,7 +99,6 @@ class Campaigns extends Reflux.Component {
         </FloatingActionButton>
       </div>
     )
-    // renderer
     return renderer()
   }
 }

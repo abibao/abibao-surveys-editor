@@ -1,6 +1,8 @@
 import React from 'react'
 import Reflux from 'reflux'
 
+import {browserHistory} from 'react-router'
+
 import {grey800, grey100, white, orange800, lightGreen800} from 'material-ui/styles/colors'
 import Dialog from 'material-ui/Dialog'
 import SettingsIcon from 'material-ui/svg-icons/action/settings'
@@ -15,7 +17,6 @@ import Dropzone from 'react-dropzone'
 
 import CampaignStore from './../../stores/CampaignStore'
 
-const host = process.env.REACT_APP_IO_HOST
 const reader = process.env.REACT_APP_SURVEY_READER
 
 const styles = {
@@ -77,6 +78,9 @@ class SettingsButton extends Reflux.Component {
     this.handleChangeName = (e) => {
       this.props.campaign.name = e.target.value
     }
+    this.handleOpenEditor = (e) => {
+      browserHistory.push('/editor/' + this.props.campaign.id)
+    }
     this.handleOpenDropzone = (e) => {
       this.refs.dropzone.open()
     }
@@ -96,7 +100,7 @@ class SettingsButton extends Reflux.Component {
         <Dropzone style={{display: 'none'}} ref="dropzone" multiple={false} onDrop={this.handleOnDrop} />
         <IconButton tooltipStyles={styles.tooltip} tooltip="Editer les metadata" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><SettingsIcon color={lightGreen800} onTouchTap={this.handleOpen} /></IconButton>
         <IconButton tooltipStyles={styles.tooltip} tooltip="Editer l'image" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><ImageIcon color={lightGreen800} onTouchTap={this.handleOpenDropzone} /></IconButton>
-        <a href={host + '/editor.html?' + this.props.campaign.id} target="_blank"><IconButton tooltipStyles={styles.tooltip} tooltip="Editer le sondage" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><EditIcon color={lightGreen800} /></IconButton></a>
+        <IconButton tooltipStyles={styles.tooltip} tooltip="Editer le sondage" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><EditIcon color={lightGreen800} onTouchTap={this.handleOpenEditor} /></IconButton>
         <IconButton tooltipStyles={styles.tooltip} tooltip="Tester le sondage" tooltipPosition="top-center" iconStyle={styles.mediumIcon} style={styles.mediumRight}><PlayIcon color={orange800} /></IconButton>
         <Dialog title="Edition des metadata" tooltipPosition="top-center" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}>
           <div>

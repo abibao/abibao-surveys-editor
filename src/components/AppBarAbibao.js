@@ -48,7 +48,7 @@ class AppBarAbibao extends Reflux.Component {
     const LeftDrawer = (props) => (
       <div>
         <Drawer width={320} open={this.state.open}>
-          <AppBar onLeftIconButtonTouchTap={this.handleToggle} title={<img src="images/abibao-logo-gris-jaune.png" role="presentation" />} style={styles.appbar} titleStyle={styles.appbarTitle} iconElementLeft={<CloseMenu />} />
+          <AppBar onLeftIconButtonTouchTap={this.handleToggle} title={<img src="/images/abibao-logo-gris-jaune.png" role="presentation" />} style={styles.appbar} titleStyle={styles.appbarTitle} iconElementLeft={<CloseMenu />} />
           <div style={{marginTop: 64}}>
             <MenuItem onTouchTap={this.handleHomepage} primaryText="Accueil" leftIcon={<HomeIcon color={orange800} />} />
             <Divider />
@@ -88,7 +88,7 @@ class AppBarAbibao extends Reflux.Component {
     // components
     let renderer = () => (
       <div>
-        <AppBar onLeftIconButtonTouchTap={this.handleToggle} title={<img src="images/abibao-logo-gris-jaune.png" role="presentation" />} style={styles.appbar} titleStyle={styles.appbarTitle} iconElementLeft={<OpenMenu />} iconElementRight={<Logged />} />
+        <AppBar onLeftIconButtonTouchTap={this.handleToggle} title={<img src="/images/abibao-logo-gris-jaune.png" role="presentation" />} style={styles.appbar} titleStyle={styles.appbarTitle} iconElementLeft={<OpenMenu />} iconElementRight={<Logged />} />
         {LeftDrawer()}
       </div>
     )

@@ -14,7 +14,9 @@ class CampaignStore extends Reflux.Store {
   constructor () {
     super()
     this.state = {
+      initialized: false,
       dataProviderCampaigns: {
+        total: 0,
         data: []
       }
     }
@@ -23,6 +25,9 @@ class CampaignStore extends Reflux.Store {
     this.service = Feathers.service('api/campaigns')
     this.service.on('created', Actions.createData)
     this.service.on('patched', Actions.updateData)
+    console.log('CampaignStore on initialize')
+    this.find()
+    this.setState({initialized: true})
   }
 
   /*
