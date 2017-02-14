@@ -1,6 +1,8 @@
+// react
 import React from 'react'
 import Reflux from 'reflux'
 
+// material-ui
 import {grey300, orange800, white} from 'material-ui/styles/colors'
 import Paper from 'material-ui/Paper'
 import CircularProgress from 'material-ui/CircularProgress'
@@ -8,8 +10,10 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import Snackbar from 'material-ui/Snackbar'
 
-import AppStore from './../stores/AppStore'
+// stores
+import AppStore from './../../stores/AppStore'
 
+// styles
 const styles = {
   labelStyle: {
     login: {
@@ -99,7 +103,7 @@ class Login extends Reflux.Component {
     let renderer = () => (
       <Paper style={styles.container}>
         <Paper style={styles.box}>
-          <img src="images/abibao-logo-gris-jaune.png" role="presentation" />
+          <img src="../../images/abibao-logo-gris-jaune.png" role="presentation" />
           <br /><br />
           <TextField underlineFocusStyle={styles.underlineFocusStyle} type="email" fullWidth hintText="Email" value={this.state.email} onChange={(e) => this.setState({email: e.target.value})} /><br />
           <TextField underlineFocusStyle={styles.underlineFocusStyle} type="password" fullWidth hintText="Mot de passe" value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} /><br />

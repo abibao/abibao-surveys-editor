@@ -17,13 +17,6 @@ import Divider from 'material-ui/Divider'
 import Drawer from 'material-ui/Drawer'
 import AppBar from 'material-ui/AppBar'
 
-const styles = {
-  appbar: {backgroundColor: white, position: 'fixed', top: 0, left: 0},
-  appbarTitle: {
-    color: orange800
-  }
-}
-
 class AppBarAbibao extends Reflux.Component {
   componentDidMount () {
   }
@@ -38,13 +31,19 @@ class AppBarAbibao extends Reflux.Component {
     }
     this.handleToggle = () => this.setState({open: !this.state.open})
     this.handleHomepage = () => {
-      browserHistory.push('/')
+      this.handleToggle()
+      browserHistory.push('/admin')
     }
     this.handleCampaigns = () => {
-      browserHistory.push('/campaigns')
+      this.handleToggle()
+      browserHistory.push('/admin/campaigns')
     }
   }
   render () {
+    const styles = {
+      appbar: {backgroundColor: white, position: 'fixed', top: 0, left: 0},
+      appbarTitle: {color: orange800}
+    }
     const LeftDrawer = (props) => (
       <div>
         <Drawer width={320} open={this.state.open}>

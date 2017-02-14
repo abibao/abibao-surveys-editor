@@ -29,6 +29,6 @@ module.exports = function (app) {
     freezeTableName: true,
     tableName: 'campaigns'
   })
-  Campaign.sync({force: true})
+  Campaign.sync()
   return Campaign
 }

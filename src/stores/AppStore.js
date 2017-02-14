@@ -38,7 +38,7 @@ class AppStore extends Reflux.Store {
       password: params.password
     }).then((result) => {
       this.setState({accessToken: result.accessToken})
-      browserHistory.push('/')
+      browserHistory.push('/admin')
     }).catch(error => {
       let message = {
         open: true,
@@ -50,7 +50,7 @@ class AppStore extends Reflux.Store {
 
   logout () {
     Feathers.logout()
-    browserHistory.push('/')
+    browserHistory.push('/admin')
   }
 
   checkUser (callback) {

@@ -15,9 +15,7 @@ import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import Dropzone from 'react-dropzone'
 
-import CampaignStore from './../../stores/CampaignStore'
-
-const reader = process.env.REACT_APP_SURVEY_READER
+import CampaignStore from './../../../stores/CampaignStore'
 
 const styles = {
   smallIcon: {
@@ -79,10 +77,10 @@ class SettingsButton extends Reflux.Component {
       this.props.campaign.name = e.target.value
     }
     this.handleOpenEditor = (e) => {
-      browserHistory.push('/editor/' + this.props.campaign.id)
+      browserHistory.push('/admin/editor/' + this.props.campaign.id)
     }
     this.handleOpenReader = (e) => {
-      browserHistory.push('/reader/' + this.props.campaign.id)
+      browserHistory.push('/admin/reader/' + this.props.campaign.id)
     }
     this.handleOpenDropzone = (e) => {
       this.refs.dropzone.open()
@@ -108,7 +106,7 @@ class SettingsButton extends Reflux.Component {
         <Dialog title="Edition des metadata" tooltipPosition="top-center" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}>
           <div>
             <Paper style={styles.paper.line} zDepth={0}>
-              <TextField id="inputUrl" floatingLabelText="URL du sondage" floatingLabelFixed fullWidth disabled defaultValue={reader + '/' + this.props.campaign.id} /><br />
+              <TextField id="inputUrl" floatingLabelText="URL du sondage" floatingLabelFixed fullWidth disabled defaultValue={process.env.REACT_APP_SURVEY_READER + '/' + this.props.campaign.id} /><br />
             </Paper>
             <Paper style={styles.paper.line} zDepth={0}>
               <TextField id="inputName" floatingLabelText="Nom de la campage" floatingLabelFixed fullWidth onChange={this.handleChangeName} defaultValue={this.props.campaign.name} />

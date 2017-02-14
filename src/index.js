@@ -1,17 +1,22 @@
+// react
 import React from 'react'
 import {render} from 'react-dom'
+import {Router, Route, browserHistory} from 'react-router'
 
-import {Router, Route, browserHistory, IndexRoute} from 'react-router'
-
+// feathers
 import Feathers from './libs/Feathers'
 
+// components
 import App from './containers/App'
-import Homepage from './pages/Homepage'
-import Login from './pages/Login'
-import Campaigns from './pages/Campaigns'
-import Editor from './pages/Editor'
-import Reader from './pages/Reader'
 
+// pages: admin
+import AdminLogin from './pages/admin/Login'
+import AdminHomepage from './pages/admin/Homepage'
+import AdminCampaigns from './pages/admin/Campaigns'
+import AdminReader from './pages/admin/Reader'
+import AdminEditor from './pages/admin/Editor'
+
+// styles
 import './index.css'
 
 Feathers.io.on('connect', () => {
@@ -23,18 +28,18 @@ Feathers.io.on('connect', () => {
         console.log('requireAuth', 'succeed')
       }).catch(() => {
         console.log('requireAuth', 'failed')
-        browserHistory.push('/login')
+        browserHistory.push('/admin/login')
       })
     }
-    // renderer
     render((
       <Router history={browserHistory}>
         <Route path="/" component={App}>
-          <IndexRoute component={Homepage} onEnter={requireAuth} />
-          <Route path="login" component={Login} />
-          <Route path="campaigns" component={Campaigns} onEnter={requireAuth} />
-          <Route path="editor/:id" component={Editor} onEnter={requireAuth} />
-          <Route path="reader/:id" component={Reader} />
+          <Route path="admin/login" component={AdminLogin} />
+          <Route path="admin" component={AdminHomepage} onEnter={requireAuth}>
+            <Route path="campaigns" component={AdminCampaigns} />
+            <Route path="editor/:id" component={AdminEditor} />
+            <Route path="reader/:id" component={AdminReader} />
+          </Route>
         </Route>
       </Router>
     ), document.getElementById('root'))
