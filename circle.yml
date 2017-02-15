@@ -25,4 +25,4 @@ deployment:
     commands:
       - docker build -t abibao/abibao-surveys-editor .
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker push abibao/abibao-surveys-editor
+      - docker push docker.io/abibao/abibao-surveys-editor
