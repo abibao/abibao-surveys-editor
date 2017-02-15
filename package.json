@@ -1,11 +1,14 @@
 {
   "name": "abibao-surveys-editor",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Frontend surveys editor",
   "author": "Gilles Perreymond",
   "scripts": {
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "./npm-scripts/test.sh",
+    "test:react": "react-scripts test --env=jsdom",
+    "test:standard": "node_modules/.bin/standard --verbose | snazzy",
+    "test:coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- --opts .mocharc",
     "eject": "react-scripts eject",
     "start": "react-scripts start",
     "start:server": "DEBUG=feathers* node server/start.js"
@@ -43,7 +46,10 @@
     "eslint-plugin-react": "6.9.0",
     "eslint-plugin-standard": "2.0.1",
     "feathers-authentication-client": "0.1.8",
+    "istanbul": "^0.4.5",
     "material-ui": "0.17.0",
+    "mocha": "3.2.0",
+    "mocha-standard": "1.0.0",
     "react": "15.4.2",
     "react-dom": "15.4.2",
     "react-dropzone": "3.10.0",
@@ -53,7 +59,19 @@
     "react-scripts": "0.9.0",
     "react-tap-event-plugin": "2.0.1",
     "reflux": "6.2.0",
+    "snazzy": "5.0.0",
     "standard-jsx": "8.0.0",
     "survey-react": "0.11.1"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "it"
+    ],
+    "ignore": [
+      "build/**",
+      "coverage/**",
+      "public/**"
+    ]
   }
 }
