@@ -5,7 +5,7 @@
   "author": "Gilles Perreymond",
   "scripts": {
     "build": "react-scripts build",
-    "test": "./npm-scripts/test.sh",
+    "test": "NODE_ENV=test && ./npm-scripts/test.sh",
     "test:react": "react-scripts test --env=jsdom",
     "test:standard": "node_modules/.bin/standard --verbose | snazzy",
     "test:coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- --opts .mocharc",
@@ -76,7 +76,8 @@
     "ignore": [
       "build/**",
       "coverage/**",
-      "public/**"
+      "public/**",
+      "volumes/**"
     ]
   }
 }

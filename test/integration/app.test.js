@@ -15,8 +15,8 @@ describe('[integration] feathers application tests', function () {
   })
 
   it('starts and shows the index page', function (done) {
-    request('http://localhost:3030/', function (err, res, body) {
-      assert.ok(body.indexOf('<html') !== -1)
+    request('http://localhost:3030/index.html', function (err, res, body) {
+      assert.equal(res.statusCode, 200)
       done(err)
     })
   })
