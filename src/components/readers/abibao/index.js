@@ -3,12 +3,9 @@ import Reflux from 'reflux'
 
 import * as Survey from 'survey-react'
 
-import data from './data.json'
 import styles from './styles'
 import './screen.css'
 import './mobile.css'
-
-var survey = new Survey.Model(data)
 
 class SurveyReader extends Reflux.Component {
   componentDidMount () {
@@ -22,6 +19,7 @@ class SurveyReader extends Reflux.Component {
     this.state = {}
   }
   render () {
+    let survey = new Survey.Model(this.props.data)
     return (<Survey.Survey model={survey} css={styles} />)
   }
 }

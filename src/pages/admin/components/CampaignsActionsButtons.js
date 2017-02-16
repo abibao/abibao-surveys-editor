@@ -1,6 +1,5 @@
 import React from 'react'
 import Reflux from 'reflux'
-
 import {browserHistory} from 'react-router'
 
 import {grey800, grey100, white, orange800, lightGreen800} from 'material-ui/styles/colors'

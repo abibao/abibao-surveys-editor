@@ -21,7 +21,7 @@ describe('[integration] feathers application tests', function () {
     })
   })
 
-  describe('404', function () {
+  describe('statusCode 404', function () {
     it('shows a 404 HTML page', function (done) {
       request({
         url: 'http://localhost:3030/path/to/nowhere',
