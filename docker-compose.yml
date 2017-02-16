@@ -2,10 +2,12 @@ version: '2'
 
 services:
 
-  phpmyadmin:
-    image: thajeztah/pgadmin4
+  mysql:
+    image: library/postgres:9.6-alpine
     privileged: true
-    volumes:
-      - ./volumes/pgadmin4:/pgadmin
+    environment:
+      POSTGRES_DB: abibao
+      POSTGRES_USER: abibao
+      POSTGRES_PASSWORD: abibao
     ports:
-      - 5050:5050
+      - 5432:5432
