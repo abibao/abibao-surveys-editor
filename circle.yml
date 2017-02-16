@@ -10,6 +10,8 @@ dependencies:
     - node_modules
 test:
   override:
+    - rm .env
+    - cp config/production.env .env
     - npm install
     - npm run build
     - npm test

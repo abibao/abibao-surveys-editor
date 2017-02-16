@@ -6,9 +6,6 @@ RUN mkdir -p /usr/app
 WORKDIR /usr/app
 
 COPY package.json /usr/app/package.json
-COPY config/production.env /usr/app/.env
-COPY src /usr/app/src
-COPY config /usr/app/config
 COPY server /usr/app/server
 COPY build /usr/app/build
 

@@ -1,5 +1,6 @@
 .*
 coverage/
+src/
 node_modules/
 volumes/
 .git/
