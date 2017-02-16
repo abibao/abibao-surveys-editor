@@ -2,11 +2,11 @@
 
 const standard = require('mocha-standard')
 
-describe('code style', function () {
+describe('[code] standard style', function () {
   it('should be conforms to standard', standard.files([
-    'index.js',
-    'test/**/*.js',
-    'lib/**/*.js',
-    'examples/**/*.js'
+    'config/**/*.js',
+    'server/**/*.js',
+    'src/**/*.js',
+    'test/**/*.js'
   ]))
 })
