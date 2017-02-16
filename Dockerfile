@@ -10,13 +10,11 @@ COPY config/production.env /usr/app/.env
 COPY src /usr/app/src
 COPY config /usr/app/config
 COPY server /usr/app/server
-COPY public /usr/app/public
+COPY build /usr/app/build
 
 RUN apk add --update make gcc g++ python git
 
-RUN npm install  && \
-    npm run build  && \
-    npm prune --production && \
+RUN npm install --production  && \
     npm uninstall -g npm
 
 RUN apk del make gcc g++ python git && \
