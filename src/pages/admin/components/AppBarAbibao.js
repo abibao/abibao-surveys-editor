@@ -38,6 +38,10 @@ class AppBarAbibao extends Reflux.Component {
       this.handleToggle()
       browserHistory.push('/admin/campaigns')
     }
+    this.handleEntities = () => {
+      this.handleToggle()
+      browserHistory.push('/admin/entities')
+    }
   }
   render () {
     const styles = {
@@ -52,6 +56,7 @@ class AppBarAbibao extends Reflux.Component {
             <MenuItem onTouchTap={this.handleHomepage} primaryText="Accueil" leftIcon={<HomeIcon color={orange800} />} />
             <Divider />
             <MenuItem onTouchTap={this.handleCampaigns} primaryText="Les Campagnes" leftIcon={<CampaignsIcon color={lightGreen800} />} />
+            <MenuItem onTouchTap={this.handleEntities} primaryText="Les entitiés" leftIcon={<CampaignsIcon color={lightGreen800} />} />
             <MenuItem primaryText="Les Sondages" leftIcon={<SurveysIcon color={lightGreen800} />} disabled />
             <Divider />
           </div>

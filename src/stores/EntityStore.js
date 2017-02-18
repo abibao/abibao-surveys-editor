@@ -6,26 +6,24 @@ import {findIndex} from 'lodash'
 import Feathers from '../libs/Feathers'
 
 const Actions = Reflux.createActions([
-  'createData',
   'updateData',
   'updateDataProdiver'])
 
-class CampaignStore extends Reflux.Store {
+class EntityStore extends Reflux.Store {
   constructor () {
     super()
     this.state = {
       initialized: false,
-      dataProviderCampaigns: {
+      dataProviderEntities: {
         total: 0,
         data: []
       }
     }
     this.listenables = Actions
     this.uploadService = Feathers.service('uploads')
-    this.service = Feathers.service('api/campaigns')
-    this.service.on('created', Actions.createData)
+    this.service = Feathers.service('api/entities')
     this.service.on('patched', Actions.updateData)
-    console.log('CampaignStore on initialize')
+    console.log('EntityStore on initialize')
     this.find()
     this.setState({initialized: true})
   }
@@ -63,32 +61,15 @@ class CampaignStore extends Reflux.Store {
     }).catch(console.error)
   }
 
-  create () {
-    let data = {
-      name: 'Nouvelle campagne',
-      picture: 'images/default/campaign.png',
-      data: {pages: [{name: 'page1'}]}
-    }
-    this.service.create(data).then(() => {
-    }).catch(console.error)
-  }
-
   /*
     EVENTS
   */
   onUpdateDataProdiver (dataProvider) {
-    this.setState({dataProviderCampaigns: dataProvider})
-  }
-
-  onCreateData (item) {
-    let campaigns = this.state.dataProviderCampaigns
-    campaigns.data.push(item)
-    campaigns.total += 1
-    this.setState({dataProviderCampaigns: campaigns})
+    this.setState({dataProviderEntities: dataProvider})
   }
 
   onUpdateData (item) {
-    let campaigns = this.state.dataProviderCampaigns
+    let campaigns = this.state.dataProviderEntities
     let i = findIndex(campaigns.data, function (o) { return o.id === item.id })
     if (i === -1) { return false }
     campaigns.data[i] = item
@@ -96,4 +77,4 @@ class CampaignStore extends Reflux.Store {
   }
 }
 
-module.exports = CampaignStore
+module.exports = EntityStore

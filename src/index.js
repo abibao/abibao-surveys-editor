@@ -13,6 +13,7 @@ import App from './containers/App'
 import AdminLogin from './pages/admin/Login'
 import AdminHomepage from './pages/admin/Homepage'
 import AdminCampaigns from './pages/admin/Campaigns'
+import AdminEntities from './pages/admin/Entities'
 import AdminReader from './pages/admin/Reader'
 import AdminEditor from './pages/admin/Editor'
 
@@ -43,6 +44,7 @@ Feathers.io.on('connect', () => {
           <Route path="admin/login" component={AdminLogin} />
           <Route path="admin" component={AdminHomepage} onEnter={requireAuth}>
             <Route path="campaigns" component={AdminCampaigns} />
+            <Route path="entities" component={AdminEntities} />
             <Route path="editor/:id" component={AdminEditor} />
             <Route path="reader/:id" component={AdminReader} />
           </Route>

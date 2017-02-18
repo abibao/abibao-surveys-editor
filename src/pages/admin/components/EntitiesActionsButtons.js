@@ -1,20 +1,17 @@
 import React from 'react'
 import Reflux from 'reflux'
-import {browserHistory} from 'react-router'
 
-import {grey800, grey100, white, orange800, lightGreen800} from 'material-ui/styles/colors'
+import {grey800, grey100, white, lightGreen800} from 'material-ui/styles/colors'
 import Dialog from 'material-ui/Dialog'
 import SettingsIcon from 'material-ui/svg-icons/action/settings'
 import ImageIcon from 'material-ui/svg-icons/image/image'
-import EditIcon from 'material-ui/svg-icons/editor/mode-edit'
-import PlayIcon from 'material-ui/svg-icons/av/play-arrow'
 import FlatButton from 'material-ui/FlatButton'
 import IconButton from 'material-ui/IconButton'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import Dropzone from 'react-dropzone'
 
-import CampaignStore from './../../../stores/CampaignStore'
+import EntityStore from './../../../stores/EntityStore'
 
 const styles = {
   smallIcon: {
@@ -54,13 +51,13 @@ const styles = {
   }
 }
 
-class CampaignsActionsButtons extends Reflux.Component {
+class EntitiesActionsButtons extends Reflux.Component {
   constructor (props) {
     super(props)
     this.state = {
       open: false
     }
-    this.stores = [CampaignStore]
+    this.stores = [EntityStore]
     this.handleOpen = () => {
       this.setState({open: true})
     }
@@ -69,24 +66,18 @@ class CampaignsActionsButtons extends Reflux.Component {
     }
     this.handleSave = () => {
       const store = this.stores[0]
-      store.update(this.props.campaign)
+      store.update(this.props.entity)
       this.setState({open: false})
     }
     this.handleChangeName = (e) => {
-      this.props.campaign.name = e.target.value
-    }
-    this.handleOpenEditor = (e) => {
-      browserHistory.push('/admin/editor/' + this.props.campaign.id)
-    }
-    this.handleOpenReader = (e) => {
-      browserHistory.push('/admin/reader/' + this.props.campaign.id)
+      this.props.entity.name = e.target.value
     }
     this.handleOpenDropzone = (e) => {
       this.refs.dropzone.open()
     }
     this.handleOnDrop = (files) => {
       const store = this.stores[0]
-      store.upload(this.props.campaign.id, files[0])
+      store.upload(this.props.entity.id, files[0])
     }
   }
 
@@ -100,15 +91,10 @@ class CampaignsActionsButtons extends Reflux.Component {
         <Dropzone style={{display: 'none'}} ref="dropzone" multiple={false} onDrop={this.handleOnDrop} />
         <IconButton tooltipStyles={styles.tooltip} tooltip="Editer les metadata" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><SettingsIcon color={lightGreen800} onTouchTap={this.handleOpen} /></IconButton>
         <IconButton tooltipStyles={styles.tooltip} tooltip="Editer l'image" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><ImageIcon color={lightGreen800} onTouchTap={this.handleOpenDropzone} /></IconButton>
-        <IconButton tooltipStyles={styles.tooltip} tooltip="Editer le sondage" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><EditIcon color={lightGreen800} onTouchTap={this.handleOpenEditor} /></IconButton>
-        <IconButton tooltipStyles={styles.tooltip} tooltip="Tester le sondage" tooltipPosition="top-center" iconStyle={styles.mediumIcon} style={styles.mediumRight}><PlayIcon color={orange800} onTouchTap={this.handleOpenReader} /></IconButton>
         <Dialog title="Edition des metadata" tooltipPosition="top-center" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}>
           <div>
             <Paper style={styles.paper.line} zDepth={0}>
-              <TextField id="inputUrl" floatingLabelText="URL du sondage" floatingLabelFixed fullWidth disabled defaultValue={process.env.REACT_APP_SURVEY_READER + '/' + this.props.campaign.id} /><br />
-            </Paper>
-            <Paper style={styles.paper.line} zDepth={0}>
-              <TextField id="inputName" floatingLabelText="Nom de la campage" floatingLabelFixed fullWidth onChange={this.handleChangeName} defaultValue={this.props.campaign.name} />
+              <TextField id="inputName" floatingLabelText="Nom de l'entité" floatingLabelFixed fullWidth onChange={this.handleChangeName} defaultValue={this.props.entity.name} />
             </Paper>
           </div>
         </Dialog>
@@ -117,4 +103,4 @@ class CampaignsActionsButtons extends Reflux.Component {
   }
 }
 
-export default CampaignsActionsButtons
+export default EntitiesActionsButtons
