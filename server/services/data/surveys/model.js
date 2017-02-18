@@ -3,23 +3,27 @@
 const Sequelize = require('sequelize')
 
 module.exports = function (app) {
-  const Campaign = app.sequelize.define('Campaign', {
+  const Survey = app.sequelize.define('Survey', {
     id: {
       type: Sequelize.STRING,
       primaryKey: true,
       unique: true,
       defaultValue: Sequelize.UUIDV4
     },
-    name: {
+    individual: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    campaign: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    picture: {
+    charity: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: true
     },
-    data: {
-      type: Sequelize.JSON,
+    company: {
+      type: Sequelize.STRING,
       allowNull: false
     }
   }, {
@@ -27,8 +31,8 @@ module.exports = function (app) {
     paranoid: true,
     underscored: false,
     freezeTableName: true,
-    tableName: 'campaigns'
+    tableName: 'surveys'
   })
-  Campaign.sync({force: app.get('force')})
-  return Campaign
+  Survey.sync({force: app.get('force')})
+  return Survey
 }
