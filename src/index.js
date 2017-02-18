@@ -26,6 +26,12 @@ Feathers.io.on('connect', () => {
       // initialize
       Feathers.authenticate().then((result) => {
         console.log('requireAuth', 'succeed')
+        const regex = /^\/admin/g
+        const str = browserHistory.getCurrentLocation().pathname
+        let m = regex.test(str)
+        if (m === true) {
+          // browserHistory.push('/admin/campaigns')
+        }
       }).catch(() => {
         console.log('requireAuth', 'failed')
         browserHistory.push('/admin/login')

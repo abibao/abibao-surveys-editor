@@ -4,7 +4,7 @@ import socketio from 'feathers-socketio/client'
 import io from 'socket.io-client'
 import authentication from 'feathers-authentication-client'
 
-const host = process.env.REACT_APP_IO_HOST
+const host = process.env.REACT_APP_FEATHERS_URI
 const socket = io(host)
 
 const app = feathers()
