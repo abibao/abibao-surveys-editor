@@ -78,7 +78,7 @@ class Campaigns extends Reflux.Component {
                 <Card style={styles.card}>
                   <CardTitle title={campaign.name} titleStyle={styles.cardTitle} subtitle="Abibao" />
                   <CardMedia>
-                    <div style={{background: 'url(' + campaign.picture + ') no-repeat center / cover', width: 'auto', height: '150px'}} />
+                    <div style={{background: 'url(' + process.env.REACT_APP_FEATHERS_URI + '/' + campaign.picture + ') no-repeat center / cover', width: 'auto', height: '150px'}} />
                   </CardMedia>
                   <CardActions style={styles.cardActions}>
                     <CampaignsActionsButtons style={styles.cardActionLeft} campaign={campaign} />

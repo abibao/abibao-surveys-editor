@@ -65,7 +65,7 @@ class CampaignStore extends Reflux.Store {
   create () {
     let data = {
       name: 'Nouvelle campagne',
-      picture: 'wp_content/default/campaign.png',
+      picture: 'images/default/campaign.png',
       data: {pages: [{name: 'page1'}]}
     }
     this.service.create(data).then(() => {
