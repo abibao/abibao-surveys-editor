@@ -35,6 +35,13 @@ class CampaignsStore extends Reflux.Store {
     .catch(console.error)
   }
 
+  onLoadAsync (id, callback) {
+    Feathers.service('api/campaigns').get(id).then((campaign) => {
+      console.log('CampaignsStore', 'onLoadAsync', campaign.id)
+      callback(campaign)
+    }).catch(console.error)
+  }
+
   onPopulateEntity (campaign) {
     let i = findIndex(this.state.entities, function (o) { return o.id === campaign.company })
     campaign.company = this.state.entities[i] || {name: 'Aucune'}

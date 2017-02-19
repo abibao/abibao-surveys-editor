@@ -11,8 +11,10 @@ import {grey300} from 'material-ui/styles/colors'
 import Feathers from '../../libs/Feathers'
 import AppBarAbibao from './components/AppBarAbibao'
 
-// action
+// stores
 import CampaignsStore from './../../stores/CampaignsStore'
+
+// actions
 import CampaignsActions from './../../actions/CampaignsActions'
 
 // styles
