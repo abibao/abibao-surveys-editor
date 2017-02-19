@@ -12,7 +12,25 @@ module.exports = function (app) {
     },
     name: {
       type: Sequelize.STRING,
+      unique: true,
       allowNull: false
+    },
+    description: {
+      type: Sequelize.TEXT,
+      allowNull: true,
+      defaultValue: ''
+    },
+    company: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    position: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
+      validate: {
+        min: 0
+      }
     },
     picture: {
       type: Sequelize.STRING,

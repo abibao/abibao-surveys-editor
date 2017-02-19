@@ -1,8 +1,14 @@
+// react
 import React from 'react'
 import Reflux from 'reflux'
+import Dropzone from 'react-dropzone'
 import {browserHistory} from 'react-router'
+import {clone} from 'lodash'
 
+// material-ui
 import {grey800, grey100, white, orange800, lightGreen800} from 'material-ui/styles/colors'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
 import Dialog from 'material-ui/Dialog'
 import SettingsIcon from 'material-ui/svg-icons/action/settings'
 import ImageIcon from 'material-ui/svg-icons/image/image'
@@ -12,9 +18,12 @@ import FlatButton from 'material-ui/FlatButton'
 import IconButton from 'material-ui/IconButton'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
-import Dropzone from 'react-dropzone'
 
-import CampaignStore from './../../../stores/CampaignStore'
+// stores
+import CampaignsStore from './../../../stores/CampaignsStore'
+
+// actions
+import CampaignsActions from './../../../actions/CampaignsActions'
 
 const styles = {
   smallIcon: {
@@ -58,22 +67,29 @@ class CampaignsActionsButtons extends Reflux.Component {
   constructor (props) {
     super(props)
     this.state = {
-      open: false
+      open: false,
+      currentCampaign: {
+        company: {
+          name: 'Aucune'
+        }
+      }
     }
-    this.stores = [CampaignStore]
+    this.store = CampaignsStore
     this.handleOpen = () => {
-      this.setState({open: true})
+      this.setState({currentCampaign: clone(this.props.campaign), open: true})
     }
     this.handleClose = () => {
       this.setState({open: false})
     }
     this.handleSave = () => {
-      const store = this.stores[0]
-      store.update(this.props.campaign)
+      CampaignsActions.save(this.state.currentCampaign)
       this.setState({open: false})
     }
     this.handleChangeName = (e) => {
-      this.props.campaign.name = e.target.value
+      this.state.currentCampaign.name = e.target.value
+    }
+    this.handleChangeCompany = (e, index, value) => {
+      this.state.currentCampaign.company = this.state.entities[index]
     }
     this.handleOpenEditor = (e) => {
       browserHistory.push('/admin/editor/' + this.props.campaign.id)
@@ -85,8 +101,7 @@ class CampaignsActionsButtons extends Reflux.Component {
       this.refs.dropzone.open()
     }
     this.handleOnDrop = (files) => {
-      const store = this.stores[0]
-      store.upload(this.props.campaign.id, files[0])
+      CampaignsActions.upload(this.props.campaign, files[0])
     }
   }
 
@@ -105,10 +120,17 @@ class CampaignsActionsButtons extends Reflux.Component {
         <Dialog title="Edition des metadata" tooltipPosition="top-center" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}>
           <div>
             <Paper style={styles.paper.line} zDepth={0}>
-              <TextField id="inputUrl" floatingLabelText="URL du sondage" floatingLabelFixed fullWidth disabled defaultValue={process.env.REACT_APP_SURVEY_READER + '/' + this.props.campaign.id} /><br />
+              <TextField id="inputUrl" floatingLabelText="URL du sondage" floatingLabelFixed fullWidth disabled defaultValue={process.env.REACT_APP_SURVEY_READER + '/' + this.state.currentCampaign.id} /><br />
             </Paper>
             <Paper style={styles.paper.line} zDepth={0}>
-              <TextField id="inputName" floatingLabelText="Nom de la campage" floatingLabelFixed fullWidth onChange={this.handleChangeName} defaultValue={this.props.campaign.name} />
+              <TextField id="inputName" floatingLabelText="Nom de la campage" floatingLabelFixed fullWidth onChange={this.handleChangeName} defaultValue={this.state.currentCampaign.name} />
+            </Paper>
+            <Paper style={styles.paper.line} zDepth={0}>
+              <SelectField autoWidth value={this.state.currentCampaign.company.id} onChange={this.handleChangeCompany}>
+                {this.state.entities.map((entity) => (
+                  <MenuItem key={entity.id} value={entity.id} label={entity.name} primaryText={entity.name} />
+                ))}
+              </SelectField>
             </Paper>
           </div>
         </Dialog>

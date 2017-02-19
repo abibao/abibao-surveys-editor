@@ -14,16 +14,12 @@ class EntityStore extends Reflux.Store {
     super()
     this.state = {
       initialized: false,
-      dataProviderEntities: {
-        total: 0,
-        data: []
-      }
+      dataProviderEntities: []
     }
     this.listenables = Actions
     this.uploadService = Feathers.service('uploads')
     this.service = Feathers.service('api/entities')
     this.service.on('patched', Actions.updateData)
-    console.log('EntityStore on initialize')
     this.find()
     this.setState({initialized: true})
   }
@@ -65,6 +61,7 @@ class EntityStore extends Reflux.Store {
     EVENTS
   */
   onUpdateDataProdiver (dataProvider) {
+    console.log('EntityStore', 'onUpdateDataProdiver')
     this.setState({dataProviderEntities: dataProvider})
   }
 

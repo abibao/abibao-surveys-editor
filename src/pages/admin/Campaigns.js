@@ -13,9 +13,11 @@ import AddIcon from 'material-ui/svg-icons/content/add'
 import AppBarAbibao from './components/AppBarAbibao'
 import CampaignsActionsButtons from './components/CampaignsActionsButtons'
 
-// stores
-import AppStore from './../../stores/AppStore'
-import CampaignStore from './../../stores/CampaignStore'
+// store
+import CampaignsStore from './../../stores/CampaignsStore'
+
+// action
+import CampaignsActions from './../../actions/CampaignsActions'
 
 // styles
 const styles = {
@@ -49,18 +51,24 @@ const styles = {
 
 class Campaigns extends Reflux.Component {
   componentDidMount () {
+    console.log('Campaigns', 'componentDidMount')
+    CampaignsActions.initialize()
   }
   componentWillUnmount () {
+    console.log('Campaigns', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
+    console.log('Campaigns', 'componentDidUpdate')
   }
   constructor (props) {
+    console.log('Campaigns', 'constructor')
     super(props)
+    // prepare state
     this.state = {}
-    this.stores = [AppStore, CampaignStore]
+    this.store = CampaignsStore
+    // create a campaign
     this.handleCreateCampaign = () => {
-      let store = this.stores[1]
-      store.create()
+      CampaignsActions.create()
     }
   }
   render () {
@@ -71,12 +79,12 @@ class Campaigns extends Reflux.Component {
           <Row style={styles.grid.row}>
             <Col xs={12} style={styles.grid.col}>
               <h2>Les campagnes</h2>
-              <p>Il y a actuellement {this.state.dataProviderCampaigns.total} campagnes en ligne.</p>
+              <p>Il y a actuellement {this.state.campaigns.length} campagnes en ligne.</p>
             </Col>
-            {this.state.dataProviderCampaigns.data.map((campaign) => (
+            {this.state.campaigns.map((campaign) => (
               <Col key={campaign.id} xs={12} sm={6} md={4} lg={3} style={styles.grid.col}>
                 <Card style={styles.card}>
-                  <CardTitle title={campaign.name} titleStyle={styles.cardTitle} subtitle="Abibao" />
+                  <CardTitle title={campaign.name} titleStyle={styles.cardTitle} subtitle={campaign.company.name || 'Chargement...'} />
                   <CardMedia>
                     <div style={{background: 'url(' + process.env.REACT_APP_FEATHERS_URI + '/' + campaign.picture + ') no-repeat center / cover', width: 'auto', height: '150px'}} />
                   </CardMedia>

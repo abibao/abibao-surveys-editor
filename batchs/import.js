@@ -24,9 +24,10 @@ const client = feathers()
   .configure(socketio(socket))
   .configure(auth())
 
+const tables = ['campaigns', 'entities']
+
 client.io.on('connect', () => {
   console.log(colors.green.bold('client-batch is connected'))
-  const tables = ['entities']
   console.log(colors.yellow.bold('client-batch try to login'))
   client.authenticate({
     strategy: 'local',
@@ -78,6 +79,12 @@ const batch = (table, callback) => {
   console.log(colors.yellow.bold('... batch for', table, 'with', files.length, 'elements'))
   async.mapLimit(files, 10, (filepath, next) => {
     let data = fse.readJsonSync(filepath)
+    if (table === 'campaigns') {
+      data.picture = 'images/default/campaign.png'
+      data.data = {
+        pages: [{name: 'page1'}]
+      }
+    }
     // try to insert
     client.service('api/' + table).create(data)
       .then(() => {

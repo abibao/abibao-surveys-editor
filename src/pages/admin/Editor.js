@@ -7,10 +7,12 @@ import {Container, Row, Col} from 'react-grid-system'
 import {grey300} from 'material-ui/styles/colors'
 
 // components
+import Feathers from '../../libs/Feathers'
 import AppBarAbibao from './components/AppBarAbibao'
 
-// stores
-import CampaignStore from './../../stores/CampaignStore'
+// action
+import CampaignsStore from './../../stores/CampaignsStore'
+import CampaignsActions from './../../actions/CampaignsActions'
 
 // styles
 const StylesAdminEditor = {
@@ -61,31 +63,30 @@ const IFrameComponent = React.createClass({
 
 class Editor extends Reflux.Component {
   componentDidMount () {
+    console.log('Editor', 'componentDidMount')
   }
   componentWillUnmount () {
+    console.log('Editor', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
+    console.log('Editor', 'componentDidUpdate')
   }
   constructor (props) {
+    console.log('Editor', 'constructor')
     super(props)
     this.state = {
-      selectedCampaign: {
+      currentCampaign: {
         name: 'En cours de chargement...'
       }
     }
-    this.stores = [CampaignStore]
     this.handleLoadData = (id) => {
-      let store = this.stores[0]
-      store.service.get(id).then((campaign) => {
-        this.setState({selectedCampaign: campaign})
-      }).catch(console.error)
-      return store.service.get(id)
+      return Feathers.service('api/campaigns').get(id)
     }
     this.handleSaveData = (data) => {
-      let store = this.stores[0]
+      /* let store = this.stores[0]
       let campaign = this.state.selectedCampaign
       campaign.data = JSON.parse(data)
-      store.service.update(this.state.selectedCampaign.id, campaign)
+      store.service.update(this.state.selectedCampaign.id, campaign) */
     }
     window.handleLoadData = this.handleLoadData
     window.handleSaveData = this.handleSaveData
@@ -95,7 +96,7 @@ class Editor extends Reflux.Component {
       <div style={StylesAdminEditor.container}>
         <Container fluid style={StylesAdminEditor.grid.container}>
           <AppBarAbibao />
-          <IFrameComponent iframe="iframe" campaign={this.state.selectedCampaign} src={'/editor.html?' + this.props.params.id} />
+          <IFrameComponent iframe="iframe" campaign={this.state.currentCampaign} src={'/editor.html?' + this.props.params.id} />
         </Container>
       </div>
     )

@@ -9,11 +9,7 @@ module.exports = function () {
   const app = this
   const Survey = SurveyModel(app)
   app.use('/api/surveys', Service({
-    Model: Survey,
-    paginate: {
-      default: 25,
-      max: 50
-    }
+    Model: Survey
   }))
   const service = app.service('api/surveys')
   service.before(hooks.before)

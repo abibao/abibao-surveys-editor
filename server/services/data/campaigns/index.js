@@ -9,11 +9,7 @@ module.exports = function () {
   const app = this
   const Campaign = CampaignModel(app)
   app.use('/api/campaigns', Service({
-    Model: Campaign,
-    paginate: {
-      default: 25,
-      max: 50
-    }
+    Model: Campaign
   }))
   const service = app.service('api/campaigns')
   service.before(hooks.before)

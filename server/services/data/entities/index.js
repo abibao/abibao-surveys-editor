@@ -9,11 +9,7 @@ module.exports = function () {
   const app = this
   const Entity = EntityModel(app)
   app.use('/api/entities', Service({
-    Model: Entity,
-    paginate: {
-      default: 25,
-      max: 50
-    }
+    Model: Entity
   }))
   const service = app.service('api/entities')
   service.before(hooks.before)

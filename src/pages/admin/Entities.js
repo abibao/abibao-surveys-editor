@@ -49,15 +49,19 @@ const styles = {
 
 class Entities extends Reflux.Component {
   componentDidMount () {
+    console.log('Entities', 'componentDidMount')
   }
   componentWillUnmount () {
+    console.log('Entities', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
   }
   constructor (props) {
+    console.log('Entities', 'constructor')
     super(props)
     this.state = {}
     this.stores = [AppStore, EntityStore]
+    // create an entity
     this.handleCreateEntity = () => {
       let store = this.stores[1]
       store.create()
@@ -73,7 +77,7 @@ class Entities extends Reflux.Component {
               <h2>Les entités</h2>
               <p>Il y a actuellement {this.state.dataProviderEntities.total} entités en ligne.</p>
             </Col>
-            {this.state.dataProviderEntities.data.map((entity) => (
+            {this.state.dataProviderEntities.map((entity) => (
               <Col key={entity.id} xs={12} sm={6} md={4} lg={3} style={styles.grid.col}>
                 <Card style={styles.card}>
                   <CardTitle title={entity.name} titleStyle={styles.cardTitle} subtitle={entity.type} />

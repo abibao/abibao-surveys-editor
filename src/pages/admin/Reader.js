@@ -15,7 +15,7 @@ import BackIcon from 'material-ui/svg-icons/navigation/arrow-back'
 import * as Readers from './../../components/readers'
 
 // stores
-import CampaignStore from './../../stores/CampaignStore'
+import CampaignsStore from './../../stores/CampaignsStore'
 
 // styles
 const styles = {
@@ -79,7 +79,7 @@ class Reader extends Reflux.Component {
         mqst: Readers.MQSTReader
       }
     }
-    this.stores = [CampaignStore]
+    this.stores = [CampaignsStore]
     this.handleBack = () => {
       browserHistory.push('/admin/campaigns')
     }
