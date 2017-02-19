@@ -12,7 +12,6 @@ class CampaignsStore extends Reflux.Store {
   constructor () {
     super()
     this.state = {
-      editor: false,
       campaigns: [],
       entities: []
     }
@@ -30,7 +29,7 @@ class CampaignsStore extends Reflux.Store {
     })
     .then(() => {
       this.state.campaigns.map((campaign) => {
-        CampaignsActions.populateEntity(campaign)
+        return CampaignsActions.populateEntity(campaign)
       })
     })
     .catch(console.error)

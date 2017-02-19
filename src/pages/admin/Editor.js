@@ -2,6 +2,7 @@
 import React from 'react'
 import Reflux from 'reflux'
 import {Container, Row, Col} from 'react-grid-system'
+import {findIndex} from 'lodash'
 
 // material-ui
 import {grey300} from 'material-ui/styles/colors'
@@ -64,6 +65,7 @@ const IFrameComponent = React.createClass({
 class Editor extends Reflux.Component {
   componentDidMount () {
     console.log('Editor', 'componentDidMount')
+    CampaignsActions.initialize()
   }
   componentWillUnmount () {
     console.log('Editor', 'componentWillUnmount')
@@ -79,19 +81,32 @@ class Editor extends Reflux.Component {
         name: 'En cours de chargement...'
       }
     }
+    this.store = CampaignsStore
     this.handleLoadData = (id) => {
+      let i = findIndex(this.state.campaigns, function (o) { return o.id === id })
+      this.setState({currentCampaign: this.state.campaigns[i]})
       return Feathers.service('api/campaigns').get(id)
     }
     this.handleSaveData = (data) => {
-      /* let store = this.stores[0]
-      let campaign = this.state.selectedCampaign
-      campaign.data = JSON.parse(data)
-      store.service.update(this.state.selectedCampaign.id, campaign) */
+      this.state.currentCampaign.data = JSON.parse(data)
+      CampaignsActions.save(this.state.currentCampaign)
     }
     window.handleLoadData = this.handleLoadData
     window.handleSaveData = this.handleSaveData
   }
   render () {
+    let loader = () => (
+      <div style={StylesAdminEditor.container}>
+        <Container fluid style={StylesAdminEditor.grid.container}>
+          <AppBarAbibao />
+          <Row style={StylesAdminEditor.grid.row}>
+            <Col xs={12} style={StylesAdminEditor.grid.row}>
+              <h2>Campagne : {this.state.currentCampaign.name}</h2>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    )
     let renderer = () => (
       <div style={StylesAdminEditor.container}>
         <Container fluid style={StylesAdminEditor.grid.container}>
@@ -100,7 +115,11 @@ class Editor extends Reflux.Component {
         </Container>
       </div>
     )
-    return renderer()
+    if (this.state.campaigns.length === 0) {
+      return loader()
+    } else {
+      return renderer()
+    }
   }
 }
 
