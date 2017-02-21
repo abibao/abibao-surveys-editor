@@ -6,7 +6,7 @@ import {browserHistory} from 'react-router'
 import {clone} from 'lodash'
 
 // material-ui
-import {grey800, grey100, white, orange800, lightGreen800} from 'material-ui/styles/colors'
+import {grey800, grey100} from 'material-ui/styles/colors'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import Dialog from 'material-ui/Dialog'
@@ -24,6 +24,9 @@ import CampaignsStore from './../../../stores/CampaignsStore'
 
 // actions
 import CampaignsActions from './../../../actions/CampaignsActions'
+
+// styles
+import Colors from '../../../colors'
 
 const styles = {
   smallIcon: {
@@ -47,7 +50,7 @@ const styles = {
   },
   tooltip: {
     fontWeight: 'bold',
-    color: white,
+    color: Colors.white,
     border: 'solid 1px',
     borderColor: grey800,
     padding: '0.5rem',
@@ -113,10 +116,10 @@ class CampaignsActionsButtons extends Reflux.Component {
     return (
       <div>
         <Dropzone style={{display: 'none'}} ref="dropzone" multiple={false} onDrop={this.handleOnDrop} />
-        <IconButton tooltipStyles={styles.tooltip} tooltip="Editer les metadata" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><SettingsIcon color={lightGreen800} onTouchTap={this.handleOpen} /></IconButton>
-        <IconButton tooltipStyles={styles.tooltip} tooltip="Editer l'image" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><ImageIcon color={lightGreen800} onTouchTap={this.handleOpenDropzone} /></IconButton>
-        <IconButton tooltipStyles={styles.tooltip} tooltip="Editer le sondage" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><EditIcon color={lightGreen800} onTouchTap={this.handleOpenEditor} /></IconButton>
-        <IconButton tooltipStyles={styles.tooltip} tooltip="Tester le sondage" tooltipPosition="top-center" iconStyle={styles.mediumIcon} style={styles.mediumRight}><PlayIcon color={orange800} onTouchTap={this.handleOpenReader} /></IconButton>
+        <IconButton tooltipStyles={styles.tooltip} tooltip="Editer les metadata" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><SettingsIcon color={Colors.secondary} onTouchTap={this.handleOpen} /></IconButton>
+        <IconButton tooltipStyles={styles.tooltip} tooltip="Editer l'image" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><ImageIcon color={Colors.secondary} onTouchTap={this.handleOpenDropzone} /></IconButton>
+        <IconButton tooltipStyles={styles.tooltip} tooltip="Editer le sondage" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><EditIcon color={Colors.secondary} onTouchTap={this.handleOpenEditor} /></IconButton>
+        <IconButton tooltipStyles={styles.tooltip} tooltip="Tester le sondage" tooltipPosition="top-center" iconStyle={styles.mediumIcon} style={styles.mediumRight}><PlayIcon color={Colors.primary} onTouchTap={this.handleOpenReader} /></IconButton>
         <Dialog title="Edition des metadata" tooltipPosition="top-center" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}>
           <div>
             <Paper style={styles.paper.line} zDepth={0}>

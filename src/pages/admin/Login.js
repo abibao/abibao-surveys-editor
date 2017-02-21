@@ -3,17 +3,15 @@ import React from 'react'
 import Reflux from 'reflux'
 
 // material-ui
-import {grey300, orange800, white} from 'material-ui/styles/colors'
 import Paper from 'material-ui/Paper'
-import CircularProgress from 'material-ui/CircularProgress'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
-import Snackbar from 'material-ui/Snackbar'
 
-// stores
-import AppStore from './../../stores/AppStore'
+// store
+import ApplicationStore from '../../stores/ApplicationStore'
 
 // styles
+import Colors from '../../colors'
 const styles = {
   labelStyle: {
     login: {
@@ -26,11 +24,11 @@ const styles = {
     }
   },
   underlineFocusStyle: {
-    borderColor: orange800
+    borderColor: Colors.primary
   },
   container: {
     display: 'flex',
-    background: grey300,
+    background: Colors.backgroundLight,
     width: '100%',
     height: '100%'
   },
@@ -50,74 +48,43 @@ const styles = {
 
 class Login extends Reflux.Component {
   componentDidMount () {
+    console.log('Login', 'componentDidMount')
   }
   componentWillUnmount () {
+    console.log('Login', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
-    if (!prevState.networkOnline && this.state.networkOnline) {
-      this.setState({loading: false})
-    }
-    if (prevState.networkOnline && !this.state.networkOnline) {
-      this.setState({loading: true})
-    }
+    console.log('Login', 'componentDidUpdate')
   }
   constructor (props) {
+    console.log('Login', 'constructor')
     super(props)
     this.state = {
-      loading: false,
       email: 'administrator@abibao.com',
       password: ''
     }
-    this.stores = [AppStore]
+    this.store = ApplicationStore
     this.handleSubmit = () => {
-      this.setState({loading: true})
-      const store = this.stores[0]
-      store.login(this.state)
-    }
-    this.handleRequestClose = () => {
-      this.setState({
-        loading: false,
-        error: {
-          open: false,
-          message: ''
-        }
-      })
     }
   }
   render () {
-    let loader = () => (
-      <Paper style={styles.container}>
-        <Paper style={styles.box}>
-          <h2>Chargement en cours...</h2>
-          <CircularProgress color={orange800} style={styles.progress} size={120} thickness={6} />
-        </Paper>
-        <Snackbar
-          open={this.state.error.open}
-          message={this.state.error.message}
-          action="Fermer"
-          autoHideDuration={3000}
-          onRequestClose={this.handleRequestClose}
-        />
-      </Paper>
-    )
     let renderer = () => (
-      <Paper style={styles.container}>
+      <div style={styles.container}>
         <Paper style={styles.box}>
           <img src="../../images/abibao-logo-gris-jaune.png" role="presentation" />
           <br /><br />
           <TextField underlineFocusStyle={styles.underlineFocusStyle} type="email" fullWidth hintText="Email" value={this.state.email} onChange={(e) => this.setState({email: e.target.value})} /><br />
           <TextField underlineFocusStyle={styles.underlineFocusStyle} type="password" fullWidth hintText="Mot de passe" value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} /><br />
           <br /><br />
-          <RaisedButton label="S'indentifer" onTouchTap={this.handleSubmit} backgroundColor={orange800} labelColor={white} labelStyle={styles.labelStyle.login} buttonStyle={styles.buttonStyle.login} />
+          <RaisedButton label="S'indentifer" onTouchTap={this.handleSubmit} backgroundColor={Colors.primary} labelColor={Colors.white} labelStyle={styles.labelStyle.login} buttonStyle={styles.buttonStyle.login} />
         </Paper>
-      </Paper>
+      </div>
     )
     // renderer
     if (this.state.loading === true) {
-      return loader()
-    } else {
-      return renderer()
+      return null
     }
+    return renderer()
   }
 }
 

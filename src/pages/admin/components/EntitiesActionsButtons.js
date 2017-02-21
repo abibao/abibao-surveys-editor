@@ -11,7 +11,7 @@ import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 import Dropzone from 'react-dropzone'
 
-import EntityStore from './../../../stores/EntityStore'
+import EntityStore from './../../../stores/EntitiesStore'
 
 const styles = {
   smallIcon: {

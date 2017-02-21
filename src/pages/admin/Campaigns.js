@@ -4,7 +4,7 @@ import Reflux from 'reflux'
 import {Container, Row, Col} from 'react-grid-system'
 
 // material-ui
-import {orange800, grey300} from 'material-ui/styles/colors'
+import {grey300} from 'material-ui/styles/colors'
 import {Card, CardMedia, CardTitle, CardActions} from 'material-ui/Card'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import AddIcon from 'material-ui/svg-icons/content/add'
@@ -20,6 +20,8 @@ import CampaignsStore from './../../stores/CampaignsStore'
 import CampaignsActions from './../../actions/CampaignsActions'
 
 // styles
+import Colors from '../../colors'
+
 const styles = {
   container: {},
   floating: {position: 'fixed', right: '1rem', bottom: '1rem', zIndex: 9999},
@@ -52,7 +54,10 @@ const styles = {
 class Campaigns extends Reflux.Component {
   componentDidMount () {
     console.log('Campaigns', 'componentDidMount')
-    CampaignsActions.initialize()
+    if (this.state.campaigns.length === 0) {
+      console.log('Campaigns', 'componentDidMount', 'initialize')
+      CampaignsActions.initialize()
+    }
   }
   componentWillUnmount () {
     console.log('Campaigns', 'componentWillUnmount')
@@ -96,7 +101,7 @@ class Campaigns extends Reflux.Component {
             ))}
           </Row>
         </Container>
-        <FloatingActionButton onTouchTap={this.handleCreateCampaign} style={styles.floating} backgroundColor={orange800} zDepth={1}>
+        <FloatingActionButton onTouchTap={this.handleCreateCampaign} style={styles.floating} backgroundColor={Colors.primary} zDepth={1}>
           <AddIcon />
         </FloatingActionButton>
       </div>

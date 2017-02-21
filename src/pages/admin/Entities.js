@@ -14,8 +14,10 @@ import AppBarAbibao from './components/AppBarAbibao'
 import EntitiesActionsButtons from './components/EntitiesActionsButtons'
 
 // stores
-import AppStore from './../../stores/AppStore'
-import EntityStore from './../../stores/EntityStore'
+import EntitiesStore from './../../stores/EntitiesStore'
+
+// actions
+import EntitiesActions from './../../actions/EntitiesActions'
 
 // styles
 const styles = {
@@ -50,6 +52,10 @@ const styles = {
 class Entities extends Reflux.Component {
   componentDidMount () {
     console.log('Entities', 'componentDidMount')
+    if (this.state.entities.length === 0) {
+      console.log('Entities', 'componentDidMount', 'initialize')
+      EntitiesActions.initialize()
+    }
   }
   componentWillUnmount () {
     console.log('Entities', 'componentWillUnmount')
@@ -60,11 +66,8 @@ class Entities extends Reflux.Component {
     console.log('Entities', 'constructor')
     super(props)
     this.state = {}
-    this.stores = [AppStore, EntityStore]
-    // create an entity
+    this.store = EntitiesStore
     this.handleCreateEntity = () => {
-      let store = this.stores[1]
-      store.create()
     }
   }
   render () {

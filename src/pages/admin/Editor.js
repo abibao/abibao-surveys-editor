@@ -67,7 +67,10 @@ const IFrameComponent = React.createClass({
 class Editor extends Reflux.Component {
   componentDidMount () {
     console.log('Editor', 'componentDidMount')
-    CampaignsActions.initialize()
+    if (this.state.campaigns.length === 0) {
+      console.log('Campaigns', 'componentDidMount', 'initialize')
+      CampaignsActions.initialize()
+    }
   }
   componentWillUnmount () {
     console.log('Editor', 'componentWillUnmount')

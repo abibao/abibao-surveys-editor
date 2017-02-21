@@ -1,9 +1,9 @@
+// react
 import React from 'react'
 import Reflux from 'reflux'
-
 import {browserHistory} from 'react-router'
 
-import {orange800, white, lightGreen800} from 'material-ui/styles/colors'
+// material-ui
 import IconButton from 'material-ui/IconButton'
 import HomeIcon from 'material-ui/svg-icons/action/home'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
@@ -16,6 +16,9 @@ import MenuItem from 'material-ui/MenuItem'
 import Divider from 'material-ui/Divider'
 import Drawer from 'material-ui/Drawer'
 import AppBar from 'material-ui/AppBar'
+
+// styles
+import Colors from '../../../colors'
 
 class AppBarAbibao extends Reflux.Component {
   componentDidMount () {
@@ -45,19 +48,19 @@ class AppBarAbibao extends Reflux.Component {
   }
   render () {
     const styles = {
-      appbar: {backgroundColor: white, position: 'fixed', top: 0, left: 0},
-      appbarTitle: {color: orange800}
+      appbar: {backgroundColor: Colors.white, position: 'fixed', top: 0, left: 0},
+      appbarTitle: {color: Colors.primary}
     }
     const LeftDrawer = (props) => (
       <div>
         <Drawer width={320} open={this.state.open}>
           <AppBar onLeftIconButtonTouchTap={this.handleToggle} title={<img src="/images/abibao-logo-gris-jaune.png" role="presentation" />} style={styles.appbar} titleStyle={styles.appbarTitle} iconElementLeft={<CloseMenu />} />
           <div style={{marginTop: 64}}>
-            <MenuItem onTouchTap={this.handleHomepage} primaryText="Accueil" leftIcon={<HomeIcon color={orange800} />} />
+            <MenuItem onTouchTap={this.handleHomepage} primaryText="Accueil" leftIcon={<HomeIcon color={Colors.primary} />} />
             <Divider />
-            <MenuItem onTouchTap={this.handleCampaigns} primaryText="Les Campagnes" leftIcon={<CampaignsIcon color={lightGreen800} />} />
-            <MenuItem onTouchTap={this.handleEntities} primaryText="Les entitiés" leftIcon={<CampaignsIcon color={lightGreen800} />} />
-            <MenuItem primaryText="Les Sondages" leftIcon={<SurveysIcon color={lightGreen800} />} disabled />
+            <MenuItem onTouchTap={this.handleCampaigns} primaryText="Les Campagnes" leftIcon={<CampaignsIcon color={Colors.secondary} />} />
+            <MenuItem onTouchTap={this.handleEntities} primaryText="Les entitiés" leftIcon={<CampaignsIcon color={Colors.secondary} />} />
+            <MenuItem primaryText="Les Sondages" leftIcon={<SurveysIcon color={Colors.secondary} />} disabled />
             <Divider />
           </div>
         </Drawer>
@@ -72,7 +75,7 @@ class AppBarAbibao extends Reflux.Component {
     const OpenMenu = (props) => (
       <IconButton
         {...props}>
-        <MenuIcon color={orange800} />
+        <MenuIcon color={Colors.primary} />
       </IconButton>
     )
     const Logged = (props) => (
