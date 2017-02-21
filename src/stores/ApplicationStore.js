@@ -41,7 +41,7 @@ class ApplicationStore extends Reflux.Store {
   onSocketConnect (socket) {
     console.log('ApplicationStore', 'onSocketConnect')
     this.setState({socket, snack: {open: true, message: 'socket connected'}})
-    NetworkActions.authenticate()
+    NetworkActions.authenticate({})
   }
   onSocketDisconnect () {
     console.log('ApplicationStore', 'onSocketDisconnect')
@@ -49,16 +49,14 @@ class ApplicationStore extends Reflux.Store {
   }
   onAuthenticate (args) {
     console.log('ApplicationStore', 'onAuthenticate')
-    if (!args) {
-      Feathers.authenticate().then((result) => {
-        this.setState({token: result.accessToken, snack: {open: true, message: 'client authenticated'}, loader: {visible: false}})
-        browserHistory.push('/')
-      }).catch((error) => {
-        console.error('...', error)
-        this.setState({token: false, loader: {visible: false}})
-        browserHistory.push('/admin/login')
-      })
-    }
+    Feathers.authenticate(args).then((result) => {
+      this.setState({token: result.accessToken, snack: {open: true, message: 'client authenticated'}, loader: {visible: false}})
+      browserHistory.push('/')
+    }).catch((error) => {
+      console.error('...', error)
+      this.setState({token: false, loader: {visible: false}})
+      browserHistory.push('/admin/login')
+    })
   }
 }
 

@@ -7,6 +7,8 @@ const compress = require('compression')
 const cors = require('cors')
 const feathers = require('feathers')
 const configuration = require('feathers-configuration')
+const profiler = require('feathers-profiler').profiler
+const getProfile = require('feathers-profiler').getProfile
 const auth = require('feathers-authentication')
 const local = require('feathers-authentication-local')
 const jwt = require('feathers-authentication-jwt')
@@ -70,6 +72,10 @@ app.use(compress())
   }))
   .configure(local())
   .configure(jwt())
+  .configure(profiler({ stats: 'detail' }))
+  .use('/profiler', (req, res) => {
+    res.json(getProfile())
+  })
   // Upload Service
   .use('/uploads', blobService({Model: blobStorage}))
   // Always return the main index.html, so react-router render the route in the client
