@@ -2,6 +2,9 @@
 import Reflux from 'reflux'
 
 const ApplicationActions = Reflux.createActions([
-  'closeErrorMessage'])
+  'initialize',
+  'creationComplete',
+  'addNotification',
+  'removeNotification'])
 
 export default ApplicationActions

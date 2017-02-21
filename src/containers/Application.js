@@ -1,6 +1,7 @@
 // react
 import React from 'react'
 import Reflux from 'reflux'
+import {NotificationStack} from 'react-notification'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 
@@ -8,7 +9,6 @@ injectTapEventPlugin()
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Paper from 'material-ui/Paper'
 import CircularProgress from 'material-ui/CircularProgress'
-import Snackbar from 'material-ui/Snackbar'
 
 // store
 import ApplicationStore from '../stores/ApplicationStore'
@@ -49,50 +49,41 @@ class App extends Reflux.Component {
     console.log('App', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
-    console.log('App', 'componentDidUpdate')
+    // console.log('App', 'componentDidUpdate')
   }
   constructor (props) {
     console.log('App', 'constructor')
     super(props)
     this.state = {}
     this.store = ApplicationStore
+    this.deleteNotification = (notification) => {
+      ApplicationActions.removeNotification(notification.key)
+    }
   }
   render () {
     let loader = () => (
-      <MuiThemeProvider>
-        <div>
-          <div style={styles.loader.container}>
-            <Paper style={styles.loader.box}>
-              <h2>{this.state.loader.message}</h2>
-              <CircularProgress color={Colors.primary} style={styles.loader.progress} size={120} thickness={6} />
-            </Paper>
-          </div>
-          <Snackbar
-            open={this.state.snack.open}
-            message={this.state.snack.message}
-            action="Fermer"
-            autoHideDuration={3000}
-            onRequestClose={ApplicationActions.closeErrorMessage} />
-        </div>
-      </MuiThemeProvider>
+      <div style={styles.loader.container}>
+        <Paper style={styles.loader.box}>
+          <h2>{this.state.loader.message}</h2>
+          <CircularProgress color={Colors.primary} style={styles.loader.progress} size={120} thickness={6} />
+        </Paper>
+      </div>
     )
     let renderer = () => (
+      <div>
+        {this.props.children}
+      </div>
+    )
+    return (
       <MuiThemeProvider>
         <div>
-          {this.props.children}
-          <Snackbar
-            open={this.state.snack.open}
-            message={this.state.snack.message}
-            action="Fermer"
-            autoHideDuration={3000}
-            onRequestClose={ApplicationActions.closeErrorMessage} />
+          {(this.state.loader.visible) ? loader() : renderer()}
+          <NotificationStack
+            notifications={this.state.notifications}
+            onDismiss={notification => this.deleteNotification(notification)} />
         </div>
       </MuiThemeProvider>
     )
-    if (this.state.loader.visible) {
-      return loader()
-    }
-    return renderer()
   }
 }
 

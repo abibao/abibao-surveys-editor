@@ -14,7 +14,7 @@ import AppBarAbibao from './components/AppBarAbibao'
 import CampaignsActionsButtons from './components/CampaignsActionsButtons'
 
 // store
-import CampaignsStore from './../../stores/CampaignsStore'
+import ApplicationStore from '../../stores/ApplicationStore'
 
 // action
 import CampaignsActions from './../../actions/CampaignsActions'
@@ -54,24 +54,18 @@ const styles = {
 class Campaigns extends Reflux.Component {
   componentDidMount () {
     console.log('Campaigns', 'componentDidMount')
-    if (this.state.campaigns.length === 0) {
-      console.log('Campaigns', 'componentDidMount', 'initialize')
-      CampaignsActions.initialize()
-    }
   }
   componentWillUnmount () {
     console.log('Campaigns', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
-    console.log('Campaigns', 'componentDidUpdate')
+    // console.log('Campaigns', 'componentDidUpdate')
   }
   constructor (props) {
     console.log('Campaigns', 'constructor')
     super(props)
-    // prepare state
     this.state = {}
-    this.store = CampaignsStore
-    // create a campaign
+    this.store = ApplicationStore
     this.handleCreateCampaign = () => {
       CampaignsActions.create()
     }
@@ -84,17 +78,17 @@ class Campaigns extends Reflux.Component {
           <Row style={styles.grid.row}>
             <Col xs={12} style={styles.grid.col}>
               <h2>Les campagnes</h2>
-              <p>Il y a actuellement {this.state.campaigns.length} campagnes en ligne.</p>
+              <p>Il y a actuellement {Object.keys(this.state.campaigns).length} campagnes en ligne.</p>
             </Col>
-            {this.state.campaigns.map((campaign) => (
-              <Col key={campaign.id} xs={12} sm={6} md={4} lg={3} style={styles.grid.col}>
+            {Object.keys(this.state.campaigns).map((key) => (
+              <Col key={this.state.campaigns[key].id} xs={12} sm={6} md={4} lg={3} style={styles.grid.col}>
                 <Card style={styles.card}>
-                  <CardTitle title={campaign.name} titleStyle={styles.cardTitle} subtitle={campaign.company.name || 'Chargement...'} />
+                  <CardTitle title={this.state.campaigns[key].name} titleStyle={styles.cardTitle} subtitle={this.state.campaigns[key].company.name || 'Chargement...'} />
                   <CardMedia>
-                    <div style={{background: 'url(' + process.env.REACT_APP_FEATHERS_URI + '/' + campaign.picture + ') no-repeat center / cover', width: 'auto', height: '150px'}} />
+                    <div style={{background: 'url(' + process.env.REACT_APP_FEATHERS_URI + '/' + this.state.campaigns[key].picture + ') no-repeat center / cover', width: 'auto', height: '150px'}} />
                   </CardMedia>
                   <CardActions style={styles.cardActions}>
-                    <CampaignsActionsButtons style={styles.cardActionLeft} campaign={campaign} />
+                    <CampaignsActionsButtons style={styles.cardActionLeft} campaign={this.state.campaigns[key]} />
                   </CardActions>
                 </Card>
               </Col>
@@ -106,6 +100,10 @@ class Campaigns extends Reflux.Component {
         </FloatingActionButton>
       </div>
     )
+    // renderer
+    if (this.state.loader.visible === true) {
+      return null
+    }
     return renderer()
   }
 }

@@ -11,8 +11,8 @@ import Application from './containers/Application'
 
 // pages: admin
 import AdminLogin from './pages/admin/Login'
+import AdminCampaigns from './pages/admin/Campaigns'
 // import AdminHomepage from './pages/admin/Homepage'
-// import AdminCampaigns from './pages/admin/Campaigns'
 // import AdminEntities from './pages/admin/Entities'
 // import AdminReader from './pages/admin/Reader'
 // import AdminEditor from './pages/admin/Editor'
@@ -32,6 +32,7 @@ render((
   <Router history={browserHistory}>
     <Route path="/" component={Application}>
       <Route path="admin/login" component={AdminLogin} />
+      <Route path="admin/campaigns" component={AdminCampaigns} />
     </Route>
   </Router>
 ), document.getElementById('root'))

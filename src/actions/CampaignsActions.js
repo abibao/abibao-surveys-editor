@@ -2,7 +2,6 @@
 import Reflux from 'reflux'
 
 const CampaignsActions = Reflux.createActions([
-  'initialize',
   'populateEntity',
   'loadAsync',
   'create',

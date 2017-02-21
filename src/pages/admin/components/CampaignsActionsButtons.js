@@ -19,8 +19,8 @@ import IconButton from 'material-ui/IconButton'
 import TextField from 'material-ui/TextField'
 import Paper from 'material-ui/Paper'
 
-// stores
-import CampaignsStore from './../../../stores/CampaignsStore'
+// store
+import ApplicationStore from './../../../stores/ApplicationStore'
 
 // actions
 import CampaignsActions from './../../../actions/CampaignsActions'
@@ -67,6 +67,9 @@ const styles = {
 }
 
 class CampaignsActionsButtons extends Reflux.Component {
+  componentDidMount () {
+    console.log('CampaignsActionsButtons', 'componentDidMount')
+  }
   constructor (props) {
     super(props)
     this.state = {
@@ -77,7 +80,7 @@ class CampaignsActionsButtons extends Reflux.Component {
         }
       }
     }
-    this.store = CampaignsStore
+    this.store = ApplicationStore
     this.handleOpen = () => {
       this.setState({currentCampaign: clone(this.props.campaign), open: true})
     }
@@ -130,8 +133,8 @@ class CampaignsActionsButtons extends Reflux.Component {
             </Paper>
             <Paper style={styles.paper.line} zDepth={0}>
               <SelectField autoWidth value={this.state.currentCampaign.company.id} onChange={this.handleChangeCompany}>
-                {this.state.entities.map((entity) => (
-                  <MenuItem key={entity.id} value={entity.id} label={entity.name} primaryText={entity.name} />
+                {Object.keys(this.state.entities).map((key) => (
+                  <MenuItem key={this.state.entities[key].id} value={this.state.entities[key].id} label={this.state.entities[key].name} primaryText={this.state.entities[key].name} />
                 ))}
               </SelectField>
             </Paper>

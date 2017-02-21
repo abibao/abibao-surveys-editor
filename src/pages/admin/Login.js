@@ -10,6 +10,9 @@ import RaisedButton from 'material-ui/RaisedButton'
 // store
 import ApplicationStore from '../../stores/ApplicationStore'
 
+// actions
+import NetworkActions from '../../actions/NetworkActions'
+
 // styles
 import Colors from '../../colors'
 const styles = {
@@ -54,7 +57,7 @@ class Login extends Reflux.Component {
     console.log('Login', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
-    console.log('Login', 'componentDidUpdate')
+    // console.log('Login', 'componentDidUpdate')
   }
   constructor (props) {
     console.log('Login', 'constructor')
@@ -65,6 +68,7 @@ class Login extends Reflux.Component {
     }
     this.store = ApplicationStore
     this.handleSubmit = () => {
+      NetworkActions.authenticate({strategy: 'local', email: this.state.email, password: this.state.password})
     }
   }
   render () {
@@ -81,7 +85,7 @@ class Login extends Reflux.Component {
       </div>
     )
     // renderer
-    if (this.state.loading === true) {
+    if (this.state.loader.visible === true) {
       return null
     }
     return renderer()
