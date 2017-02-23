@@ -2,7 +2,7 @@
 import uuid from 'uuid'
 
 // actions
-import ApplicationActions from '../actions/ApplicationActions'
+import NotificationActions from '../actions/NotificationActions'
 
 class NotificationHelpers {
   constructor (context) {
@@ -15,7 +15,7 @@ class NotificationHelpers {
       key,
       action: 'Fermer',
       dismissAfter: options.dismissAfter || 1500,
-      onClick: () => ApplicationActions.notificationRemove(key)
+      onClick: () => NotificationActions.notificationRemove(key)
     })
     this.context.setState({notifications: this.context.state.notifications})
   }

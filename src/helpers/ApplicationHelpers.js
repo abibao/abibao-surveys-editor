@@ -10,7 +10,7 @@ class ApplicationHelpers {
     this.context = context
   }
   initialize () {
-    console.log('ApplicationHelpers', 'onInitialize')
+    console.log('ApplicationHelpers', 'initialize')
     this.context.setState({loader: {visible: true, message: 'Chargement...'}})
     return Feathers.service('api/campaigns').find().then((campaigns) => {
       let dictionnary = {}
@@ -34,7 +34,7 @@ class ApplicationHelpers {
     }).catch(console.error)
   }
   creationComplete () {
-    console.log('ApplicationHelpers', 'onCreationComplete')
+    console.log('ApplicationHelpers', 'creationComplete')
     // populate campaigns
     Object.keys(this.context.state.campaigns).map((key) => {
       let val = this.context.state.campaigns[key].company

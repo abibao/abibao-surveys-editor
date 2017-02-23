@@ -14,19 +14,19 @@ class NetworkHelpers {
     this.context = context
   }
   connect (socket) {
-    console.log('NetworkHelpers', 'onConnect')
+    console.log('NetworkHelpers', 'connect')
     this.context.setState({socket})
     NotificationActions.notificationAdd({message: 'socket connected '})
     NetworkActions.networkAuthenticate({})
   }
   disconnect () {
-    console.log('NetworkHelpers', 'onDisconnect')
+    console.log('NetworkHelpers', 'disconnect')
     this.context.setState({socket: false})
     NotificationActions.notificationAdd({message: 'socket disconnected '})
   }
   authenticate (args) {
     let useStrategy = !!args.strategy
-    console.log('NetworkHelpers', 'onAuthenticate useStrategy=', useStrategy)
+    console.log('NetworkHelpers', 'authenticate useStrategy=', useStrategy)
     Feathers.authenticate(args).then((result) => {
       this.context.setState({token: result.accessToken})
       if (useStrategy) {

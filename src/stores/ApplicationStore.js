@@ -6,11 +6,13 @@ import Feathers from '../libs/Feathers'
 
 // actions
 import ApplicationActions from '../actions/ApplicationActions'
+import CampaignActions from '../actions/CampaignActions'
 import NetworkActions from '../actions/NetworkActions'
 import NotificationActions from '../actions/NotificationActions'
 
 // helpers
 import ApplicationHelpers from '../helpers/ApplicationHelpers'
+import CampaignHelpers from '../helpers/CampaignHelpers'
 import NetworkHelpers from '../helpers/NetworkHelpers'
 import NotificationHelpers from '../helpers/NotificationHelpers'
 
@@ -33,10 +35,9 @@ class ApplicationStore extends Reflux.Store {
     this.notification = new NotificationHelpers(this)
     this.network = new NetworkHelpers(this)
     this.application = new ApplicationHelpers(this)
+    this.campaign = new CampaignHelpers(this)
     // actions
-    this.listenables = [ApplicationActions, NetworkActions, NotificationActions]
-    // resolvers
-    console.log(this.helpers)
+    this.listenables = [ApplicationActions, NetworkActions, NotificationActions, CampaignActions]
     // listeners
     Feathers.io.on('connect', () => {
       console.log('Feathers', 'onSocketConnect')
@@ -45,6 +46,22 @@ class ApplicationStore extends Reflux.Store {
     Feathers.io.on('disconnect', () => {
       console.log('Feathers', 'onSocketDisconnect')
       NetworkActions.networkDisconnect()
+    })
+    Feathers.service('api/campaigns').on('created', (campaign) => {
+      campaign.company = this.state.entities[campaign.company]
+      if (!campaign.company) {
+        campaign.company = 'None'
+      }
+      this.state.campaigns[campaign.id] = campaign
+      this.setState({campaigns: this.state.campaigns})
+    })
+    Feathers.service('api/campaigns').on('patched', (campaign) => {
+      campaign.company = this.state.entities[campaign.company]
+      if (!campaign.company) {
+        campaign.company = 'None'
+      }
+      this.state.campaigns[campaign.id] = campaign
+      this.setState({campaigns: this.state.campaigns})
     })
   }
   onNetworkConnect (socket) {
@@ -68,11 +85,14 @@ class ApplicationStore extends Reflux.Store {
   onNotificationRemove (uuid) {
     this.notification.remove(uuid)
   }
-  onCreateCampaign () {
-    console.log('ApplicationStore', 'onCreateCampaign')
-    return Feathers.service('api/campaigns').create({}).then((campaign) => {
-      ApplicationActions.addNotification({message: 'Une campagne a été ajouté.'})
-    }).catch(console.error)
+  onCampaignCreate () {
+    this.campaign.create()
+  }
+  onCampaignUpdate (data) {
+    this.campaign.campaignUpdate(data)
+  }
+  onCampaignUpdatePicture (id, file) {
+    this.campaign.campaignUpdatePicture(id, file)
   }
 }
 

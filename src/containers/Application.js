@@ -14,7 +14,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import ApplicationStore from '../stores/ApplicationStore'
 
 // actions
-import ApplicationActions from '../actions/ApplicationActions'
+import NotificationActions from '../actions/NotificationActions'
 
 // styles
 import Colors from '../colors'
@@ -57,7 +57,7 @@ class App extends Reflux.Component {
     this.state = {}
     this.store = ApplicationStore
     this.deleteNotification = (notification) => {
-      ApplicationActions.removeNotification(notification.key)
+      NotificationActions.notificationRemove(notification.key)
     }
   }
   render () {

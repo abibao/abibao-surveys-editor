@@ -17,7 +17,7 @@ import CampaignsActionsButtons from './components/CampaignsActionsButtons'
 import ApplicationStore from '../../stores/ApplicationStore'
 
 // action
-import ApplicationActions from './../../actions/ApplicationActions'
+import CampaignActions from './../../actions/CampaignActions'
 
 // styles
 import Colors from '../../colors'
@@ -67,7 +67,7 @@ class Campaigns extends Reflux.Component {
     this.state = {}
     this.store = ApplicationStore
     this.handleCreateCampaign = () => {
-      ApplicationActions.createCampaign()
+      CampaignActions.campaignCreate()
     }
   }
   render () {

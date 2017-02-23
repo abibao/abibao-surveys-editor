@@ -6,7 +6,6 @@ import {browserHistory} from 'react-router'
 import {clone} from 'lodash'
 
 // material-ui
-import {grey800, grey100} from 'material-ui/styles/colors'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import Dialog from 'material-ui/Dialog'
@@ -23,7 +22,7 @@ import Paper from 'material-ui/Paper'
 import ApplicationStore from './../../../stores/ApplicationStore'
 
 // actions
-import ApplicationActions from './../../../actions/ApplicationActions'
+import CampaignActions from './../../../actions/CampaignActions'
 
 // styles
 import Colors from '../../../colors'
@@ -51,24 +50,22 @@ const styles = {
   tooltip: {
     fontWeight: 'bold',
     color: Colors.white,
-    border: 'solid 1px',
-    borderColor: grey800,
+    border: 'solid 1px #303030',
     padding: '0.5rem',
     paddingBottom: 0,
     paddingTop: 0
   },
   paper: {
     line: {
-      padding: '0.5rem',
-      marginBottom: '0.5rem',
-      backgroundColor: grey100
+      padding: '0.2rem',
+      marginBottom: '0.2rem'
     }
   }
 }
 
 class CampaignsActionsButtons extends Reflux.Component {
   componentDidMount () {
-    console.log('CampaignsActionsButtons', 'componentDidMount')
+    // console.log('CampaignsActionsButtons', 'componentDidMount')
   }
   constructor (props) {
     super(props)
@@ -78,24 +75,32 @@ class CampaignsActionsButtons extends Reflux.Component {
         company: {
           name: 'Aucune'
         }
+      },
+      selectedCompany: {
+        id: 0
       }
     }
     this.store = ApplicationStore
     this.handleOpen = () => {
-      this.setState({currentCampaign: clone(this.props.campaign), open: true})
+      this.setState({currentCampaign: clone(this.props.campaign), open: true, selectedCompany: this.props.campaign.company})
     }
     this.handleClose = () => {
       this.setState({open: false})
     }
     this.handleSave = () => {
-      ApplicationActions.saveCampaign(this.state.currentCampaign)
+      CampaignActions.campaignUpdate(this.state.currentCampaign)
       this.setState({open: false})
     }
     this.handleChangeName = (e) => {
       this.state.currentCampaign.name = e.target.value
+      this.setState({currentCampaign: this.state.currentCampaign})
     }
     this.handleChangeCompany = (e, index, value) => {
-      this.state.currentCampaign.company = this.state.entities[index]
+      this.state.currentCampaign.company = this.state.entities[value]
+      this.setState({currentCampaign: this.state.currentCampaign, selectedCompany: this.state.entities[value]})
+    }
+    this.handleChangePicture = (files) => {
+      CampaignActions.campaignUpdatePicture(this.props.campaign.id, files[0])
     }
     this.handleOpenEditor = (e) => {
       browserHistory.push('/admin/editor/' + this.props.campaign.id)
@@ -106,9 +111,6 @@ class CampaignsActionsButtons extends Reflux.Component {
     this.handleOpenDropzone = (e) => {
       this.refs.dropzone.open()
     }
-    this.handleOnDrop = (files) => {
-      ApplicationActions.changeCampaignPicture(this.props.campaign, files[0])
-    }
   }
 
   render () {
@@ -118,7 +120,7 @@ class CampaignsActionsButtons extends Reflux.Component {
     ]
     return (
       <div>
-        <Dropzone style={{display: 'none'}} ref="dropzone" multiple={false} onDrop={this.handleOnDrop} />
+        <Dropzone style={{display: 'none'}} ref="dropzone" multiple={false} onDrop={this.handleChangePicture} />
         <IconButton tooltipStyles={styles.tooltip} tooltip="Editer les metadata" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><SettingsIcon color={Colors.secondary} onTouchTap={this.handleOpen} /></IconButton>
         <IconButton tooltipStyles={styles.tooltip} tooltip="Editer l'image" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><ImageIcon color={Colors.secondary} onTouchTap={this.handleOpenDropzone} /></IconButton>
         <IconButton tooltipStyles={styles.tooltip} tooltip="Editer le sondage" tooltipPosition="top-center" iconStyle={styles.smallIcon} style={styles.small}><EditIcon color={Colors.secondary} onTouchTap={this.handleOpenEditor} /></IconButton>
@@ -132,7 +134,7 @@ class CampaignsActionsButtons extends Reflux.Component {
               <TextField id="inputName" floatingLabelText="Nom de la campage" floatingLabelFixed fullWidth onChange={this.handleChangeName} defaultValue={this.state.currentCampaign.name} />
             </Paper>
             <Paper style={styles.paper.line} zDepth={0}>
-              <SelectField autoWidth value={this.state.currentCampaign.company.id} onChange={this.handleChangeCompany}>
+              <SelectField floatingLabelText="Compagnie propriétaire" autoWidth value={this.state.selectedCompany.id} onChange={this.handleChangeCompany}>
                 {Object.keys(this.state.entities).map((key) => (
                   <MenuItem key={this.state.entities[key].id} value={this.state.entities[key].id} label={this.state.entities[key].name} primaryText={this.state.entities[key].name} />
                 ))}

@@ -3,6 +3,7 @@ import Reflux from 'reflux'
 
 const NotificationActions = Reflux.createActions([
   'notificationRemove',
-  'notificationAdd'])
+  'notificationAdd'
+])
 
 export default NotificationActions
