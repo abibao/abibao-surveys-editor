@@ -2,9 +2,9 @@
 import Reflux from 'reflux'
 
 const ApplicationActions = Reflux.createActions([
-  'initialize',
-  'creationComplete',
-  'addNotification',
-  'removeNotification'])
+  'applicationInitialize',
+  'applicationCreationComplete',
+  'removeNotification',
+  'createCampaign'])
 
 export default ApplicationActions

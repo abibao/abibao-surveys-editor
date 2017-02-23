@@ -1,7 +1,5 @@
 // react
 import Reflux from 'reflux'
-import uuid from 'uuid'
-import {browserHistory} from 'react-router'
 
 // libraries
 import Feathers from '../libs/Feathers'
@@ -9,6 +7,12 @@ import Feathers from '../libs/Feathers'
 // actions
 import ApplicationActions from '../actions/ApplicationActions'
 import NetworkActions from '../actions/NetworkActions'
+import NotificationActions from '../actions/NotificationActions'
+
+// helpers
+import ApplicationHelpers from '../helpers/ApplicationHelpers'
+import NetworkHelpers from '../helpers/NetworkHelpers'
+import NotificationHelpers from '../helpers/NotificationHelpers'
 
 class ApplicationStore extends Reflux.Store {
   constructor () {
@@ -25,97 +29,50 @@ class ApplicationStore extends Reflux.Store {
       entities: {},
       notifications: []
     }
-    this.listenables = [ApplicationActions, NetworkActions]
+    // helpers
+    this.notification = new NotificationHelpers(this)
+    this.network = new NetworkHelpers(this)
+    this.application = new ApplicationHelpers(this)
+    // actions
+    this.listenables = [ApplicationActions, NetworkActions, NotificationActions]
+    // resolvers
+    console.log(this.helpers)
+    // listeners
     Feathers.io.on('connect', () => {
       console.log('Feathers', 'onSocketConnect')
-      NetworkActions.socketConnect(Feathers.io)
+      NetworkActions.networkConnect(Feathers.io)
     })
     Feathers.io.on('disconnect', () => {
       console.log('Feathers', 'onSocketDisconnect')
-      NetworkActions.socketDisconnect()
+      NetworkActions.networkDisconnect()
     })
   }
-  onSocketConnect (socket) {
-    console.log('ApplicationStore', 'onSocketConnect')
-    this.setState({socket})
-    ApplicationActions.addNotification({message: 'socket connected '})
-    NetworkActions.authenticate({})
+  onNetworkConnect (socket) {
+    this.network.connect(socket)
   }
-  onSocketDisconnect () {
-    console.log('ApplicationStore', 'onSocketDisconnect')
-    this.setState({socket: false})
-    ApplicationActions.addNotification({message: 'socket disconnected '})
+  onNetworkDisconnect () {
+    this.network.disconnect()
   }
-  onAuthenticate (args) {
-    let useStrategy = !!args.strategy
-    console.log('ApplicationStore', 'onAuthenticate useStrategy=', useStrategy)
-    Feathers.authenticate(args).then((result) => {
-      this.setState({token: result.accessToken})
-      if (useStrategy) {
-        ApplicationActions.addNotification({message: 'client logged'})
-      } else {
-        ApplicationActions.addNotification({message: 'client authenticated'})
-      }
-      if (!this.state.initialized) {
-        ApplicationActions.initialize()
-      }
-    }).catch((error) => {
-      console.error('...', error)
-      this.setState({token: false, loader: {visible: false}})
-      browserHistory.push('/admin/login')
-    })
+  onNetworkAuthenticate (args) {
+    this.network.authenticate(args)
   }
-  onInitialize () {
-    console.log('ApplicationStore', 'onInitialize')
-    this.setState({loader: {visible: true, message: 'Chargement...'}})
-    return Feathers.service('api/campaigns').find().then((campaigns) => {
-      let dictionnary = {}
-      campaigns.map((campaign) => {
-        dictionnary[campaign.id] = campaign
-        return true
-      })
-      this.setState({campaigns: dictionnary})
-      ApplicationActions.addNotification({message: 'campaigns loaded '})
-      return Feathers.service('api/entities').find().then((entities) => {
-        let dictionnary = {}
-        entities.map((entity) => {
-          dictionnary[entity.id] = entity
-          return true
-        })
-        this.setState({entities: dictionnary})
-        ApplicationActions.addNotification({message: 'entities loaded '})
-        // on complete then ...
-        ApplicationActions.creationComplete()
-      })
+  onApplicationInitialize () {
+    this.application.initialize()
+  }
+  onApplicationCreationComplete () {
+    this.application.creationComplete()
+  }
+  onNotificationAdd (options) {
+    this.notification.add(options)
+  }
+  onNotificationRemove (uuid) {
+    this.notification.remove(uuid)
+  }
+  onCreateCampaign () {
+    console.log('ApplicationStore', 'onCreateCampaign')
+    return Feathers.service('api/campaigns').create({}).then((campaign) => {
+      ApplicationActions.addNotification({message: 'Une campagne a été ajouté.'})
     }).catch(console.error)
-  }
-  onCreationComplete () {
-    console.log('ApplicationStore', 'onCreationComplete')
-    // populate campaigns
-    Object.keys(this.state.campaigns).map((key) => {
-      let val = this.state.campaigns[key].company
-      this.state.campaigns[key].company = this.state.entities[val] || {name: 'Aucune'}
-      return true
-    })
-    console.log(this.state.campaigns)
-    this.setState({initialized: true, loader: {visible: false}, campaigns: this.state.campaigns})
-  }
-  onAddNotification (options) {
-    const key = uuid.v4()
-    this.state.notifications.push({
-      message: options.message,
-      key,
-      action: 'Fermer',
-      dismissAfter: options.dismissAfter || 1500,
-      onClick: () => ApplicationActions.removeNotification(key)
-    })
-    this.setState({notifications: this.state.notifications})
-  }
-  onRemoveNotification (uuid) {
-    const {notifications} = this.state
-    this.setState({
-      notifications: notifications.filter(n => n.key !== uuid)
-    })
   }
 }
 

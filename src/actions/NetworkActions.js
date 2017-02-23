@@ -2,8 +2,8 @@
 import Reflux from 'reflux'
 
 const NetworkActions = Reflux.createActions([
-  'socketConnect',
-  'socketDisconnect',
-  'authenticate'])
+  'networkConnect',
+  'networkDisconnect',
+  'networkAuthenticate'])
 
 export default NetworkActions

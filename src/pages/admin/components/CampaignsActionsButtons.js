@@ -23,7 +23,7 @@ import Paper from 'material-ui/Paper'
 import ApplicationStore from './../../../stores/ApplicationStore'
 
 // actions
-import CampaignsActions from './../../../actions/CampaignsActions'
+import ApplicationActions from './../../../actions/ApplicationActions'
 
 // styles
 import Colors from '../../../colors'
@@ -88,7 +88,7 @@ class CampaignsActionsButtons extends Reflux.Component {
       this.setState({open: false})
     }
     this.handleSave = () => {
-      CampaignsActions.save(this.state.currentCampaign)
+      ApplicationActions.saveCampaign(this.state.currentCampaign)
       this.setState({open: false})
     }
     this.handleChangeName = (e) => {
@@ -107,7 +107,7 @@ class CampaignsActionsButtons extends Reflux.Component {
       this.refs.dropzone.open()
     }
     this.handleOnDrop = (files) => {
-      CampaignsActions.upload(this.props.campaign, files[0])
+      ApplicationActions.changeCampaignPicture(this.props.campaign, files[0])
     }
   }
 
