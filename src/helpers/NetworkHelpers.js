@@ -27,8 +27,10 @@ class NetworkHelpers {
   authenticate (args) {
     let useStrategy = !!args.strategy
     console.log('NetworkHelpers', 'authenticate useStrategy=', useStrategy)
+    this.context.state.loader.visible = true
+    this.context.setState({loader: this.context.state.loader})
     Feathers.authenticate(args).then((result) => {
-      this.context.setState({token: result.accessToken})
+      this.context.setState({token: result.accessToken, loader: {visible: false}})
       if (useStrategy) {
         NotificationActions.notificationAdd({message: 'client logged'})
       } else {

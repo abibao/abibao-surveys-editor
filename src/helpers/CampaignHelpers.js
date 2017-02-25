@@ -37,18 +37,23 @@ class CampaignHelpers {
   }
   campaignUpdatePicture (id, file) {
     console.log('CampaignHelpers', 'campaignUpdatePicture')
+    this.context.setState({loader: {visible: true}})
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.addEventListener('load', () => {
       Feathers.service('uploads')
         .create({uri: reader.result})
         .then((response) => {
+          this.context.setState({loader: {visible: false}})
           NotificationActions.notificationAdd({message: 'Image sur le serveur'})
           CampaignActions.campaignUpdate({
             id,
             picture: 'wp_content/' + response.id
           })
-        }).catch(console.error)
+        }).catch((error) => {
+          this.context.setState({loader: {visible: false}})
+          console.error(error)
+        })
     }, false)
   }
 }

@@ -9,6 +9,7 @@ class NotificationHelpers {
     this.context = context
   }
   add (options) {
+    console.log('NotificationHelpers', 'add', options.message)
     const key = uuid.v4()
     this.context.state.notifications.push({
       message: options.message,
