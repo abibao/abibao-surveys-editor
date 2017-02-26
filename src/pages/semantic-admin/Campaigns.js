@@ -1,3 +1,5 @@
+/* eslint jsx-quotes: ["error", "prefer-double"] */
+
 // react
 import React from 'react'
 import Reflux from 'reflux'
@@ -66,8 +68,8 @@ class Campaigns extends Reflux.Component {
         </Segment>
         <Sidebar.Pushable as={Segment} basic className="content">
           <Sidebar as={Menu} animation="push" visible={this.state.menuOn} icon="labeled" vertical inverted color="grey">
-            <Menu.Item name='home'>
-              <Icon name='home' />
+            <Menu.Item name="home">
+              <Icon name="home" />
               Home
             </Menu.Item>
           </Sidebar>
@@ -77,8 +79,6 @@ class Campaigns extends Reflux.Component {
                 Listes des campagnes
                 <Header.Subheader>Il y a actuellement {Object.keys(this.state.campaigns).length || 0} campagnes en lignes.</Header.Subheader>
               </Header>
-            </Segment>
-            <Segment basic loading={this.state.loader.visible}>
               <Dropzone style={{display: 'none'}} ref="dropzone" multiple={false} onDrop={this.handleChangePicture} />
               <Card.Group>
                 {Object.keys(this.state.campaigns).map((key) => (

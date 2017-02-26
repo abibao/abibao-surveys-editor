@@ -1,3 +1,5 @@
+/* eslint jsx-quotes: ["error", "prefer-double"] */
+
 // react
 import React from 'react'
 import Reflux from 'reflux'

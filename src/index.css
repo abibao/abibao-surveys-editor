@@ -1,13 +1,20 @@
 /**
 GLOBAL **/
 
-html, body, #root {
+html, body, #root, #root > div {
   margin: 0;
   padding: 0;
   height: 100%;
 }
 html * {
   font-family: Roboto;
+}
+
+/**
+MENU COMPONENT **/
+
+h1.ui.appbar {
+  letter-spacing: 0.5rem;
 }
 
 /**
@@ -73,8 +80,19 @@ h2.ui.login {
 }
 
 /**
-MENU COMPONENT **/
+EDITOR COMPONENT **/
 
-h1.ui.appbar {
-  letter-spacing: 0.5rem;
+.ui.container.editor {
+	overflow: hidden;
+	height: 100% !important;
+}
+
+.pusher.editor {
+	overflow: hidden;
+	height: calc(100% - 60px) !important;
+	min-height: calc(100% - 60px) !important;
+}
+
+.ui.segment.editor {
+	height: calc(100% - 60px) !important;
 }
