@@ -7,7 +7,7 @@ import Dropzone from 'react-dropzone'
 import {browserHistory} from 'react-router'
 
 // semantic
-import { Container, Segment, Menu, Icon, Button, Header, Sidebar, Card, Image } from 'semantic-ui-react'
+import { Container, Segment, Menu, Icon, Button, Header, Sidebar, Card, Image, Modal } from 'semantic-ui-react'
 
 // store
 import ApplicationStore from '../../stores/ApplicationStore'
@@ -48,6 +48,9 @@ class Campaigns extends Reflux.Component {
       console.log('Campaigns', 'handleOpenDropzone', key)
       this.setState({selectedCampaign: this.state.campaigns[key]})
       this.refs.dropzone.open()
+    }
+    this.handleCampaignCreate = () => {
+      CampaignActions.campaignCreate()
     }
   }
   render () {
@@ -98,7 +101,17 @@ class Campaigns extends Reflux.Component {
                       </Card.Description>
                     </Card.Content>
                     <Card.Content extra>
-                      <Icon bordered link name="setting" inverted color="grey" />
+                      <Modal trigger={<Icon bordered link name="setting" inverted color="grey" />}>
+                        <Modal.Header>Select a Photo</Modal.Header>
+                        <Modal.Content image>
+                          <Image wrapped size="medium" src="http://semantic-ui.com/images/avatar2/large/rachel.png" />
+                          <Modal.Description>
+                            <Header>AAA</Header>
+                            <p>We've found the following gravatar image associated with your e-mail address.</p>
+                            <p>Is it okay to use this photo?</p>
+                          </Modal.Description>
+                        </Modal.Content>
+                      </Modal>
                       <Icon onClick={this.handleOpenDropzone.bind(this, key)} bordered link name="image" inverted color="grey" />
                       <Icon onClick={this.handleOpenEditor.bind(this, key)} bordered link name="folder open outline" inverted color="grey" />
                       <Icon onClick={this.handleOpenReader.bind(this, key)} style={{float: 'right'}} bordered link name="play" inverted color="red" />
@@ -109,6 +122,7 @@ class Campaigns extends Reflux.Component {
             </Segment>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
+        <Button onClick={this.handleCampaignCreate} size="huge" color="red" circular icon="plus" className="floating right" loading={this.state.loader.visible} />
       </Container>
     )
     return renderer()

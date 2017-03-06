@@ -96,3 +96,9 @@ EDITOR COMPONENT **/
 .ui.segment.editor {
 	height: calc(100% - 60px) !important;
 }
+
+.button.floating.right {
+	position: fixed;
+	bottom: 1rem;
+	right: 1rem;
+}
