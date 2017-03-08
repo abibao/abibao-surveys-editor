@@ -30,9 +30,3 @@ render((
     <Route path="*" component={PageNotFound} />
   </Router>
 ), document.getElementById('root'))
-
-/** <Route path="admin/login" component={AdminLogin} />
-<Route path="admin" component={AdminHomepage} onEnter={requireAuth}>
-  <Route path="campaigns" component={AdminCampaigns} />
-  <Route path="entities" component={AdminEntities} />
-</Route> **/
