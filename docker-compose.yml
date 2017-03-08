@@ -1,0 +1,15 @@
+version: "2"
+
+services:
+
+  postgres:
+    image: "library/postgres:9.5-alpine"
+    privileged: true
+    environment:
+      POSTGRES_USER: "infra"
+      POSTGRES_PASSWORD: "infra"
+      POSTGRES_DB: "infra"
+    volumes:
+      - "./volumes/postgres/var/lib/postgresql/data:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
