@@ -5,7 +5,7 @@ import React from 'react'
 import Reflux from 'reflux'
 
 // store
-import ApplicationStore from '../stores/ApplicationStore'
+import ApplicationStore from './../stores/ApplicationStore'
 
 class Application extends Reflux.Component {
   componentDidMount () {

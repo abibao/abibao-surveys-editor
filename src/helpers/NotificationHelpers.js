@@ -2,7 +2,7 @@
 import uuid from 'uuid'
 
 // actions
-import NotificationActions from '../actions/NotificationActions'
+import NotificationActions from './../actions/NotificationActions'
 
 class NotificationHelpers {
   constructor (context) {

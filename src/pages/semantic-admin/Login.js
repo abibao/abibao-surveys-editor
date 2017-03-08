@@ -8,10 +8,10 @@ import Reflux from 'reflux'
 import { Container, Button, Input, Segment, Grid, Header, Icon } from 'semantic-ui-react'
 
 // store
-import ApplicationStore from '../../stores/ApplicationStore'
+import ApplicationStore from './../../stores/ApplicationStore'
 
 // actions
-import NetworkActions from '../../actions/NetworkActions'
+import NetworkActions from './../../actions/NetworkActions'
 
 class Login extends Reflux.Component {
   componentDidMount () {

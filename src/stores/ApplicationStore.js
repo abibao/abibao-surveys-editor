@@ -2,19 +2,19 @@
 import Reflux from 'reflux'
 
 // libraries
-import Feathers from '../libs/Feathers'
+import Feathers from './../libs/Feathers'
 
 // actions
-import ApplicationActions from '../actions/ApplicationActions'
-import CampaignActions from '../actions/CampaignActions'
-import NetworkActions from '../actions/NetworkActions'
-import NotificationActions from '../actions/NotificationActions'
+import ApplicationActions from './../actions/ApplicationActions'
+import CampaignActions from './../actions/CampaignActions'
+import NetworkActions from './../actions/NetworkActions'
+import NotificationActions from './../actions/NotificationActions'
 
 // helpers
-import ApplicationHelpers from '../helpers/ApplicationHelpers'
-import CampaignHelpers from '../helpers/CampaignHelpers'
-import NetworkHelpers from '../helpers/NetworkHelpers'
-import NotificationHelpers from '../helpers/NotificationHelpers'
+import ApplicationHelpers from './../helpers/ApplicationHelpers'
+import CampaignHelpers from './../helpers/CampaignHelpers'
+import NetworkHelpers from './../helpers/NetworkHelpers'
+import NotificationHelpers from './../helpers/NotificationHelpers'
 
 class ApplicationStore extends Reflux.Store {
   constructor () {

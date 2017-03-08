@@ -3,11 +3,11 @@
 // libraries
 import uuid from 'uuid'
 import {clone} from 'lodash'
-import Feathers from '../libs/Feathers'
+import Feathers from './../libs/Feathers'
 
 // actions
-import CampaignActions from '../actions/CampaignActions'
-import NotificationActions from '../actions/NotificationActions'
+import CampaignActions from './../actions/CampaignActions'
+import NotificationActions from './../actions/NotificationActions'
 
 class CampaignHelpers {
   constructor (context) {

@@ -11,10 +11,10 @@ import {clone} from 'lodash'
 import { Container, Form, Segment, Menu, Icon, Input, Button, Header, Sidebar, Card, Image, Modal } from 'semantic-ui-react'
 
 // store
-import ApplicationStore from '../../stores/ApplicationStore'
+import ApplicationStore from './../../stores/ApplicationStore'
 
 // actions
-import CampaignActions from '../../actions/CampaignActions'
+import CampaignActions from './../../actions/CampaignActions'
 
 class Campaigns extends Reflux.Component {
   componentDidMount () {

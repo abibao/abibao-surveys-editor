@@ -1,9 +1,9 @@
 // libraries
-import Feathers from '../libs/Feathers'
+import Feathers from './../libs/Feathers'
 
 // actions
-import ApplicationActions from '../actions/ApplicationActions'
-import NotificationActions from '../actions/NotificationActions'
+import ApplicationActions from './../actions/ApplicationActions'
+import NotificationActions from './../actions/NotificationActions'
 
 class ApplicationHelpers {
   constructor (context) {

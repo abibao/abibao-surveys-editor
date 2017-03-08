@@ -2,12 +2,12 @@
 import {browserHistory} from 'react-router'
 
 // libraries
-import Feathers from '../libs/Feathers'
+import Feathers from './../libs/Feathers'
 
 // actions
-import ApplicationActions from '../actions/ApplicationActions'
-import NetworkActions from '../actions/NetworkActions'
-import NotificationActions from '../actions/NotificationActions'
+import ApplicationActions from './../actions/ApplicationActions'
+import NetworkActions from './../actions/NetworkActions'
+import NotificationActions from './../actions/NotificationActions'
 
 class NetworkHelpers {
   constructor (context) {
