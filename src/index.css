@@ -20,17 +20,19 @@ h1.ui.appbar {
 /**
 FORM COMPONENT **/
 
-.ui.input input, .ui.input input {
+.ui.input input, .ui.input.form input {
 	border-radius: 4px;
 	border: solid 2px rgba(34, 36, 38, 0.15);
 }
-.ui.input.focus input, .ui.input input:focus {
+.ui.input.focus input, .ui.input.form input:focus, .ui.input input:focus {
 	border: solid 2px rgba(219, 40, 40, 0.5);
 	border-radius: 4px;
 }
 .ui.segment.content {
 	margin-top: 50px;
 }
+
+
 
 /**
 404 COMPONENT **/
@@ -77,6 +79,12 @@ LOGIN COMPONENT **/
 }
 h2.ui.login {
   letter-spacing: 1rem;
+}
+
+/**
+CAMPAIGNS COMPONENT **/
+div.description.campaigns {
+	width: 100% !important;
 }
 
 /**

@@ -5,9 +5,10 @@ import React from 'react'
 import Reflux from 'reflux'
 import Dropzone from 'react-dropzone'
 import {browserHistory} from 'react-router'
+import {clone} from 'lodash'
 
 // semantic
-import { Container, Segment, Menu, Icon, Button, Header, Sidebar, Card, Image, Modal } from 'semantic-ui-react'
+import { Container, Form, Segment, Menu, Icon, Input, Button, Header, Sidebar, Card, Image, Modal } from 'semantic-ui-react'
 
 // store
 import ApplicationStore from '../../stores/ApplicationStore'
@@ -28,11 +29,12 @@ class Campaigns extends Reflux.Component {
     console.log('Campaigns', 'constructor')
     super(props)
     this.state = {
-      menuOn: false,
+      menuOpen: false,
+      modalOpen: false,
       selectedCampaign: false
     }
     this.store = ApplicationStore
-    this.toggleVisibility = () => this.setState({ menuOn: !this.state.menuOn })
+    this.toggleVisibility = () => this.setState({ menuOpen: !this.state.menuOpen })
     this.handleChangePicture = (files) => {
       CampaignActions.campaignUpdatePicture(this.state.selectedCampaign.id, files[0])
     }
@@ -43,6 +45,23 @@ class Campaigns extends Reflux.Component {
     this.handleOpenReader = (key) => {
       console.log('Campaigns', 'handleOpenReader', key)
       browserHistory.push('/admin/reader/' + key)
+    }
+    this.handleOpenInformations = (key) => {
+      console.log('Campaigns', 'handleOpenInformations', key)
+      this.setState({selectedCampaign: clone(this.state.campaigns[key]), modalOpen: true})
+    }
+    this.handleChangeInformation = (prop) => {
+      console.log('Campaigns', 'handleChangeInformation')
+      this.state.selectedCampaign[prop.key] = prop.val
+      this.setState({selectedCampaign: this.state.selectedCampaign})
+    }
+    this.handleCloseInformations = () => {
+      console.log('Campaigns', 'handleCloseInformations')
+      this.setState({selectedCampaign: false, modalOpen: false})
+    }
+    this.handleUpdateInformations = () => {
+      console.log('Campaigns', 'handleUpdateInformations')
+      CampaignActions.campaignUpdate(this.state.selectedCampaign)
     }
     this.handleOpenDropzone = (key) => {
       console.log('Campaigns', 'handleOpenDropzone', key)
@@ -70,7 +89,7 @@ class Campaigns extends Reflux.Component {
           </Menu>
         </Segment>
         <Sidebar.Pushable as={Segment} basic className="content">
-          <Sidebar as={Menu} animation="push" visible={this.state.menuOn} icon="labeled" vertical inverted color="grey">
+          <Sidebar as={Menu} animation="push" visible={this.state.menuOpen} icon="labeled" vertical inverted color="grey">
             <Menu.Item name="home">
               <Icon name="home" />
               Home
@@ -101,17 +120,7 @@ class Campaigns extends Reflux.Component {
                       </Card.Description>
                     </Card.Content>
                     <Card.Content extra>
-                      <Modal trigger={<Icon bordered link name="setting" inverted color="grey" />}>
-                        <Modal.Header>Select a Photo</Modal.Header>
-                        <Modal.Content image>
-                          <Image wrapped size="medium" src="http://semantic-ui.com/images/avatar2/large/rachel.png" />
-                          <Modal.Description>
-                            <Header>AAA</Header>
-                            <p>We've found the following gravatar image associated with your e-mail address.</p>
-                            <p>Is it okay to use this photo?</p>
-                          </Modal.Description>
-                        </Modal.Content>
-                      </Modal>
+                      <Icon onClick={this.handleOpenInformations.bind(this, key)} bordered link name="setting" inverted color="grey" />
                       <Icon onClick={this.handleOpenDropzone.bind(this, key)} bordered link name="image" inverted color="grey" />
                       <Icon onClick={this.handleOpenEditor.bind(this, key)} bordered link name="folder open outline" inverted color="grey" />
                       <Icon onClick={this.handleOpenReader.bind(this, key)} style={{float: 'right'}} bordered link name="play" inverted color="red" />
@@ -120,6 +129,24 @@ class Campaigns extends Reflux.Component {
                 ))}
               </Card.Group>
             </Segment>
+            <Modal open={this.state.modalOpen}>
+              <Header size="huge" color="red" content="Informations" subheader="metadata d'une campagne" />
+              <Modal.Content image>
+                <Image wrapped size="medium" src={process.env.REACT_APP_FEATHERS_URI + '/' + this.state.selectedCampaign.picture} />
+                <Modal.Description className="campaigns">
+                  <Form>
+                    <Form.Field>
+                      <label>Nom de la campagne</label>
+                      <Input onChange={(e) => this.handleChangeInformation({key: 'name', val: e.target.value})} defaultValue={this.state.selectedCampaign.name} size="large" label={{ color: 'red', icon: 'asterisk' }} labelPosition="right corner" className="form" />
+                    </Form.Field>
+                  </Form>
+                </Modal.Description>
+              </Modal.Content>
+              <Modal.Actions>
+                <Button onClick={this.handleCloseInformations} negative icon="close" labelPosition="right" content="Annuler" />
+                <Button onClick={this.handleUpdateInformations} positive icon="checkmark" labelPosition="right" content="Sauver" />
+              </Modal.Actions>
+            </Modal>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
         <Button onClick={this.handleCampaignCreate} size="huge" color="red" circular icon="plus" className="floating right" loading={this.state.loader.visible} />
