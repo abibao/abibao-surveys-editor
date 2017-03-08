@@ -1,3 +1,5 @@
+/* eslint jsx-quotes: ["error", "prefer-double"] */
+
 // react
 import React from 'react'
 import Reflux from 'reflux'
@@ -15,7 +17,10 @@ import BackIcon from 'material-ui/svg-icons/navigation/arrow-back'
 import * as Readers from './../../components/readers'
 
 // stores
-import CampaignStore from './../../stores/CampaignStore'
+import CampaignsStore from './../../stores/CampaignsStore'
+
+// actions
+import CampaignsActions from './../../actions/CampaignsActions'
 
 // styles
 const styles = {
@@ -64,13 +69,17 @@ const styles = {
 
 class Reader extends Reflux.Component {
   componentDidMount () {
+    console.log('Reader', 'componentDidMount')
     this.handleLoadData(this.props.params.id)
   }
   componentWillUnmount () {
+    console.log('Reader', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
+    console.log('Reader', 'componentDidUpdate')
   }
   constructor (props) {
+    console.log('Reader', 'constructor')
     super(props)
     this.state = {
       data: false,
@@ -79,16 +88,16 @@ class Reader extends Reflux.Component {
         mqst: Readers.MQSTReader
       }
     }
-    this.stores = [CampaignStore]
+    this.store = CampaignsStore
     this.handleBack = () => {
       browserHistory.push('/admin/campaigns')
     }
     this.handleLoadData = (id) => {
-      let store = this.stores[0]
-      store.service.get(id).then((campaign) => {
+      console.log('Reader', 'handleLoadData', id)
+      CampaignsActions.loadAsync(id, (campaign) => {
+        console.log('Reader', 'loadAsync callback', campaign.id)
         this.setState({data: campaign.data})
-      }).catch(console.error)
-      return store.service.get(id)
+      })
     }
   }
   render () {

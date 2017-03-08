@@ -3,15 +3,15 @@
 const Service = require('feathers-sequelize')
 const hooks = require('./hooks')
 
-const CampaignModel = require('./../campaigns/model')
+const SurveyModel = require('./../surveys/model')
 
 module.exports = function () {
   const app = this
-  const Campaign = CampaignModel(app)
-  app.use('/api/campaigns', Service({
-    Model: Campaign
+  const Survey = SurveyModel(app)
+  app.use('/api/surveys', Service({
+    Model: Survey
   }))
-  const service = app.service('api/campaigns')
+  const service = app.service('api/surveys')
   service.before(hooks.before)
   service.after(hooks.after)
 }

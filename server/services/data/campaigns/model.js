@@ -14,6 +14,23 @@ module.exports = function (app) {
       type: Sequelize.STRING,
       allowNull: false
     },
+    description: {
+      type: Sequelize.TEXT,
+      allowNull: true,
+      defaultValue: ''
+    },
+    company: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    position: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
+      validate: {
+        min: 0
+      }
+    },
     picture: {
       type: Sequelize.STRING,
       allowNull: false
@@ -29,6 +46,6 @@ module.exports = function (app) {
     freezeTableName: true,
     tableName: 'campaigns'
   })
-  Campaign.sync()
+  Campaign.sync({force: app.get('force')})
   return Campaign
 }

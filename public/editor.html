@@ -17,12 +17,14 @@
     <script type="text/javascript">
       var editorOptions = {showEmbededSurveyTab: true, showOptions: false}
       var campaignId = window.location.search.substring(1)
-      parent.handleLoadData(campaignId).then((campaign) => {
+      var self = parent
+      self.handleLoadData(campaignId).then((campaign) => {
+        self.handleSetData(campaign)
         var editor = new SurveyEditor.SurveyEditor("surveyEditorContainer", editorOptions)
         editor.options.generateValidJSON = true
         editor.text = JSON.stringify(campaign.data)
         editor.saveSurveyFunc = () => {
-          parent.handleSaveData(editor.text)
+          self.handleSaveData(editor.text)
         }
       }).catch(console.error)
     </script>

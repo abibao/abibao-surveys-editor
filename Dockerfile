@@ -5,8 +5,8 @@ MAINTAINER Gilles Perreymond <gperreymond@gmail.com>
 RUN mkdir -p /usr/app
 WORKDIR /usr/app
 
-COPY config/default.js /usr/app/config/default.js
 COPY package.json /usr/app/package.json
+COPY config/default.js /usr/app/config/default.js
 COPY server /usr/app/server
 COPY build /usr/app/build
 
