@@ -16,6 +16,9 @@ MENU COMPONENT **/
 h1.ui.appbar {
   letter-spacing: 0.5rem;
 }
+h1.ui.appbar .sub.header {
+  letter-spacing: 0.8rem;
+}
 
 /**
 FORM COMPONENT **/

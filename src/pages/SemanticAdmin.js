@@ -9,15 +9,12 @@ import ApplicationStore from './../stores/ApplicationStore'
 
 class Application extends Reflux.Component {
   componentDidMount () {
-    console.log('Application', 'componentDidMount')
   }
   componentWillUnmount () {
-    console.log('Application', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
   }
   constructor (props) {
-    console.log('Application', 'constructor')
     super(props)
     this.state = {}
     this.store = ApplicationStore

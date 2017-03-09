@@ -16,17 +16,16 @@ import ApplicationStore from './../../stores/ApplicationStore'
 // actions
 import CampaignActions from './../../actions/CampaignActions'
 
+const host = process.env.REACT_APP_FEATHERS_URI
+
 class Campaigns extends Reflux.Component {
   componentDidMount () {
-    console.log('Campaigns', 'componentDidMount')
   }
   componentWillUnmount () {
-    console.log('Campaigns', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
   }
   constructor (props) {
-    console.log('Campaigns', 'constructor')
     super(props)
     this.state = {
       menuOpen: false,
@@ -39,32 +38,25 @@ class Campaigns extends Reflux.Component {
       CampaignActions.campaignUpdatePicture(this.state.selectedCampaign.id, files[0])
     }
     this.handleOpenEditor = (key) => {
-      console.log('Campaigns', 'handleOpenEditor', key)
       browserHistory.push('/admin/editor/' + key)
     }
     this.handleOpenReader = (key) => {
-      console.log('Campaigns', 'handleOpenReader', key)
       browserHistory.push('/admin/reader/' + key)
     }
     this.handleOpenInformations = (key) => {
-      console.log('Campaigns', 'handleOpenInformations', key)
       this.setState({selectedCampaign: clone(this.state.campaigns[key]), modalOpen: true})
     }
     this.handleChangeInformation = (prop) => {
-      console.log('Campaigns', 'handleChangeInformation')
       this.state.selectedCampaign[prop.key] = prop.val
       this.setState({selectedCampaign: this.state.selectedCampaign})
     }
     this.handleCloseInformations = () => {
-      console.log('Campaigns', 'handleCloseInformations')
       this.setState({selectedCampaign: false, modalOpen: false})
     }
     this.handleUpdateInformations = () => {
-      console.log('Campaigns', 'handleUpdateInformations')
       CampaignActions.campaignUpdate(this.state.selectedCampaign)
     }
     this.handleOpenDropzone = (key) => {
-      console.log('Campaigns', 'handleOpenDropzone', key)
       this.setState({selectedCampaign: this.state.campaigns[key]})
       this.refs.dropzone.open()
     }
@@ -105,7 +97,7 @@ class Campaigns extends Reflux.Component {
               <Card.Group>
                 {Object.keys(this.state.campaigns).map((key) => (
                   <Card key={key} centered>
-                    <Image height="140" src={process.env.REACT_APP_FEATHERS_URI + '/' + this.state.campaigns[key].picture} />
+                    <Image height="140" src={host + '/' + this.state.campaigns[key].picture} />
                     <Card.Content>
                       <Card.Header>
                         {this.state.campaigns[key].name}
@@ -132,7 +124,7 @@ class Campaigns extends Reflux.Component {
             <Modal open={this.state.modalOpen}>
               <Header size="huge" color="red" content="Informations" subheader="metadata d'une campagne" />
               <Modal.Content image>
-                <Image wrapped size="medium" src={process.env.REACT_APP_FEATHERS_URI + '/' + this.state.selectedCampaign.picture} />
+                <Image height="140" wrapped size="medium" src={host + '/' + this.state.selectedCampaign.picture} />
                 <Modal.Description className="campaigns">
                   <Form>
                     <Form.Field>

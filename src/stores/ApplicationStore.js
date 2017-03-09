@@ -8,13 +8,11 @@ import Feathers from './../libs/Feathers'
 import ApplicationActions from './../actions/ApplicationActions'
 import CampaignActions from './../actions/CampaignActions'
 import NetworkActions from './../actions/NetworkActions'
-import NotificationActions from './../actions/NotificationActions'
 
 // helpers
 import ApplicationHelpers from './../helpers/ApplicationHelpers'
 import CampaignHelpers from './../helpers/CampaignHelpers'
 import NetworkHelpers from './../helpers/NetworkHelpers'
-import NotificationHelpers from './../helpers/NotificationHelpers'
 
 class ApplicationStore extends Reflux.Store {
   constructor () {
@@ -28,23 +26,19 @@ class ApplicationStore extends Reflux.Store {
         message: 'Connexion en cours...'
       },
       campaigns: {},
-      entities: {},
-      notifications: []
+      entities: {}
     }
     // helpers
-    this.notification = new NotificationHelpers(this)
     this.network = new NetworkHelpers(this)
     this.application = new ApplicationHelpers(this)
     this.campaign = new CampaignHelpers(this)
     // actions
-    this.listenables = [ApplicationActions, NetworkActions, NotificationActions, CampaignActions]
+    this.listenables = [ApplicationActions, NetworkActions, CampaignActions]
     // listeners
     Feathers.io.on('connect', () => {
-      console.log('Feathers', 'onSocketConnect')
       NetworkActions.networkConnect(Feathers.io)
     })
     Feathers.io.on('disconnect', () => {
-      console.log('Feathers', 'onSocketDisconnect')
       NetworkActions.networkDisconnect()
     })
     Feathers.service('api/campaigns').on('created', (campaign) => {
@@ -78,12 +72,6 @@ class ApplicationStore extends Reflux.Store {
   }
   onApplicationCreationComplete () {
     this.application.creationComplete()
-  }
-  onNotificationAdd (options) {
-    this.notification.add(options)
-  }
-  onNotificationRemove (uuid) {
-    this.notification.remove(uuid)
   }
   onCampaignCreate () {
     this.campaign.create()

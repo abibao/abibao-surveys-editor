@@ -27,10 +27,8 @@ const IFrameComponent = React.createClass({
 
 class Editor extends Reflux.Component {
   componentDidMount () {
-    console.log('Editor', 'componentDidMount')
   }
   componentWillUnmount () {
-    console.log('Editor', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
     if (this.state.selectedCampaign === false && this.state.campaigns[this.props.params.id]) {
@@ -38,7 +36,6 @@ class Editor extends Reflux.Component {
     }
   }
   constructor (props) {
-    console.log('Editor', 'constructor')
     super(props)
     this.state = {
       menuOn: false,

@@ -9,16 +9,14 @@ import { Container, Segment, Header, Icon } from 'semantic-ui-react'
 
 class PageNotFound extends Reflux.Component {
   componentDidMount () {
-    console.log('PageNotFound', 'componentDidMount')
   }
   componentWillUnmount () {
-    console.log('PageNotFound', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
   }
   constructor (props) {
-    console.log('PageNotFound', 'constructor')
     super(props)
+    this.state = {}
   }
   render () {
     let renderer = () => (

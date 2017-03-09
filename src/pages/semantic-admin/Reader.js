@@ -9,16 +9,14 @@ import { Container } from 'semantic-ui-react'
 
 class Reader extends Reflux.Component {
   componentDidMount () {
-    console.log('Reader', 'componentDidMount')
   }
   componentWillUnmount () {
-    console.log('Reader', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
   }
   constructor (props) {
-    console.log('Reader', 'constructor')
     super(props)
+    this.state = {}
   }
   render () {
     let renderer = () => (

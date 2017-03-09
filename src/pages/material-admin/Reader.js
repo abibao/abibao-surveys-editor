@@ -69,17 +69,13 @@ const styles = {
 
 class Reader extends Reflux.Component {
   componentDidMount () {
-    console.log('Reader', 'componentDidMount')
     this.handleLoadData(this.props.params.id)
   }
   componentWillUnmount () {
-    console.log('Reader', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
-    console.log('Reader', 'componentDidUpdate')
   }
   constructor (props) {
-    console.log('Reader', 'constructor')
     super(props)
     this.state = {
       data: false,
@@ -93,9 +89,7 @@ class Reader extends Reflux.Component {
       browserHistory.push('/admin/campaigns')
     }
     this.handleLoadData = (id) => {
-      console.log('Reader', 'handleLoadData', id)
       CampaignsActions.loadAsync(id, (campaign) => {
-        console.log('Reader', 'loadAsync callback', campaign.id)
         this.setState({data: campaign.data})
       })
     }
