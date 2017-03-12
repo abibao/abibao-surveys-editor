@@ -8,7 +8,7 @@ import Reflux from 'reflux'
 import { Container, Button, Input, Segment, Grid, Header, Icon } from 'semantic-ui-react'
 
 // store
-import ApplicationStore from './../../stores/ApplicationStore'
+import AdminStore from './../../stores/AdminStore'
 
 // actions
 import NetworkActions from './../../actions/NetworkActions'
@@ -26,7 +26,7 @@ class Login extends Reflux.Component {
       email: 'administrator@abibao.com',
       password: ''
     }
-    this.store = ApplicationStore
+    this.store = AdminStore
     this.handleSubmit = () => {
       NetworkActions.networkAuthenticate({strategy: 'local', email: this.state.email, password: this.state.password})
     }

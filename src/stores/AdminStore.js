@@ -7,14 +7,16 @@ import Feathers from './../libs/Feathers'
 // actions
 import ApplicationActions from './../actions/ApplicationActions'
 import CampaignActions from './../actions/CampaignActions'
+import SurveyActions from './../actions/SurveyActions'
 import NetworkActions from './../actions/NetworkActions'
 
 // helpers
 import ApplicationHelpers from './../helpers/ApplicationHelpers'
 import CampaignHelpers from './../helpers/CampaignHelpers'
+import SurveyHelpers from './../helpers/SurveyHelpers'
 import NetworkHelpers from './../helpers/NetworkHelpers'
 
-class ApplicationStore extends Reflux.Store {
+class AdminStore extends Reflux.Store {
   constructor () {
     super()
     this.state = {
@@ -32,13 +34,15 @@ class ApplicationStore extends Reflux.Store {
     this.network = new NetworkHelpers(this)
     this.application = new ApplicationHelpers(this)
     this.campaign = new CampaignHelpers(this)
+    this.survey = new SurveyHelpers(this)
     // actions
-    this.listenables = [ApplicationActions, NetworkActions, CampaignActions]
+    this.listenables = [ApplicationActions, NetworkActions, CampaignActions, SurveyActions]
     // listeners
     Feathers.io.on('connect', () => {
+      console.log('Feathers Admin connect')
       NetworkActions.networkConnect(Feathers.io)
     })
-    Feathers.io.on('disconnect', () => {
+    Feathers.io.on('Feathers Admin disconnect', () => {
       NetworkActions.networkDisconnect()
     })
     Feathers.service('api/campaigns').on('created', (campaign) => {
@@ -77,11 +81,14 @@ class ApplicationStore extends Reflux.Store {
     this.campaign.create()
   }
   onCampaignUpdate (data) {
-    this.campaign.campaignUpdate(data)
+    this.campaign.update(data)
   }
   onCampaignUpdatePicture (id, file) {
-    this.campaign.campaignUpdatePicture(id, file)
+    this.campaign.updatePicture(id, file)
+  }
+  onSurveyAffect (data) {
+    this.survey.affect(data)
   }
 }
 
-module.exports = ApplicationStore
+module.exports = AdminStore

@@ -3,26 +3,41 @@
 const Sequelize = require('sequelize')
 
 module.exports = function (app) {
-  const Survey = app.sequelize.define('Survey', {
+  const Answer = app.sequelize.define('Answer', {
     id: {
       type: Sequelize.STRING,
       primaryKey: true,
       unique: true,
       defaultValue: Sequelize.UUIDV4
     },
-    individual: {
+    email: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isEmail: true
+      }
     },
     campaign: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    charity: {
+    campaign_name: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    charity_id: {
       type: Sequelize.STRING,
       allowNull: true
     },
-    company: {
+    charity_name: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    answer: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    answer_text: {
       type: Sequelize.STRING,
       allowNull: false
     }
@@ -31,8 +46,8 @@ module.exports = function (app) {
     paranoid: true,
     underscored: false,
     freezeTableName: true,
-    tableName: 'surveys'
+    tableName: 'answers'
   })
-  Survey.sync({force: app.get('force')})
-  return Survey
+  Answer.sync({force: app.get('force')})
+  return Answer
 }

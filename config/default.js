@@ -8,9 +8,13 @@ nconf.argv().env().file({ file: 'nconf.json' })
 module.exports = {
   host: nconf.get('ABIBAO_SERVICE_HOST') || '127.0.0.1',
   port: nconf.get('ABIBAO_SERVICE_PORT') || 3001,
-  force: true,
+  force: false,
   superu: {
     email: nconf.get('ABIBAO_ADMINISTRATOR_EMAIL') || 'administrator@abibao.com',
+    password: nconf.get('ABIBAO_ADMINISTRATOR_PASSWORD') || 'password'
+  },
+  readeru: {
+    email: nconf.get('ABIBAO_ADMINISTRATOR_EMAIL') || 'application@abibao.com',
     password: nconf.get('ABIBAO_ADMINISTRATOR_PASSWORD') || 'password'
   },
   postgres: {

@@ -5,9 +5,9 @@ import React from 'react'
 import Reflux from 'reflux'
 
 // store
-import AdminStore from './../stores/AdminStore'
+import ReaderStore from './../stores/ReaderStore'
 
-class SemanticAdmin extends Reflux.Component {
+class SemanticReader extends Reflux.Component {
   componentDidMount () {
   }
   componentWillUnmount () {
@@ -17,7 +17,7 @@ class SemanticAdmin extends Reflux.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    this.store = AdminStore
+    this.store = ReaderStore
   }
   render () {
     let renderer = () => (
@@ -29,4 +29,4 @@ class SemanticAdmin extends Reflux.Component {
   }
 }
 
-export default SemanticAdmin
+export default SemanticReader

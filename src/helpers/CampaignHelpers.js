@@ -12,6 +12,15 @@ class CampaignHelpers {
   constructor (context) {
     this.context = context
   }
+  read (id) {
+    this.context.setState({loader: {visible: true}})
+    Feathers.service('api/campaigns').get(id).then((campaign) => {
+      this.context.setState({selectedCampaign: campaign, loader: {visible: false}})
+    }).catch((error) => {
+      this.context.setState({loader: {visible: false}})
+      console.error(error)
+    })
+  }
   create () {
     return Feathers.service('api/campaigns').create({
       name: 'Nouvelle campagne (' + uuid.v4() + ')',
@@ -22,7 +31,7 @@ class CampaignHelpers {
     }).then((campaign) => {
     }).catch(console.error)
   }
-  campaignUpdate (data) {
+  update (data) {
     let newData = clone(data)
     if (newData.company && newData.company.name) {
       newData.company = newData.company.id
@@ -30,7 +39,7 @@ class CampaignHelpers {
     Feathers.service('api/campaigns').patch(newData.id, newData).then(() => {
     }).catch(console.error)
   }
-  campaignUpdatePicture (id, file) {
+  updatePicture (id, file) {
     this.context.setState({loader: {visible: true}})
     const reader = new FileReader()
     reader.readAsDataURL(file)
@@ -39,7 +48,7 @@ class CampaignHelpers {
         .create({uri: reader.result})
         .then((response) => {
           this.context.setState({loader: {visible: false}})
-          CampaignActions.campaignUpdate({
+          CampaignActions.update({
             id,
             picture: 'wp_content/' + response.id
           })

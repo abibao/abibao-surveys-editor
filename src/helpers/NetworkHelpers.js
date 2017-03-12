@@ -20,22 +20,26 @@ class NetworkHelpers {
     this.context.setState({socket: false})
   }
   authenticate (args) {
-    let useStrategy = !!args.strategy
+    console.log('authenticate', args)
+    // let useStrategy = !!args.strategy
     this.context.state.loader.visible = true
     this.context.setState({loader: this.context.state.loader})
-    Feathers.authenticate(args).then((result) => {
-      this.context.setState({token: result.accessToken, loader: {visible: false}})
-      if (useStrategy) {
-      } else {
-      }
-      if (!this.context.state.initialized) {
-        ApplicationActions.applicationInitialize()
-      }
-    }).catch((error) => {
-      console.error('...', error)
-      this.context.setState({token: false, loader: {visible: false}})
-      browserHistory.push('/admin/login')
-    })
+    Feathers.authenticate(args)
+      .then((response) => {
+        this.context.setState({token: response.accessToken, loader: {visible: false}})
+        if (!this.context.state.initialized) {
+          ApplicationActions.applicationInitialize()
+        }
+        return Feathers.passport.verifyJWT(response.accessToken)
+      })
+      .then(passport => {
+        console.log('passport', passport)
+      })
+      .catch((error) => {
+        console.error('...', error)
+        this.context.setState({token: false, loader: {visible: false}})
+        browserHistory.push('/admin/login')
+      })
   }
 }
 

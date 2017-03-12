@@ -11,7 +11,7 @@ import {clone} from 'lodash'
 import { Container, Form, Segment, Menu, Icon, Input, Button, Header, Sidebar, Card, Image, Modal } from 'semantic-ui-react'
 
 // store
-import ApplicationStore from './../../stores/ApplicationStore'
+import AdminStore from './../../stores/AdminStore'
 
 // actions
 import CampaignActions from './../../actions/CampaignActions'
@@ -32,16 +32,16 @@ class Campaigns extends Reflux.Component {
       modalOpen: false,
       selectedCampaign: false
     }
-    this.store = ApplicationStore
+    this.store = AdminStore
     this.toggleVisibility = () => this.setState({ menuOpen: !this.state.menuOpen })
     this.handleChangePicture = (files) => {
       CampaignActions.campaignUpdatePicture(this.state.selectedCampaign.id, files[0])
     }
     this.handleOpenEditor = (key) => {
-      browserHistory.push('/admin/editor/' + key)
+      browserHistory.push('/admin/campaigns/editor/' + key)
     }
     this.handleOpenReader = (key) => {
-      browserHistory.push('/admin/reader/' + key)
+      browserHistory.push('/reader/' + key)
     }
     this.handleOpenInformations = (key) => {
       this.setState({selectedCampaign: clone(this.state.campaigns[key]), modalOpen: true})

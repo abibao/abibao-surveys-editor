@@ -73,9 +73,9 @@ app.use(compress())
   .configure(local())
   .configure(jwt())
   .configure(profiler({ stats: 'detail' }))
-  .use('/profiler', (req, res) => {
+  /* .use('/profiler', (req, res) => {
     res.json(getProfile())
-  })
+  }) */
   // Upload Service
   .use('/uploads', blobService({Model: blobStorage}))
   // Always return the main index.html, so react-router render the route in the client
@@ -87,12 +87,19 @@ app.use(compress())
   .configure(middlewares)
 
 // User service
-const newUser = {
+const superu = {
   email: app.get('superu').email,
   password: app.get('superu').password,
   permissions: ['*']
 }
-app.service('users').create(newUser).then(user => {
+const readeru = {
+  email: app.get('readeru').email,
+  password: app.get('readeru').password,
+  permissions: ['reader']
+}
+app.service('users').create(superu).then(user => {
+}).catch(console.error)
+app.service('users').create(readeru).then(user => {
 }).catch(console.error)
 
 module.exports = app

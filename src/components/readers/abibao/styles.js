@@ -1,70 +1,70 @@
 const styles = {
-  'root': 'reader',
-  'header': 'panel-heading',
-  'body': 'panel-body',
-  'footer': 'panel-footer',
-  'navigationButton': 'button-nav',
+  'root': 'abibao-reader',
+  'header': 'abibao-panel-heading',
+  'body': 'abibao-panel-body',
+  'footer': 'abibao-panel-footer',
+  'navigationButton': 'abibao-button-nav',
   'navigation': {
     'complete': '',
     'prev': '',
     'next': ''
   },
-  'progress': 'progress center-block',
-  'progressBar': 'progress-bar',
-  'pageTitle': 'page-title',
-  'row': 'row',
+  'progress': 'abibao-progress abibao-center-block',
+  'progressBar': 'abibao-progress-bar',
+  'pageTitle': 'abibao-page-title',
+  'row': 'abibao-row',
   'question': {
-    'root': 'question',
-    'title': 'question-title',
-    'comment': 'form-control',
+    'root': 'abibao-question',
+    'title': 'abibao-question-title',
+    'comment': 'abibao-form-control',
     'indent': 20
   },
   'error': {
-    'root': 'alert alert-danger',
-    'icon': 'glyphicon glyphicon-exclamation-sign',
+    'root': 'abibao-alert abibao-abibao-alert-danger',
+    'icon': 'abibao-glyphicon abibao-glyphicon-exclamation-sign',
     'item': ''
   },
   'checkbox': {
-    'root': 'form-inline',
-    'item': 'checkbox',
+    'root': 'abibao-form-inline',
+    'item': 'abibao-checkbox',
     'other': ''
   },
-  'comment': 'form-control',
-  'dropdown': 'form-control',
+  'comment': 'abibao-form-control',
+  'dropdown': 'abibao-form-control',
   'matrix': {
-    'root': 'table table-striped'
+    'root': 'abibao-table abibao-table-striped'
   },
   'matrixdropdown': {
-    'root': 'table'
+    'root': 'abibao-table'
   },
   'matrixdynamic': {
-    'root': 'table',
-    'button': 'button'
+    'root': 'abibao-table',
+    'button': 'abibao-button'
   },
   'multipletext': {
-    'root': 'table',
+    'root': 'abibao-table',
     'itemTitle': '',
-    'itemValue': 'form-control'
+    'itemValue': 'abibao-form-control'
   },
   'radiogroup': {
-    'root': 'form-inline',
-    'item': 'radio',
+    'root': 'abibao-form-inline',
+    'item': 'abibao-radio',
     'other': ''
   },
   'rating': {
-    'root': 'btn-group',
-    'item': 'btn btn-default'
+    'root': 'abibao-btn-group',
+    'item': 'abibao-btn abibao-btn-default'
   },
-  'text': 'form-control',
+  'text': 'abibao-form-control',
   'window': {
-    'root': 'modal-content',
-    'body': 'modal-body',
+    'root': 'abibao-modal-content',
+    'body': 'abibao-modal-body',
     'header': {
-      'root': 'modal-header panel-title',
-      'title': 'pull-left',
-      'button': 'glyphicon pull-right',
-      'buttonExpanded': 'glyphicon pull-right glyphicon-chevron-up',
-      'buttonCollapsed': 'glyphicon pull-right glyphicon-chevron-down'
+      'root': 'abibao-modal-header abibao-panel-title',
+      'title': 'abibao-pull-left',
+      'button': 'abibao-glyphicon abibao-pull-right',
+      'buttonExpanded': 'abibao-glyphicon abibao-pull-right abibao-glyphicon-chevron-up',
+      'buttonCollapsed': 'abibao-glyphicon abibao-pull-right abibao-glyphicon-chevron-down'
     }
   }
 }

@@ -63,6 +63,12 @@ h1.ui.error404 {
 }
 
 /**
+READER COMPONENT **/
+.ui.container.loader-reader {
+  height: 100%;
+}
+
+/**
 LOGIN COMPONENT **/
 
 .ui.container.login {

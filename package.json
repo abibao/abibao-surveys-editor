@@ -12,7 +12,8 @@
     "test:coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- --opts .mocharc",
     "eject": "react-scripts eject",
     "start": "react-scripts start",
-    "start:server": "DEBUG=feathers* node server/start.js"
+    "start:server": "node server/start.js",
+    "start:server:debug": "DEBUG=feathers* node server/start.js"
   },
   "dependencies": {
     "bluebird": "3.5.0",
@@ -61,6 +62,7 @@
     "progress": "1.1.8",
     "react": "15.4.2",
     "react-addons-test-utils": "15.4.2",
+    "react-cookie": "^1.0.4",
     "react-dom": "15.4.2",
     "react-dropzone": "3.11.0",
     "react-markdown": "2.4.5",

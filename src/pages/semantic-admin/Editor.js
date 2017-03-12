@@ -11,7 +11,7 @@ import { Container, Sidebar, Icon, Segment, Menu, Header, Button } from 'semanti
 import Feathers from './../../libs/Feathers'
 
 // store
-import ApplicationStore from './../../stores/ApplicationStore'
+import AdminStore from './../../stores/AdminStore'
 
 // actions
 import CampaignActions from './../../actions/CampaignActions'
@@ -41,7 +41,7 @@ class Editor extends Reflux.Component {
       menuOn: false,
       selectedCampaign: false
     }
-    this.store = ApplicationStore
+    this.store = AdminStore
     this.toggleVisibility = () => this.setState({ menuOn: !this.state.menuOn })
     this.handleLoadData = (id) => {
       return Feathers.service('api/campaigns').get(id)

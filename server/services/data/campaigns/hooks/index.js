@@ -1,15 +1,28 @@
 'use strict'
 
+const hasRole = require('../../../globalHooks').hasRole
 const uuid = require('../../../globalHooks').uuid
 
 exports.before = {
   all: [],
-  find: [],
-  get: [],
-  create: [],
-  update: [],
-  patch: [],
-  remove: []
+  find: [
+    hasRole(['*'])
+  ],
+  get: [
+    hasRole(['*', 'reader'])
+  ],
+  create: [
+    hasRole(['*'])
+  ],
+  update: [
+    hasRole(['*'])
+  ],
+  patch: [
+    hasRole(['*'])
+  ],
+  remove: [
+    hasRole(['*'])
+  ]
 }
 
 exports.after = {
