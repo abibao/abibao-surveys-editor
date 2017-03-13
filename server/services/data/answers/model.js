@@ -3,55 +3,46 @@
 const Sequelize = require('sequelize')
 
 module.exports = function (app) {
-  const Entity = app.sequelize.define('Entity', {
+  const Answer = app.sequelize.define('Answer', {
     id: {
       type: Sequelize.STRING,
       primaryKey: true,
       unique: true,
       defaultValue: Sequelize.UUIDV4
     },
-    name: {
+    email: {
       type: Sequelize.STRING,
-      allowNull: false
-    },
-    contact: {
-      type: Sequelize.STRING,
-      unique: true,
       allowNull: false,
       validate: {
         isEmail: true
       }
     },
-    url: {
-      type: Sequelize.STRING,
-      allowNull: true,
-      defaultValue: '',
-      validate: {
-        isUrl: true
-      }
-    },
-    type: {
-      type: Sequelize.ENUM('abibao', 'charity', 'company'),
-      allowNull: false
-    },
-    picture: {
+    campaign_id: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    title: {
+    campaign_name: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    hangs: {
+    charity_id: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    charity_name: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
+    question: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    description: {
-      type: Sequelize.TEXT,
+    answer: {
+      type: Sequelize.STRING,
       allowNull: false
     },
-    usages: {
-      type: Sequelize.TEXT,
+    answer_text: {
+      type: Sequelize.STRING,
       allowNull: false
     }
   }, {
@@ -59,8 +50,8 @@ module.exports = function (app) {
     paranoid: true,
     underscored: false,
     freezeTableName: true,
-    tableName: 'entities'
+    tableName: 'answers'
   })
-  Entity.sync({force: app.get('force')})
-  return Entity
+  Answer.sync({force: app.get('postgres').force})
+  return Answer
 }

@@ -7,10 +7,12 @@ import Feathers from './../libs/Feathers'
 // actions
 import NetworkActions from './../actions/NetworkActions'
 import CampaignActions from './../actions/CampaignActions'
+import AnswerActions from './../actions/AnswerActions'
 
 // helpers
 import NetworkHelpers from './../helpers/NetworkHelpers'
 import CampaignHelpers from './../helpers/CampaignHelpers'
+import AnswerHelpers from './../helpers/AnswerHelpers'
 
 class ReaderStore extends Reflux.Store {
   constructor () {
@@ -27,8 +29,9 @@ class ReaderStore extends Reflux.Store {
     // helpers
     this.network = new NetworkHelpers(this)
     this.campaign = new CampaignHelpers(this)
+    this.answer = new AnswerHelpers(this)
     // actions
-    this.listenables = [NetworkActions, CampaignActions]
+    this.listenables = [NetworkActions, CampaignActions, AnswerActions]
     // listeners
     Feathers.io.on('connect', () => {
       console.log('Feathers Reader connect')
@@ -50,6 +53,10 @@ class ReaderStore extends Reflux.Store {
   }
   onCampaignRead (id) {
     this.campaign.read(id)
+  }
+  onAnswerUpsert (data) {
+    console.log('ReaderStore', 'onAnswerUpsert')
+    this.answer.upsert(data)
   }
 }
 

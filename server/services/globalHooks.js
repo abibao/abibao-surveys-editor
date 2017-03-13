@@ -14,13 +14,13 @@ module.exports.uuid = function () {
   }
 }
 
-module.exports.hasRole = function(permissions = []) {
-  return function(hook) {
-  	let found = intersection(hook.params.user.permissions, permissions)
-  	if (found.length > 0) {
-  		return hook
-  	} else {
-  		throw new Error('No permissions to do that.')
-  	}
+module.exports.hasRole = function (permissions = []) {
+  return function (hook) {
+    let found = intersection(hook.params.user.permissions, permissions)
+    if (found.length > 0) {
+      return hook
+    } else {
+      throw new Error('No permissions to do that.')
+    }
   }
 }

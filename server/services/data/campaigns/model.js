@@ -3,42 +3,40 @@
 const Sequelize = require('sequelize')
 
 module.exports = function (app) {
-  const Answer = app.sequelize.define('Answer', {
+  const Campaign = app.sequelize.define('Campaign', {
     id: {
       type: Sequelize.STRING,
       primaryKey: true,
       unique: true,
       defaultValue: Sequelize.UUIDV4
     },
-    email: {
+    name: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: false
+    },
+    description: {
+      type: Sequelize.TEXT,
+      allowNull: true,
+      defaultValue: ''
+    },
+    company: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+    position: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
       validate: {
-        isEmail: true
+        min: 0
       }
     },
-    campaign: {
+    picture: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    campaign_name: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    charity_id: {
-      type: Sequelize.STRING,
-      allowNull: true
-    },
-    charity_name: {
-      type: Sequelize.STRING,
-      allowNull: true
-    },
-    answer: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    answer_text: {
-      type: Sequelize.STRING,
+    data: {
+      type: Sequelize.JSON,
       allowNull: false
     }
   }, {
@@ -46,8 +44,8 @@ module.exports = function (app) {
     paranoid: true,
     underscored: false,
     freezeTableName: true,
-    tableName: 'answers'
+    tableName: 'campaigns'
   })
-  Answer.sync({force: app.get('force')})
-  return Answer
+  Campaign.sync({force: app.get('postgres').force})
+  return Campaign
 }

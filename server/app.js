@@ -7,8 +7,6 @@ const compress = require('compression')
 const cors = require('cors')
 const feathers = require('feathers')
 const configuration = require('feathers-configuration')
-const profiler = require('feathers-profiler').profiler
-const getProfile = require('feathers-profiler').getProfile
 const auth = require('feathers-authentication')
 const local = require('feathers-authentication-local')
 const jwt = require('feathers-authentication-jwt')
@@ -56,7 +54,7 @@ app.use(compress())
   .configure(hooks())
   // Configure feathers-authentication
   .configure(auth({
-    secret: app.get('auth').token.secret,
+    secret: app.get('auth').secret,
     cookie: {
       enabled: app.get('auth').cookie.enabled,
       name: app.get('auth').cookie.name,
@@ -72,10 +70,6 @@ app.use(compress())
   }))
   .configure(local())
   .configure(jwt())
-  .configure(profiler({ stats: 'detail' }))
-  /* .use('/profiler', (req, res) => {
-    res.json(getProfile())
-  }) */
   // Upload Service
   .use('/uploads', blobService({Model: blobStorage}))
   // Always return the main index.html, so react-router render the route in the client
@@ -88,13 +82,13 @@ app.use(compress())
 
 // User service
 const superu = {
-  email: app.get('superu').email,
-  password: app.get('superu').password,
+  email: app.get('users').super.email,
+  password: app.get('users').super.password,
   permissions: ['*']
 }
 const readeru = {
-  email: app.get('readeru').email,
-  password: app.get('readeru').password,
+  email: app.get('users').reader.email,
+  password: app.get('users').reader.password,
   permissions: ['reader']
 }
 app.service('users').create(superu).then(user => {

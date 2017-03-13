@@ -1,7 +1,10 @@
+// react
 import React from 'react'
 import Reflux from 'reflux'
-
 import * as Survey from 'survey-react'
+
+// actions
+import AnswerActions from './../../../actions/AnswerActions'
 
 import styles from './styles'
 import './screen.css'
@@ -20,6 +23,7 @@ class SurveyReader extends Reflux.Component {
       campaign: this.props.campaign
     }
     this.surveyValidateQuestion = (s, options) => {
+      console.log('SurveyReader', 'surveyValidateQuestion', options)
       let answer = {
         'email': this.props.individual.email || this.props.individual + '@abibao.com',
         'campaign_id': this.state.campaign.id,
@@ -30,7 +34,7 @@ class SurveyReader extends Reflux.Component {
         answer: options.value,
         answer_text: options.value
       }
-      console.log(answer)
+      AnswerActions.answerUpsert(answer)
     }
   }
   render () {

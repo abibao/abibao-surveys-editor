@@ -33,6 +33,6 @@ module.exports = function (app) {
     freezeTableName: true,
     tableName: 'surveys'
   })
-  Survey.sync({force: app.get('force')})
+  Survey.sync({force: app.get('postgres').force})
   return Survey
 }
