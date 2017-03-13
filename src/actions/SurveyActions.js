@@ -2,7 +2,7 @@
 import Reflux from 'reflux'
 
 const SurveyActions = Reflux.createActions([
-	'surveyAffect'
+  'surveyAffect'
 ])
 
 export default SurveyActions
