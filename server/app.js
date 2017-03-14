@@ -62,14 +62,15 @@ app.use(compress())
     },
     jwt: {
       audience: 'https://platform.abibao.com',
-      issuer: 'platform.abibao.com'
+      issuer: 'platform.abibao.com',
+      expiresIn: '1d'
     },
     session: true,
     successRedirect: false,
     failureRedirect: false
   }))
-  .configure(local())
   .configure(jwt())
+  .configure(local())
   // Upload Service
   .use('/uploads', blobService({Model: blobStorage}))
   // Always return the main index.html, so react-router render the route in the client
@@ -80,20 +81,30 @@ app.use(compress())
   .configure(services)
   .configure(middlewares)
 
-// User service
-const superu = {
-  email: app.get('users').super.email,
-  password: app.get('users').super.password,
+// create super user
+app.service('users').create({
+  email: app.get('accounts').users.super.email,
+  password: app.get('accounts').users.super.password,
   permissions: ['*']
-}
-const readeru = {
-  email: app.get('users').reader.email,
-  password: app.get('users').reader.password,
-  permissions: ['reader']
-}
-app.service('users').create(superu).then(user => {
+}).then(user => {
 }).catch(console.error)
-app.service('users').create(readeru).then(user => {
+
+// create reader user
+app.service('users').create({
+  email: app.get('accounts').users.reader.email,
+  password: app.get('accounts').users.reader.password,
+  permissions: [
+    '*:create'
+  ]
+}).then(user => {
 }).catch(console.error)
+
+app.service('authentication').hooks({
+  before: {
+    create: [
+      auth.hooks.authenticate(['jwt', 'local'])
+    ]
+  }
+})
 
 module.exports = app

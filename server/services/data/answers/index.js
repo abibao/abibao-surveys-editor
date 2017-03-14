@@ -8,7 +8,7 @@ const AnswerModel = require('./../answers/model')
 module.exports = function () {
   const app = this
   const Answer = AnswerModel(app)
-  app.use('/api/answers', Service({
+  app.use('api/answers', Service({
     Model: Answer
   }))
   const service = app.service('api/answers')

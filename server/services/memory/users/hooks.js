@@ -4,24 +4,17 @@ const hooks = require('feathers-hooks')
 const local = require('feathers-authentication-local')
 
 exports.before = {
-  all: [],
-  find: [
+  all: [
     hooks.disable('external')
   ],
+  find: [],
   get: [],
   create: [
-    hooks.disable('external'),
     local.hooks.hashPassword({ passwordField: 'password' })
   ],
-  update: [
-    hooks.disable('external')
-  ],
-  patch: [
-    hooks.disable('external')
-  ],
-  remove: [
-    hooks.disable('external')
-  ]
+  update: [],
+  patch: [],
+  remove: []
 }
 
 exports.after = {
