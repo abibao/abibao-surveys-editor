@@ -45,6 +45,8 @@
     "node-cqrs-framework": "0.9.4",
     "pg": "6.1.4",
     "pg-hstore": "2.3.2",
+    "request": "^2.81.0",
+    "request-promise": "^4.1.1",
     "sequelize": "3.30.2",
     "serve-favicon": "2.4.1",
     "uuid": "3.0.1",

@@ -23,6 +23,9 @@ module.exports = {
     user: nconf.get('ABIBAO_RABBITMQ_USER') || 'guest',
     pass: nconf.get('ABIBAO_RABBITMQ_PASSWORD') || 'guest'
   },
+  slack: {
+    webhook: nconf.get('ABIBAO_SLACK_WEBHOOK') || 'http://localhost'
+  },
   cqrs: {
     patterns: ['cqrs/commands/**/*.js', 'cqrs/queries/**/*.js']
   },

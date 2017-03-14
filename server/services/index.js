@@ -8,7 +8,8 @@ const surveys = require('./data/surveys')
 const answers = require('./data/answers')
 
 // external commands
-const upsertAnsweringSurveyCommand = require('./domain/commands/upsertAnsweringSurveyCommand')
+const upsertAnswerSurveyCommand = require('./domain/commands/upsertAnswerSurveyCommand')
+const postOnSlackWithWebhook = require('./domain/commands/postOnSlackWithWebhook')
 
 module.exports = function () {
   const app = this
@@ -19,5 +20,6 @@ module.exports = function () {
   app.configure(surveys)
   app.configure(answers)
 
-  app.configure(upsertAnsweringSurveyCommand)
+  app.configure(upsertAnswerSurveyCommand)
+  app.configure(postOnSlackWithWebhook)
 }

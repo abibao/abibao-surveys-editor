@@ -14,7 +14,6 @@ class Service {
   }
   create (params) {
     const app = this.app
-    console.log(this)
     if (!params.email) {
       return Promise.reject(new Error('email is mandatory'))
     }
@@ -40,8 +39,8 @@ class Service {
 
 module.exports = function () {
   const app = this
-  app.use('commands/upsertAnsweringSurveyCommand', new Service())
-  const service = app.service('commands/upsertAnsweringSurveyCommand')
+  app.use('command/upsertAnsweringSurveyCommand', new Service())
+  const service = app.service('command/upsertAnsweringSurveyCommand')
   service.before({
     create: [
       auth.hooks.authenticate('jwt'),

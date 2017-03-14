@@ -1,5 +1,5 @@
 // react
-import {browserHistory} from 'react-router'
+// import {browserHistory} from 'react-router'
 
 // libraries
 import Feathers from './../libs/Feathers'
@@ -19,8 +19,17 @@ class NetworkHelpers {
   disconnect () {
     this.context.setState({socket: false})
   }
+  postOnSlack (message) {
+    console.log('postOnSlack', message)
+    Feathers.service('command/postOnSlackWithWebhook').create(message)
+      .then((response) => {
+        console.log('...', response)
+      })
+      .catch((error) => {
+        console.error('...', error)
+      })
+  }
   authenticate (args) {
-    console.log('authenticate', args)
     // let useStrategy = !!args.strategy
     this.context.state.loader.visible = true
     this.context.setState({loader: this.context.state.loader})
@@ -33,12 +42,11 @@ class NetworkHelpers {
         return Feathers.passport.verifyJWT(response.accessToken)
       })
       .then(passport => {
-        console.log('passport', passport)
       })
       .catch((error) => {
         console.error('...', error)
         this.context.setState({token: false, loader: {visible: false}})
-        browserHistory.push('/admin/login')
+        // browserHistory.push('/admin/login')
       })
   }
 }

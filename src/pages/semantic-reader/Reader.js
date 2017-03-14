@@ -19,12 +19,13 @@ import ReaderStore from './../../stores/ReaderStore'
 
 // actions
 import SurveyActions from './../../actions/SurveyActions'
-import CampaignActions from './../../actions/CampaignActions'
+import NetworkActions from './../../actions/NetworkActions'
+// import CampaignActions from './../../actions/CampaignActions'
 
 class Reader extends Reflux.Component {
   componentDidMount () {
     console.log('Reader', 'componentDidMount')
-    let individual = uuid.v4()
+    let individual = uuid.v4() + '@abibao.com'
     if (!this.state.individual) {
       this.setState({ individual })
       cookie.save('individual', individual, { path: '/' })
@@ -34,9 +35,13 @@ class Reader extends Reflux.Component {
   }
   componentDidUpdate (prevProps, prevState) {
     if (this.state.selectedCampaign === false && this.state.token !== false) {
-      console.log('Time to load the campaign')
+      console.log('Time to affect the campaign or load the survey for user', this.state.individual)
       this.state.selectedCampaign = true
-      CampaignActions.campaignRead(this.props.params.id)
+      const body = {
+        'username': 'individualCreateSurveyCommand',
+        'text': '[' + new Date() + '] - [' + this.state.individual + '] can access a new survey ( ... )'
+      }
+      NetworkActions.networkPostOnSlack(body)
     }
     if (this.state.selectedCampaign.id) {
       console.log('ping pong on campaign done', this.state.selectedCampaign)

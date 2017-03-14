@@ -36,7 +36,7 @@ class ReaderStore extends Reflux.Store {
     Feathers.io.on('connect', () => {
       console.log('Feathers Reader connect')
       NetworkActions.networkConnect(Feathers.io)
-      NetworkActions.networkAuthenticate({strategy: 'local', email: 'application@abibao.com', password: 'password'})
+      NetworkActions.networkAuthenticate({strategy: 'local', email: 'reader@abibao.com', password: 'password'})
     })
     Feathers.io.on('Feathers Reader disconnect', () => {
       NetworkActions.networkDisconnect()
@@ -51,8 +51,8 @@ class ReaderStore extends Reflux.Store {
   onNetworkAuthenticate (args) {
     this.network.authenticate(args)
   }
-  onCampaignRead (id) {
-    this.campaign.read(id)
+  onNetworkPostOnSlack (message) {
+    this.network.postOnSlack(message)
   }
   onAnswerUpsert (data) {
     console.log('ReaderStore', 'onAnswerUpsert')

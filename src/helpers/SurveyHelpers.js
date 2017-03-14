@@ -7,11 +7,14 @@ class SurveyHelpers {
   }
 
   affect (data) {
-    Feathers.service('api/surveys').find(data).then((result) => {
-      if (result.length === 0) {
-        return Feathers.service('api/surveys').create(data)
-      }
-    }).catch(console.error)
+    console.log('survey affect', data)
+    Feathers.service('command/individualCreateSurveyCommand').create(data)
+      .then((response) => {
+        console.log('...', response)
+      })
+      .catch((error) => {
+        console.error('...', error)
+      })
   }
 }
 
