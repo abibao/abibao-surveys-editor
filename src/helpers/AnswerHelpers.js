@@ -7,8 +7,7 @@ class AnswerHelpers {
   }
 
   upsert (data) {
-    Feathers.service('commands/upsertAnsweringSurveyCommand').create(data).then((result) => {
-      console.log(result)
+    Feathers.service('command/individualAnswerSurvey').create(data).then((result) => {
     }).catch(console.error)
   }
 }

@@ -7,10 +7,10 @@ class SurveyHelpers {
   }
 
   affect (data) {
-    console.log('survey affect', data)
+    this.context.state.loader.visible = true
     Feathers.service('command/individualAffectSurvey').create(data)
       .then((response) => {
-        console.log('...', response)
+        this.context.setState({selectedSurvey: response, selectedCampaign: response.campaign})
       })
       .catch((error) => {
         console.error('...', error)

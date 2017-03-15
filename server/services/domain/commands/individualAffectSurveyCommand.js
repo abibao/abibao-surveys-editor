@@ -15,7 +15,7 @@ class Service {
   create (params) {
     const app = this.app
     let campaign = {}
-    let email = params.individual.email || params.individual + '@abibao.com'
+    let email = params.individual.email || params.individual
     // mandatory
     if (!params.individual) {
       return Promise.reject(new Error('individual is mandatory'))
@@ -74,6 +74,7 @@ class Service {
       .then((surveys) => {
         let survey = surveys[0]
         survey.campaign = campaign
+        return survey
       })
       .then(Promise.resolve)
       .catch(Promise.reject)

@@ -38,11 +38,11 @@ module.exports = function (app) {
       allowNull: false
     },
     answer: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: false
     },
     answer_text: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: false
     }
   }, {

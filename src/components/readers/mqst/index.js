@@ -22,10 +22,14 @@ class SurveyReader extends Reflux.Component {
       individual: this.props.individual,
       campaign: this.props.campaign
     }
+    this.surveyComplete = () => {
+      console.log('SurveyReader', 'surveyComplete')
+      // now we make this survey complete in database
+    }
     this.surveyValidateQuestion = (s, options) => {
-      console.log('SurveyReader', 'surveyValidateQuestion', options)
+      console.log('SurveyReader', 'surveyValidateQuestion')
       let answer = {
-        'email': this.props.individual.email || this.props.individual + '@abibao.com',
+        'email': this.props.individual.email || this.props.individual,
         'campaign_id': this.state.campaign.id,
         'campaign_name': this.state.campaign.name,
         'charity_id': this.state.campaign.charity || null,
@@ -42,7 +46,7 @@ class SurveyReader extends Reflux.Component {
     let data = new Survey.Model(this.state.campaign.data)
     return (
       <div>
-        <Survey.Survey onValidateQuestion={this.surveyValidateQuestion} model={data} css={styles} />
+        <Survey.Survey onComplete={this.surveyComplete} onValidateQuestion={this.surveyValidateQuestion} model={data} css={styles} />
       </div>
     )
   }

@@ -4,9 +4,6 @@
 import React from 'react'
 import Reflux from 'reflux'
 
-// store
-import ReaderStore from './../stores/ReaderStore'
-
 class SemanticReader extends Reflux.Component {
   componentDidMount () {
   }
@@ -17,7 +14,6 @@ class SemanticReader extends Reflux.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    this.store = ReaderStore
   }
   render () {
     let renderer = () => (

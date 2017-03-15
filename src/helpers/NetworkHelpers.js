@@ -20,7 +20,6 @@ class NetworkHelpers {
     this.context.setState({socket: false})
   }
   postOnSlack (message) {
-    console.log('postOnSlack', message)
     Feathers.service('command/postOnSlackWithWebhook').create(message)
   }
   authenticate (args) {

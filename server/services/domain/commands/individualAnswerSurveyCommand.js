@@ -25,11 +25,11 @@ class Service {
       return Promise.reject(new Error('question is mandatory'))
     }
     // upsert answer
-    return app.service('api/answers').find({
+    return app.service('api/answers').find({query: {
       email: params.email,
       'campaign_id': params['campaign_id'],
       question: params.question
-    }).then((result) => {
+    }}).then((result) => {
       if (result.length === 0) {
         return app.service('api/answers').create(params).then(Promise.resolve)
       } else {

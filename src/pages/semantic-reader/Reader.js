@@ -6,7 +6,6 @@ import Reflux from 'reflux'
 import {clone} from 'lodash'
 import uuid from 'uuid'
 import cookie from 'react-cookie'
-import Feathers from './../../libs/Feathers'
 
 // components
 import * as Readers from './../../components/readers'
@@ -34,29 +33,25 @@ class Reader extends Reflux.Component {
   componentWillUnmount () {
   }
   componentDidUpdate (prevProps, prevState) {
-    if (this.state.selectedCampaign === false && this.state.token !== false) {
-      console.log('Time to affect the campaign or load the survey for user', this.state.individual)
-      this.state.selectedCampaign = true
+    if (this.state.selectedSurvey === false && this.state.token !== false) {
+      console.log('Time to affect the campaign or load the survey for user')
+      this.state.selectedSurvey = true
       SurveyActions.surveyAffect({individual: this.state.individual, campaign: this.props.params.id})
     }
-    if (this.state.selectedCampaign.id) {
-      console.log('ping pong on campaign done', this.state.selectedCampaign)
+    if (this.state.selectedSurvey.id) {
+      console.log('ping pong on campaign done')
     }
   }
   constructor (props) {
     super(props)
     this.state = {
       individual: cookie.load('individual'),
-      selectedCampaign: false,
       readers: {
         abibao: Readers.AbibaoReader,
         mqst: Readers.MQSTReader
       }
     }
     this.store = ReaderStore
-    Feathers.service('api/surveys').on('created', (survey) => {
-      console.log('survey created', survey)
-    })
   }
   render () {
     let loader = () => {
@@ -68,7 +63,7 @@ class Reader extends Reflux.Component {
     }
     let renderer = (CurrentReader) => (
       <Container fluid>
-        <CurrentReader campaign={clone(this.state.selectedCampaign)} individual={this.state.individual} />
+        <CurrentReader campaign={clone(this.state.selectedCampaign)} individual={this.state.selectedSurvey.individual} />
       </Container>
     )
     if (this.state.loader.visible === true) {

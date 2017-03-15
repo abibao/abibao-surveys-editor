@@ -23,6 +23,8 @@ class ReaderStore extends Reflux.Store {
       socket: false,
       token: false,
       initialized: false,
+      selectedSurvey: false,
+      selectedCampaign: false,
       loader: {
         visible: true,
         message: 'Connexion en cours...'
