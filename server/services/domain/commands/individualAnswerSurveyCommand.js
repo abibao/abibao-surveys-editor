@@ -14,6 +14,7 @@ class Service {
   }
   create (params) {
     const app = this.app
+    // mandatory
     if (!params.email) {
       return Promise.reject(new Error('email is mandatory'))
     }
@@ -23,6 +24,7 @@ class Service {
     if (!params.question) {
       return Promise.reject(new Error('question is mandatory'))
     }
+    // upsert answer
     return app.service('api/answers').find({
       email: params.email,
       'campaign_id': params['campaign_id'],
@@ -39,8 +41,8 @@ class Service {
 
 module.exports = function () {
   const app = this
-  app.use('command/upsertAnsweringSurveyCommand', new Service())
-  const service = app.service('command/upsertAnsweringSurveyCommand')
+  app.use('command/individualAnswerSurvey', new Service())
+  const service = app.service('command/individualAnswerSurvey')
   service.before({
     create: [
       auth.hooks.authenticate('jwt'),

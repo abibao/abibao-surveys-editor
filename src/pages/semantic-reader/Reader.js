@@ -19,7 +19,7 @@ import ReaderStore from './../../stores/ReaderStore'
 
 // actions
 import SurveyActions from './../../actions/SurveyActions'
-import NetworkActions from './../../actions/NetworkActions'
+// import NetworkActions from './../../actions/NetworkActions'
 // import CampaignActions from './../../actions/CampaignActions'
 
 class Reader extends Reflux.Component {
@@ -37,11 +37,7 @@ class Reader extends Reflux.Component {
     if (this.state.selectedCampaign === false && this.state.token !== false) {
       console.log('Time to affect the campaign or load the survey for user', this.state.individual)
       this.state.selectedCampaign = true
-      const body = {
-        'username': 'individualCreateSurveyCommand',
-        'text': '[' + new Date() + '] - [' + this.state.individual + '] can access a new survey ( ... )'
-      }
-      NetworkActions.networkPostOnSlack(body)
+      SurveyActions.surveyAffect({individual: this.state.individual, campaign: this.props.params.id})
     }
     if (this.state.selectedCampaign.id) {
       console.log('ping pong on campaign done', this.state.selectedCampaign)
@@ -50,7 +46,6 @@ class Reader extends Reflux.Component {
   constructor (props) {
     super(props)
     this.state = {
-      firstRenderer: true,
       individual: cookie.load('individual'),
       selectedCampaign: false,
       readers: {
@@ -81,14 +76,6 @@ class Reader extends Reflux.Component {
     } else {
       const label = (this.props.location.query.reader) ? this.props.location.query.reader : 'abibao'
       const reader = (this.state.readers[label]) ? this.state.readers[label] : this.state.readers['abibao']
-      if (this.state.firstRenderer) {
-        this.state.firstRenderer = false
-        SurveyActions.surveyAffect({
-          individual: this.state.individual,
-          campaign: this.state.selectedCampaign.id,
-          company: this.state.selectedCampaign.company
-        })
-      }
       return renderer(reader)
     }
   }

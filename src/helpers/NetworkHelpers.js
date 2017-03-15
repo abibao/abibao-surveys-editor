@@ -22,12 +22,6 @@ class NetworkHelpers {
   postOnSlack (message) {
     console.log('postOnSlack', message)
     Feathers.service('command/postOnSlackWithWebhook').create(message)
-      .then((response) => {
-        console.log('...', response)
-      })
-      .catch((error) => {
-        console.error('...', error)
-      })
   }
   authenticate (args) {
     // let useStrategy = !!args.strategy

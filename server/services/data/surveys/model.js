@@ -25,6 +25,11 @@ module.exports = function (app) {
     company: {
       type: Sequelize.STRING,
       allowNull: false
+    },
+    complete: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   }, {
     timestamps: true,

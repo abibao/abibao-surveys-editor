@@ -8,7 +8,7 @@ class SurveyHelpers {
 
   affect (data) {
     console.log('survey affect', data)
-    Feathers.service('command/individualCreateSurveyCommand').create(data)
+    Feathers.service('command/individualAffectSurvey').create(data)
       .then((response) => {
         console.log('...', response)
       })
