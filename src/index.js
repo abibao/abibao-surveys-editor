@@ -12,38 +12,44 @@ import {Router, Route, browserHistory} from 'react-router'
 import 'semantic-ui-css/semantic.css'
 import './index.css'
 
-import SemanticReader from './pages/SemanticReader'
-import Reader from './pages/semantic-reader/Reader'
+// reader
+import Reader from './pages/reader/Reader'
 
-import SemanticAdmin from './pages/SemanticAdmin'
-import PageNotFound from './pages/semantic-admin/PageNotFound'
-import Login from './pages/semantic-admin/Login'
-import Campaigns from './pages/semantic-admin/Campaigns'
-import Editor from './pages/semantic-admin/Editor'
+// admin
+import PageNotFound from './pages/admin/PageNotFound'
+import Login from './pages/admin/Login'
+import Campaigns from './pages/admin/Campaigns'
+import Editor from './pages/admin/Editor'
 
 const routerAdmin = (
   <Router history={browserHistory}>
     <Route path="admin/login" component={Login} />
-    <Route path="admin" component={SemanticAdmin}>
-      <Route path="campaigns" component={Campaigns} />
-      <Route path="campaigns/editor/:id" component={Editor} />
-    </Route>
+    <Route path="admin/campaigns" component={Campaigns} />
+    <Route path="admin/campaigns/editor/:id" component={Editor} />
     <Route path="*" component={PageNotFound} />
   </Router>
 )
 
 const routerReader = (
   <Router history={browserHistory}>
-    <Route path="reader" component={SemanticReader}>
-      <Route path=":id" component={Reader} />
-    </Route>
+    <Route path="reader/:id" component={Reader} />
     <Route path="*" component={PageNotFound} />
   </Router>
 )
 
-let routerCurrent = routerAdmin
+const routerError = (
+  <Router history={browserHistory}>
+    <Route path="*" component={PageNotFound} />
+  </Router>
+)
+
+let routerCurrent = routerError
+
 if (window.location.pathname.search('reader') === 1) {
   routerCurrent = routerReader
+}
+if (window.location.pathname.search('admin') === 1) {
+  routerCurrent = routerAdmin
 }
 
 render(routerCurrent, document.getElementById('root'))

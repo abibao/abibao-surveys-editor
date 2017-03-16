@@ -23,18 +23,21 @@ class NetworkHelpers {
     Feathers.service('command/postOnSlackWithWebhook').create(message)
   }
   authenticate (args) {
+    console.log('NetworkHelpers', 'authenticate')
     // let useStrategy = !!args.strategy
     this.context.state.loader.visible = true
     this.context.setState({loader: this.context.state.loader})
     Feathers.authenticate(args)
       .then((response) => {
-        this.context.setState({token: response.accessToken, loader: {visible: false}})
-        if (!this.context.state.initialized) {
-          ApplicationActions.applicationInitialize()
-        }
+        console.log('...', response)
         return Feathers.passport.verifyJWT(response.accessToken)
       })
       .then(passport => {
+        console.log('...', passport)
+        console.log('...', 'state.initialized', this.context.state.initialized)
+        if (!this.context.state.initialized) {
+          ApplicationActions.applicationInitialize()
+        }
       })
       .catch((error) => {
         console.error('...', error)

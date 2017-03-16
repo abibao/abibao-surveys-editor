@@ -4,7 +4,7 @@ import Reflux from 'reflux'
 import * as Survey from 'survey-react'
 
 // actions
-import AnswerActions from './../../../actions/AnswerActions'
+import AnswerActions from './../../../../../actions/AnswerActions'
 
 import styles from './styles'
 import './screen.css'

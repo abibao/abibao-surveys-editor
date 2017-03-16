@@ -9,7 +9,8 @@ class ApplicationHelpers {
     this.context = context
   }
   initialize () {
-    this.context.setState({loader: {visible: true, message: 'Chargement...'}})
+    console.log('ApplicationHelpers', 'initialize')
+    this.context.setState({loader: {visible: true}})
     return Feathers.service('api/campaigns').find().then((campaigns) => {
       let dictionnary = {}
       campaigns.map((campaign) => {
@@ -27,7 +28,13 @@ class ApplicationHelpers {
         // on complete then ...
         ApplicationActions.applicationCreationComplete()
       })
-    }).catch(console.error)
+    }).catch((error) => {
+      console.error('...', error)
+      if (error.toString() === 'Forbidden: You do not have the correct permissions.') {
+        window.localStorage.removeItem('rememberMe')
+      }
+      this.context.setState({token: false, loader: {visible: false}})
+    })
   }
   creationComplete () {
     // populate campaigns

@@ -5,7 +5,7 @@ import React from 'react'
 import Reflux from 'reflux'
 
 // semantic
-import { Container, Button, Input, Segment, Grid, Header, Icon } from 'semantic-ui-react'
+import { Container, Button, Input, Segment, Grid, Header, Icon, Loader } from 'semantic-ui-react'
 
 // store
 import AdminStore from './../../stores/AdminStore'
@@ -32,6 +32,13 @@ class Login extends Reflux.Component {
     }
   }
   render () {
+    let waiting = () => {
+      return (
+        <Container fluid className="loader-reader">
+          <Loader active size="huge">En attente du serveur...</Loader>
+        </Container>
+      )
+    }
     let renderer = () => (
       <Container fluid className="login">
         <Grid container className="login">
@@ -67,6 +74,9 @@ class Login extends Reflux.Component {
         </Grid>
       </Container>
     )
+    if (this.state.socket === false) {
+      return waiting()
+    }
     return renderer()
   }
 }

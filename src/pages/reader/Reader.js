@@ -8,7 +8,7 @@ import uuid from 'uuid'
 import cookie from 'react-cookie'
 
 // components
-import * as Readers from './../../components/readers'
+import * as Readers from './components/readers'
 
 // semantic
 import { Container, Loader } from 'semantic-ui-react'
@@ -18,8 +18,6 @@ import ReaderStore from './../../stores/ReaderStore'
 
 // actions
 import SurveyActions from './../../actions/SurveyActions'
-// import NetworkActions from './../../actions/NetworkActions'
-// import CampaignActions from './../../actions/CampaignActions'
 
 class Reader extends Reflux.Component {
   componentDidMount () {
