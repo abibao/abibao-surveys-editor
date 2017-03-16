@@ -16,6 +16,9 @@ MENU COMPONENT **/
 h1.ui.appbar {
   letter-spacing: 0.5rem;
 }
+h1.ui.appbar .sub.header {
+  letter-spacing: 0.8rem;
+}
 
 /**
 FORM COMPONENT **/
@@ -57,6 +60,12 @@ FORM COMPONENT **/
 }
 h1.ui.error404 {
   font-size: 4rem;
+}
+
+/**
+READER COMPONENT **/
+.ui.container.loader-reader {
+  height: 100%;
 }
 
 /**

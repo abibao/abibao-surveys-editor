@@ -61,6 +61,6 @@ module.exports = function (app) {
     freezeTableName: true,
     tableName: 'entities'
   })
-  Entity.sync({force: app.get('force')})
+  Entity.sync({force: app.get('postgres').force})
   return Entity
 }

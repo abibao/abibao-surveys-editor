@@ -46,6 +46,6 @@ module.exports = function (app) {
     freezeTableName: true,
     tableName: 'campaigns'
   })
-  Campaign.sync({force: app.get('force')})
+  Campaign.sync({force: app.get('postgres').force})
   return Campaign
 }

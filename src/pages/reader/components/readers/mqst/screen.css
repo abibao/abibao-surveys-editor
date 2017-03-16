@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+.mqst-reader * {
+  font-family: 'Lato', sans-serif;
+  font-weight: normal;
+}
+
+.mqst-reader {
+  background: #f0f0f0;
+  padding: 20px;
+  margin: auto;
+  max-width: 550px;
+}

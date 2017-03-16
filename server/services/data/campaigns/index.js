@@ -8,7 +8,7 @@ const CampaignModel = require('./../campaigns/model')
 module.exports = function () {
   const app = this
   const Campaign = CampaignModel(app)
-  app.use('/api/campaigns', Service({
+  app.use('api/campaigns', Service({
     Model: Campaign
   }))
   const service = app.service('api/campaigns')

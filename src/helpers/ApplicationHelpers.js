@@ -3,7 +3,6 @@ import Feathers from './../libs/Feathers'
 
 // actions
 import ApplicationActions from './../actions/ApplicationActions'
-import NotificationActions from './../actions/NotificationActions'
 
 class ApplicationHelpers {
   constructor (context) {
@@ -11,7 +10,7 @@ class ApplicationHelpers {
   }
   initialize () {
     console.log('ApplicationHelpers', 'initialize')
-    this.context.setState({loader: {visible: true, message: 'Chargement...'}})
+    this.context.setState({loader: {visible: true}})
     return Feathers.service('api/campaigns').find().then((campaigns) => {
       let dictionnary = {}
       campaigns.map((campaign) => {
@@ -19,7 +18,6 @@ class ApplicationHelpers {
         return true
       })
       this.context.setState({campaigns: dictionnary})
-      NotificationActions.notificationAdd({message: 'campaigns loaded '})
       return Feathers.service('api/entities').find().then((entities) => {
         let dictionnary = {}
         entities.map((entity) => {
@@ -27,11 +25,16 @@ class ApplicationHelpers {
           return true
         })
         this.context.setState({entities: dictionnary})
-        NotificationActions.notificationAdd({message: 'entities loaded '})
         // on complete then ...
         ApplicationActions.applicationCreationComplete()
       })
-    }).catch(console.error)
+    }).catch((error) => {
+      console.error('...', error)
+      if (error.toString() === 'Forbidden: You do not have the correct permissions.') {
+        window.localStorage.removeItem('rememberMe')
+      }
+      this.context.setState({token: false, loader: {visible: false}})
+    })
   }
   creationComplete () {
     console.log('ApplicationHelpers', 'creationComplete')

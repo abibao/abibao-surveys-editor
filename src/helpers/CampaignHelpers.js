@@ -7,14 +7,21 @@ import Feathers from './../libs/Feathers'
 
 // actions
 import CampaignActions from './../actions/CampaignActions'
-import NotificationActions from './../actions/NotificationActions'
 
 class CampaignHelpers {
   constructor (context) {
     this.context = context
   }
+  read (id) {
+    this.context.setState({loader: {visible: true}})
+    Feathers.service('api/campaigns').get(id).then((campaign) => {
+      this.context.setState({selectedCampaign: campaign, loader: {visible: false}})
+    }).catch((error) => {
+      this.context.setState({loader: {visible: false}})
+      console.error(error)
+    })
+  }
   create () {
-    console.log('CampaignHelpers', 'create')
     return Feathers.service('api/campaigns').create({
       name: 'Nouvelle campagne (' + uuid.v4() + ')',
       company: 'None',
@@ -22,21 +29,17 @@ class CampaignHelpers {
       picture: 'images/default/campaign.png',
       data: {pages: [{name: 'page1'}]}
     }).then((campaign) => {
-      NotificationActions.notificationAdd({message: 'Une campagne a été ajouté.'})
     }).catch(console.error)
   }
-  campaignUpdate (data) {
-    console.log('CampaignHelpers', 'campaignUpdate')
+  update (data) {
     let newData = clone(data)
     if (newData.company && newData.company.name) {
       newData.company = newData.company.id
     }
     Feathers.service('api/campaigns').patch(newData.id, newData).then(() => {
-      NotificationActions.notificationAdd({message: 'Une campagne a été modifé.'})
     }).catch(console.error)
   }
-  campaignUpdatePicture (id, file) {
-    console.log('CampaignHelpers', 'campaignUpdatePicture')
+  updatePicture (id, file) {
     this.context.setState({loader: {visible: true}})
     const reader = new FileReader()
     reader.readAsDataURL(file)
@@ -45,8 +48,7 @@ class CampaignHelpers {
         .create({uri: reader.result})
         .then((response) => {
           this.context.setState({loader: {visible: false}})
-          NotificationActions.notificationAdd({message: 'Image sur le serveur'})
-          CampaignActions.campaignUpdate({
+          CampaignActions.update({
             id,
             picture: 'wp_content/' + response.id
           })

@@ -12,7 +12,7 @@ module.exports = function (app) {
     },
     individual: {
       type: Sequelize.STRING,
-      allowNull: true
+      allowNull: false
     },
     campaign: {
       type: Sequelize.STRING,
@@ -25,6 +25,11 @@ module.exports = function (app) {
     company: {
       type: Sequelize.STRING,
       allowNull: false
+    },
+    complete: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   }, {
     timestamps: true,
@@ -33,6 +38,6 @@ module.exports = function (app) {
     freezeTableName: true,
     tableName: 'surveys'
   })
-  Survey.sync({force: app.get('force')})
+  Survey.sync({force: app.get('postgres').force})
   return Survey
 }
