@@ -24,25 +24,35 @@ class NetworkHelpers {
   }
   authenticate (args) {
     console.log('NetworkHelpers', 'authenticate')
-    // let useStrategy = !!args.strategy
     this.context.state.loader.visible = true
     this.context.setState({loader: this.context.state.loader})
     Feathers.authenticate(args)
       .then((response) => {
-        console.log('...', response)
+        console.log('...', 'response')
+        this.context.state.token = response.accessToken
         return Feathers.passport.verifyJWT(response.accessToken)
       })
       .then(passport => {
-        console.log('...', passport)
+        console.log('...', 'passport')
         console.log('...', 'state.initialized', this.context.state.initialized)
-        if (!this.context.state.initialized) {
-          ApplicationActions.applicationInitialize()
+        if (this.context.state.reader === true) {
+          console.log('...', this.context.state.token)
+          this.context.setState({initialized: true, token: this.context.state.token})
+        } else {
+          if (!this.context.state.initialized) {
+            ApplicationActions.applicationInitialize()
+          }
         }
       })
       .catch((error) => {
-        console.error('...', error)
+        console.error('...', error.toString())
+        if (error.toString().includes('NotAuthenticated')) {
+          console.log('...', 'time to connect auto if client')
+          if (this.context.state.reader === true) {
+            NetworkActions.networkAuthenticate({strategy: 'local', email: 'reader@abibao.com', password: 'password'})
+          }
+        }
         this.context.setState({token: false, loader: {visible: false}})
-        // browserHistory.push('/admin/login')
       })
   }
 }

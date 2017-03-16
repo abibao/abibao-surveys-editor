@@ -36,9 +36,6 @@ class Reader extends Reflux.Component {
       this.state.selectedSurvey = true
       SurveyActions.surveyAffect({individual: this.state.individual, campaign: this.props.params.id})
     }
-    if (this.state.selectedSurvey.id) {
-      console.log('ping pong on campaign done')
-    }
   }
   constructor (props) {
     super(props)

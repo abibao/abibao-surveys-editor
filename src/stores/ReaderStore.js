@@ -20,6 +20,7 @@ class ReaderStore extends Reflux.Store {
   constructor () {
     super()
     this.state = {
+      reader: true,
       socket: false,
       token: false,
       initialized: false,
@@ -41,7 +42,6 @@ class ReaderStore extends Reflux.Store {
     Feathers.io.on('connect', () => {
       console.log('Feathers Reader connect')
       NetworkActions.networkConnect(Feathers.io)
-      NetworkActions.networkAuthenticate({strategy: 'local', email: 'reader@abibao.com', password: 'password'})
     })
     Feathers.io.on('Feathers Reader disconnect', () => {
       NetworkActions.networkDisconnect()

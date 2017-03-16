@@ -11,6 +11,7 @@ class SurveyHelpers {
     Feathers.service('command/individualAffectSurvey').create(data)
       .then((response) => {
         this.context.setState({selectedSurvey: response, selectedCampaign: response.campaign})
+        this.context.setState({loader: {visible: false}})
       })
       .catch((error) => {
         console.error('...', error)

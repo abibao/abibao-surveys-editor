@@ -28,6 +28,7 @@ class SurveyReader extends Reflux.Component {
     }
     this.surveyValidateQuestion = (s, options) => {
       console.log('SurveyReader', 'surveyValidateQuestion')
+      console.log(s.currentPage.name)
       let answer = {
         'email': this.props.individual.email || this.props.individual,
         'campaign_id': this.state.campaign.id,

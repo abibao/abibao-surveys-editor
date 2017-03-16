@@ -37,6 +37,7 @@ class ApplicationHelpers {
     })
   }
   creationComplete () {
+    console.log('ApplicationHelpers', 'creationComplete')
     // populate campaigns
     Object.keys(this.context.state.campaigns).map((key) => {
       let val = this.context.state.campaigns[key].company
