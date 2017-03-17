@@ -26,8 +26,8 @@ module.exports = function (app) {
       type: Sequelize.STRING,
       allowNull: false
     },
-    source: {
-      type: Sequelize.STRING,
+    params: {
+      type: Sequelize.JSON,
       allowNull: true
     },
     complete: {
