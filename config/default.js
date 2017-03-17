@@ -29,8 +29,7 @@ module.exports = {
   cqrs: {
     patterns: ['cqrs/commands/**/*.js', 'cqrs/queries/**/*.js']
   },
-  public: path.resolve(__dirname, '..', nconf.get('ABIBAO_WWW_DIRPATH') || 'build'),
-  routes: ['admin', 'admin/login', 'admin/entities', 'admin/campaigns', 'admin/campaigns/editor/:id', 'reader/:id'],
+  public: path.resolve(__dirname, '..', nconf.get('ABIBAO_WWW_DIRPATH') || 'public'),
   corsWhitelist: ['localhost'],
   cryptr: {
     secret: nconf.get('ABIBAO_CRYPTR_SECRET') || 'secret key'

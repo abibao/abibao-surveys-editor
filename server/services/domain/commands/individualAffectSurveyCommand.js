@@ -50,6 +50,7 @@ class Service {
             individual: params.individual,
             campaign: campaign.id,
             company: campaign.company,
+            source: params.source,
             complete: false
           }).then((result) => {
             const message = {

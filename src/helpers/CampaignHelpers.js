@@ -48,7 +48,7 @@ class CampaignHelpers {
         .create({uri: reader.result})
         .then((response) => {
           this.context.setState({loader: {visible: false}})
-          CampaignActions.update({
+          CampaignActions.campaignUpdate({
             id,
             picture: 'wp_content/' + response.id
           })

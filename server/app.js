@@ -17,15 +17,14 @@ const socketio = require('feathers-socketio')
 const middlewares = require('./middlewares')
 const services = require('./services')
 
+const dirpathUpload = path.resolve(__dirname, 'uploads')
 const blobService = require('feathers-blob')
 const fs = require('fs-blob-store')
-const blobStorage = fs(path.resolve(__dirname, 'uploads'))
+const blobStorage = fs(dirpathUpload)
 
 const app = feathers()
 
 app.configure(configuration(path.join(__dirname, '..')))
-
-const routes = '/(' + app.get('routes').join('|') + ')'
 
 app.sequelize = new Sequelize(app.get('postgres').database, app.get('postgres').username, app.get('postgres').password, {
   dialect: 'postgres',
@@ -44,9 +43,14 @@ const corsOptions = {
 
 app.use(compress())
   .options('*', cors(corsOptions))
+  .use('/', serveStatic(app.get('public')))
+  .use('/wp_content', serveStatic(dirpathUpload))
+  .use('(/admin)', serveStatic(app.get('public')))
+  .use('(/admin/campaigns)', serveStatic(app.get('public')))
+  .use('(/admin/campaigns/:id)', serveStatic(app.get('public')))
+  .use('(/admin/login)', serveStatic(app.get('public')))
+  .use('(/reader/:id)', serveStatic(app.get('public')))
   .use(cors(corsOptions))
-  .use(serveStatic(path.resolve(__dirname, app.get('public'))))
-  .use('/wp_content', serveStatic(path.resolve(__dirname, 'uploads')))
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
   .configure(rest())
@@ -71,12 +75,7 @@ app.use(compress())
   }))
   .configure(jwt())
   .configure(local())
-  // Upload Service
   .use('/uploads', blobService({Model: blobStorage}))
-  // Always return the main index.html, so react-router render the route in the client
-  .use(new RegExp(routes), (req, res) => {
-    res.sendFile(path.resolve(__dirname, app.get('public'), 'index.html'))
-  })
   // Configure services
   .configure(services)
   .configure(middlewares)

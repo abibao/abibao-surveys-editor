@@ -26,6 +26,10 @@ module.exports = function (app) {
       type: Sequelize.STRING,
       allowNull: false
     },
+    source: {
+      type: Sequelize.STRING,
+      allowNull: true
+    },
     complete: {
       type: Sequelize.BOOLEAN,
       allowNull: false,
