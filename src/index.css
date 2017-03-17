@@ -14,7 +14,7 @@ html * {
 MENU COMPONENT **/
 
 h1.ui.appbar {
-  letter-spacing: 0.5rem;
+  letter-spacing: 0.62rem;
 }
 h1.ui.appbar .sub.header {
   letter-spacing: 0.8rem;
@@ -94,6 +94,10 @@ h2.ui.login {
 CAMPAIGNS COMPONENT **/
 div.description.campaigns {
 	width: 100% !important;
+}
+.campaigns.content {
+  border: solid blue 2px !important;
+  margin-top: 80px !important;
 }
 
 /**

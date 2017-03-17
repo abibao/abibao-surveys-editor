@@ -4,11 +4,10 @@
 import React from 'react'
 import Reflux from 'reflux'
 import Dropzone from 'react-dropzone'
-import {browserHistory} from 'react-router'
 import {clone} from 'lodash'
 
 // semantic
-import { Container, Form, Segment, Menu, Icon, Input, Button, Header, Sidebar, Card, Image, Modal } from 'semantic-ui-react'
+import { Container, Form, Segment, Icon, Input, Button, Header, Card, Image, Modal } from 'semantic-ui-react'
 
 // store
 import AdminStore from './../../stores/AdminStore'
@@ -38,10 +37,10 @@ class Campaigns extends Reflux.Component {
       CampaignActions.campaignUpdatePicture(this.state.selectedCampaign.id, files[0])
     }
     this.handleOpenEditor = (key) => {
-      browserHistory.push('/admin/campaigns/editor/' + key)
+      window.open('/admin/campaigns/editor/' + key, '_blank')
     }
     this.handleOpenReader = (key) => {
-      browserHistory.push('/reader/' + key)
+      window.open('/reader/' + key, '_blank')
     }
     this.handleOpenInformations = (key) => {
       this.setState({selectedCampaign: clone(this.state.campaigns[key]), modalOpen: true})
@@ -67,80 +66,66 @@ class Campaigns extends Reflux.Component {
   render () {
     let renderer = () => (
       <Container fluid>
-        <Segment basic>
-          <Menu borderless fixed="top" size="large">
-            <Menu.Item>
-              <Button onClick={this.toggleVisibility} icon="content" color="red" />
-            </Menu.Item>
-            <Menu.Item>
-              <Header as="h1" color="red" className="appbar">
-                ABIBAO
-                <Header.Subheader>platform</Header.Subheader>
-              </Header>
-            </Menu.Item>
-          </Menu>
+        <Header as="h1" attached inverted color="red" className="appbar">
+          <Icon name="settings" />
+          <Header.Content>
+            ABIBAO
+            <Header.Subheader>
+              platform
+            </Header.Subheader>
+          </Header.Content>
+        </Header>
+        <Segment basic loading={this.state.loader.visible}>
+          <Header as="h2" color="red">
+            Listes des campagnes
+            <Header.Subheader>Il y a actuellement {Object.keys(this.state.campaigns).length || 0} campagnes en lignes.</Header.Subheader>
+          </Header>
+          <Dropzone style={{display: 'none'}} ref="dropzone" multiple={false} onDrop={this.handleChangePicture} />
+          <Card.Group>
+            {Object.keys(this.state.campaigns).map((key) => (
+              <Card key={key} centered>
+                <Image height="140" src={host + '/' + this.state.campaigns[key].picture} />
+                <Card.Content>
+                  <Card.Header>
+                    {this.state.campaigns[key].name}
+                  </Card.Header>
+                  <Card.Meta>
+                    <span>
+                      {this.state.campaigns[key].company.name || 'Aucune'}
+                    </span>
+                  </Card.Meta>
+                  <Card.Description>
+                    {this.state.campaigns[key].description}
+                  </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                  <Icon onClick={this.handleOpenInformations.bind(this, key)} bordered link name="setting" inverted color="grey" />
+                  <Icon onClick={this.handleOpenDropzone.bind(this, key)} bordered link name="image" inverted color="grey" />
+                  <Icon onClick={this.handleOpenEditor.bind(this, key)} bordered link name="folder open outline" inverted color="grey" />
+                  <Icon onClick={this.handleOpenReader.bind(this, key)} style={{float: 'right'}} bordered link name="play" inverted color="red" />
+                </Card.Content>
+              </Card>
+            ))}
+          </Card.Group>
         </Segment>
-        <Sidebar.Pushable as={Segment} basic className="content">
-          <Sidebar as={Menu} animation="push" visible={this.state.menuOpen} icon="labeled" vertical inverted color="grey">
-            <Menu.Item name="home">
-              <Icon name="home" />
-              Home
-            </Menu.Item>
-          </Sidebar>
-          <Sidebar.Pusher>
-            <Segment padded basic loading={this.state.loader.visible}>
-              <Header as="h2" color="red">
-                Listes des campagnes
-                <Header.Subheader>Il y a actuellement {Object.keys(this.state.campaigns).length || 0} campagnes en lignes.</Header.Subheader>
-              </Header>
-              <Dropzone style={{display: 'none'}} ref="dropzone" multiple={false} onDrop={this.handleChangePicture} />
-              <Card.Group>
-                {Object.keys(this.state.campaigns).map((key) => (
-                  <Card key={key} centered>
-                    <Image height="140" src={host + '/' + this.state.campaigns[key].picture} />
-                    <Card.Content>
-                      <Card.Header>
-                        {this.state.campaigns[key].name}
-                      </Card.Header>
-                      <Card.Meta>
-                        <span>
-                          {this.state.campaigns[key].company.name || 'Aucune'}
-                        </span>
-                      </Card.Meta>
-                      <Card.Description>
-                        {this.state.campaigns[key].description}
-                      </Card.Description>
-                    </Card.Content>
-                    <Card.Content extra>
-                      <Icon onClick={this.handleOpenInformations.bind(this, key)} bordered link name="setting" inverted color="grey" />
-                      <Icon onClick={this.handleOpenDropzone.bind(this, key)} bordered link name="image" inverted color="grey" />
-                      <Icon onClick={this.handleOpenEditor.bind(this, key)} bordered link name="folder open outline" inverted color="grey" />
-                      <Icon onClick={this.handleOpenReader.bind(this, key)} style={{float: 'right'}} bordered link name="play" inverted color="red" />
-                    </Card.Content>
-                  </Card>
-                ))}
-              </Card.Group>
-            </Segment>
-            <Modal open={this.state.modalOpen}>
-              <Header size="huge" color="red" content="Informations" subheader="metadata d'une campagne" />
-              <Modal.Content image>
-                <Image height="140" wrapped size="medium" src={host + '/' + this.state.selectedCampaign.picture} />
-                <Modal.Description className="campaigns">
-                  <Form>
-                    <Form.Field>
-                      <label>Nom de la campagne</label>
-                      <Input onChange={(e) => this.handleChangeInformation({key: 'name', val: e.target.value})} defaultValue={this.state.selectedCampaign.name} size="large" label={{ color: 'red', icon: 'asterisk' }} labelPosition="right corner" className="form" />
-                    </Form.Field>
-                  </Form>
-                </Modal.Description>
-              </Modal.Content>
-              <Modal.Actions>
-                <Button onClick={this.handleCloseInformations} negative icon="close" labelPosition="right" content="Annuler" />
-                <Button onClick={this.handleUpdateInformations} positive icon="checkmark" labelPosition="right" content="Sauver" />
-              </Modal.Actions>
-            </Modal>
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
+        <Modal open={this.state.modalOpen}>
+          <Header size="huge" color="red" content="Informations" subheader="metadata d'une campagne" />
+          <Modal.Content image>
+            <Image height="140" wrapped size="medium" src={host + '/' + this.state.selectedCampaign.picture} />
+            <Modal.Description className="campaigns">
+              <Form>
+                <Form.Field>
+                  <label>Nom de la campagne</label>
+                  <Input onChange={(e) => this.handleChangeInformation({key: 'name', val: e.target.value})} defaultValue={this.state.selectedCampaign.name} size="large" label={{ color: 'red', icon: 'asterisk' }} labelPosition="right corner" className="form" />
+                </Form.Field>
+              </Form>
+            </Modal.Description>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button onClick={this.handleCloseInformations} negative icon="close" labelPosition="right" content="Annuler" />
+            <Button onClick={this.handleUpdateInformations} positive icon="checkmark" labelPosition="right" content="Sauver" />
+          </Modal.Actions>
+        </Modal>
         <Button onClick={this.handleCampaignCreate} size="huge" color="red" circular icon="plus" className="floating right" loading={this.state.loader.visible} />
       </Container>
     )

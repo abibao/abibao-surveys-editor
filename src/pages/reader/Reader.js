@@ -19,6 +19,16 @@ import ReaderStore from './../../stores/ReaderStore'
 // actions
 import SurveyActions from './../../actions/SurveyActions'
 
+function getParameterByName (name, search) {
+  const temp = search.split('?').join('').split('&')
+  let params = {}
+  temp.map((item) => {
+    params[item.split('=')[0]] = item.split('=')[1]
+    return true
+  })
+  return params[name] || null
+}
+
 class Reader extends Reflux.Component {
   componentDidMount () {
     console.log('Reader', 'componentDidMount')
@@ -33,8 +43,9 @@ class Reader extends Reflux.Component {
   componentDidUpdate (prevProps, prevState) {
     if (this.state.selectedSurvey === false && this.state.token !== false) {
       console.log('Time to affect the campaign or load the survey for user')
+      let source = getParameterByName('source[]', this.props.location.search)
       this.state.selectedSurvey = true
-      SurveyActions.surveyAffect({individual: this.state.individual, campaign: this.props.params.id})
+      SurveyActions.surveyAffect({individual: this.state.individual, campaign: this.props.params.id, source})
     }
   }
   constructor (props) {
