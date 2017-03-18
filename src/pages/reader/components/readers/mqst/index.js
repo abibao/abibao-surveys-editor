@@ -7,6 +7,12 @@ import * as Survey from 'survey-react'
 import AnswerActions from './../../../../../actions/AnswerActions'
 import SurveyActions from './../../../../../actions/SurveyActions'
 
+// semantic
+import { Container } from 'semantic-ui-react'
+
+import styles from './styles'
+import './screen.css'
+
 class SurveyReader extends Reflux.Component {
   componentDidMount () {
   }
@@ -44,9 +50,9 @@ class SurveyReader extends Reflux.Component {
     Survey.Survey.cssType = 'bootstrap'
     let data = new Survey.Model(this.state.campaign.data)
     return (
-      <div>
-        <Survey.Survey onComplete={this.surveyComplete} onValidateQuestion={this.surveyValidateQuestion} model={data} />
-      </div>
+      <Container className="mqst-body">
+        <Survey.Survey onComplete={this.surveyComplete} onValidateQuestion={this.surveyValidateQuestion} model={data} css={styles} />
+      </Container>
     )
   }
 }

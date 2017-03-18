@@ -136,3 +136,11 @@ textarea.abibao-form-control {
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
+
+.mqst-radio label span {
+  cursor: pointer;
+  padding: 0.5rem;
+  ont-size: 18px;
+  line-height: 18px;
+  font-weight: 700;
+}
