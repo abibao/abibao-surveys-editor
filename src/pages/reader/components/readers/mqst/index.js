@@ -5,6 +5,7 @@ import * as Survey from 'survey-react'
 
 // actions
 import AnswerActions from './../../../../../actions/AnswerActions'
+import SurveyActions from './../../../../../actions/SurveyActions'
 
 class SurveyReader extends Reflux.Component {
   componentDidMount () {
@@ -21,7 +22,7 @@ class SurveyReader extends Reflux.Component {
     }
     this.surveyComplete = () => {
       console.log('SurveyReader', 'surveyComplete')
-      // now we make this survey complete in database
+      SurveyActions.surveyComplete()
     }
     this.surveyValidateQuestion = (s, options) => {
       console.log('SurveyReader', 'surveyValidateQuestion')

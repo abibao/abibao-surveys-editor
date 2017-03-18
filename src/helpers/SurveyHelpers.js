@@ -17,6 +17,11 @@ class SurveyHelpers {
         console.error('...', error)
       })
   }
+
+  complete (data) {
+    Feathers.service('command/individualCompleteSurvey').create(data).then((result) => {
+    }).catch(console.error)
+  }
 }
 
 export default SurveyHelpers

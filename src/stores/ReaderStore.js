@@ -63,6 +63,10 @@ class ReaderStore extends Reflux.Store {
     console.log('ReaderStore', 'onAnswerUpsert')
     this.answer.upsert(data)
   }
+  onSurveyComplete () {
+    console.log('ReaderStore', 'onSurveyComplete')
+    this.survey.complete(this.state.selectedSurvey)
+  }
   onSurveyAffect (data) {
     console.log('ReaderStore', 'onSurveyAffect')
     this.survey.affect(data)

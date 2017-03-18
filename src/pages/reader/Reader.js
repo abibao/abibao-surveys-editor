@@ -26,6 +26,7 @@ function getParams (search) {
     params[item.split('=')[0]] = item.split('=')[1]
     return true
   })
+  console.log(temp, params)
   return params
 }
 
@@ -44,7 +45,8 @@ class Reader extends Reflux.Component {
     if (this.state.selectedSurvey === false && this.state.token !== false) {
       console.log('Time to affect the campaign or load the survey for user')
       this.state.selectedSurvey = true
-      SurveyActions.surveyAffect({individual: this.state.individual, campaign: this.props.params.id, params: getParams()})
+      let text = JSON.stringify(getParams(this.props.location.search))
+      SurveyActions.surveyAffect({individual: this.state.individual, campaign: this.props.params.id, params: JSON.parse(text)})
     }
   }
   constructor (props) {
