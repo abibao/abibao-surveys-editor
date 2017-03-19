@@ -3,6 +3,9 @@ import React from 'react'
 import Reflux from 'reflux'
 import * as Survey from 'survey-react'
 
+// libraries
+import Feathers from './../../../../../libs/Feathers'
+
 // actions
 import AnswerActions from './../../../../../actions/AnswerActions'
 import SurveyActions from './../../../../../actions/SurveyActions'
@@ -12,6 +15,7 @@ import { Container } from 'semantic-ui-react'
 
 import styles from './styles'
 import './screen.css'
+import './modal'
 
 class SurveyReader extends Reflux.Component {
   componentDidMount () {
@@ -44,6 +48,13 @@ class SurveyReader extends Reflux.Component {
       }
       AnswerActions.answerUpsert(answer)
     }
+    this.handleGetRandomAnswer = () => {
+      return Feathers.service('query/answerGetRandom').get({
+        campaign: this.state.campaign.id,
+        email: this.props.individual.email || this.props.individual
+      })
+    }
+    window.handleGetRandomAnswer = this.handleGetRandomAnswer
   }
   render () {
     this.state.campaign = this.props.campaign

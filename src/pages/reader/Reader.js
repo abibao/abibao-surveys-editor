@@ -26,7 +26,6 @@ function getParams (search) {
     params[item.split('=')[0]] = item.split('=')[1]
     return true
   })
-  console.log(temp, params)
   return params
 }
 
@@ -55,7 +54,7 @@ class Reader extends Reflux.Component {
       individual: cookie.load('individual'),
       readers: {
         abibao: Readers.AbibaoReader,
-        mqst: Readers.MQSTReader
+        ehop: Readers.EHOPReader
       }
     }
     this.store = ReaderStore
