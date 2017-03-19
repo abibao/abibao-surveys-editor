@@ -39,21 +39,22 @@ class Service {
         return Answer.findAll({
           where: { 'campaign_id': params.campaign, question: 'AGENCEDURABLE_EHOP_IDEA', email: { $not: params.email } },
           offset, limit: 1
-       })
+        })
       }
     }).then(Promise.resolve).catch(Promise.reject)
+  }
 }
 
 
 module.exports = function () {
   const app = this
   app.use('query/answerGetRandom', new Service())
-  const service = app.service('query/answerGetRandom')
+  /* const service = app.service('query/answerGetRandom')
   service.before({
     get: [
       auth.hooks.authenticate('jwt'),
       permissions.hooks.checkPermissions(options),
       permissions.hooks.isPermitted()
     ]
-  })
+  }) */
 }
