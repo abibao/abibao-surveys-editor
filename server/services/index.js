@@ -13,6 +13,9 @@ const individualCompleteSurveyCommand = require('./domain/commands/individualCom
 const individualAffectSurveyCommand = require('./domain/commands/individualAffectSurveyCommand')
 const postOnSlackWithWebhookCommand = require('./domain/commands/postOnSlackWithWebhookCommand')
 
+// external queries
+const answerGetRandomQuery = require('./domain/queries/answerGetRandomQuery')
+
 module.exports = function () {
   const app = this
 
@@ -26,4 +29,6 @@ module.exports = function () {
   app.configure(individualCompleteSurveyCommand)
   app.configure(individualAffectSurveyCommand)
   app.configure(postOnSlackWithWebhookCommand)
+
+  app.configure(answerGetRandomQuery)
 }

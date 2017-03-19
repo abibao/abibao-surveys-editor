@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      html, body {
+        min-height: 100%;
+      }
+      button.iframe {
+        width: 120px;
+        font-size: 15px;
+        line-height: 15px;
+        font-weight: 700;
+        letter-spacing: .04em;
+        text-align: center;
+        text-transform: none;
+        background: #eb690a;
+        color: #fff;
+        padding: 10px;
+        border-radius: 7px;
+        cursor: pointer;
+        transition: all .2s;
+        -ms-flex-negative: 0;
+        flex-shrink: 0;
+        margin: auto;
+        margin-bottom: 1rem;
+      }
+      #container {
+        padding: 0;
+        width: 100%;
+        overflow-y: auto;
+        height: 100%
+      }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+      var self = this
+      self.handleGetRandomAnswer = parent.handleGetRandomAnswer
+      var init = function () {
+        self.handleGetRandomAnswer()
+          .then((result) => {
+            document.getElementById('container').innerHTML = result[0]['answer_text']
+          }).catch(console.error)
+      }
+      init()
+    </script>
+    <button class="iframe" onclick="init()">Une autre</button>
+    <div id="container" />
+  </body>
+</html>

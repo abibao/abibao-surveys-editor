@@ -1,23 +1,23 @@
-.mqst-body: {
+.ehop-body: {
 	border: solid red 4px;
 	background: #cccccc !important;
 }
 
-.mqst-reader {
+.ehop-reader {
 	box-shadow: 0 3px 6px 3px rgba(0,0,0,.2);
   padding: 20px;
 }
 
-textarea.mqst-form-control {
+textarea.ehop-form-control {
 	width: 100%;
 	min-height: 300px;
 }
 
-.mqst-panel-footer {
+.ehop-panel-footer {
 	text-align: center;
 }
 
-input.mqst-button-nav {
+input.ehop-button-nav {
 	width: 120px;
   font-size: 15px;
   line-height: 15px;
@@ -29,7 +29,6 @@ input.mqst-button-nav {
   color: #fff;
   padding: 10px;
   border-radius: 7px;
-  box-shadow: 0 3px 6px 3px rgba(0,0,0,.2);
   cursor: pointer;
   transition: all .2s;
   -ms-flex-negative: 0;
@@ -37,7 +36,7 @@ input.mqst-button-nav {
   margin: auto;
 }
 
-input.mqst-form-control {
+input.ehop-form-control {
 	margin-bottom: 1rem;
 	padding: 0.25rem;
 	width: 100%;
@@ -47,10 +46,10 @@ input.mqst-form-control {
   box-shadow: 0 2px 4px 2px rgba(0,0,0,.2);
 }
 
-.mqst-radio {
+.ehop-radio {
  	padding: 0.5rem;
 }
-.mqst-radio > label > span {
+.ehop-radio > label > span {
 	cursor: pointer;
 	font-size: 15px;
   line-height: 15px;

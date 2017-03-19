@@ -1,7 +1,7 @@
 import AbibaoReader from './abibao'
-import MQSTReader from './mqst'
+import EHOPReader from './ehop'
 
 export {
   AbibaoReader,
-  MQSTReader
+  EHOPReader
 }
