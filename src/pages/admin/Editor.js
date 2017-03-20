@@ -5,7 +5,7 @@ import React from 'react'
 import Reflux from 'reflux'
 
 // semantic
-import { Container, Sidebar, Icon, Segment, Menu, Header, Button } from 'semantic-ui-react'
+import { Container, Icon, Header, Segment } from 'semantic-ui-react'
 
 // libraries
 import Feathers from './../../libs/Feathers'
@@ -60,36 +60,18 @@ class Editor extends Reflux.Component {
   render () {
     let renderer = () => (
       <Container fluid className="editor">
-        <Segment basic>
-          <Menu borderless fixed="top" size="large">
-            <Menu.Item>
-              <Button onClick={this.toggleVisibility} icon="content" color="red" />
-            </Menu.Item>
-            <Menu.Item>
-              <Header as="h1" color="red" className="appbar">
-                ABIBAO
-                <Header.Subheader>platform</Header.Subheader>
-              </Header>
-            </Menu.Item>
-          </Menu>
+        <Header as="h1" attached inverted color="red" className="appbar">
+          <Icon name="settings" />
+          <Header.Content>
+            ABIBAO
+            <Header.Subheader>
+              platform
+            </Header.Subheader>
+          </Header.Content>
+        </Header>
+        <Segment basic className="editor">
+          <IFrameComponent iframe="iframe" campaign={this.state.selectedCampaign} src={'/editor.html?' + this.props.params.id} />
         </Segment>
-        <Sidebar.Pushable as={Segment} basic className="content">
-          <Sidebar as={Menu} animation="push" visible={this.state.menuOn} icon="labeled" vertical inverted color="grey">
-            <Menu.Item name="home">
-              <Icon name="home" />
-              Home
-            </Menu.Item>
-          </Sidebar>
-          <Sidebar.Pusher className="editor">
-            <Segment padded basic loading={this.state.loader.visible} className="editor">
-              <Header as="h2" color="red">
-                Campagne
-                <Header.Subheader>{(this.state.selectedCampaign && this.state.selectedCampaign.name) ? this.state.selectedCampaign.name : 'En cours de chargement...'}</Header.Subheader>
-              </Header>
-              <IFrameComponent iframe="iframe" campaign={this.state.selectedCampaign} src={'/editor.html?' + this.props.params.id} />
-            </Segment>
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
       </Container>
     )
     return renderer()

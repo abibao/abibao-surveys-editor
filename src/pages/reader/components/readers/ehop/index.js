@@ -10,12 +10,9 @@ import Feathers from './../../../../../libs/Feathers'
 import AnswerActions from './../../../../../actions/AnswerActions'
 import SurveyActions from './../../../../../actions/SurveyActions'
 
-// semantic
-import { Container } from 'semantic-ui-react'
-
 import styles from './styles'
 import './screen.css'
-import './modal'
+import './mobile.css'
 
 class SurveyReader extends Reflux.Component {
   componentDidMount () {
@@ -61,9 +58,7 @@ class SurveyReader extends Reflux.Component {
     Survey.Survey.cssType = 'bootstrap'
     let data = new Survey.Model(this.state.campaign.data)
     return (
-      <Container className="mqst-body">
-        <Survey.Survey onComplete={this.surveyComplete} onValidateQuestion={this.surveyValidateQuestion} model={data} css={styles} />
-      </Container>
+      <Survey.Survey onComplete={this.surveyComplete} onValidateQuestion={this.surveyValidateQuestion} model={data} css={styles} />
     )
   }
 }
