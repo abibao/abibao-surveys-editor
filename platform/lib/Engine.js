@@ -19,7 +19,7 @@ class Engine {
   initialize () {
     this.debug('initialize started')
     // load configurations
-    this.config = require('../config/default')
+    this.config = require('../config')
     // initializers
     this.domain = new Domain(this)
     this.server = new Server(this)

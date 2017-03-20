@@ -13,7 +13,8 @@
     "eject": "react-scripts eject",
     "start": "react-scripts start",
     "start:server": "node server/start.js",
-    "start:server:debug": "DEBUG=feathers* node server/start.js"
+    "start:server:debug": "DEBUG=feathers* node server/start.js",
+    "start:platform": "DEBUG=abibao:*,cqrs:* node_modules/.bin/nodemon --config nodemon.json platform"
   },
   "dependencies": {
     "bluebird": "3.5.0",
@@ -40,6 +41,7 @@
     "hapi-auth-jwt2": "7.2.4",
     "hapi-sequelize": "3.0.4",
     "inert": "4.1.0",
+    "joi": "10.2.2",
     "lodash": "4.17.4",
     "nconf": "0.8.4",
     "node-cqrs-framework": "0.9.4",
@@ -67,6 +69,7 @@
     "log": "1.4.0",
     "mocha": "3.2.0",
     "mocha-standard": "1.0.0",
+    "nodemon": "^1.11.0",
     "progress": "1.1.8",
     "react": "15.4.2",
     "react-addons-test-utils": "15.4.2",
