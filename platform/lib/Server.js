@@ -14,7 +14,7 @@ class Server {
     this.name = 'server'
     this.debug = require('debug')('abibao:server')
     this.error = engine.error
-    this.config = engine.config
+    this.config = require('../config')
     this.options = {
       host: this.config.host,
       port: this.config.port,

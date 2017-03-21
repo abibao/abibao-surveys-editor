@@ -14,7 +14,7 @@ class Domain {
     this.name = 'domain'
     this.debug = require('debug')('abibao:domain')
     this.error = engine.error
-    this.config = engine.config
+    this.config = require('../config')
     this.cryptr = new Cryptr(this.config.cryptr.secret)
     this.debug('cqrs location', path.resolve(__dirname, '..'))
     this.cqrs = {

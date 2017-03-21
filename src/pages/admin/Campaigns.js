@@ -83,7 +83,7 @@ class Campaigns extends Reflux.Component {
           <Dropzone style={{display: 'none'}} ref="dropzone" multiple={false} onDrop={this.handleChangePicture} />
           <Card.Group>
             {Object.keys(this.state.campaigns).map((key) => (
-              <Card key={key} centered>
+              <Card key={key}>
                 <Image height="140" src={host + '/' + this.state.campaigns[key].picture} />
                 <Card.Content>
                   <Card.Header>

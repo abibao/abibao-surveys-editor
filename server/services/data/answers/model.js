@@ -17,6 +17,10 @@ module.exports = function (app) {
         isEmail: true
       }
     },
+    survey_id: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
     campaign_id: {
       type: Sequelize.STRING,
       allowNull: false
@@ -38,10 +42,6 @@ module.exports = function (app) {
       allowNull: false
     },
     answer: {
-      type: Sequelize.TEXT,
-      allowNull: false
-    },
-    answer_text: {
       type: Sequelize.TEXT,
       allowNull: false
     }

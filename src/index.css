@@ -108,14 +108,10 @@ EDITOR COMPONENT **/
 	height: 100% !important;
 }
 
-.pusher.editor {
-	overflow: hidden;
-	height: calc(100% - 60px) !important;
-	min-height: calc(100% - 60px) !important;
-}
-
 .ui.segment.editor {
-	height: calc(100% - 60px) !important;
+	height: calc(100% - 1px) !important;
+  padding: 0;
+  margin: 0;
 }
 
 .button.floating.right {

@@ -10,7 +10,7 @@ class SurveyHelpers {
     this.context.state.loader.visible = true
     Feathers.service('command/individualAffectSurvey').create(data)
       .then((response) => {
-        this.context.setState({selectedSurvey: response, selectedCampaign: response.campaign})
+        this.context.setState({selectedSurvey: response})
         this.context.setState({loader: {visible: false}})
       })
       .catch((error) => {
@@ -19,7 +19,7 @@ class SurveyHelpers {
   }
 
   complete (data) {
-    Feathers.service('command/individualCompleteSurvey').create(data).then((result) => {
+    Feathers.service('command/individualCompleteSurvey').create(data).then((response) => {
     }).catch(console.error)
   }
 }

@@ -3,7 +3,6 @@
 // react
 import React from 'react'
 import Reflux from 'reflux'
-import {clone} from 'lodash'
 import uuid from 'uuid'
 import cookie from 'react-cookie'
 
@@ -69,7 +68,7 @@ class Reader extends Reflux.Component {
     }
     let renderer = (CurrentReader) => (
       <Container fluid>
-        <CurrentReader campaign={clone(this.state.selectedCampaign)} individual={this.state.selectedSurvey.individual} />
+        <CurrentReader survey={this.state.selectedSurvey} />
       </Container>
     )
     if (this.state.loader.visible === true) {
