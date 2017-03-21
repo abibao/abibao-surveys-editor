@@ -23,10 +23,6 @@ class SurveyReader extends Reflux.Component {
   }
   constructor (props) {
     super(props)
-    this.state = {
-      individual: this.props.individual,
-      campaign: this.props.campaign
-    }
     this.surveyComplete = () => {
       console.log('SurveyReader', 'surveyComplete')
       SurveyActions.surveyComplete()
@@ -34,29 +30,31 @@ class SurveyReader extends Reflux.Component {
     this.surveyValidateQuestion = (s, options) => {
       console.log('SurveyReader', 'surveyValidateQuestion')
       let answer = {
-        'email': this.props.individual.email || this.props.individual,
-        'campaign_id': this.state.campaign.id,
-        'campaign_name': this.state.campaign.name,
-        'charity_id': this.state.campaign.charity || null,
-        'charity_name': this.state.campaign.charity || null,
+        'email': this.props.survey.individual.email || this.props.survey.individual,
+        'survey_id': this.props.survey.id,
+        'campaign_id': this.props.survey.campaign.id,
+        'campaign_name': this.props.survey.campaign.name,
+        'charity_id': this.props.survey.campaign.charity || null,
+        'charity_name': this.props.survey.campaign.charity || null,
         question: options.name,
-        answer: options.value,
-        answer_text: options.value
+        answer: options.value
       }
       AnswerActions.answerUpsert(answer)
     }
     this.handleGetRandomAnswer = () => {
       return Feathers.service('query/answerGetRandom').get({
-        campaign: this.state.campaign.id,
-        email: this.props.individual.email || this.props.individual
+        campaign: this.props.survey.campaign.id,
+        email: this.props.survey.individual.email || this.props.survey.individual
       })
     }
     window.handleGetRandomAnswer = this.handleGetRandomAnswer
   }
   render () {
-    this.state.campaign = this.props.campaign
+    if (!this.props.survey) {
+      return (null)
+    }
     Survey.Survey.cssType = 'bootstrap'
-    let data = new Survey.Model(this.state.campaign.data)
+    let data = new Survey.Model(this.props.survey.campaign.data)
     return (
       <Survey.Survey onComplete={this.surveyComplete} onValidateQuestion={this.surveyValidateQuestion} model={data} css={styles} />
     )

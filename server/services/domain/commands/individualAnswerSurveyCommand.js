@@ -27,6 +27,7 @@ class Service {
     // upsert answer
     return app.service('api/answers').find({query: {
       email: params.email,
+      'survey_id': params['survey_id'],
       'campaign_id': params['campaign_id'],
       question: params.question
     }}).then((result) => {

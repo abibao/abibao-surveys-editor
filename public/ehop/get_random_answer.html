@@ -41,7 +41,7 @@
       var init = function () {
         self.handleGetRandomAnswer()
           .then((result) => {
-            document.getElementById('container').innerHTML = result[0]['answer_text']
+            document.getElementById('container').innerHTML = result[0]['answer']
           }).catch(console.error)
       }
       init()
