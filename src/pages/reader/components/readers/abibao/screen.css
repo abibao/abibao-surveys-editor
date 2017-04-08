@@ -5,11 +5,15 @@
   font-weight: normal;
 }
 
+.abibao-reader p {
+  font-size: 1.1rem;
+}
+
 .abibao-reader {
   background: #ffffff;
   padding: 20px;
   margin: auto;
-  max-width: 550px;
+  max-width: 640px;
 }
 .abibao-panel-heading {
   font-size: 2.05rem;
@@ -46,8 +50,8 @@
 }
 
 h4.abibao-page-title {
-  font-size: 1.85rem;
-  font-weight: 300;
+  font-size: 2.05rem;
+  font-weight: 900;
   letter-spacing: -.01rem;
   background: #5da2c7;
   color: #ffffff;
@@ -57,19 +61,38 @@ h4.abibao-page-title {
   padding-top: 0;
 }
 
+.abibao-row {
+  background: #e7ebee;
+}
+
 .abibao-question {
   margin: 0;
   padding: 30px;
   background: #e7ebee;
-  width: calc(100% - 60px) !important;
+  width: calc(100% - 0px) !important;
+  margin-bottom: 22px;
 }
 .abibao-question-title {
   margin: 0;
   display: inline-block;
   width: 100%;
   color: #373e44;
-  font-size: 1.5rem;
+  font-size: 1.5rem !important;
   margin-bottom: 20px;
+}
+
+.abibao-abibao-alert-danger {
+  background: #ef9a9a;
+  border: solid 2px #e57373;
+  border-radius: 5px;
+  text-align: center;
+  padding: 1em;
+  font-size: 1.25em;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 1em;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .abibao-progress.center-block {
@@ -102,7 +125,7 @@ input.abibao-form-control {
   font-size: 1.5rem;
   border: none;
   background: #fffff;
-  width: calc(100% - 40px) !important;
+  width: 100% !important;
 }
 
 textarea.abibao-form-control {
@@ -113,7 +136,7 @@ textarea.abibao-form-control {
   font-size: 1rem;
   border: none;
   background: #fffff;
-  width: calc(100% - 40px) !important;
+  width: 100% !important;
 }
 
 .abibao-button-nav {
@@ -137,10 +160,95 @@ textarea.abibao-form-control {
   flex-shrink: 0;
 }
 
-.mqst-radio label span {
-  cursor: pointer;
-  padding: 0.5rem;
-  ont-size: 18px;
-  line-height: 18px;
-  font-weight: 700;
+/* CHECKBOX */
+div.abibao-checkbox > label > input[type="checkbox"]:checked,
+div.abibao-checkbox > label > input[type="checkbox"]:not(:checked) {
+	display: none;
+	margin: 0;
+	padding: 0;
+}
+div.abibao-checkbox {
+  height: 30px;
+  margin-bottom: 5px;
+}
+.abibao-checkbox > label > span {
+  display: inline-flex;
+  white-space: nowrap;
+  font-size: 1.25em;
+  line-height: 30px;
+  margin: auto;
+	padding-left: 38px;
+	position: relative;
+	cursor: pointer;
+}
+.abibao-checkbox > label > span:before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 30px;
+	height: 30px;
+  background: #cccccc;
+  border: solid 2px #cccccc;
+  border-radius: 5px;
+}
+.abibao-checkbox > label > input[type="checkbox"]:checked + span:before {
+  content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 30px;
+	height: 30px;
+  background: #f0f0f0;
+  border: solid 10px #5da2c7;
+  border-radius: 5px;
+}
+
+/* RADIO */
+
+.abibao-radio > label > input[type="radio"]:checked,
+.abibao-radio > label > input[type="radio"]:not(:checked) {
+	display: none;
+	margin: 0;
+	padding: 0;
+}
+.abibao-radio {
+  height: 30px;
+  margin-bottom: 5px;
+}
+.abibao-radio > label > span {
+  display: inline-flex;
+  white-space: nowrap;
+  font-size: 1.25em;
+  line-height: 30px;
+  margin: auto;
+	padding-left: 38px;
+	position: relative;
+	cursor: pointer;
+}
+.abibao-radio > label > span:before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 30px;
+	height: 30px;
+  background: #cccccc;
+  border: solid 2px #cccccc;
+  border-radius: 100%;
+}
+.abibao-radio > label > input[type="radio"]:checked + span:before {
+  content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 30px;
+	height: 30px;
+  background: #f0f0f0;
+  border: solid 10px #5da2c7;
+  border-radius: 100%;
+}
+
+.abibao-panel-footer .abibao-button-nav:nth-child(2) {
+  float: right;
 }

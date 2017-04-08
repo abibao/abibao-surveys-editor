@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.3/es6-shim.js" type="text/javascript"></script>
     <style>
       html, body {
         min-height: 100%;
@@ -40,7 +41,7 @@
       self.handleGetRandomAnswer = parent.handleGetRandomAnswer
       var init = function () {
         self.handleGetRandomAnswer()
-          .then((result) => {
+          .then(function (result) {
             document.getElementById('container').innerHTML = result[0]['answer']
           }).catch(console.error)
       }

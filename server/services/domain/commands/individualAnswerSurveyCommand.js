@@ -3,6 +3,7 @@
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
+const _ = require('lodash')
 
 const options = {
   service: 'users'
@@ -24,19 +25,25 @@ class Service {
     if (!params.question) {
       return Promise.reject(new Error('question is mandatory'))
     }
-    // upsert answer
-    return app.service('api/answers').find({query: {
+    const answersToCreate = []
+    return app.service('api/answers').remove(null, {query: {
       email: params.email,
       'survey_id': params['survey_id'],
       'campaign_id': params['campaign_id'],
       question: params.question
-    }}).then((result) => {
-      if (result.length === 0) {
-        return app.service('api/answers').create(params).then(Promise.resolve)
+    }}).then(() => {
+      if (_.isArray(params.answer)) {
+        _.map(params.answer, (answer) => {
+          let newParams = _.clone(params)
+          newParams.answer = answer
+          answersToCreate.push(newParams)
+        })
       } else {
-        return app.service('api/answers').update(result[0].id, params).then(Promise.resolve)
+        answersToCreate.push(params)
       }
+      return app.service('api/answers').create(answersToCreate).then(Promise.resolve)
     }).catch(Promise.reject)
+
   }
 }
 

@@ -30,7 +30,7 @@ function getParams (search) {
 
 class Reader extends Reflux.Component {
   componentDidMount () {
-    console.log('Reader', 'componentDidMount')
+    console.log('Reader', 'componentDidMount', this.state.individual)
     let individual = uuid.v4() + '@abibao.com'
     if (!this.state.individual) {
       this.setState({ individual })
@@ -49,6 +49,9 @@ class Reader extends Reflux.Component {
   }
   constructor (props) {
     super(props)
+    if (this.props.location.query.individual) {
+      cookie.save('individual', this.props.location.query.individual, { path: '/' })
+    }
     this.state = {
       individual: cookie.load('individual'),
       readers: {

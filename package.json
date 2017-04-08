@@ -13,8 +13,7 @@
     "eject": "react-scripts eject",
     "start": "react-scripts start",
     "start:server": "node server/start.js",
-    "start:server:debug": "DEBUG=feathers* node server/start.js",
-    "start:platform": "DEBUG=abibao:*,cqrs:* node_modules/.bin/nodemon --config nodemon.json platform"
+    "start:server:debug": "DEBUG=feathers* node server/start.js"
   },
   "dependencies": {
     "bluebird": "3.5.0",

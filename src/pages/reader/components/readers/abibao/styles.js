@@ -49,7 +49,7 @@ const styles = {
   'radiogroup': {
     'root': 'abibao-form-inline',
     'item': 'abibao-radio',
-    'other': ''
+    'other': 'abibao-radio-other'
   },
   'rating': {
     'root': 'abibao-btn-group',

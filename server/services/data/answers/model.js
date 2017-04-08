@@ -29,14 +29,6 @@ module.exports = function (app) {
       type: Sequelize.STRING,
       allowNull: false
     },
-    charity_id: {
-      type: Sequelize.STRING,
-      allowNull: true
-    },
-    charity_name: {
-      type: Sequelize.STRING,
-      allowNull: true
-    },
     question: {
       type: Sequelize.STRING,
       allowNull: false

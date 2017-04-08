@@ -30,12 +30,10 @@ class SurveyReader extends Reflux.Component {
     this.surveyValidateQuestion = (s, options) => {
       console.log('SurveyReader', 'surveyValidateQuestion')
       let answer = {
-        'email': this.props.survey.individual.email || this.props.survey.individual,
+        'email': this.props.survey.individual,
         'survey_id': this.props.survey.id,
         'campaign_id': this.props.survey.campaign.id,
         'campaign_name': this.props.survey.campaign.name,
-        'charity_id': this.props.survey.campaign.charity || null,
-        'charity_name': this.props.survey.campaign.charity || null,
         question: options.name,
         answer: options.value
       }
@@ -44,7 +42,7 @@ class SurveyReader extends Reflux.Component {
     this.handleGetRandomAnswer = () => {
       return Feathers.service('query/answerGetRandom').get({
         campaign: this.props.survey.campaign.id,
-        email: this.props.survey.individual.email || this.props.survey.individual
+        email: this.props.survey.individual
       })
     }
     window.handleGetRandomAnswer = this.handleGetRandomAnswer
