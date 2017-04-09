@@ -6,6 +6,7 @@ const entities = require('./data/entities')
 const campaigns = require('./data/campaigns')
 const surveys = require('./data/surveys')
 const answers = require('./data/answers')
+const individuals = require('./data/individuals')
 
 // external commands
 const individualAnswerSurveyCommand = require('./domain/commands/individualAnswerSurveyCommand')
@@ -24,7 +25,8 @@ module.exports = function () {
   app.configure(campaigns)
   app.configure(surveys)
   app.configure(answers)
-
+  app.configure(individuals)
+  
   app.configure(individualAnswerSurveyCommand)
   app.configure(individualCompleteSurveyCommand)
   app.configure(individualAffectSurveyCommand)
