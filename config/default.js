@@ -23,6 +23,12 @@ module.exports = {
     user: nconf.get('ABIBAO_RABBITMQ_USER') || 'guest',
     pass: nconf.get('ABIBAO_RABBITMQ_PASSWORD') || 'guest'
   },
+  sendgrid: {
+    key: nconf.get('ABIBAO_SENDGRID_KEY') || 'sendgrid',
+    templates: {
+      passwordless: nconf.get('ABIBAO_SENDGRID_TEMPLATE_PASSWORDLESS') || 'sendgrid'
+    }
+  },
   slack: {
     webhook: nconf.get('ABIBAO_SLACK_WEBHOOK') || 'http://localhost'
   },

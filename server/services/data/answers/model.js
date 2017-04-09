@@ -10,7 +10,7 @@ module.exports = function (app) {
       unique: true,
       defaultValue: Sequelize.UUIDV4
     },
-    email: {
+    individual: {
       type: Sequelize.STRING,
       allowNull: false,
       validate: {

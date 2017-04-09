@@ -16,8 +16,8 @@ class Service {
   create (params) {
     const app = this.app
     // mandatory
-    if (!params.email) {
-      return Promise.reject(new Error('email is mandatory'))
+    if (!params.individual) {
+      return Promise.reject(new Error('individual is mandatory'))
     }
     if (!params['campaign_id']) {
       return Promise.reject(new Error('campaign_id is mandatory'))
@@ -27,7 +27,7 @@ class Service {
     }
     const answersToCreate = []
     return app.service('api/answers').remove(null, {query: {
-      email: params.email,
+      individual: params.individual,
       'survey_id': params['survey_id'],
       'campaign_id': params['campaign_id'],
       question: params.question

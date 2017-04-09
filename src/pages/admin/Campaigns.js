@@ -117,6 +117,8 @@ class Campaigns extends Reflux.Component {
                 <Form.Field>
                   <label>Nom de la campagne</label>
                   <Input onChange={(e) => this.handleChangeInformation({key: 'name', val: e.target.value})} defaultValue={this.state.selectedCampaign.name} size="large" label={{ color: 'red', icon: 'asterisk' }} labelPosition="right corner" className="form" />
+                  <label>Position de la campagne</label>
+                  <Input onChange={(e) => this.handleChangeInformation({key: 'position', val: e.target.value})} defaultValue={this.state.selectedCampaign.position} size="large" className="form" />
                 </Form.Field>
               </Form>
             </Modal.Description>

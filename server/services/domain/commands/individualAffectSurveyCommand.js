@@ -34,6 +34,23 @@ class Service {
           return true
         }
       })
+      // is individual already in our database if reader = abibao
+      .then(() => {
+        if(params.reader === 'abibao') {
+          return app.service('api/individuals').find({query: {
+            urn: params.individual
+          }}).then((result) => {
+            if (result.length === 0) {
+              // auto affectation survey abibao 1
+              throw new Error('ABIBAO_ERROR_AFFECT_POSITION_1')
+            } else {
+              params.individual = result[0].urn
+            }
+          })
+        } else {
+          return true
+        }
+      })
       // already have affected survey and not complete for this individual ?
       .then(() => {
         return app.service('api/surveys').find({query: {

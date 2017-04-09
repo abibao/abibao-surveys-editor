@@ -24,6 +24,8 @@ class ReaderStore extends Reflux.Store {
       socket: false,
       token: false,
       initialized: false,
+      askEmail: false,
+      passwordless: false,
       selectedSurvey: false,
       selectedCampaign: false,
       loader: {
@@ -70,6 +72,10 @@ class ReaderStore extends Reflux.Store {
   onSurveyAffect (data) {
     console.log('ReaderStore', 'onSurveyAffect')
     this.survey.affect(data)
+  }
+  onSurveyAbibaoAffectPosition1 (email) {
+    console.log('ReaderStore', 'onSurveyAbibaoAffectPosition1', email)
+    this.survey.affectAbibaoPosition1(email)
   }
 }
 

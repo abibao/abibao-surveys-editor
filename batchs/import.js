@@ -24,18 +24,20 @@ const client = feathers()
   .configure(socketio(socket))
   .configure(auth())
 
-const tables = ['campaigns', 'entities']
+const tables = ['individuals']
 
 client.io.on('connect', () => {
   console.log(colors.green.bold('client-batch is connected'))
   console.log(colors.yellow.bold('client-batch try to login'))
   client.authenticate({
     strategy: 'local',
-    email: config.superu.email,
-    password: config.superu.password
+    email: config.accounts.users.super.email,
+    password: config.accounts.users.super.password
   }).then((response) => {
+    console.log('token', response.accessToken)
     return client.passport.verifyJWT(response.accessToken)
   }).then((payload) => {
+    console.log('payload', payload)
     return client.service('users').get(payload.userId)
   }).then((user) => {
     client.set('user', user)

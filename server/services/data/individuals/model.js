@@ -16,6 +16,10 @@ module.exports = function (app) {
       validate: {
         isEmail: true
       }
+    },
+    urn: {
+      type: Sequelize.STRING,
+      allowNull: false
     }
   }, {
     timestamps: true,

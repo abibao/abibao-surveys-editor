@@ -1,11 +1,14 @@
 'use strict'
 
-const hooks = require('feathers-hooks')
+const auth = require('feathers-authentication')
+const permissions = require('feathers-permissions')
 const local = require('feathers-authentication-local')
 
 exports.before = {
   all: [
-    hooks.disable('external')
+    auth.hooks.authenticate('jwt'),
+    permissions.hooks.checkPermissions({ service: 'users' }),
+    permissions.hooks.isPermitted()
   ],
   find: [],
   get: [],
