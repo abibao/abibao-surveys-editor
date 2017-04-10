@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: "infra"
       POSTGRES_DB: "infra"
     volumes:
-      - "./volumes/postgres/var/lib/postgresql/data:/var/lib/postgresql/data"
+      - "/home/docker/volumes/abibao-surveys-editor/postgres/var/lib/postgresql/data:/var/lib/postgresql/data"
     ports:
       - "5432:5432"
 

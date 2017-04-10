@@ -11,7 +11,7 @@ import is from 'is_js'
 import * as Readers from './components/readers'
 
 // semantic
-import { Container, Loader, Header, Icon, Segment, Input, Form, Button } from 'semantic-ui-react'
+import { Container, Loader, Header, Segment, Input, Form, Button } from 'semantic-ui-react'
 
 // store
 import ReaderStore from './../../stores/ReaderStore'
@@ -64,32 +64,40 @@ class Reader extends Reflux.Component {
   render () {
     let email = () => {
       return (
-        <Container fluid>
-          <Header as="h1" attached inverted color="blue" className="appbar">
-            <Icon name="settings" />
-            <Header.Content>
-              ABIBAO
-              <Header.Subheader>
-                platform
-              </Header.Subheader>
-            </Header.Content>
-          </Header>
-          <Segment basic>
-            <Header as="h2" color="blue">
-              Vous êtes quelqu'un d'incroyable !
-              <Header.Subheader>Pour répondre à ce sondge et être alerté des sondages à venir, laissez nous votre e-mail :</Header.Subheader>
-            </Header>
-          </Segment>
-          <Segment basic>
-            <Form>
-              <Form.Field>
-                <Input disabled={this.state.loader.visible} onChange={(e) => this.handleChangeEmail(e.target.value)} type="email" placeholder={this.state.email} size="large" label={{ color: 'blue', icon: 'asterisk' }} labelPosition="right corner" className="form" />
-              </Form.Field>
-            </Form>
-            <br />
-            <Button loading={this.state.loader.visible} onClick={this.handleSubmit} size="large" content="Répondre" />
-          </Segment>
-        </Container>
+        <div className="ui fluid container">
+          <div className="abibao-reader">
+            <div className="abibao-panel-heading">
+              <h3> </h3>
+            </div>
+            <div className="abibao-panel-body">
+              <div style={{background: '#e7ebee'}}>
+                <h4 className="abibao-page-title">Vous êtes quelqu'un d'incroyable !</h4>
+                <br />
+                <Container fluid  style={{background: '#e7ebee'}}>
+                  <Segment basic>
+                    <Header as="h2">
+                      Le monde caritatif à besoin de gens comme vous !
+                      <Header.Subheader>Pour répondre à ce sondge et être alerté des sondages à venir, laissez nous votre e-mail :</Header.Subheader>
+                    </Header>
+                  </Segment>
+                  <Segment basic>
+                    <Form>
+                      <Form.Field>
+                        <Input disabled={this.state.loader.visible} onChange={(e) => this.handleChangeEmail(e.target.value)} type="email" placeholder={this.state.email} size="large" label={{ color: 'grey', icon: 'asterisk' }} labelPosition="right corner" className="form" />
+                      </Form.Field>
+                    </Form>
+                    <br />
+                    <Button loading={this.state.loader.visible} onClick={this.handleSubmit} color="grey" size="large" content="Se connecter" />
+                  </Segment>
+                </Container>
+                <br />
+              </div>
+            </div>
+            <div className="abibao-panel-footer">
+              <Header as="h3" textAlign="center" style={{color: '#ffffff'}}>Vous allez reçevoir un email avec le lien du sondage</Header>
+            </div>
+          </div>
+        </div>
       )
     }
     let loader = () => {
