@@ -118,8 +118,8 @@ class Reader extends Reflux.Component {
     if (this.state.loader.visible === true) {
       return loader()
     } else {
-      const label = (this.props.location.query.reader) ? this.props.location.query.reader : 'none'
-      const reader = (this.state.readers[label]) ? this.state.readers[label] : this.state.readers['none']
+      const label = this.state.selectedSurvey.campaign.reader
+      const reader = this.state.readers[label]
       return renderer(reader)
     }
   }

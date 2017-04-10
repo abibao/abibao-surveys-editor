@@ -1,4 +1,36 @@
 @media screen and (max-width: 640px) {
+  .abibao-panel-heading h3 {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .abibao-panel-footer {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 100%;
+  }
+  .abibao-row {
+    padding: 1rem;
+  }
+  .abibao-button-nav {
+    width: 120px;
+    border: none;
+    background: none;
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-align: center;
+    text-transform: none;
+    background: #fff;
+    color: #5da2c7;
+    padding: 10px;
+    border-radius: 7px;
+    box-shadow: 0 3px 6px 3px rgba(0,0,0,.2);
+    cursor: pointer;
+    transition: all .2s;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+  }
   .ui.container {
     padding: 0 !important;
     margin: 0 !important;

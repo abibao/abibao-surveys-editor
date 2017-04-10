@@ -40,7 +40,7 @@ class Campaigns extends Reflux.Component {
       window.open('/admin/campaigns/editor/' + key, '_blank')
     }
     this.handleOpenReader = (key) => {
-      window.open('/reader/' + key, '_blank')
+      window.open('/reader/' + key + '?tags=admin&tags=test', '_blank')
     }
     this.handleOpenInformations = (key) => {
       this.setState({selectedCampaign: clone(this.state.campaigns[key]), modalOpen: true})
@@ -117,6 +117,8 @@ class Campaigns extends Reflux.Component {
                 <Form.Field>
                   <label>Nom de la campagne</label>
                   <Input onChange={(e) => this.handleChangeInformation({key: 'name', val: e.target.value})} defaultValue={this.state.selectedCampaign.name} size="large" label={{ color: 'red', icon: 'asterisk' }} labelPosition="right corner" className="form" />
+                  <label>Reader de la campagne</label>
+                  <Input onChange={(e) => this.handleChangeInformation({key: 'reader', val: e.target.value})} defaultValue={this.state.selectedCampaign.reader} size="large" label={{ color: 'red', icon: 'asterisk' }} labelPosition="right corner" className="form" />
                   <label>Position de la campagne</label>
                   <Input onChange={(e) => this.handleChangeInformation({key: 'position', val: e.target.value})} defaultValue={this.state.selectedCampaign.position} size="large" className="form" />
                 </Form.Field>

@@ -23,6 +23,10 @@ module.exports = function (app) {
       type: Sequelize.STRING,
       allowNull: false
     },
+    reader: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
     position: {
       type: Sequelize.INTEGER,
       allowNull: true,

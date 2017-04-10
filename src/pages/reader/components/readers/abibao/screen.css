@@ -96,9 +96,6 @@ h4.abibao-page-title {
 }
 
 .abibao-progress.center-block {
-  font-size: 18px;
-  line-height: 18px;
-  font-weight: 700;
   padding: 0;
   margin: 0;
 }
@@ -109,12 +106,18 @@ h4.abibao-page-title {
   background: #e7ebee;
 }
 .abibao-progress-bar {
-  padding: 5px;
-  margin: 0;
-  background: #5da2c7;
-  opacity: 0.75;
+  padding-top: 1em;
+  width: 100% !important;
+  background: linear-gradient( 90deg, #5da2c7 40%, #e7ebee );
+}
+.abibao-progress-bar > span {
+  padding: 1em;
   color: #ffffff;
-  max-width: calc(100% - 10px);
+  font-size: 18px;
+  line-height: 18px;
+  font-weight: 700;
+  width: 100%;
+  text-align: center;
 }
 
 input.abibao-form-control {

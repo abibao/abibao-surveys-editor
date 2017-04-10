@@ -36,7 +36,7 @@ class Service {
       })
       // is individual already in our database if reader = abibao
       .then(() => {
-        if(params.reader === 'abibao') {
+        if(campaign.reader === 'abibao') {
           return app.service('api/individuals').find({query: {
             urn: params.individual
           }}).then((result) => {
