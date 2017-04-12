@@ -26,15 +26,20 @@ class SurveyHelpers {
     console.log('SurveyHelpers', 'control security')
     this.context.setState({loader: {visible: true, message: ''}})
     Feathers.service('command/surveyControlSecurity').create({email, origin: window.location.href}).then((result) => {
+      console.log('...', result)
       if (result.connected === true) {
         console.log('connected', result.connected)
-        // this.context.setState({passwordless: true})
+        this.context.setState({passwordless: true})
       } else {
         console.log('connected', result.connected)
-        // window.location = window.location.origin + '/reader/' + result.campaign + window.location.search + '&individual=' + result.urn
+        this.context.setState({passwordless: false})
+        window.location = window.location.href + '&individual=' + result.urn
       }
       this.context.setState({loader: {visible: false, message: ''}})
-    }).catch(console.error)
+    }).catch((error) => {
+      console.error(error)
+      this.context.setState({loader: {visible: false, message: ''}})
+    })
 
   }
 

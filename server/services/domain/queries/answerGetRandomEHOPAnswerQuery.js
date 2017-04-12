@@ -23,7 +23,7 @@ class Service {
     const app = this.app
     const Answer = AnswerModel(app)
     return Answer.findAll({
-      where: { 'campaign_id': params.campaign, question: 'AGENCEDURABLE_EHOP_IDEA', email: { $not: params.email } },
+      where: { 'campaign_id': params.campaign, question: 'AGENCEDURABLE_EHOP_IDEA', individual: { $not: params.individual } },
       attributes: [[Sequelize.fn('COUNT', Sequelize.col('question')), 'count']]
     }).then((result) => {
       let count = parseInt(result[0].dataValues.count)
@@ -37,7 +37,7 @@ class Service {
       } else {
         let offset = getRandomInt(0, count-1)
         return Answer.findAll({
-          where: { 'campaign_id': params.campaign, question: 'AGENCEDURABLE_EHOP_IDEA', email: { $not: params.email } },
+          where: { 'campaign_id': params.campaign, question: 'AGENCEDURABLE_EHOP_IDEA', individual: { $not: params.individual } },
           offset, limit: 1
         })
       }
@@ -47,7 +47,7 @@ class Service {
 
 module.exports = function () {
   const app = this
-  app.use('query/answerGetRandom', new Service())
+  app.use('query/answerGetRandomEHOPAnswer', new Service())
   /* const service = app.service('query/answerGetRandom')
   service.before({
     get: [

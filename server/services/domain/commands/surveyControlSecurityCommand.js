@@ -58,7 +58,6 @@ class Service {
           }).then((result) => {
             return {
               connected: false,
-              campaign: campaign.id,
               urn: result.dataValues.urn
             }
           })

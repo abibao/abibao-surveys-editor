@@ -16,7 +16,7 @@ const postOnSlackWithWebhookCommand = require('./domain/commands/postOnSlackWith
 const surveyControlSecurityCommand = require('./domain/commands/surveyControlSecurityCommand')
 
 // external queries
-const answerGetRandomQuery = require('./domain/queries/answerGetRandomQuery')
+const answerGetRandomEHOPAnswerQuery = require('./domain/queries/answerGetRandomEHOPAnswerQuery')
 
 module.exports = function () {
   const app = this
@@ -34,5 +34,5 @@ module.exports = function () {
   app.configure(postOnSlackWithWebhookCommand)
   app.configure(surveyControlSecurityCommand)
 
-  app.configure(answerGetRandomQuery)
+  app.configure(answerGetRandomEHOPAnswerQuery)
 }

@@ -25,8 +25,8 @@ class ReaderStore extends Reflux.Store {
       token: false, // Authentification jwt
       initialized: false, // application has finish loading or not ?
       selectedCampaign: false, // campaign id to load
-      askEmail: false,
-      // passwordless: false,
+      askEmail: false, // reader in ask email mode
+      passwordless: false, // message email sended
       // selectedSurvey: false,
       // selectedCampaign: false,
       loader: {

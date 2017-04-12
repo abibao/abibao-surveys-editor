@@ -40,9 +40,12 @@ class SurveyReader extends Reflux.Component {
       AnswerActions.answerUpsert(answer)
     }
     this.handleGetRandomAnswer = () => {
-      return Feathers.service('query/answerGetRandom').get({
+      console.log('SurveyReader', 'handleGetRandomAnswer')
+      return Feathers.service('query/answerGetRandomEHOPAnswer').get({
         campaign: this.props.survey.campaign.id,
         email: this.props.survey.individual
+      }).catch((error) => {
+        console.error(error)
       })
     }
     window.handleGetRandomAnswer = this.handleGetRandomAnswer

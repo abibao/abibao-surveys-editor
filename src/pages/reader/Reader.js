@@ -11,7 +11,7 @@ import is from 'is_js'
 import * as Readers from './components/readers'
 
 // semantic
-import { Container, Loader, Header, Segment, Input, Form, Button } from 'semantic-ui-react'
+import { Container, Loader, Header, Segment, Input, Form, Button, Message } from 'semantic-ui-react'
 
 // store
 import ReaderStore from './../../stores/ReaderStore'
@@ -29,13 +29,15 @@ class Reader extends Reflux.Component {
     if (this.state.initialized === true && this.state.selectedCampaign === false) {
       console.log('Reader', 'initialized')
       this.setState({selectedCampaign: this.props.params.id})
-      SurveyActions.surveyAffect({individual: this.props.location.query.individual, campaign: this.props.params.id, params: this.props.location.query})
+      SurveyActions.surveyAffect({individual: this.state.individual, campaign: this.props.params.id, params: this.props.location.query})
     }
   }
   constructor (props) {
-    // control props
-    if (!props.location.query.individual) {
-      props.location.query.individual = uuid.v4() + '@abibao.com'
+    let mycookie = cookie.load('individual')
+    if (mycookie === undefined) {
+      console.log('Reader','make fingerprint')
+      let fingerprint = 'urn:fingerprint:individual:' + uuid.v4()
+      cookie.save('individual', fingerprint, { path: '/' })
     }
     props.location.query.isMobile = is.mobile()
     props.location.query.isTablet = is.tablet()
@@ -43,16 +45,15 @@ class Reader extends Reflux.Component {
     // time to read the survey
     super(props)
     console.log('Reader', 'constructor', this.props.params.id)
-    this.store = ReaderStore
-    // cookie.save('individual', this.props.location.query.individual, { path: '/' })
     this.state = {
-      individual: cookie.load('individual'),
+      individual: this.props.location.query.individual || cookie.load('individual'),
       email: 'example@domain.com',
       readers: {
         abibao: Readers.AbibaoReader,
         ehop: Readers.EHOPReader
       }
     }
+    this.store = ReaderStore
     this.handleChangeEmail = (email) => {
       this.setState({email})
     }
@@ -88,6 +89,12 @@ class Reader extends Reflux.Component {
                     </Form>
                     <br />
                     <Button loading={this.state.loader.visible} onClick={this.handleSubmit} color="grey" size="large" content="Se connecter" />
+                  </Segment>
+                  <Segment basic hidden={!this.state.passwordless}>
+                    <Message info
+                      icon="inbox"
+                      header="Message de sécurité"
+                      content="Un email d’accès vous a été envoyé" />
                   </Segment>
                 </Container>
                 <br />
