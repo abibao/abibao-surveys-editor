@@ -104,20 +104,15 @@ h4.abibao-page-title {
   margin: 0 !important;
   width: 100% !important;
   background: #e7ebee;
+  border: solid 2px #5da2c7;
+  border-bottom: solid 2px #e7ebee;
 }
 .abibao-progress-bar {
   padding-top: 1em;
-  width: 100% !important;
-  background: linear-gradient( 90deg, #5da2c7 40%, #e7ebee );
+  background: linear-gradient( 90deg, #5da2c7 90%, #e7ebee );
 }
 .abibao-progress-bar > span {
-  padding: 1em;
-  color: #ffffff;
-  font-size: 18px;
-  line-height: 18px;
-  font-weight: 700;
-  width: 100%;
-  text-align: center;
+  display: none;
 }
 
 input.abibao-form-control {
