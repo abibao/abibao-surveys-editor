@@ -25,6 +25,7 @@ class CampaignHelpers {
     return Feathers.service('api/campaigns').create({
       name: 'Nouvelle campagne (' + uuid.v4() + ')',
       company: 'None',
+      reader: 'abibao',
       position: 0,
       picture: 'images/default/campaign.png',
       data: {pages: [{name: 'page1'}]}

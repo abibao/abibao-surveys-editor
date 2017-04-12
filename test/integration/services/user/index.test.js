@@ -4,6 +4,8 @@ const assert = require('assert')
 const request = require('request')
 const app = require('../../../../server/app')
 
+let token = ''
+
 describe('[integration] user service', function () {
   before(function (done) {
     this.server = app.listen(3030)
@@ -14,15 +16,53 @@ describe('[integration] user service', function () {
     this.server.close(done)
   })
 
-  it('failed to login as administrator', (done) => {
+  it('should fail to login', (done) => {
     request({
-      url: 'http://localhost:3030/path/to/nowhere',
+      method: 'POST',
+      url: 'http://localhost:3030/authentication',
+      json: true,
       headers: {
-        'Accept': 'text/html'
       }
     }, function (err, res, body) {
-      assert.equal(res.statusCode, 404)
-      assert.ok(body.indexOf('<html>') !== -1)
+      assert.equal(res.statusCode, 401)
+      assert.equal(body.code, 401)
+      done(err)
+    })
+  })
+
+  it('should fail to login as administrator', (done) => {
+    request({
+      method: 'POST',
+      url: 'http://localhost:3030/authentication',
+      json: true,
+      headers: {
+      },
+      body: {
+        email: 'administrator@abibao.com',
+        password: 'not a good one'
+      },
+    }, function (err, res, body) {
+      assert.equal(res.statusCode, 401)
+      assert.equal(body.code, 401)
+      done(err)
+    })
+  })
+
+  it('should success to login as administrator', (done) => {
+    request({
+      method: 'POST',
+      url: 'http://localhost:3030/authentication',
+      json: true,
+      headers: {
+      },
+      body: {
+        email: 'administrator@abibao.com',
+        password: 'password'
+      }
+    }, function (err, res, body) {
+      assert.equal(res.statusCode, 201)
+      assert.ok(body.accessToken != null)
+      token = body.accessToken
       done(err)
     })
   })

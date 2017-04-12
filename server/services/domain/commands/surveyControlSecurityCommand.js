@@ -16,11 +16,14 @@ class Service {
   create (params) {
     const app = this.app
     let email = params.email
+    let user = ''
+    let campaignAbibaoPosition1 = ''
     return app.service('api/individuals').find({query: {
       email
     }})
     .then((result) => {
       if (result.length === 1) {
+        user = result[0]
         // case 1: email is in database
         const sendgrid = require('sendgrid')(app.get('sendgrid').key)
         const request = sendgrid.emptyRequest()
@@ -69,8 +72,8 @@ class Service {
 
 module.exports = function () {
   const app = this
-  app.use('command/individualAffectAbibaoSurveyPosition1', new Service())
-  const service = app.service('command/individualAffectAbibaoSurveyPosition1')
+  app.use('command/surveyControlSecurity', new Service())
+  const service = app.service('command/surveyControlSecurity')
   service.before({
     create: [
       auth.hooks.authenticate('jwt'),

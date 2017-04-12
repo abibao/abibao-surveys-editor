@@ -41,8 +41,7 @@ class Service {
             urn: params.individual
           }}).then((result) => {
             if (result.length === 0) {
-              // auto affectation survey abibao 1
-              throw new Error('ABIBAO_ERROR_AFFECT_POSITION_1')
+              throw new Error('ABIBAO_INDIVIDUAL_CONTROL_SECURITY')
             } else {
               params.individual = result[0].urn
             }

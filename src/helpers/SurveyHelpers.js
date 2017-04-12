@@ -7,33 +7,33 @@ class SurveyHelpers {
   }
 
   affect (data) {
-    this.context.setState({loader: {visible: true}})
+    console.log('SurveyHelpers', 'affect', data.individual)
     Feathers.service('command/individualAffectSurvey').create(data)
       .then((response) => {
-        this.context.setState({selectedSurvey: response})
-        this.context.setState({loader: {visible: false}})
+        this.context.setState({selectedSurvey: response, loader: {visible: false, message: ''}})
       })
       .catch((error) => {
-        if (error.toString() === 'Error: ABIBAO_ERROR_AFFECT_POSITION_1') {
-          console.error('we need to auto affect abibao survey 1')
-          this.context.setState({askEmail: true, loader: {visible: false}})
+        if (error.toString() === 'Error: ABIBAO_INDIVIDUAL_CONTROL_SECURITY') {
+          console.error('we need to ask email')
+          this.context.setState({askEmail: true, loader: {visible: false, message: ''}})
         } else {
           console.error('...', error)
         }
       })
   }
 
-  affectAbibaoPosition1 (email) {
-    this.context.setState({loader: {visible: true}})
-    Feathers.service('command/individualAffectAbibaoSurveyPosition1').create({email, origin: window.location.href}).then((result) => {
+  controlSecurity (email) {
+    console.log('SurveyHelpers', 'control security')
+    this.context.setState({loader: {visible: true, message: ''}})
+    Feathers.service('command/surveyControlSecurity').create({email, origin: window.location.href}).then((result) => {
       if (result.connected === true) {
         console.log('connected', result.connected)
-        this.context.setState({passwordless: true})
+        // this.context.setState({passwordless: true})
       } else {
         console.log('connected', result.connected)
-        window.location = window.location.origin + '/reader/' + result.campaign + window.location.search + '&individual=' + result.urn
+        // window.location = window.location.origin + '/reader/' + result.campaign + window.location.search + '&individual=' + result.urn
       }
-      this.context.setState({loader: {visible: false}})
+      this.context.setState({loader: {visible: false, message: ''}})
     }).catch(console.error)
 
   }

@@ -21,15 +21,15 @@ import SurveyActions from './../../actions/SurveyActions'
 
 class Reader extends Reflux.Component {
   componentDidMount () {
-    console.log('Reader', 'componentDidMount', this.state.individual)
+    console.log('Reader', 'componentDidMount')
   }
   componentWillUnmount () {
   }
   componentDidUpdate (prevProps, prevState) {
-    if (this.state.selectedSurvey === false && this.state.token !== false) {
-      console.log('Time to affect the campaign or load the survey for user')
-      this.state.selectedSurvey = true
-      SurveyActions.surveyAffect({reader: this.props.location.query.reader, individual: this.state.individual, campaign: this.props.params.id, params: this.props.location.query})
+    if (this.state.initialized === true && this.state.selectedCampaign === false) {
+      console.log('Reader', 'initialized')
+      this.setState({selectedCampaign: this.props.params.id})
+      SurveyActions.surveyAffect({individual: this.props.location.query.individual, campaign: this.props.params.id, params: this.props.location.query})
     }
   }
   constructor (props) {
@@ -41,9 +41,10 @@ class Reader extends Reflux.Component {
     props.location.query.isTablet = is.tablet()
     props.location.query.isDesktop = is.desktop()
     // time to read the survey
-    console.log('Reader', 'constructor', props)
     super(props)
-    cookie.save('individual', this.props.location.query.individual, { path: '/' })
+    console.log('Reader', 'constructor', this.props.params.id)
+    this.store = ReaderStore
+    // cookie.save('individual', this.props.location.query.individual, { path: '/' })
     this.state = {
       individual: cookie.load('individual'),
       email: 'example@domain.com',
@@ -52,13 +53,12 @@ class Reader extends Reflux.Component {
         ehop: Readers.EHOPReader
       }
     }
-    this.store = ReaderStore
     this.handleChangeEmail = (email) => {
       this.setState({email})
     }
     this.handleSubmit = () => {
       console.log('Reader', 'handleSubmit', this.state.email)
-      SurveyActions.surveyAbibaoAffectPosition1(this.state.email)
+      SurveyActions.surveyControlSecurity(this.state.email)
     }
   }
   render () {
@@ -103,7 +103,7 @@ class Reader extends Reflux.Component {
     let loader = () => {
       return (
         <Container fluid className="loader-reader">
-          <Loader active size="huge">Chargement en cours...</Loader>
+          <Loader active size="huge">{this.state.loader.message}</Loader>
         </Container>
       )
     }

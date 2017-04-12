@@ -3,7 +3,7 @@ import Reflux from 'reflux'
 
 const SurveyActions = Reflux.createActions([
   'surveyAffect',
-  'surveyAbibaoAffectPosition1',
+  'surveyControlSecurity',
   'surveyComplete'
 ])
 

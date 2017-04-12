@@ -1,10 +1,8 @@
-// react
-// import {browserHistory} from 'react-router'
-
 // libraries
 import Feathers from './../libs/Feathers'
 
 // actions
+import ReaderActions from './../actions/ReaderActions'
 import ApplicationActions from './../actions/ApplicationActions'
 import NetworkActions from './../actions/NetworkActions'
 
@@ -13,7 +11,11 @@ class NetworkHelpers {
     this.context = context
   }
   connect (socket) {
-    this.context.setState({socket})
+    console.log('NetworkHelpers', 'connect')
+    this.context.setState({socket, loader: {
+      visible: true,
+      message: 'Connexion acceptée...'
+    }})
     NetworkActions.networkAuthenticate({})
   }
   disconnect () {
@@ -24,35 +26,32 @@ class NetworkHelpers {
   }
   authenticate (args) {
     console.log('NetworkHelpers', 'authenticate')
-    this.context.state.loader.visible = true
-    this.context.setState({loader: this.context.state.loader})
     Feathers.authenticate(args)
       .then((response) => {
+        this.context.setState({loader: {
+          visible: true,
+          message: 'Authentification acceptée...'
+        }})
         console.log('...', 'response')
-        this.context.state.token = response.accessToken
+        this.context.setState({token: response.accessToken})
         return Feathers.passport.verifyJWT(response.accessToken)
       })
       .then(passport => {
         console.log('...', 'passport')
         console.log('...', 'state.initialized', this.context.state.initialized)
-        if (this.context.state.reader === true) {
-          console.log('...', this.context.state.token)
-          this.context.setState({initialized: true, token: this.context.state.token})
-        } else {
-          if (!this.context.state.initialized) {
-            ApplicationActions.applicationInitialize()
-          }
-        }
+        ApplicationActions.applicationInitialize()
+        ReaderActions.readerInitialize()
       })
       .catch((error) => {
         console.error('...', error.toString())
         if (error.toString().includes('NotAuthenticated')) {
-          console.log('...', 'time to connect auto if client')
-          if (this.context.state.reader === true) {
-            NetworkActions.networkAuthenticate({strategy: 'local', email: 'reader@abibao.com', password: 'password'})
-          }
+          console.log('...', 'no jwt token found, now use strategy local')
+          this.context.setState({loader: {
+            visible: true,
+            message: 'Authentification en cours...'
+          }})
+          NetworkActions.networkAuthenticate({strategy: 'local', email: 'reader@abibao.com', password: 'password'})
         }
-        this.context.setState({token: false, loader: {visible: false}})
       })
   }
 }
