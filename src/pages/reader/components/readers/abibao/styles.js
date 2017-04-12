@@ -9,7 +9,7 @@ const styles = {
     'prev': '',
     'next': ''
   },
-  'progress': 'abibao-progress abibao-center-block',
+  'progress': 'abibao-progress',
   'progressBar': 'abibao-progress-bar',
   'pageTitle': 'abibao-page-title',
   'row': 'abibao-row',

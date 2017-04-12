@@ -193,10 +193,13 @@ div.abibao-checkbox {
   margin-bottom: 5px;
 }
 .abibao-checkbox > label > span {
-  display: inline-flex;
-  white-space: nowrap;
+  display: inline-block;
+  white-space: pre-wrap;
+  display: table-cell;
+  vertical-align: middle;
   font-size: 1.25em;
-  line-height: 30px;
+  height: 30px;
+  line-height: 15px;
   margin: auto;
 	padding-left: 38px;
 	position: relative;
@@ -238,10 +241,13 @@ div.abibao-checkbox {
   margin-bottom: 5px;
 }
 .abibao-radio > label > span {
-  display: inline-flex;
-  white-space: nowrap;
+  display: inline-block;
+  white-space: pre-wrap;
+  display: table-cell;
+  vertical-align: middle;
   font-size: 1.25em;
-  line-height: 30px;
+  height: 30px;
+  line-height: 15px;
   margin: auto;
 	padding-left: 38px;
 	position: relative;

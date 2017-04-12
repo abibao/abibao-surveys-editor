@@ -39,7 +39,6 @@
     "joi": "10.2.2",
     "lodash": "4.17.4",
     "nconf": "0.8.4",
-    "node-cqrs-framework": "0.9.4",
     "pg": "6.1.5",
     "pg-hstore": "2.3.2",
     "request": "2.81.0",
