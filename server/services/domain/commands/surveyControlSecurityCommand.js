@@ -15,7 +15,7 @@ class Service {
   }
   create (params) {
     const app = this.app
-    let email = params.email
+    let email = params.email.toLowerCase()
     let user = ''
     let campaignAbibaoPosition1 = ''
     return app.service('api/individuals').find({query: {

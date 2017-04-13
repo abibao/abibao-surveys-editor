@@ -52,6 +52,23 @@ class Service {
       })
       // already have affected survey and not complete for this individual ?
       .then(() => {
+        if (campaign.reader === 'abibao') {
+          return app.service('api/surveys').find({query: {
+            individual: params.individual,
+            campaign: campaign.id,
+            company: campaign.company,
+          }}).then((result) => {
+            if (result.length > 1) {
+              console.log(params.individual)
+              throw new Error('ERROR_SURVEY_ABIBAO_AFFECT_MORE_THAN_ONCE')
+            }
+            if (result.length === 1 && result[0].complete === true ) {
+              throw new Error('ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE')
+            }
+            return result
+          })
+        }
+        // else
         return app.service('api/surveys').find({query: {
           individual: params.individual,
           campaign: campaign.id,
@@ -62,18 +79,25 @@ class Service {
       // final, create or return
       .then((result) => {
         if (result.length === 0) {
-          return app.service('api/surveys').create({
+          let data = {
             individual: params.individual,
             campaign: campaign.id,
             company: campaign.company,
             params: params.params,
             complete: false
-          }).then((result) => {
+          }
+          if (params.createdAt) {
+            data.createdAt = params.createdAt
+          }
+          return app.service('api/surveys').create(data).then((result) => {
             const message = {
               'username': 'individualCreateSurveyCommand',
               'text': '[' + new Date() + '] - [' + email + '] can access a new survey (' + campaign.name + ')'
             }
-            app.service('command/postOnSlackWithWebhook').create(message)
+            if (params.silence) {
+            } else {
+              app.service('command/postOnSlackWithWebhook').create(message)
+            }
             return true
           })
         } else {

@@ -6,7 +6,6 @@ const path = require('path')
 const fse = require('fs-extra')
 const colors = require('colors/safe')
 const ProgressBar = require('progress')
-const Log = require('log')
 
 const config = require('./../config/default')
 
@@ -63,11 +62,7 @@ client.io.on('disconnect', () => {
 })
 
 const batch = (table, callback) => {
-  const log = new Log('debug', fse.createWriteStream('batch-import-' + table + '.log'))
   let patternPath = path.resolve(__dirname, '../../api-gateway/src/tools/.cache/prod/rethinkdb', table.replace(/-/gi, '_'), '*.json')
-  if (table === 'surveys-answers') {
-    patternPath = path.resolve(__dirname, '../../api-gateway/src/tools/.cache/prod/mysql/answers/**/*.json')
-  }
   const files = glob.sync(patternPath, {
     nodir: true,
     dot: true
@@ -78,39 +73,29 @@ const batch = (table, callback) => {
     width: 30,
     total: files.length
   })
-  console.log(colors.yellow.bold('... batch for', table, 'with', files.length, 'elements'))
-  async.mapLimit(files, 10, (filepath, next) => {
+  console.log(colors.yellow.bold('batch for', table, 'with', files.length, 'elements'))
+  async.mapLimit(files, 1, (filepath, next) => {
     let data = fse.readJsonSync(filepath)
-    if (table === 'campaigns') {
-      data.picture = 'images/default/campaign.png'
-      data.data = {
-        pages: [{name: 'page1'}]
-      }
-    }
-    // try to insert
-    client.service('api/' + table).create(data)
+    // email already in dtabase v2 ?
+    client.service('api/' + table).find({query: {email: data.email.toLowerCase()}})
+      .then((result) => {
+        if (result.length === 0) {
+          // create user
+          return client.service('api/' + table).create({email: data.email.toLowerCase()}).catch((error) => {
+            if (error.toString() === 'BadRequest: Validation error: Validation isEmail failed') {
+              return true
+            } else {
+              throw error
+            }
+          })
+        } else {
+          // next
+          return true
+        }
+      })
       .then(() => {
         bar.tick()
         next()
-      })
-      .catch((error) => {
-        if (error.errors && error.errors[0].type !== 'unique violation') {
-          log.error({
-            filepath,
-            data,
-            error,
-            errors: JSON.stringify(error.errors)
-          })
-        }
-        // if error then we try to update
-        return client.service('api/' + table).update(data.id, data)
-          .then(() => {
-            bar.tick()
-            next()
-          }).catch(() => {
-            bar.tick()
-            next()
-          })
       })
       .catch((error) => {
         console.log('')

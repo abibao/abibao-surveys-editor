@@ -22,6 +22,12 @@ class Service {
     if (!params['campaign_id']) {
       return Promise.reject(new Error('campaign_id is mandatory'))
     }
+    if (!params['campaign_name']) {
+      return Promise.reject(new Error('campaign_name is mandatory'))
+    }
+    if (!params['survey_id']) {
+      return Promise.reject(new Error('survey_id is mandatory'))
+    }
     if (!params.question) {
       return Promise.reject(new Error('question is mandatory'))
     }
