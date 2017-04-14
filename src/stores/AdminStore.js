@@ -27,8 +27,7 @@ class AdminStore extends Reflux.Store {
         visible: true,
         message: 'Connexion en cours...'
       },
-      campaigns: {},
-      entities: {}
+      campaigns: {}
     }
     // helpers
     this.network = new NetworkHelpers(this)
@@ -46,18 +45,10 @@ class AdminStore extends Reflux.Store {
       NetworkActions.networkDisconnect()
     })
     Feathers.service('api/campaigns').on('created', (campaign) => {
-      campaign.company = this.state.entities[campaign.company]
-      if (!campaign.company) {
-        campaign.company = 'None'
-      }
       this.state.campaigns[campaign.id] = campaign
       this.setState({campaigns: this.state.campaigns})
     })
     Feathers.service('api/campaigns').on('patched', (campaign) => {
-      campaign.company = this.state.entities[campaign.company]
-      if (!campaign.company) {
-        campaign.company = 'None'
-      }
       this.state.campaigns[campaign.id] = campaign
       this.setState({campaigns: this.state.campaigns})
     })

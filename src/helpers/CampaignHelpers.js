@@ -34,9 +34,6 @@ class CampaignHelpers {
   }
   update (data) {
     let newData = clone(data)
-    if (newData.company && newData.company.name) {
-      newData.company = newData.company.id
-    }
     Feathers.service('api/campaigns').patch(newData.id, newData).then(() => {
     }).catch(console.error)
   }
