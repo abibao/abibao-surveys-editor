@@ -3,6 +3,7 @@
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
+const eraro = require('eraro')({package:'platform.abibao.com'})
 
 const options = {
   service: 'users'
@@ -14,11 +15,32 @@ class Service {
   }
   create (data) {
     const app = this.app
+    const starttime = new Date()
     data.complete = true
     data.campaign = data.campaign.id
     return app.service('api/surveys').patch(data.id, data)
-      .then(Promise.resolve)
-      .catch(Promise.reject)
+      .then((result) => {
+        const endtime = new Date()
+        app.info({
+          env: app.get('env'),
+          exectime: endtime - starttime,
+          type: 'command',
+          name: 'individualCompleteSurvey',
+          params
+        })
+        return Promise.resolve(result)
+      })
+      .catch((error) => {
+        const endtime = new Date()
+        app.error({
+          env: app.get('env'),
+          exectime: endtime - starttime,
+          type: 'command',
+          name: 'individualCompleteSurvey',
+          error
+        })
+        return Promise.reject(error)
+      })
   }
 }
 
