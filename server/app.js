@@ -4,16 +4,19 @@ const path = require('path')
 const Sequelize = require('sequelize')
 const serveStatic = require('feathers').static
 const compress = require('compression')
-const cors = require('cors')
+
 const feathers = require('feathers')
+const socketio = require('feathers-socketio')
 const configuration = require('feathers-configuration')
 const auth = require('feathers-authentication')
 const local = require('feathers-authentication-local')
 const jwt = require('feathers-authentication-jwt')
 const hooks = require('feathers-hooks')
 const rest = require('feathers-rest')
+const logger = require('feathers-logger')
+
+const cors = require('cors')
 const bodyParser = require('body-parser')
-const socketio = require('feathers-socketio')
 const middlewares = require('./middlewares')
 const services = require('./services')
 
@@ -23,6 +26,14 @@ const fs = require('fs-blob-store')
 const blobStorage = fs(dirpathUpload)
 
 const app = feathers()
+
+// streams of loggers
+let streams = []
+streams.push(require('./streams/logstash'))
+const bunyan = require('bunyan').createLogger({
+  name: 'abiao-surveys-editor',
+  streams
+})
 
 app.configure(configuration(path.join(__dirname, '..')))
 
@@ -53,6 +64,7 @@ app.use(compress())
   .use(cors(corsOptions))
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
+  .configure(logger(bunyan))
   .configure(rest())
   .configure(socketio())
   .configure(hooks())

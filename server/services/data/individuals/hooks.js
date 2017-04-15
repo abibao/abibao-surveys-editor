@@ -4,6 +4,7 @@ const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
 const uuid = require('../../globalHooks').uuid
 const urn = require('../../globalHooks').urn
+const bunyan = require('../../globalHooks').bunyan
 
 exports.before = {
   all: [

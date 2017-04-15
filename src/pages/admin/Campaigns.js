@@ -67,6 +67,7 @@ class Campaigns extends Reflux.Component {
         campaign: this.state.selectedCampaign.id,
         template: this.state.selectedSendgrid.template
       })
+      this.setState({selectedCampaign: false, selectedSendgrid: false, modalSendgridOpen: false})
     }
     this.handleOpenInformations = (key) => {
       this.setState({selectedCampaign: clone(this.state.campaigns[key]), modalOpen: true})

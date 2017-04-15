@@ -3,6 +3,7 @@
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
+const eraro = require('eraro')({package:'platform.abibao.com'})
 const _ = require('lodash')
 
 const options = {
@@ -15,21 +16,22 @@ class Service {
   }
   create (params) {
     const app = this.app
+    const starttime = new Date()
     // mandatory
     if (!params.individual) {
-      return Promise.reject(new Error('individual is mandatory'))
+      return Promise.reject(eraro('individual is mandatory'))
     }
     if (!params['campaign_id']) {
-      return Promise.reject(new Error('campaign_id is mandatory'))
+      return Promise.reject(eraro('campaign_id is mandatory'))
     }
     if (!params['campaign_name']) {
-      return Promise.reject(new Error('campaign_name is mandatory'))
+      return Promise.reject(eraro('campaign_name is mandatory'))
     }
     if (!params['survey_id']) {
-      return Promise.reject(new Error('survey_id is mandatory'))
+      return Promise.reject(eraro('survey_id is mandatory'))
     }
     if (!params.question) {
-      return Promise.reject(new Error('question is mandatory'))
+      return Promise.reject(eraro('question is mandatory'))
     }
     const answersToCreate = []
     return app.service('api/answers').remove(null, {query: {
@@ -47,9 +49,30 @@ class Service {
       } else {
         answersToCreate.push(params)
       }
-      return app.service('api/answers').create(answersToCreate).then(Promise.resolve)
-    }).catch(Promise.reject)
-
+      return app.service('api/answers').create(answersToCreate)
+    })
+    .then((result) => {
+      const endtime = new Date()
+      app.info({
+        env: app.get('env'),
+        exectime: endtime - starttime,
+        type: 'command',
+        name: 'individualAnswerSurvey',
+        params
+      })
+      return Promise.resolve(result)
+    })
+    .catch((error) => {
+      const endtime = new Date()
+      app.error({
+        env: app.get('env'),
+        exectime: endtime - starttime,
+        type: 'command',
+        name: 'individualAnswerSurvey',
+        error
+      })
+      return Promise.reject(error)
+    })
   }
 }
 

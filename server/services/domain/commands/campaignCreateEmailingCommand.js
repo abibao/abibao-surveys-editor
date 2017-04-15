@@ -3,6 +3,7 @@
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
+const eraro = require('eraro')({package:'platform.abibao.com'})
 
 const options = {
   service: 'users'
@@ -14,12 +15,13 @@ class Service {
   }
   create (params) {
     const app = this.app
+    const starttime = new Date()
     app.service('api/individuals').find({query: {
       email: params.email
     }})
     .then((individuals) => {
       if (individuals.length === 0) {
-        throw new Error('ERROR_INDIVIDUAL_NOT_FOUND')
+        throw eraro('ERROR_INDIVIDUAL_NOT_FOUND')
       }
       return individuals[0]
     })
@@ -41,13 +43,30 @@ class Service {
         'content': [{ 'type': 'text/html', 'value': ' ' }],
         'template_id': params.template
       }
-      sendgrid.API(request)
-      return {
-        sended: true
-      }
+      return sendgrid.API(request)
     })
-    .then(Promise.resolve)
-    .catch(Promise.reject)
+    .then((result) => {
+      const endtime = new Date()
+      app.info({
+        env: app.get('env'),
+        exectime: endtime - starttime,
+        type: 'command',
+        name: 'campaignCreateEmailing',
+        params
+      })
+      return Promise.resolve(result)
+    })
+    .catch((error) => {
+      const endtime = new Date()
+      app.error({
+        env: app.get('env'),
+        exectime: endtime - starttime,
+        type: 'command',
+        name: 'campaignCreateEmailing',
+        error
+      })
+      return Promise.reject(error)
+    })
   }
 }
 

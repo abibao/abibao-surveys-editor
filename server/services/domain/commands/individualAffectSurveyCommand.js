@@ -3,6 +3,7 @@
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
+const eraro = require('eraro')({package:'platform.abibao.com'})
 
 const options = {
   service: 'users'
@@ -14,6 +15,7 @@ class Service {
   }
   create (params) {
     const app = this.app
+    const starttime = new Date()
     let campaign = {}
     let email = params.individual
     // mandatory
@@ -41,7 +43,7 @@ class Service {
             urn: params.individual
           }}).then((result) => {
             if (result.length === 0) {
-              throw new Error('ABIBAO_INDIVIDUAL_CONTROL_SECURITY')
+              throw eraro('ABIBAO_INDIVIDUAL_CONTROL_SECURITY')
             } else {
               params.individual = result[0].urn
             }
@@ -60,10 +62,10 @@ class Service {
           }}).then((result) => {
             if (result.length > 1) {
               console.log(params.individual)
-              throw new Error('ERROR_SURVEY_ABIBAO_AFFECT_MORE_THAN_ONCE')
+              throw eraro('ERROR_SURVEY_ABIBAO_AFFECT_MORE_THAN_ONCE')
             }
             if (result.length === 1 && result[0].complete === true ) {
-              throw new Error('ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE')
+              throw eraro('ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE')
             }
             return result
           })
@@ -117,8 +119,28 @@ class Service {
         survey.campaign = campaign
         return survey
       })
-      .then(Promise.resolve)
-      .catch(Promise.reject)
+      .then((result) => {
+        const endtime = new Date()
+        app.info({
+          env: app.get('env'),
+          exectime: endtime - starttime,
+          type: 'command',
+          name: 'individualAffectSurvey',
+          params
+        })
+        return Promise.resolve(result)
+      })
+      .catch((error) => {
+        const endtime = new Date()
+        app.error({
+          env: app.get('env'),
+          exectime: endtime - starttime,
+          type: 'command',
+          name: 'individualAffectSurvey',
+          error
+        })
+        return Promise.reject(error)
+      })
   }
 }
 

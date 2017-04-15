@@ -50,8 +50,8 @@ class NetworkHelpers {
             visible: true,
             message: 'Authentification en cours...'
           }})
-          this.context.setState({loader: {visible: false, message: ''}})
-          // NetworkActions.networkAuthenticate({strategy: 'local', email: 'reader@abibao.com', password: 'password'})
+          // this.context.setState({loader: {visible: false, message: ''}})
+          NetworkActions.networkAuthenticate({strategy: 'local', email: 'reader@abibao.com', password: 'password'})
         }
       })
   }
