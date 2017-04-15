@@ -33,6 +33,7 @@ class Reader extends Reflux.Component {
     }
   }
   constructor (props) {
+    console.log('Reader', 'constructor', props)
     let mycookie = cookie.load('individual')
     if (mycookie === undefined) {
       console.log('Reader','make fingerprint')

@@ -20,10 +20,6 @@ class ApplicationHelpers {
       this.context.setState({campaigns: dictionnary})
       ApplicationActions.applicationCreationComplete()
     }).catch((error) => {
-      console.error('...', error)
-      if (error.toString() === 'Forbidden: You do not have the correct permissions.') {
-        window.localStorage.removeItem('rememberMe')
-      }
       this.context.setState({token: false, loader: {visible: false}})
     })
   }

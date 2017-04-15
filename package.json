@@ -12,7 +12,7 @@
     "test:coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- --opts .mocharc",
     "eject": "react-scripts eject",
     "start": "react-scripts start",
-    "start:server": "node server/start.js",
+    "start:server": "node_modules/.bin/nodemon --config nodemon.json server/start.js",
     "start:server:debug": "DEBUG=feathers* node server/start.js"
   },
   "dependencies": {
@@ -63,7 +63,7 @@
     "istanbul": "0.4.5",
     "mocha": "3.2.0",
     "mocha-standard": "1.0.0",
-    "nodemon": "^1.11.0",
+    "nodemon": "1.11.0",
     "progress": "1.1.8",
     "react": "15.4.2",
     "react-addons-test-utils": "15.4.2",

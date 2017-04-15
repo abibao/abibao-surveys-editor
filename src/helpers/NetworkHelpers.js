@@ -25,7 +25,7 @@ class NetworkHelpers {
     Feathers.service('command/postOnSlackWithWebhook').create(message)
   }
   authenticate (args) {
-    console.log('NetworkHelpers', 'authenticate')
+    console.log('NetworkHelpers', 'authenticate', args)
     Feathers.authenticate(args)
       .then((response) => {
         this.context.setState({loader: {
@@ -50,7 +50,8 @@ class NetworkHelpers {
             visible: true,
             message: 'Authentification en cours...'
           }})
-          NetworkActions.networkAuthenticate({strategy: 'local', email: 'reader@abibao.com', password: 'password'})
+          this.context.setState({loader: {visible: false, message: ''}})
+          // NetworkActions.networkAuthenticate({strategy: 'local', email: 'reader@abibao.com', password: 'password'})
         }
       })
   }

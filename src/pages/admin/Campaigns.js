@@ -7,7 +7,7 @@ import Dropzone from 'react-dropzone'
 import {clone} from 'lodash'
 
 // semantic
-import { Container, Form, Segment, Icon, Input, Button, Header, Card, Image, Modal } from 'semantic-ui-react'
+import { Container, Form, Segment, Icon, Input, Button, Header, Card, Image, Modal, TextArea } from 'semantic-ui-react'
 
 // store
 import AdminStore from './../../stores/AdminStore'
@@ -19,17 +19,22 @@ const host = process.env.REACT_APP_FEATHERS_URI
 
 class Campaigns extends Reflux.Component {
   componentDidMount () {
+    console.log('Campaigns', 'componentDidMount')
   }
   componentWillUnmount () {
+    console.log('Campaigns', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
   }
   constructor (props) {
+    console.log('Campaigns', 'constructor')
     super(props)
     this.state = {
       menuOpen: false,
       modalOpen: false,
-      selectedCampaign: false
+      modalSendgridOpen: false,
+      selectedCampaign: false,
+      selectedSendgrid: false
     }
     this.store = AdminStore
     this.toggleVisibility = () => this.setState({ menuOpen: !this.state.menuOpen })
@@ -37,10 +42,31 @@ class Campaigns extends Reflux.Component {
       CampaignActions.campaignUpdatePicture(this.state.selectedCampaign.id, files[0])
     }
     this.handleOpenEditor = (key) => {
-      window.open('/admin/campaigns/editor/' + key, '_blank')
+      window.open('/admin/campaigns/' + key + '/editor', '_blank')
     }
     this.handleOpenReader = (key) => {
       window.open('/reader/' + key + '?tags=admin&tags=test', '_blank')
+    }
+    this.handleCloseSendgrid = () => {
+      this.setState({selectedCampaign: false, selectedSendgrid: false, modalSendgridOpen: false})
+    }
+    this.handleOpenSendgrid = (key) => {
+      this.setState({selectedCampaign: clone(this.state.campaigns[key]), selectedSendgrid: {template: 'empty', emails: [], url: window.location.origin}, modalSendgridOpen: true})
+    }
+    this.handleChangeSendgrid = (prop) => {
+      if (prop.key === 'emails') {
+        prop.val = prop.val.split('\n')
+      }
+      this.state.selectedSendgrid[prop.key] = prop.val
+      this.setState({selectedSendgrid: this.state.selectedSendgrid})
+    }
+    this.handleSendSendgrid = () => {
+      CampaignActions.campaignEmailing({
+        emails: this.state.selectedSendgrid.emails,
+        url: this.state.selectedSendgrid.url,
+        campaign: this.state.selectedCampaign.id,
+        template: this.state.selectedSendgrid.template
+      })
     }
     this.handleOpenInformations = (key) => {
       this.setState({selectedCampaign: clone(this.state.campaigns[key]), modalOpen: true})
@@ -64,6 +90,7 @@ class Campaigns extends Reflux.Component {
     }
   }
   render () {
+    console.log('Campaigns', 'render')
     let renderer = () => (
       <Container fluid>
         <Header as="h1" attached inverted color="red" className="appbar">
@@ -103,11 +130,32 @@ class Campaigns extends Reflux.Component {
                   <Icon onClick={this.handleOpenDropzone.bind(this, key)} bordered link name="image" inverted color="grey" />
                   <Icon onClick={this.handleOpenEditor.bind(this, key)} bordered link name="folder open outline" inverted color="grey" />
                   <Icon onClick={this.handleOpenReader.bind(this, key)} style={{float: 'right'}} bordered link name="play" inverted color="red" />
+                  <Icon onClick={this.handleOpenSendgrid.bind(this, key)} style={{float: 'right'}} bordered link name="mail" inverted color="blue" />
                 </Card.Content>
               </Card>
             ))}
           </Card.Group>
         </Segment>
+        <Modal open={this.state.modalSendgridOpen}>
+          <Header size="huge" color="red" content="Sendgrid" subheader="diffusion d'une campagne" />
+          <Modal.Content image>
+            <Image height="140" wrapped size="medium" src={host + '/' + this.state.selectedCampaign.picture} />
+            <Modal.Description className="campaigns">
+              <Form>
+                <Form.Field>
+                  <label>Template sendgrid</label>
+                  <Input onChange={(e) => this.handleChangeSendgrid({key: 'template', val: e.target.value})} defaultValue="" size="large" label={{ color: 'red', icon: 'asterisk' }} labelPosition="right corner" className="form" />
+                  <label>Liste des emails</label>
+                  <TextArea onChange={(e) => this.handleChangeSendgrid({key: 'emails', val: e.target.value})} placeholder="Ajouter la liste de diffusion" />
+                </Form.Field>
+              </Form>
+            </Modal.Description>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button onClick={this.handleCloseSendgrid} negative icon="close" labelPosition="right" content="Annuler" />
+            <Button onClick={this.handleSendSendgrid} positive icon="checkmark" labelPosition="right" content="Envoyer" />
+          </Modal.Actions>
+        </Modal>
         <Modal open={this.state.modalOpen}>
           <Header size="huge" color="red" content="Informations" subheader="metadata d'une campagne" />
           <Modal.Content image>

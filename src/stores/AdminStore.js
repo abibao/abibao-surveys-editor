@@ -68,6 +68,9 @@ class AdminStore extends Reflux.Store {
   onApplicationCreationComplete () {
     this.application.creationComplete()
   }
+  onCampaignEmailing (params) {
+    this.campaign.emailing(params)
+  }
   onCampaignCreate () {
     this.campaign.create()
   }

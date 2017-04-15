@@ -2,6 +2,7 @@
 import Reflux from 'reflux'
 
 const CampaignActions = Reflux.createActions([
+  'campaignEmailing',
   'campaignRead',
   'campaignCreate',
   'campaignUpdate',

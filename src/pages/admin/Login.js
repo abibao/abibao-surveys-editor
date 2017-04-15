@@ -15,12 +15,15 @@ import NetworkActions from './../../actions/NetworkActions'
 
 class Login extends Reflux.Component {
   componentDidMount () {
+    console.log('Login', 'componentDidMount')
   }
   componentWillUnmount () {
+    console.log('Login', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
   }
   constructor (props) {
+    console.log('Login', 'constructor')
     super(props)
     this.state = {
       email: 'administrator@abibao.com',
@@ -32,6 +35,7 @@ class Login extends Reflux.Component {
     }
   }
   render () {
+    console.log('Login', 'render')
     let waiting = () => {
       return (
         <Container fluid className="loader-reader">

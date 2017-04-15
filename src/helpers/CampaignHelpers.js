@@ -2,7 +2,7 @@
 
 // libraries
 import uuid from 'uuid'
-import {clone} from 'lodash'
+import {clone, map} from 'lodash'
 import Feathers from './../libs/Feathers'
 
 // actions
@@ -11,6 +11,17 @@ import CampaignActions from './../actions/CampaignActions'
 class CampaignHelpers {
   constructor (context) {
     this.context = context
+  }
+  emailing (params) {
+    console.log('CampaignHelpers', 'emailing')
+    map(params.emails, (email) => {
+      Feathers.service('command/campaignCreateEmailing').create({
+        email,
+        url: params.url,
+        campaign: params.campaign,
+        template: params.template
+      })
+    })
   }
   read (id) {
     this.context.setState({loader: {visible: true}})
