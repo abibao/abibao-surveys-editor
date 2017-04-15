@@ -3,7 +3,7 @@
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
-const eraro = require('eraro')({package:'platform.abibao.com'})
+const eraro = require('eraro')({package: 'platform.abibao.com'})
 
 const options = {
   service: 'users'
@@ -38,7 +38,7 @@ class Service {
       })
       // is individual already in our database if reader = abibao
       .then(() => {
-        if(campaign.reader === 'abibao') {
+        if (campaign.reader === 'abibao') {
           return app.service('api/individuals').find({query: {
             urn: params.individual
           }}).then((result) => {
@@ -58,13 +58,13 @@ class Service {
           return app.service('api/surveys').find({query: {
             individual: params.individual,
             campaign: campaign.id,
-            company: campaign.company,
+            company: campaign.company
           }}).then((result) => {
             if (result.length > 1) {
               console.log(params.individual)
               throw eraro('ERROR_SURVEY_ABIBAO_AFFECT_MORE_THAN_ONCE')
             }
-            if (result.length === 1 && result[0].complete === true ) {
+            if (result.length === 1 && result[0].complete === true) {
               throw eraro('ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE')
             }
             return result

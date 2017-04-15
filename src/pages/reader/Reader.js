@@ -36,7 +36,7 @@ class Reader extends Reflux.Component {
     console.log('Reader', 'constructor', props)
     let mycookie = cookie.load('individual')
     if (mycookie === undefined) {
-      console.log('Reader','make fingerprint')
+      console.log('Reader', 'make fingerprint')
       let fingerprint = 'urn:fingerprint:individual:' + uuid.v4()
       cookie.save('individual', fingerprint, { path: '/' })
     }
@@ -69,13 +69,13 @@ class Reader extends Reflux.Component {
         <div className="ui fluid container">
           <div className="abibao-reader">
             <div className="abibao-panel-heading">
-              <h3> </h3>
+              <h3 />
             </div>
             <div className="abibao-panel-body">
               <div style={{background: '#e7ebee'}}>
                 <h4 className="abibao-page-title">Vous êtes quelqu'un d'incroyable !</h4>
                 <br />
-                <Container fluid  style={{background: '#e7ebee'}}>
+                <Container fluid style={{background: '#e7ebee'}}>
                   <Segment basic>
                     <Header as="h2">
                       Le monde caritatif à besoin de gens comme vous !

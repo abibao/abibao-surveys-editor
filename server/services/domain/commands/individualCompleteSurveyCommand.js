@@ -3,7 +3,6 @@
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
-const eraro = require('eraro')({package:'platform.abibao.com'})
 
 const options = {
   service: 'users'
@@ -26,7 +25,7 @@ class Service {
           exectime: endtime - starttime,
           type: 'command',
           name: 'individualCompleteSurvey',
-          params
+          params: data
         })
         return Promise.resolve(result)
       })

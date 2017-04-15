@@ -3,7 +3,7 @@
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
-var rp = require('request-promise')
+const rp = require('request-promise')
 
 const options = {
   service: 'users'

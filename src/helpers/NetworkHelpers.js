@@ -12,10 +12,13 @@ class NetworkHelpers {
   }
   connect (socket) {
     console.log('NetworkHelpers', 'connect')
-    this.context.setState({socket, loader: {
-      visible: true,
-      message: 'Connexion acceptée...'
-    }})
+    this.context.setState({
+      socket,
+      loader: {
+        visible: true,
+        message: 'Connexion acceptée...'
+      }
+    })
     NetworkActions.networkAuthenticate({})
   }
   disconnect () {

@@ -19,7 +19,7 @@ class ApplicationHelpers {
       })
       this.context.setState({campaigns: dictionnary})
       ApplicationActions.applicationCreationComplete()
-    }).catch((error) => {
+    }).catch(() => {
       this.context.setState({token: false, loader: {visible: false}})
     })
   }

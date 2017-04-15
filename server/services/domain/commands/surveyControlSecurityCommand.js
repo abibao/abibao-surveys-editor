@@ -3,8 +3,6 @@
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
-const eraro = require('eraro')({package:'platform.abibao.com'})
-const uuid = require('uuid')
 
 const options = {
   service: 'users'
@@ -18,14 +16,11 @@ class Service {
     const app = this.app
     const starttime = new Date()
     let email = params.email.toLowerCase()
-    let user = ''
-    let campaignAbibaoPosition1 = ''
     return app.service('api/individuals').find({query: {
       email
     }})
     .then((result) => {
       if (result.length === 1) {
-        user = result[0]
         // case 1: email is in database
         const sendgrid = require('sendgrid')(app.get('sendgrid').key)
         const request = sendgrid.emptyRequest()
@@ -55,7 +50,6 @@ class Service {
           position: 1,
           company: 'Abibao'
         }}).then((result) => {
-          let campaign = result[0]
           return app.service('api/individuals').create({
             email
           }).then((result) => {

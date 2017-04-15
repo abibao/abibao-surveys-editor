@@ -15,7 +15,7 @@ module.exports.uuid = function () {
 
 module.exports.urn = function () {
   return function (hook) {
-    hook.data.urn = "urn:abibao:individual:" + uuid.v4()
+    hook.data.urn = 'urn:abibao:individual:' + uuid.v4()
     return hook
   }
 }

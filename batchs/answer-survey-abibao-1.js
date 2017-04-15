@@ -116,7 +116,7 @@ const batch = (table, callback) => {
                   campaign_id: campaignPostgres.id,
                   campaign_name: campaignPostgres.name,
                   question: key,
-                  answer:  choice.prefix + '_' + choice.suffix,
+                  answer: choice.prefix + '_' + choice.suffix,
                   createdAt: data.createdAt
                 }))
               } else {

@@ -2,15 +2,8 @@
 
 const Promise = require('bluebird')
 const Sequelize = require('sequelize')
-const auth = require('feathers-authentication')
-const permissions = require('feathers-permissions')
-const eraro = require('eraro')({package:'platform.abibao.com'})
 
 const AnswerModel = require('./../../data/answers/model')
-
-const options = {
-  service: 'users'
-}
 
 const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min)
@@ -37,10 +30,11 @@ class Service {
           random: false
         }
       } else {
-        let offset = getRandomInt(0, count-1)
+        let offset = getRandomInt(0, count - 1)
         return Answer.findAll({
           where: { 'campaign_id': params.campaign, question: 'AGENCEDURABLE_EHOP_IDEA', individual: { $not: params.individual } },
-          offset, limit: 1
+          offset,
+          limit: 1
         })
       }
     })

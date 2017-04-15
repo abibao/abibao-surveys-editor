@@ -40,7 +40,6 @@ class SurveyHelpers {
       console.error(error)
       this.context.setState({loader: {visible: false, message: ''}})
     })
-
   }
 
   complete (data) {

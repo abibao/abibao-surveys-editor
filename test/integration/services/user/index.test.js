@@ -4,8 +4,6 @@ const assert = require('assert')
 const request = require('request')
 const app = require('../../../../server/app')
 
-let token = ''
-
 describe('[integration] user service', function () {
   before(function (done) {
     this.server = app.listen(3030)
@@ -40,7 +38,7 @@ describe('[integration] user service', function () {
       body: {
         email: 'administrator@abibao.com',
         password: 'not a good one'
-      },
+      }
     }, function (err, res, body) {
       assert.equal(res.statusCode, 401)
       assert.equal(body.code, 401)
@@ -62,7 +60,6 @@ describe('[integration] user service', function () {
     }, function (err, res, body) {
       assert.equal(res.statusCode, 201)
       assert.ok(body.accessToken != null)
-      token = body.accessToken
       done(err)
     })
   })

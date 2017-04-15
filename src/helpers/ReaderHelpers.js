@@ -4,10 +4,13 @@ class ReaderHelpers {
   }
   initialize () {
     console.log('ReaderHelpers', 'initialize')
-    this.context.setState({initialized: true, loader: {
-      visible: true,
-      message: 'Chargement campagne en cours...'
-    }})
+    this.context.setState({
+      initialized: true,
+      loader: {
+        visible: true,
+        message: 'Chargement campagne en cours...'
+      }
+    })
   }
 }
 

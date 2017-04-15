@@ -3,7 +3,7 @@
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
-const eraro = require('eraro')({package:'platform.abibao.com'})
+const eraro = require('eraro')({package: 'platform.abibao.com'})
 
 const options = {
   service: 'users'

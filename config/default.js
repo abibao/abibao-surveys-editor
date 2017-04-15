@@ -30,7 +30,7 @@ module.exports = {
   sendgrid: {
     key: nconf.get('ABIBAO_SENDGRID_KEY') || 'sendgrid',
     templates: {
-      passwordless: nconf.get('ABIBAO_SENDGRID_TEMPLATE_PASSWORDLESS') || 'sendgrid'
+      passwordless: nconf.get('ABIBAO_SENDGRID_TEMPLATE_PASSWORDLESS') || 'sendgrid'
     }
   },
   slack: {
