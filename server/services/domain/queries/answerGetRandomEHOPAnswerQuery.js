@@ -11,7 +11,7 @@ class Service {
   setup (app, path) {
     this.app = app
   }
-  get (params) {
+  find (params) {
     const app = this.app
     const starttime = new Date()
     const Answer = AnswerModel(app)

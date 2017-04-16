@@ -7,7 +7,7 @@ import Dropzone from 'react-dropzone'
 import {clone} from 'lodash'
 
 // semantic
-import { Container, Form, Segment, Icon, Input, Button, Header, Card, Image, Modal, TextArea, Loader } from 'semantic-ui-react'
+import { Container, Form, Segment, Icon, Input, Button, Header, Card, Image, Modal, TextArea, Loader, Dropdown } from 'semantic-ui-react'
 
 import AdminStore from './../../stores/AdminStore'
 import AdminActions from './../../actions/AdminActions'
@@ -88,7 +88,7 @@ class Campaigns extends Reflux.Component {
     }
   }
   render () {
-    console.log('Campaigns', 'render')
+    console.log('Campaigns', 'render', this.state.loader.visible)
     let loader = () => {
       return (
         <Container fluid className="loader-reader">
@@ -149,9 +149,9 @@ class Campaigns extends Reflux.Component {
               <Form>
                 <Form.Field>
                   <label>Template sendgrid</label>
-                  <Input onChange={(e) => this.handleChangeSendgrid({key: 'template', val: e.target.value})} defaultValue="" size="large" label={{ color: 'red', icon: 'asterisk' }} labelPosition="right corner" className="form" />
+                  <Dropdown onChange={(e, data) => this.handleChangeSendgrid({key: 'template', val: data.value})} selection fluid search placeholder="Sélectionnez un template sendgrid" options={this.state.templates} size="large" className="form" />
                   <label>Liste des emails</label>
-                  <TextArea onChange={(e) => this.handleChangeSendgrid({key: 'emails', val: e.target.value})} placeholder="Ajouter la liste de diffusion" />
+                  <TextArea onChange={(e) => this.handleChangeSendgrid({key: 'emails', val: e.target.value})} placeholder="Ajouter la liste de diffusion" size="large" className="form" />
                 </Form.Field>
               </Form>
             </Modal.Description>

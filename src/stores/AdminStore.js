@@ -19,7 +19,8 @@ class AdminStore extends Reflux.Store {
         visible: true,
         message: 'Connexion en cours...'
       },
-      campaigns: {}
+      campaigns: {},
+      templates: []
     }
     // helpers
     this.helpers = new AdminnHelpers(this)
@@ -56,9 +57,11 @@ class AdminStore extends Reflux.Store {
     this.helpers.authenticate(args)
   }
   onApplicationInitialize () {
+    console.log('AdminStore', 'onApplicationInitialize')
     this.helpers.initialize()
   }
   onApplicationCreationComplete () {
+    console.log('AdminStore', 'onApplicationCreationComplete')
     this.helpers.creationComplete()
   }
   onCampaignEmailing (params) {

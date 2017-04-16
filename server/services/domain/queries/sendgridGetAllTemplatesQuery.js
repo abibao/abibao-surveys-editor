@@ -1,0 +1,42 @@
+const Promise = require('bluebird')
+
+class Service {
+  setup (app, path) {
+    this.app = app
+  }
+  find () {
+    const app = this.app
+    const starttime = new Date()
+    const sendgrid = require('sendgrid')(app.get('sendgrid').key)
+    const request = sendgrid.emptyRequest()
+    request.method = 'GET'
+    request.path = '/v3/templates'
+    return sendgrid.API(request)
+      .then((response) => {
+        const endtime = new Date()
+        app.info({
+          env: app.get('env'),
+          exectime: endtime - starttime,
+          type: 'query',
+          name: 'sendgridGetAllTemplates'
+        })
+        return Promise.resolve(response.body)
+      })
+      .catch((error) => {
+        const endtime = new Date()
+        app.error({
+          env: app.get('env'),
+          exectime: endtime - starttime,
+          type: 'query',
+          name: 'sendgridGetAllTemplates',
+          error
+        })
+        return Promise.reject(error)
+      })
+  }
+}
+
+module.exports = function () {
+  const app = this
+  app.use('query/sendgridGetAllTemplates', new Service())
+}

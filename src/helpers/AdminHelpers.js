@@ -2,7 +2,7 @@
 
 import AdminActions from './../actions/AdminActions'
 import uuid from 'uuid'
-import {clone, map} from 'lodash'
+import {clone} from 'lodash'
 
 class AdminHelpers {
   constructor (context) {
@@ -71,7 +71,6 @@ class AdminHelpers {
       visible: true,
       message: 'Chargement des data en cours...'
     }})
-    this.context.setState({loader: {visible: true}})
     this.context.state.client.service('api/campaigns').find({
       query: {
         $sort: {company: 1, position: 1}
@@ -80,11 +79,31 @@ class AdminHelpers {
       let dictionnary = {}
       campaigns.map((campaign) => {
         dictionnary[campaign.id] = campaign
-        return true
+        return this
       })
       this.context.setState({campaigns: dictionnary})
+      return this.context.state.client.service('query/sendgridGetAllTemplates').find()
+    }).then((result) => {
+      result.templates.map((template) => {
+        this.context.state.templates.push({
+          key: template.id,
+          text: template.name,
+          value: template.id
+        })
+        /* template.versions.map((version) => {
+          this.context.state.templates.push({
+            key: version.id,
+            text: version.name,
+            value: version.id
+          })
+          return this
+        }) */
+        return this
+      })
+      this.context.setState({templates: this.context.state.templates})
       AdminActions.applicationCreationComplete()
-    }).catch(() => {
+    }).catch((error) => {
+      console.error(error)
       this.context.setState({token: false, loader: {visible: false}})
     })
   }
@@ -94,13 +113,14 @@ class AdminHelpers {
   }
   emailingCampaign (params) {
     console.log('AdminHelpers', 'emailing')
-    map(params.emails, (email) => {
+    params.emails.map((email) => {
       this.context.state.client.service('command/campaignCreateEmailing').create({
         email,
         url: params.url,
         campaign: params.campaign,
         template: params.template
       })
+      return this
     })
   }
   createCampaign () {

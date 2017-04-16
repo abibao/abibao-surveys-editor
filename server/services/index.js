@@ -16,6 +16,7 @@ const surveyControlSecurityCommand = require('./domain/commands/surveyControlSec
 
 // external queries
 const answerGetRandomEHOPAnswerQuery = require('./domain/queries/answerGetRandomEHOPAnswerQuery')
+const sendgridGetAllTemplatesQuery = require('./domain/queries/sendgridGetAllTemplatesQuery')
 
 module.exports = function () {
   const app = this
@@ -35,4 +36,5 @@ module.exports = function () {
   app.configure(surveyControlSecurityCommand)
 
   app.configure(answerGetRandomEHOPAnswerQuery)
+  app.configure(sendgridGetAllTemplatesQuery)
 }

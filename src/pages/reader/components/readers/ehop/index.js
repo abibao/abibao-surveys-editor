@@ -38,7 +38,7 @@ class SurveyReader extends Reflux.Component {
     }
     this.handleGetRandomAnswer = () => {
       console.log('SurveyReader', 'handleGetRandomAnswer')
-      return this.props.client.service('query/answerGetRandomEHOPAnswer').get({
+      return this.props.client.service('query/answerGetRandomEHOPAnswer').find({
         campaign: this.props.survey.campaign.id,
         email: this.props.survey.individual
       }).catch((error) => {
