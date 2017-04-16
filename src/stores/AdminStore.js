@@ -2,27 +2,19 @@
 import Reflux from 'reflux'
 
 // libraries
-import Feathers from './../libs/Feathers'
-
-// actions
-import ApplicationActions from './../actions/ApplicationActions'
-import CampaignActions from './../actions/CampaignActions'
-import SurveyActions from './../actions/SurveyActions'
-import NetworkActions from './../actions/NetworkActions'
-
-// helpers
-import ApplicationHelpers from './../helpers/ApplicationHelpers'
-import CampaignHelpers from './../helpers/CampaignHelpers'
-import SurveyHelpers from './../helpers/SurveyHelpers'
-import NetworkHelpers from './../helpers/NetworkHelpers'
+import Client from './../libs/ClientAdmin'
+import AdminActions from './../actions/AdminActions'
+import AdminnHelpers from './../helpers/AdminHelpers'
 
 class AdminStore extends Reflux.Store {
   constructor () {
+    console.log('AdminStore', 'constructor')
     super()
     this.state = {
-      socket: false,
-      token: false,
-      initialized: false,
+      client: false, // feathers client
+      socket: false, // socketIO token
+      token: false, // Authentification jwt
+      initialized: false, // application has finish loading or not ?
       loader: {
         visible: true,
         message: 'Connexion en cours...'
@@ -30,58 +22,56 @@ class AdminStore extends Reflux.Store {
       campaigns: {}
     }
     // helpers
-    this.network = new NetworkHelpers(this)
-    this.application = new ApplicationHelpers(this)
-    this.campaign = new CampaignHelpers(this)
-    this.survey = new SurveyHelpers(this)
+    this.helpers = new AdminnHelpers(this)
     // actions
-    this.listenables = [ApplicationActions, NetworkActions, CampaignActions, SurveyActions]
+    this.listenables = [AdminActions]
     // listeners
-    Feathers.io.on('connect', () => {
-      console.log('Feathers Admin connect')
-      NetworkActions.networkConnect(Feathers.io)
-    })
-    Feathers.io.on('Feathers Admin disconnect', () => {
-      NetworkActions.networkDisconnect()
-    })
-    Feathers.service('api/campaigns').on('created', (campaign) => {
-      this.state.campaigns[campaign.id] = campaign
-      this.setState({campaigns: this.state.campaigns})
-    })
-    Feathers.service('api/campaigns').on('patched', (campaign) => {
-      this.state.campaigns[campaign.id] = campaign
-      this.setState({campaigns: this.state.campaigns})
+    Client((app) => {
+      app.io.on('connect', () => {
+        console.log('ReaderStore', 'Feathers connect')
+        AdminActions.networkConnect(app)
+      })
+      app.io.on('disconnect', () => {
+        console.log('ReaderStore', 'Feathers disconnect')
+        AdminActions.networkDisconnect()
+      })
+      app.service('api/campaigns').on('created', (campaign) => {
+        this.state.campaigns[campaign.id] = campaign
+        this.setState({campaigns: this.state.campaigns})
+      })
+      app.service('api/campaigns').on('patched', (campaign) => {
+        this.state.campaigns[campaign.id] = campaign
+        this.setState({campaigns: this.state.campaigns})
+      })
     })
   }
-  onNetworkConnect (socket) {
-    this.network.connect(socket)
+  onNetworkConnect (client) {
+    console.log('AdminStore', 'onNetworkConnect')
+    this.helpers.connect(client)
   }
   onNetworkDisconnect () {
-    this.network.disconnect()
+    this.helpers.disconnect()
   }
   onNetworkAuthenticate (args) {
-    this.network.authenticate(args)
+    this.helpers.authenticate(args)
   }
   onApplicationInitialize () {
-    this.application.initialize()
+    this.helpers.initialize()
   }
   onApplicationCreationComplete () {
-    this.application.creationComplete()
+    this.helpers.creationComplete()
   }
   onCampaignEmailing (params) {
-    this.campaign.emailing(params)
+    this.helpers.emailingCampaign(params)
   }
   onCampaignCreate () {
-    this.campaign.create()
+    this.helpers.createCampaign()
   }
   onCampaignUpdate (data) {
-    this.campaign.update(data)
+    this.helpers.updateCampaign(data)
   }
   onCampaignUpdatePicture (id, file) {
-    this.campaign.updatePicture(id, file)
-  }
-  onSurveyAffect (data) {
-    this.survey.affect(data)
+    this.helpers.updateCampaignPicture(id, file)
   }
 }
 

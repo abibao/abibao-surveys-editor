@@ -1,5 +1,3 @@
-'use strict'
-
 // internal services
 const users = require('./memory/users')
 const entities = require('./data/entities')

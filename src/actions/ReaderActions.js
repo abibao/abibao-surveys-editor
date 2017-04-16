@@ -2,7 +2,13 @@
 import Reflux from 'reflux'
 
 const ReaderActions = Reflux.createActions([
-  'readerInitialize'
+  'networkConnect',
+  'networkDisconnect',
+  'readerInitialize',
+  'controlSecurity',
+  'affectSurvey',
+  'answerSurvey',
+  'completeSurvey'
 ])
 
 export default ReaderActions

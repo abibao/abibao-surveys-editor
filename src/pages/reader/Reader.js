@@ -13,11 +13,8 @@ import * as Readers from './components/readers'
 // semantic
 import { Container, Loader, Header, Segment, Input, Form, Button, Message } from 'semantic-ui-react'
 
-// store
 import ReaderStore from './../../stores/ReaderStore'
-
-// actions
-import SurveyActions from './../../actions/SurveyActions'
+import ReaderActions from './../../actions/ReaderActions'
 
 class Reader extends Reflux.Component {
   componentDidMount () {
@@ -29,11 +26,11 @@ class Reader extends Reflux.Component {
     if (this.state.initialized === true && this.state.selectedCampaign === false) {
       console.log('Reader', 'initialized')
       this.setState({selectedCampaign: this.props.params.id})
-      SurveyActions.surveyAffect({individual: this.state.individual, campaign: this.props.params.id, params: this.props.location.query})
+      ReaderActions.affectSurvey({individual: this.state.individual, campaign: this.props.params.id, params: this.props.location.query})
     }
   }
   constructor (props) {
-    console.log('Reader', 'constructor', props)
+    console.log('Reader', 'constructor', props.params.id)
     let mycookie = cookie.load('individual')
     if (mycookie === undefined) {
       console.log('Reader', 'make fingerprint')
@@ -45,7 +42,6 @@ class Reader extends Reflux.Component {
     props.location.query.isDesktop = is.desktop()
     // time to read the survey
     super(props)
-    console.log('Reader', 'constructor', this.props.params.id)
     this.state = {
       individual: this.props.location.query.individual || cookie.load('individual'),
       email: 'example@domain.com',
@@ -60,10 +56,11 @@ class Reader extends Reflux.Component {
     }
     this.handleSubmit = () => {
       console.log('Reader', 'handleSubmit', this.state.email)
-      SurveyActions.surveyControlSecurity(this.state.email)
+      ReaderActions.controlSecurity(this.state.email)
     }
   }
   render () {
+    console.log('Reader', 'render')
     let email = () => {
       return (
         <div className="ui fluid container">
@@ -117,7 +114,7 @@ class Reader extends Reflux.Component {
     }
     let renderer = (CurrentReader) => (
       <Container fluid>
-        <CurrentReader survey={this.state.selectedSurvey} />
+        <CurrentReader survey={this.state.selectedSurvey} client={this.state.client} />
       </Container>
     )
     if (this.state.askEmail === true) {

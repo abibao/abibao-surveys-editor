@@ -1,5 +1,3 @@
-'use strict'
-
 const memory = require('feathers-memory')
 const hooks = require('./hooks')
 

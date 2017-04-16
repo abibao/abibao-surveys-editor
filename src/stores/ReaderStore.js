@@ -2,90 +2,74 @@
 import Reflux from 'reflux'
 
 // libraries
-import Feathers from './../libs/Feathers'
-
-// actions
+import Client from './../libs/ClientReader'
 import ReaderActions from './../actions/ReaderActions'
-import NetworkActions from './../actions/NetworkActions'
-import AnswerActions from './../actions/AnswerActions'
-import SurveyActions from './../actions/SurveyActions'
-
-// helpers
 import ReaderHelpers from './../helpers/ReaderHelpers'
-import NetworkHelpers from './../helpers/NetworkHelpers'
-import AnswerHelpers from './../helpers/AnswerHelpers'
-import SurveyHelpers from './../helpers/SurveyHelpers'
 
 class ReaderStore extends Reflux.Store {
   constructor () {
+    console.log('ReaderStore', 'constructor')
     super()
     this.state = {
-      // reader: true,
+      client: false, // feathers client
       socket: false, // socketIO token
       token: false, // Authentification jwt
       initialized: false, // application has finish loading or not ?
       selectedCampaign: false, // campaign id to load
       askEmail: false, // reader in ask email mode
       passwordless: false, // message email sended
-      // selectedSurvey: false,
-      // selectedCampaign: false,
       loader: {
         visible: true,
         message: 'Connexion en cours...'
       }
     }
     // helpers
-    this.reader = new ReaderHelpers(this)
-    this.network = new NetworkHelpers(this)
-    this.answer = new AnswerHelpers(this)
-    this.survey = new SurveyHelpers(this)
+    this.helpers = new ReaderHelpers(this)
     // actions
-    this.listenables = [NetworkActions, ReaderActions, AnswerActions, SurveyActions]
+    this.listenables = [ReaderActions]
     // listeners
-    Feathers.io.on('connect', () => {
-      console.log('ReaderStore', 'Feathers connect')
-      NetworkActions.networkConnect(Feathers.io)
-    })
-    Feathers.io.on('ReaderStore', 'Feathers disconnect', () => {
-      NetworkActions.networkDisconnect()
+    Client((app) => {
+      app.io.on('connect', () => {
+        console.log('ReaderStore', 'Feathers connect')
+        ReaderActions.networkConnect(app)
+      })
+      app.io.on('disconnect', () => {
+        console.log('ReaderStore', 'Feathers disconnect')
+        ReaderActions.networkDisconnect()
+      })
     })
   }
-  onNetworkConnect (socket) {
+  onNetworkConnect (client) {
     console.log('ReaderStore', 'onNetworkConnect')
-    this.network.connect(socket)
+    this.helpers.connect(client)
+  }
+  onNetworkDisconnect () {
+    this.helpers.disconnect()
   }
   onNetworkAuthenticate (args) {
     console.log('ReaderStore', 'onNetworkAuthenticate')
-    this.network.authenticate(args)
+    this.helpers.authenticate(args)
   }
   onReaderInitialize () {
     console.log('ReaderStore', 'onApplicationInitialize')
-    this.reader.initialize()
+    this.helpers.initialize()
   }
-  onSurveyAffect (data) {
-    console.log('ReaderStore', 'onSurveyAffect')
-    this.survey.affect(data)
+  onAffectSurvey (data) {
+    console.log('ReaderStore', 'onAffectSurvey')
+    this.helpers.affectSurvey(data)
   }
   onSurveyControlSecurity (email) {
     console.log('ReaderStore', 'onSurveyControlSecurity', email)
-    this.survey.controlSecurity(email)
+    this.helpers.controlSecurity(email)
   }
-  onAnswerUpsert (data) {
-    console.log('ReaderStore', 'onAnswerUpsert')
-    this.answer.upsert(data)
+  onAnswerSurvey (data) {
+    console.log('ReaderStore', 'onAnswerSurvey')
+    this.helpers.answerSurvey(data)
   }
-  onSurveyComplete () {
-    console.log('ReaderStore', 'onSurveyComplete')
-    this.survey.complete(this.state.selectedSurvey)
+  onCompleteSurvey () {
+    console.log('ReaderStore', 'onCompleteSurvey')
+    this.helpers.completeSurvey(this.state.selectedSurvey)
   }
-  /*
-  onNetworkDisconnect () {
-    this.network.disconnect()
-  }
-  onNetworkPostOnSlack (message) {
-    this.network.postOnSlack(message)
-  }
-  */
 }
 
 module.exports = ReaderStore

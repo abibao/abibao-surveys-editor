@@ -7,11 +7,8 @@ import Reflux from 'reflux'
 // semantic
 import { Container, Button, Input, Segment, Grid, Header, Icon, Loader } from 'semantic-ui-react'
 
-// store
 import AdminStore from './../../stores/AdminStore'
-
-// actions
-import NetworkActions from './../../actions/NetworkActions'
+import AdminActions from './../../actions/AdminActions'
 
 class Login extends Reflux.Component {
   componentDidMount () {
@@ -31,15 +28,15 @@ class Login extends Reflux.Component {
     }
     this.store = AdminStore
     this.handleSubmit = () => {
-      NetworkActions.networkAuthenticate({strategy: 'local', email: this.state.email, password: this.state.password})
+      AdminActions.networkAuthenticate({strategy: 'local', email: this.state.email, password: this.state.password})
     }
   }
   render () {
     console.log('Login', 'render')
-    let waiting = () => {
+    let loader = () => {
       return (
         <Container fluid className="loader-reader">
-          <Loader active size="huge">En attente du serveur...</Loader>
+          <Loader active size="huge">{this.state.loader.message}</Loader>
         </Container>
       )
     }
@@ -78,8 +75,8 @@ class Login extends Reflux.Component {
         </Grid>
       </Container>
     )
-    if (this.state.socket === false) {
-      return waiting()
+    if (this.state.loader.visible === true) {
+      return loader()
     }
     return renderer()
   }

@@ -4,8 +4,7 @@ import Reflux from 'reflux'
 import * as Survey from 'survey-react'
 
 // actions
-import AnswerActions from './../../../../../actions/AnswerActions'
-import SurveyActions from './../../../../../actions/SurveyActions'
+import ReaderActions from './../../../../../actions/ReaderActions'
 
 import styles from './styles'
 import './screen.css'
@@ -22,7 +21,7 @@ class SurveyReader extends Reflux.Component {
     super(props)
     this.surveyComplete = () => {
       console.log('SurveyReader', 'surveyComplete')
-      SurveyActions.surveyComplete()
+      ReaderActions.completeSurvey()
     }
     this.surveyValidateQuestion = (s, options) => {
       console.log('SurveyReader', 'surveyValidateQuestion', options)
@@ -34,7 +33,7 @@ class SurveyReader extends Reflux.Component {
         question: options.name,
         answer: options.value
       }
-      AnswerActions.answerUpsert(answer)
+      ReaderActions.answerSurvey(answer)
     }
   }
   render () {

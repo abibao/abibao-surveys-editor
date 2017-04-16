@@ -3,12 +3,8 @@ import React from 'react'
 import Reflux from 'reflux'
 import * as Survey from 'survey-react'
 
-// libraries
-import Feathers from './../../../../../libs/Feathers'
-
 // actions
-import AnswerActions from './../../../../../actions/AnswerActions'
-import SurveyActions from './../../../../../actions/SurveyActions'
+import ReaderActions from './../../../../../actions/ReaderActions'
 
 import styles from './styles'
 import './screen.css'
@@ -23,9 +19,10 @@ class SurveyReader extends Reflux.Component {
   }
   constructor (props) {
     super(props)
+    console.log('SurveyReader', 'constructor')
     this.surveyComplete = () => {
       console.log('SurveyReader', 'surveyComplete')
-      SurveyActions.surveyComplete()
+      ReaderActions.completeSurvey()
     }
     this.surveyValidateQuestion = (s, options) => {
       console.log('SurveyReader', 'surveyValidateQuestion')
@@ -37,11 +34,11 @@ class SurveyReader extends Reflux.Component {
         question: options.name,
         answer: options.value
       }
-      AnswerActions.answerUpsert(answer)
+      ReaderActions.answerSurvey(answer)
     }
     this.handleGetRandomAnswer = () => {
       console.log('SurveyReader', 'handleGetRandomAnswer')
-      return Feathers.service('query/answerGetRandomEHOPAnswer').get({
+      return this.props.client.service('query/answerGetRandomEHOPAnswer').get({
         campaign: this.props.survey.campaign.id,
         email: this.props.survey.individual
       }).catch((error) => {

@@ -7,15 +7,12 @@ import Dropzone from 'react-dropzone'
 import {clone} from 'lodash'
 
 // semantic
-import { Container, Form, Segment, Icon, Input, Button, Header, Card, Image, Modal, TextArea } from 'semantic-ui-react'
+import { Container, Form, Segment, Icon, Input, Button, Header, Card, Image, Modal, TextArea, Loader } from 'semantic-ui-react'
 
-// store
 import AdminStore from './../../stores/AdminStore'
+import AdminActions from './../../actions/AdminActions'
 
-// actions
-import CampaignActions from './../../actions/CampaignActions'
-
-const host = process.env.REACT_APP_FEATHERS_URI
+const host = window.location.origin
 
 class Campaigns extends Reflux.Component {
   componentDidMount () {
@@ -39,7 +36,7 @@ class Campaigns extends Reflux.Component {
     this.store = AdminStore
     this.toggleVisibility = () => this.setState({ menuOpen: !this.state.menuOpen })
     this.handleChangePicture = (files) => {
-      CampaignActions.campaignUpdatePicture(this.state.selectedCampaign.id, files[0])
+      AdminActions.campaignUpdatePicture(this.state.selectedCampaign.id, files[0])
     }
     this.handleOpenEditor = (key) => {
       window.open('/admin/campaigns/' + key + '/editor', '_blank')
@@ -61,7 +58,7 @@ class Campaigns extends Reflux.Component {
       this.setState({selectedSendgrid: this.state.selectedSendgrid})
     }
     this.handleSendSendgrid = () => {
-      CampaignActions.campaignEmailing({
+      AdminActions.campaignEmailing({
         emails: this.state.selectedSendgrid.emails,
         url: this.state.selectedSendgrid.url,
         campaign: this.state.selectedCampaign.id,
@@ -80,18 +77,25 @@ class Campaigns extends Reflux.Component {
       this.setState({selectedCampaign: false, modalOpen: false})
     }
     this.handleUpdateInformations = () => {
-      CampaignActions.campaignUpdate(this.state.selectedCampaign)
+      AdminActions.campaignUpdate(this.state.selectedCampaign)
     }
     this.handleOpenDropzone = (key) => {
       this.setState({selectedCampaign: this.state.campaigns[key]})
       this.refs.dropzone.open()
     }
     this.handleCampaignCreate = () => {
-      CampaignActions.campaignCreate()
+      AdminActions.campaignCreate()
     }
   }
   render () {
     console.log('Campaigns', 'render')
+    let loader = () => {
+      return (
+        <Container fluid className="loader-reader">
+          <Loader active size="huge">{this.state.loader.message}</Loader>
+        </Container>
+      )
+    }
     let renderer = () => (
       <Container fluid>
         <Header as="h1" attached inverted color="red" className="appbar">
@@ -184,7 +188,11 @@ class Campaigns extends Reflux.Component {
         <Button onClick={this.handleCampaignCreate} size="huge" color="red" circular icon="plus" className="floating right" loading={this.state.loader.visible} />
       </Container>
     )
-    return renderer()
+    if (this.state.loader.visible === true) {
+      return loader()
+    } else {
+      return renderer()
+    }
   }
 }
 

@@ -7,14 +7,8 @@ import Reflux from 'reflux'
 // semantic
 import { Container, Icon, Header, Segment } from 'semantic-ui-react'
 
-// libraries
-import Feathers from './../../libs/Feathers'
-
-// store
 import AdminStore from './../../stores/AdminStore'
-
-// actions
-import CampaignActions from './../../actions/CampaignActions'
+import AdminActions from './../../actions/AdminActions'
 
 const IFrameComponent = React.createClass({
   render: function () {
@@ -44,14 +38,14 @@ class Editor extends Reflux.Component {
     this.store = AdminStore
     this.toggleVisibility = () => this.setState({ menuOn: !this.state.menuOn })
     this.handleLoadData = (id) => {
-      return Feathers.service('api/campaigns').get(id)
+      return this.state.client.service('api/campaigns').get(id)
     }
     this.handleSetData = (data) => {
       this.setState({selectedCampaign: data})
     }
     this.handleSaveData = (data) => {
       this.state.selectedCampaign.data = JSON.parse(data)
-      CampaignActions.campaignUpdate(this.state.selectedCampaign)
+      AdminActions.campaignUpdate(this.state.selectedCampaign)
     }
     window.handleSetData = this.handleSetData
     window.handleLoadData = this.handleLoadData

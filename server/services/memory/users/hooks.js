@@ -1,5 +1,3 @@
-'use strict'
-
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
 const local = require('feathers-authentication-local')

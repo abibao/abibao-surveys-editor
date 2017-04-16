@@ -1,5 +1,3 @@
-'use strict'
-
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
@@ -32,6 +30,9 @@ class Service {
     }
     if (!params.question) {
       return Promise.reject(eraro('question is mandatory'))
+    }
+    if (!params.answer || params.answer === null) {
+      params.answer = ''
     }
     const answersToCreate = []
     return app.service('api/answers').remove(null, {query: {

@@ -25,7 +25,7 @@ const routerAdmin = (
   <Router history={browserHistory}>
     <Route path="admin/login" component={Login} />
     <Route path="admin/campaigns" component={Campaigns} />
-    <Route path="admin/campaigns/editor/:id" component={Editor} />
+    <Route path="admin/campaigns/:id/editor" component={Editor} />
     <Route path="*" component={PageNotFound} />
   </Router>
 )

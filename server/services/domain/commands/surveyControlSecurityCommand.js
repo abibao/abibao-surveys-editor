@@ -1,5 +1,3 @@
-'use strict'
-
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')

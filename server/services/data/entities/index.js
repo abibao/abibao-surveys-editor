@@ -1,5 +1,3 @@
-'use strict'
-
 const Service = require('feathers-sequelize')
 const hooks = require('./hooks')
 

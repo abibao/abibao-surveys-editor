@@ -42,6 +42,9 @@
       var init = function () {
         self.handleGetRandomAnswer()
           .then(function (result) {
+            if (result.count === 0) {
+              return false
+            }
             document.getElementById('container').innerHTML = result[0]['answer']
           }).catch(console.error)
       }
