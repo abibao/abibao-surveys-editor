@@ -51,16 +51,17 @@ const corsOptions = {
 }
 
 /*
-.use('(/admin/campaigns)', serveStatic(app.get('public')))
-.use('(/admin/campaigns/editor/:id)', serveStatic(app.get('public')))
-.use('(/admin/login)', serveStatic(app.get('public')))
-.use('(/reader/:id)', serveStatic(app.get('public')))
+
 */
 
 app.use(compress())
   .options('*', cors(corsOptions))
-  .use('/wp_content', serveStatic(dirpathUpload))
   .use('/', serveStatic(app.get('public')))
+  .use('/wp_content', serveStatic(dirpathUpload))
+  .use('(/admin/campaigns)', serveStatic(app.get('public')))
+  .use('(/admin/campaigns/:id/editor)', serveStatic(app.get('public')))
+  .use('(/admin/login)', serveStatic(app.get('public')))
+  .use('(/reader/:id)', serveStatic(app.get('public')))
   .use(cors(corsOptions))
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
