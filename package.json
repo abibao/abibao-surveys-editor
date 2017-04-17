@@ -38,7 +38,7 @@
     "feathers-memory": "1.1.0",
     "feathers-permissions": "0.1.1",
     "feathers-rest": "1.7.1",
-    "feathers-sequelize": "1.4.3",
+    "feathers-sequelize": "1.4.5",
     "feathers-socketio": "1.5.2",
     "fs-blob-store": "5.2.1",
     "joi": "10.4.1",
@@ -86,7 +86,7 @@
     "sinon": "2.1.0",
     "snazzy": "7.0.0",
     "standard-jsx": "8.0.0",
-    "survey-react": "0.12.4"
+    "survey-react": "0.12.8"
   },
   "standard": {
     "globals": [

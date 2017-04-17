@@ -40,7 +40,7 @@ class AdminHelpers {
         if (passport.exp < Date.now() / 1000) {
           window.location = window.location.origin + '/admin/login'
         } else {
-          if (window.location.pathname !== '/admin/login') {
+          if (!window.location.pathname.includes('admin/login')) {
             AdminActions.applicationInitialize()
           } else {
             window.location = window.location.origin + '/admin/campaigns'
@@ -51,7 +51,7 @@ class AdminHelpers {
         console.error('...', error.toString())
         if (error.toString().includes('NotAuthenticated')) {
           console.log('...', 'no jwt token found, now use strategy local')
-          if (window.location.pathname !== '/admin/login') {
+          if (!window.location.pathname.includes('admin/login')) {
             window.location = window.location.origin + '/admin/login'
           } else {
             this.context.setState({
@@ -99,14 +99,6 @@ class AdminHelpers {
           text: template.name,
           value: template.id
         })
-        /* template.versions.map((version) => {
-          this.context.state.templates.push({
-            key: version.id,
-            text: version.name,
-            value: version.id
-          })
-          return this
-        }) */
         return this
       })
       this.context.setState({templates: this.context.state.templates})
@@ -114,7 +106,7 @@ class AdminHelpers {
     }).catch((error) => {
       console.error(error)
       this.context.setState({token: false, loader: {visible: true, message: 'Une erreur est survenue pendant l\'initialisation'}})
-      if (window.location.pathname !== '/admin/login') {
+      if (!window.location.pathname.includes('admin/login')) {
         window.localStorage.removeItem('rememberMe')
         window.location = window.location.origin + '/admin/login'
       }

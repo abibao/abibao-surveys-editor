@@ -50,18 +50,14 @@ const corsOptions = {
   }
 }
 
-/*
-
-*/
-
 app.use(compress())
   .options('*', cors(corsOptions))
   .use('/', serveStatic(app.get('public')))
   .use('/wp_content', serveStatic(dirpathUpload))
-  .use('(/admin/campaigns)', serveStatic(app.get('public')))
-  .use('(/admin/campaigns/:id/editor)', serveStatic(app.get('public')))
-  .use('(/admin/login)', serveStatic(app.get('public')))
-  .use('(/reader/:id)', serveStatic(app.get('public')))
+  .use('/admin/campaigns', serveStatic(app.get('public')))
+  .use('/admin/campaigns/:id/editor', serveStatic(app.get('public')))
+  .use('/admin/login', serveStatic(app.get('public')))
+  .use('/reader/:id', serveStatic(app.get('public')))
   .use(cors(corsOptions))
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
