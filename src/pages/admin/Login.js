@@ -7,8 +7,8 @@ import Reflux from 'reflux'
 // semantic
 import { Container, Button, Input, Segment, Grid, Header, Icon, Loader } from 'semantic-ui-react'
 
-import AdminStore from './../../stores/AdminStore'
-import AdminActions from './../../actions/AdminActions'
+import AdminStore from './libs/Store'
+import AdminActions from './libs/Actions'
 
 class Login extends Reflux.Component {
   componentDidMount () {

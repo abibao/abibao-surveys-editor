@@ -1,4 +1,10 @@
 const Promise = require('bluebird')
+const auth = require('feathers-authentication')
+const permissions = require('feathers-permissions')
+
+const options = {
+  service: 'users'
+}
 
 class Service {
   setup (app, path) {
@@ -39,4 +45,12 @@ class Service {
 module.exports = function () {
   const app = this
   app.use('query/sendgridGetAllTemplates', new Service())
+  const service = app.service('query/sendgridGetAllTemplates')
+  service.before({
+    create: [
+      auth.hooks.authenticate('jwt'),
+      permissions.hooks.checkPermissions(options),
+      permissions.hooks.isPermitted()
+    ]
+  })
 }

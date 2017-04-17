@@ -12,8 +12,8 @@ import { Container, Form, Segment, Icon, Input, Button, Header, Card, Image, Mod
 // components
 import AppBar from './components/AppBar'
 
-import AdminStore from './../../stores/AdminStore'
-import AdminActions from './../../actions/AdminActions'
+import AdminStore from './libs/Store'
+import AdminActions from './libs/Actions'
 
 class Campaigns extends Reflux.Component {
   componentDidMount () {

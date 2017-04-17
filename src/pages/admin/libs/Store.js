@@ -2,9 +2,9 @@
 import Reflux from 'reflux'
 
 // libraries
-import Client from './../libs/ClientAdmin'
-import AdminActions from './../actions/AdminActions'
-import AdminnHelpers from './../helpers/AdminHelpers'
+import Client from './Client'
+import AdminActions from './Actions'
+import AdminnHelpers from './Helpers'
 
 class AdminStore extends Reflux.Store {
   constructor () {

@@ -8,7 +8,7 @@ import Reflux from 'reflux'
 // semantic
 import { Header, Icon, Menu, Button } from 'semantic-ui-react'
 
-import AdminActions from './../../../actions/AdminActions'
+import AdminActions from './../libs/Actions'
 
 class AppBar extends Reflux.Component {
   constructor (props) {

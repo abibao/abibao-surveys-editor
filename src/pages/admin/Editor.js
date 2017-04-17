@@ -10,8 +10,8 @@ import { Container, Segment } from 'semantic-ui-react'
 // components
 import AppBar from './components/AppBar'
 
-import AdminStore from './../../stores/AdminStore'
-import AdminActions from './../../actions/AdminActions'
+import AdminStore from './libs/Store'
+import AdminActions from './libs/Actions'
 
 const IFrameComponent = React.createClass({
   render: function () {

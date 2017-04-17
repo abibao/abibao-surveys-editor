@@ -1,8 +1,9 @@
 /* global FileReader */
 
-import AdminActions from './../actions/AdminActions'
 import uuid from 'uuid'
 import {clone} from 'lodash'
+
+import AdminActions from './Actions'
 
 class AdminHelpers {
   constructor (context) {
