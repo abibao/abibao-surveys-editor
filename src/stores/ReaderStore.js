@@ -58,7 +58,7 @@ class ReaderStore extends Reflux.Store {
     console.log('ReaderStore', 'onAffectSurvey')
     this.helpers.affectSurvey(data)
   }
-  onSurveyControlSecurity (email) {
+  controlSecurity (email) {
     console.log('ReaderStore', 'onSurveyControlSecurity', email)
     this.helpers.controlSecurity(email)
   }
