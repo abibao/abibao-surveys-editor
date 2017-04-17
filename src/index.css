@@ -13,6 +13,10 @@ html * {
 /**
 MENU COMPONENT **/
 
+.ui.inverted.menu {
+  background: #555555;
+  border-bottom: solid #888888 2px;
+}
 h1.ui.appbar {
   letter-spacing: 0.62rem;
 }

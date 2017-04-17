@@ -65,6 +65,15 @@ class AdminHelpers {
         }
       })
   }
+  disconnect () {
+    console.log('AdminHelpers', 'disconnect')
+    this.context.setState({loader: {
+      visible: true,
+      message: 'Déconnexion en cours...'
+    }})
+    window.localStorage.removeItem('rememberMe')
+    window.location = window.location.origin + '/admin/login'
+  }
   initialize () {
     console.log('AdminHelpers', 'initialize')
     this.context.setState({loader: {
@@ -104,7 +113,11 @@ class AdminHelpers {
       AdminActions.applicationCreationComplete()
     }).catch((error) => {
       console.error(error)
-      this.context.setState({token: false, loader: {visible: false}})
+      this.context.setState({token: false, loader: {visible: true, message: 'Une erreur est survenue pendant l\'initialisation'}})
+      if (window.location.pathname !== '/admin/login') {
+        window.localStorage.removeItem('rememberMe')
+        window.location = window.location.origin + '/admin/login'
+      }
     })
   }
   creationComplete () {

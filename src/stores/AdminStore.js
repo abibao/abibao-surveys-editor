@@ -51,13 +51,19 @@ class AdminStore extends Reflux.Store {
     this.helpers.connect(client)
   }
   onNetworkDisconnect () {
+    console.log('AdminStore', 'onNetworkDisconnect')
     this.helpers.disconnect()
   }
   onNetworkAuthenticate (args) {
+    console.log('AdminStore', 'onNetworkAuthenticate')
     this.helpers.authenticate(args)
   }
+  onNetworkLogout () {
+    console.log('AdminStore', 'onNetworkAuthenticate')
+    this.helpers.disconnect()
+  }
   onApplicationInitialize () {
-    console.log('AdminStore', 'onApplicationInitialize')
+    console.log('AdminStore', 'onNetworkLogout')
     this.helpers.initialize()
   }
   onApplicationCreationComplete () {

@@ -5,7 +5,10 @@ import React from 'react'
 import Reflux from 'reflux'
 
 // semantic
-import { Container, Icon, Header, Segment } from 'semantic-ui-react'
+import { Container, Segment } from 'semantic-ui-react'
+
+// components
+import AppBar from './components/AppBar'
 
 import AdminStore from './../../stores/AdminStore'
 import AdminActions from './../../actions/AdminActions'
@@ -14,7 +17,7 @@ const IFrameComponent = React.createClass({
   render: function () {
     let Iframe = this.props.iframe
     return (
-      <Iframe src={this.props.src} style={{width: '100%', height: '100%', padding: '0', border: '0'}} />
+      <Iframe src={this.props.src} style={{marginTop: '77px', width: '100%', height: '100%', padding: '0', border: '0'}} />
     )
   }
 })
@@ -54,15 +57,7 @@ class Editor extends Reflux.Component {
   render () {
     let renderer = () => (
       <Container fluid className="editor">
-        <Header as="h1" attached inverted color="red" className="appbar">
-          <Icon name="settings" />
-          <Header.Content>
-            ABIBAO
-            <Header.Subheader>
-              platform
-            </Header.Subheader>
-          </Header.Content>
-        </Header>
+        <AppBar />
         <Segment basic className="editor">
           <IFrameComponent iframe="iframe" campaign={this.state.selectedCampaign} src={'/editor.html?' + this.props.params.id} />
         </Segment>

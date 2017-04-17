@@ -9,10 +9,11 @@ import {clone} from 'lodash'
 // semantic
 import { Container, Form, Segment, Icon, Input, Button, Header, Card, Image, Modal, TextArea, Loader, Dropdown } from 'semantic-ui-react'
 
+// components
+import AppBar from './components/AppBar'
+
 import AdminStore from './../../stores/AdminStore'
 import AdminActions from './../../actions/AdminActions'
-
-const host = window.location.origin
 
 class Campaigns extends Reflux.Component {
   componentDidMount () {
@@ -98,16 +99,8 @@ class Campaigns extends Reflux.Component {
     }
     let renderer = () => (
       <Container fluid>
-        <Header as="h1" attached inverted color="red" className="appbar">
-          <Icon name="settings" />
-          <Header.Content>
-            ABIBAO
-            <Header.Subheader>
-              platform
-            </Header.Subheader>
-          </Header.Content>
-        </Header>
-        <Segment basic loading={this.state.loader.visible}>
+        <AppBar />
+        <Segment basic loading={this.state.loader.visible} style={{marginTop: '77px'}}>
           <Header as="h2" color="red">
             Listes des campagnes
             <Header.Subheader>Il y a actuellement {Object.keys(this.state.campaigns).length || 0} campagnes en lignes.</Header.Subheader>
@@ -116,7 +109,7 @@ class Campaigns extends Reflux.Component {
           <Card.Group>
             {Object.keys(this.state.campaigns).map((key) => (
               <Card key={key}>
-                <Image height="140" src={host + '/' + this.state.campaigns[key].picture} />
+                <Image height="140" src={window.location.origin + '/' + this.state.campaigns[key].picture} />
                 <Card.Content>
                   <Card.Header>
                     {this.state.campaigns[key].name}
@@ -144,7 +137,7 @@ class Campaigns extends Reflux.Component {
         <Modal open={this.state.modalSendgridOpen}>
           <Header size="huge" color="red" content="Sendgrid" subheader="diffusion d'une campagne" />
           <Modal.Content image>
-            <Image height="140" wrapped size="medium" src={host + '/' + this.state.selectedCampaign.picture} />
+            <Image height="140" wrapped size="medium" src={window.location.origin + '/' + this.state.selectedCampaign.picture} />
             <Modal.Description className="campaigns">
               <Form>
                 <Form.Field>
@@ -164,7 +157,7 @@ class Campaigns extends Reflux.Component {
         <Modal open={this.state.modalOpen}>
           <Header size="huge" color="red" content="Informations" subheader="metadata d'une campagne" />
           <Modal.Content image>
-            <Image height="140" wrapped size="medium" src={host + '/' + this.state.selectedCampaign.picture} />
+            <Image height="140" wrapped size="medium" src={window.location.origin + '/' + this.state.selectedCampaign.picture} />
             <Modal.Description className="campaigns">
               <Form>
                 <Form.Field>

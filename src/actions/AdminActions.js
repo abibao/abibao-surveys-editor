@@ -5,6 +5,7 @@ const AdminActions = Reflux.createActions([
   'networkConnect',
   'networkDisconnect',
   'networkAuthenticate',
+  'networkLogout',
   'applicationInitialize',
   'applicationCreationComplete',
   'campaignEmailing',
