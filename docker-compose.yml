@@ -2,6 +2,17 @@ version: "2"
 
 services:
 
+  couchdb:
+    image: "library/couchdb:1.6"
+    privileged: true
+    environment:
+      COUCHDB_USER: "infra"
+      COUCHDB_PASSWORD: "infra"
+    volumes:
+      - "/home/docker/volumes/abibao-surveys-editor/couchdb/usr/local/var/lib/couchdb:/usr/local/var/lib/couchdb"
+    ports:
+      - "5984:5984"
+
   postgres:
     image: "library/postgres:9.5-alpine"
     privileged: true
@@ -16,9 +27,10 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.6-management-alpine
+    privileged: true
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
     ports:
       - "5672:5672"
       - "15672:15672"
-    environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest

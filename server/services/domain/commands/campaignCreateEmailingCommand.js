@@ -24,24 +24,24 @@ class Service {
       return individuals[0]
     })
     .then((individual) => {
-      const sendgrid = require('sendgrid')(app.get('sendgrid').key)
-      const request = sendgrid.emptyRequest()
-      request.method = 'POST'
-      request.path = '/v3/mail/send'
-      request.body = {
-        'personalizations': [
-          { 'to': [{ 'email': params.email }],
-            'subject': 'Une entreprise a besoin de vous.',
-            'substitutions': {
-              '%urn_survey%': params.url + '/reader/' + params.campaign + '?individual=' + individual.urn
+      app.bus.send('BUS_EVENT_BATCH_EMAILING_SENDGRID', {
+        email: params.email,
+        template: params.template,
+        body: {
+          'personalizations': [
+            { 'to': [{ 'email': params.email }],
+              'subject': 'Une entreprise a besoin de vous.',
+              'substitutions': {
+                '%urn_survey%': params.url + '/reader/' + params.campaign + '?individual=' + individual.urn
+              }
             }
-          }
-        ],
-        'from': { 'email': 'bonjour@abibao.com', 'name': 'Abibao' },
-        'content': [{ 'type': 'text/html', 'value': ' ' }],
-        'template_id': params.template
-      }
-      return sendgrid.API(request)
+          ],
+          'from': { 'email': 'bonjour@abibao.com', 'name': 'Abibao' },
+          'content': [{ 'type': 'text/html', 'value': ' ' }],
+          'template_id': params.template
+        }
+      })
+      return true
     })
     .then((result) => {
       const endtime = new Date()

@@ -100,10 +100,10 @@ class Campaigns extends Reflux.Component {
     let renderer = () => (
       <Container fluid>
         <AppBar />
-        <Segment basic loading={this.state.loader.visible} style={{marginTop: '77px'}}>
+        <Segment basic style={{marginTop: '77px'}}>
           <Header as="h2" color="red">
             Listes des campagnes
-            <Header.Subheader>Il y a actuellement {Object.keys(this.state.campaigns).length || 0} campagnes en lignes.</Header.Subheader>
+            <Header.Subheader>Il y a actuellement {Object.keys(this.state.campaigns).length || 0} campagnes en ligne</Header.Subheader>
           </Header>
           <Dropzone style={{display: 'none'}} ref="dropzone" multiple={false} onDrop={this.handleChangePicture} />
           <Card.Group>

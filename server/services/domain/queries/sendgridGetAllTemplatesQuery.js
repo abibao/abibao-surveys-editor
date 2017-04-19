@@ -37,7 +37,10 @@ class Service {
           name: 'sendgridGetAllTemplates',
           error
         })
-        return Promise.reject(error)
+        // error have to be not blocking for the UI
+        return Promise.resolve({
+          templates: [{id: 'none', name: 'ERROR_SENDGRID'}]
+        })
       })
   }
 }

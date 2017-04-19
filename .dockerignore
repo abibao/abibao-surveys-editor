@@ -3,6 +3,5 @@
 coverage/
 src/
 node_modules/
-volumes/
 github/
 .git/

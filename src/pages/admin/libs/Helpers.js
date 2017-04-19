@@ -2,6 +2,7 @@
 
 import uuid from 'uuid'
 import {clone} from 'lodash'
+import PouchDB from 'pouchdb'
 
 import AdminActions from './Actions'
 
@@ -9,6 +10,23 @@ class AdminHelpers {
   constructor (context) {
     console.log('AdminHelpers', 'constructor')
     this.context = context
+    this.dbs = {
+      remoteMailings: new PouchDB('http://infra:infra@localhost:5984/mailing'),
+      localMailings: new PouchDB('mailing', {auto_compaction: true})
+    }
+    this.dbs.localMailings.sync(this.dbs.remoteMailings, {live: true, retry: true})
+      .on('change', ({direction, change}) => {
+        if (direction === 'pull' && change.ok === true) {
+          console.log('localDB mailings', 'on met à jour', change)
+          this.dbs.localMailings.allDocs({include_docs: true}).then((docs) => {
+            this.context.setState({mailings: docs})
+          })
+        }
+      })
+      .on('error', (error) => {
+        console.error('...', 'local and remote databases sync failed')
+        console.error(error)
+      })
   }
   connect (client) {
     console.log('AdminHelpers', 'connect', client.io.id)
@@ -103,13 +121,23 @@ class AdminHelpers {
         return this
       })
       this.context.setState({templates: this.context.state.templates})
+      this.context.setState({loader: {
+        visible: true,
+        message: 'Synchronisation des data en cours...'
+      }})
       AdminActions.applicationCreationComplete()
+      // databases real time
+      this.dbs.localMailings.allDocs({include_docs: true}).then((docs) => {
+        this.context.setState({mailings: docs})
+      }).catch((error) => {
+        console.error(error)
+      })
     }).catch((error) => {
       console.error(error)
-      this.context.setState({token: false, loader: {visible: true, message: 'Une erreur est survenue pendant l\'initialisation'}})
+      this.context.setState({token: false, loader: {visible: true, message: error.toString()}})
       if (!window.location.pathname.includes('admin/login')) {
         window.localStorage.removeItem('rememberMe')
-        window.location = window.location.origin + '/admin/login'
+        // window.location = window.location.origin + '/admin/login'
       }
     })
   }
