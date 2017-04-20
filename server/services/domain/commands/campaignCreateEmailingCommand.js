@@ -39,6 +39,7 @@ class Service {
         ],
         'from': { 'email': 'bonjour@abibao.com', 'name': 'Abibao' },
         'content': [{ 'type': 'text/html', 'value': ' ' }],
+        'categories': params.categories || [],
         'template_id': params.template
       }
       return sendgrid.API(request)

@@ -124,7 +124,8 @@ class AdminHelpers {
         email,
         url: params.url,
         campaign: params.campaign,
-        template: params.template
+        template: params.template,
+        categories: params.categories
       })
       return this
     })

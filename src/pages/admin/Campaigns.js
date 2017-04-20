@@ -49,10 +49,13 @@ class Campaigns extends Reflux.Component {
       this.setState({selectedCampaign: false, selectedSendgrid: false, modalSendgridOpen: false})
     }
     this.handleOpenSendgrid = (key) => {
-      this.setState({selectedCampaign: clone(this.state.campaigns[key]), selectedSendgrid: {template: 'empty', emails: [], url: window.location.origin}, modalSendgridOpen: true})
+      this.setState({selectedCampaign: clone(this.state.campaigns[key]), selectedSendgrid: {template: 'empty', emails: [], categories: [], url: window.location.origin}, modalSendgridOpen: true})
     }
     this.handleChangeSendgrid = (prop) => {
       if (prop.key === 'emails') {
+        prop.val = prop.val.split('\n')
+      }
+      if (prop.key === 'categories') {
         prop.val = prop.val.split('\n')
       }
       this.state.selectedSendgrid[prop.key] = prop.val
@@ -63,7 +66,8 @@ class Campaigns extends Reflux.Component {
         emails: this.state.selectedSendgrid.emails,
         url: this.state.selectedSendgrid.url,
         campaign: this.state.selectedCampaign.id,
-        template: this.state.selectedSendgrid.template
+        template: this.state.selectedSendgrid.template,
+        categories: this.state.selectedSendgrid.categories
       })
       this.setState({selectedCampaign: false, selectedSendgrid: false, modalSendgridOpen: false})
     }
@@ -143,6 +147,8 @@ class Campaigns extends Reflux.Component {
                 <Form.Field>
                   <label>Template sendgrid</label>
                   <Dropdown onChange={(e, data) => this.handleChangeSendgrid({key: 'template', val: data.value})} selection fluid search placeholder="Sélectionnez un template sendgrid" options={this.state.templates} size="large" className="form" />
+                  <label>Liste des catégories</label>
+                  <TextArea onChange={(e) => this.handleChangeSendgrid({key: 'categories', val: e.target.value})} placeholder="Ajouter les catégories de diffusion" size="large" className="form" />
                   <label>Liste des emails</label>
                   <TextArea onChange={(e) => this.handleChangeSendgrid({key: 'emails', val: e.target.value})} placeholder="Ajouter la liste de diffusion" size="large" className="form" />
                 </Form.Field>
