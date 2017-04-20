@@ -3,10 +3,6 @@ const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
 const eraro = require('eraro')({package: 'platform.abibao.com'})
 
-const options = {
-  service: 'users'
-}
-
 class Service {
   setup (app, path) {
     this.app = app
@@ -14,6 +10,15 @@ class Service {
   create (params) {
     const app = this.app
     const starttime = new Date()
+    if (!params.email) {
+      return Promise.reject(eraro('ERROR_PARAMS_EMAIL_MANDATORY'))
+    }
+    if (!params.template) {
+      return Promise.reject(eraro('ERROR_PARAMS_TEMPLATE_MANDATORY'))
+    }
+    if (!params.url) {
+      return Promise.reject(eraro('ERROR_PARAMS_URL_MANDATORY'))
+    }
     app.service('api/individuals').find({query: {
       email: params.email
     }})
@@ -70,6 +75,9 @@ class Service {
 
 module.exports = function () {
   const app = this
+  const options = {
+    service: 'users'
+  }
   app.use('command/campaignCreateEmailing', new Service())
   const service = app.service('command/campaignCreateEmailing')
   service.before({
@@ -80,3 +88,5 @@ module.exports = function () {
     ]
   })
 }
+
+module.exports.Service = Service

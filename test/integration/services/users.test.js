@@ -2,7 +2,7 @@
 
 const assert = require('assert')
 const request = require('request')
-const app = require('../../../../server/app')
+const app = require('../../../server/app')
 
 describe('[integration] user service', function () {
   before(function (done) {
