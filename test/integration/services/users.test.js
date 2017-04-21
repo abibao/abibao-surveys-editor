@@ -9,11 +9,9 @@ describe('[integration] user service', function () {
     this.server = app.listen(3030)
     this.server.once('listening', () => done())
   })
-
   after(function (done) {
     this.server.close(done)
   })
-
   it('should fail to login', (done) => {
     request({
       method: 'POST',
@@ -27,7 +25,6 @@ describe('[integration] user service', function () {
       done(err)
     })
   })
-
   it('should fail to login as administrator', (done) => {
     request({
       method: 'POST',
@@ -45,7 +42,6 @@ describe('[integration] user service', function () {
       done(err)
     })
   })
-
   it('should success to login as administrator', (done) => {
     request({
       method: 'POST',
@@ -58,6 +54,7 @@ describe('[integration] user service', function () {
         password: 'password'
       }
     }, function (err, res, body) {
+      console.log(body)
       assert.equal(res.statusCode, 201)
       assert.ok(body.accessToken != null)
       done(err)

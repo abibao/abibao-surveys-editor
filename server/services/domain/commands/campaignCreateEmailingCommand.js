@@ -7,20 +7,20 @@ class Service {
   setup (app, path) {
     this.app = app
   }
-  create (params) {
+  create (data, params) {
     const app = this.app
     const starttime = new Date()
-    if (!params.email) {
+    if (!data.email) {
       return Promise.reject(eraro('ERROR_PARAMS_EMAIL_MANDATORY'))
     }
-    if (!params.template) {
+    if (!data.template) {
       return Promise.reject(eraro('ERROR_PARAMS_TEMPLATE_MANDATORY'))
     }
-    if (!params.url) {
+    if (!data.url) {
       return Promise.reject(eraro('ERROR_PARAMS_URL_MANDATORY'))
     }
-    app.service('api/individuals').find({query: {
-      email: params.email
+    return app.service('api/individuals').find({query: {
+      email: data.email
     }})
     .then((individuals) => {
       if (individuals.length === 0) {
@@ -30,20 +30,20 @@ class Service {
     })
     .then((individual) => {
       app.bus.send('BUS_EVENT_BATCH_EMAILING_SENDGRID', {
-        email: params.email,
-        template: params.template,
+        email: data.email,
+        template: data.template,
         body: {
           'personalizations': [
-            { 'to': [{ 'email': params.email }],
+            { 'to': [{ 'email': data.email }],
               'subject': 'Une entreprise a besoin de vous.',
               'substitutions': {
-                '%urn_survey%': params.url + '/reader/' + params.campaign + '?individual=' + individual.urn
+                '%urn_survey%': data.url + '/reader/' + data.campaign + '?individual=' + individual.urn
               }
             }
           ],
           'from': { 'email': 'bonjour@abibao.com', 'name': 'Abibao' },
           'content': [{ 'type': 'text/html', 'value': ' ' }],
-          'template_id': params.template
+          'template_id': data.template
         }
       })
       return true

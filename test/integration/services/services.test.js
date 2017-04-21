@@ -1,7 +1,10 @@
 const assert = require('assert')
 const app = require('../../../server/app')
 
-describe('[unit] server', function () {
+describe('[integration] server', function () {
+  it('should has registered authentication service', () => {
+    assert.ok(app.service('authentication'))
+  })
   it('should has registered users service', () => {
     assert.ok(app.service('users'))
   })
@@ -22,5 +25,8 @@ describe('[unit] server', function () {
   })
   it('should has registered command/campaignCreateEmailing service', () => {
     assert.ok(app.service('command/campaignCreateEmailing'))
+  })
+  it('should has registered command/individualAffectSurvey service', () => {
+    assert.ok(app.service('command/individualAffectSurvey'))
   })
 })
