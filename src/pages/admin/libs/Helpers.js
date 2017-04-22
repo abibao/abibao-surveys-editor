@@ -67,7 +67,7 @@ class AdminHelpers {
         }
       })
       .catch((error) => {
-        console.error('...', error.toString())
+        console.error('...', error)
         if (error.toString().includes('NotAuthenticated')) {
           console.log('...', 'no jwt token found, now use strategy local')
           if (!window.location.pathname.includes('admin/login')) {
@@ -146,13 +146,14 @@ class AdminHelpers {
     this.context.setState({initialized: true, loader: {visible: false}, campaigns: this.context.state.campaigns})
   }
   emailingCampaign (params) {
-    console.log('AdminHelpers', 'emailing')
+    console.log('AdminHelpers', 'emailingCampaign')
     params.emails.map((email) => {
       this.context.state.client.service('command/campaignCreateEmailing').create({
         email,
         url: params.url,
         campaign: params.campaign,
-        template: params.template
+        template: params.template,
+        categories: params.categories
       })
       return this
     })

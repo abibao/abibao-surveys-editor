@@ -7,7 +7,7 @@ class Service {
   setup (app, path) {
     this.app = app
   }
-  create (data, params) {
+  create (data) {
     const app = this.app
     const starttime = new Date()
     if (!data.email) {
@@ -43,6 +43,7 @@ class Service {
           ],
           'from': { 'email': 'bonjour@abibao.com', 'name': 'Abibao' },
           'content': [{ 'type': 'text/html', 'value': ' ' }],
+          'categories': data.categories || [],
           'template_id': data.template
         }
       })
@@ -55,7 +56,7 @@ class Service {
         exectime: endtime - starttime,
         type: 'command',
         name: 'campaignCreateEmailing',
-        params
+        data
       })
       return Promise.resolve(result)
     })
