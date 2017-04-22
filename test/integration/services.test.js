@@ -1,5 +1,5 @@
 const assert = require('assert')
-const app = require('../../../server/app')
+const app = require('../../server/app')
 
 describe('[integration] server', function () {
   it('should has registered authentication service', () => {
