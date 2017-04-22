@@ -13,6 +13,12 @@ module.exports = {
     host: nconf.get('ABIBAO_LOGSTASH_HOST') || 'localhost',
     port: nconf.get('ABIBAO_LOGSTASH_PORT') || 5000
   },
+  couchdb: {
+    host: nconf.get('ABIBAO_COUCHDB_HOST') || 'localhost',
+    port: nconf.get('ABIBAO_COUCHDB_PORT') || 5984,
+    user: nconf.get('ABIBAO_COUCHDB_USER') || 'infra',
+    pass: nconf.get('ABIBAO_COUCHDB_PASSWORD') || 'infra'
+  },
   postgres: {
     host: nconf.get('ABIBAO_POSTGRES_HOST') || 'localhost',
     port: nconf.get('ABIBAO_POSTGRES_PORT') || 5432,
@@ -35,9 +41,6 @@ module.exports = {
   },
   slack: {
     webhook: nconf.get('ABIBAO_SLACK_WEBHOOK') || 'http://localhost'
-  },
-  cqrs: {
-    patterns: ['cqrs/commands/**/*.js', 'cqrs/queries/**/*.js']
   },
   public: path.resolve(__dirname, '..', nconf.get('ABIBAO_WWW_DIRPATH') || 'public'),
   corsWhitelist: ['localhost'],

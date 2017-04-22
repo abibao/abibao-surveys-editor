@@ -2,10 +2,6 @@ const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
 
-const options = {
-  service: 'users'
-}
-
 class Service {
   setup (app, path) {
     this.app = app
@@ -43,6 +39,9 @@ class Service {
 
 module.exports = function () {
   const app = this
+  const options = {
+    service: 'users'
+  }
   app.use('command/individualCompleteSurvey', new Service())
   const service = app.service('command/individualCompleteSurvey')
   service.before({
@@ -53,3 +52,5 @@ module.exports = function () {
     ]
   })
 }
+
+module.exports.Service = Service

@@ -4,10 +4,6 @@ const permissions = require('feathers-permissions')
 const eraro = require('eraro')({package: 'platform.abibao.com'})
 const _ = require('lodash')
 
-const options = {
-  service: 'users'
-}
-
 class Service {
   setup (app, path) {
     this.app = app
@@ -17,19 +13,19 @@ class Service {
     const starttime = new Date()
     // mandatory
     if (!params.individual) {
-      return Promise.reject(eraro('individual is mandatory'))
+      return Promise.reject(eraro('ERROR_PARAMS_INDIVIDUAL_MANDATORY'))
     }
     if (!params['campaign_id']) {
-      return Promise.reject(eraro('campaign_id is mandatory'))
+      return Promise.reject(eraro('ERROR_PARAMS_CAMPAIGN_ID_MANDATORY'))
     }
     if (!params['campaign_name']) {
-      return Promise.reject(eraro('campaign_name is mandatory'))
+      return Promise.reject(eraro('ERROR_PARAMS_CAMPAIGN_NAME_MANDATORY'))
     }
     if (!params['survey_id']) {
-      return Promise.reject(eraro('survey_id is mandatory'))
+      return Promise.reject(eraro('ERROR_PARAMS_SURVEY_ID_MANDATORY'))
     }
     if (!params.question) {
-      return Promise.reject(eraro('question is mandatory'))
+      return Promise.reject(eraro('ERROR_PARAMS_QUESTION_MANDATORY'))
     }
     if (!params.answer || params.answer === null) {
       params.answer = ''
@@ -79,6 +75,9 @@ class Service {
 
 module.exports = function () {
   const app = this
+  const options = {
+    service: 'users'
+  }
   app.use('command/individualAnswerSurvey', new Service())
   const service = app.service('command/individualAnswerSurvey')
   service.before({
@@ -89,3 +88,5 @@ module.exports = function () {
     ]
   })
 }
+
+module.exports.Service = Service

@@ -35,11 +35,9 @@ class Editor extends Reflux.Component {
   constructor (props) {
     super(props)
     this.state = {
-      menuOn: false,
       selectedCampaign: false
     }
     this.store = AdminStore
-    this.toggleVisibility = () => this.setState({ menuOn: !this.state.menuOn })
     this.handleLoadData = (id) => {
       return this.state.client.service('api/campaigns').get(id)
     }

@@ -3,10 +3,6 @@ const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
 const eraro = require('eraro')({package: 'platform.abibao.com'})
 
-const options = {
-  service: 'users'
-}
-
 class Service {
   setup (app, path) {
     this.app = app
@@ -18,17 +14,17 @@ class Service {
     let email = params.individual
     // mandatory
     if (!params.individual) {
-      return Promise.reject(new Error('individual is mandatory'))
+      return Promise.reject(eraro('ERROR_PARAMS_INDIVIDUAL_MANDATORY'))
     }
     if (!params.campaign) {
-      return Promise.reject(new Error('campaign is mandatory'))
+      return Promise.reject(eraro('ERROR_PARAMS_CAMPAIGN_MANDATORY'))
     }
     // logical traitment
     return app.service('api/campaigns').get(params.campaign)
       // check if campaign exists in database
       .then((result) => {
         if (result.code === 404) {
-          return Promise.reject(result)
+          throw eraro('ERROR_CAMPAIGN_NOT_FOUND')
         } else {
           campaign = result.dataValues
           return true
@@ -41,9 +37,10 @@ class Service {
             urn: params.individual
           }}).then((result) => {
             if (result.length === 0) {
-              throw eraro('ABIBAO_INDIVIDUAL_CONTROL_SECURITY')
+              throw eraro('ERROR_INDIVIDUAL_CONTROL_SECURITY')
             } else {
               params.individual = result[0].urn
+              return true
             }
           })
         } else {
@@ -59,7 +56,6 @@ class Service {
             company: campaign.company
           }}).then((result) => {
             if (result.length > 1) {
-              console.log(params.individual)
               throw eraro('ERROR_SURVEY_ABIBAO_AFFECT_MORE_THAN_ONCE')
             }
             if (result.length === 1 && result[0].complete === true) {
@@ -89,7 +85,7 @@ class Service {
           if (params.createdAt) {
             data.createdAt = params.createdAt
           }
-          return app.service('api/surveys').create(data).then((result) => {
+          return app.service('api/surveys').create(data).then(() => {
             const message = {
               'username': 'individualCreateSurveyCommand',
               'text': '[' + new Date() + '] - [' + email + '] can access a new survey (' + campaign.name + ')'
@@ -144,6 +140,9 @@ class Service {
 
 module.exports = function () {
   const app = this
+  const options = {
+    service: 'users'
+  }
   app.use('command/individualAffectSurvey', new Service())
   const service = app.service('command/individualAffectSurvey')
   service.before({
@@ -154,3 +153,5 @@ module.exports = function () {
     ]
   })
 }
+
+module.exports.Service = Service

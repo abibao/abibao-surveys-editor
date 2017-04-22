@@ -94,7 +94,7 @@ class ReaderHelpers {
         this.context.setState({selectedSurvey: response, loader: {visible: false, message: ''}})
       })
       .catch((error) => {
-        if (error.toString().includes('ABIBAO_INDIVIDUAL_CONTROL_SECURITY')) {
+        if (error.toString().includes('ERROR_INDIVIDUAL_CONTROL_SECURITY')) {
           console.error('we need to ask email')
           this.context.setState({askEmail: true, loader: {visible: false, message: ''}})
         } else {

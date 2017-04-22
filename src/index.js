@@ -19,12 +19,14 @@ import Reader from './pages/reader/Reader'
 import PageNotFound from './pages/admin/PageNotFound'
 import Login from './pages/admin/Login'
 import Campaigns from './pages/admin/Campaigns'
+import Mailings from './pages/admin/Mailings'
 import Editor from './pages/admin/Editor'
 
 const routerAdmin = (
   <Router history={browserHistory}>
     <Route path="admin/login" component={Login} />
     <Route path="admin/campaigns" component={Campaigns} />
+    <Route path="admin/mailings" component={Mailings} />
     <Route path="admin/campaigns/:id/editor" component={Editor} />
     <Route path="*" component={PageNotFound} />
   </Router>

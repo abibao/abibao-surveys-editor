@@ -20,7 +20,11 @@ class AdminStore extends Reflux.Store {
         message: 'Connexion en cours...'
       },
       campaigns: {},
-      templates: []
+      templates: [],
+      mailings: {
+        total_rows: 0,
+        rows: []
+      }
     }
     // helpers
     this.helpers = new AdminnHelpers(this)
@@ -71,6 +75,7 @@ class AdminStore extends Reflux.Store {
     this.helpers.creationComplete()
   }
   onCampaignEmailing (params) {
+    console.log('AdminStore', 'onCampaignEmailing')
     this.helpers.emailingCampaign(params)
   }
   onCampaignCreate () {

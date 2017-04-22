@@ -3,10 +3,6 @@ const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
 const rp = require('request-promise')
 
-const options = {
-  service: 'users'
-}
-
 class Service {
   setup (app, path) {
     this.app = app
@@ -25,6 +21,9 @@ class Service {
 
 module.exports = function () {
   const app = this
+  const options = {
+    service: 'users'
+  }
   app.use('command/postOnSlackWithWebhook', new Service())
   const service = app.service('command/postOnSlackWithWebhook')
   service.before({
@@ -35,3 +34,5 @@ module.exports = function () {
     ]
   })
 }
+
+module.exports.Service = Service
