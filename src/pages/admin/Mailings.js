@@ -3,12 +3,14 @@
 // react
 import React from 'react'
 import Reflux from 'reflux'
+import { find } from 'lodash'
 
 // semantic
-import { Container, Loader, Table, Segment, Header } from 'semantic-ui-react'
+import { Container, Loader, Segment, Header, Card, Icon } from 'semantic-ui-react'
 
 // components
 import AppBar from './components/AppBar'
+import AppBarSubMenu from './components/AppBarSubMenu'
 
 import AdminStore from './libs/Store'
 
@@ -25,6 +27,12 @@ class Mailings extends Reflux.Component {
       selectedCampaign: false
     }
     this.store = AdminStore
+    this.getTemplateNameById = (id) => {
+      let template = find(this.state.templates, function (item) {
+        return (item.key === id)
+      })
+      return (template.text || 'Not found...')
+    }
   }
   render () {
     console.log('Campaigns', 'render', this.state.loader.visible)
@@ -36,37 +44,29 @@ class Mailings extends Reflux.Component {
       )
     }
     let renderer = () => (
-      <Container fluid className="editor">
+      <Container fluid style={{paddingTop: '120px'}}>
         <AppBar />
-        <Segment basic style={{marginTop: '77px'}}>
+        <AppBarSubMenu />
+        <Segment basic>
           <Header as="h2" color="red">
             Listes des mailings
             <Header.Subheader>Il y a actuellement {this.state.mailings.total_rows} mailings en ligne.</Header.Subheader>
           </Header>
-          <Table selectable sortable celled color="red">
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell>Email</Table.HeaderCell>
-                <Table.HeaderCell>Template</Table.HeaderCell>
-                <Table.HeaderCell textAlign="center">Updated</Table.HeaderCell>
-                <Table.HeaderCell textAlign="center">Created</Table.HeaderCell>
-                <Table.HeaderCell textAlign="center">Réponse</Table.HeaderCell>
-                <Table.HeaderCell textAlign="center">Erreur</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {this.state.mailings.rows.map((item) => (
-                <Table.Row key={item.id}>
-                  <Table.Cell>{item.doc.email}</Table.Cell>
-                  <Table.Cell>{item.doc.template}</Table.Cell>
-                  <Table.Cell textAlign="center">{item.doc.updated}</Table.Cell>
-                  <Table.Cell textAlign="center">{item.doc.created}</Table.Cell>
-                  <Table.Cell textAlign="center">{(item.doc.response === false) ? 'NON' : item.doc.response.statusCode}</Table.Cell>
-                  <Table.Cell textAlign="center">{(item.doc.error === false) ? 'NON' : 'ERR'}</Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
+          <Card.Group>
+            {(this.state.mailings.rows).map((item) => (
+              <Card key={item.id} color="red">
+                <Card.Content>
+                  <Card.Header>{this.getTemplateNameById(item.doc.template)}</Card.Header>
+                  <Card.Meta>{item.doc.email}</Card.Meta>
+                  <Card.Description>{item.doc.body.categories.join(',')}</Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                  <Icon name="user" />
+                  22 Friends
+                </Card.Content>
+              </Card>
+            ))}
+          </Card.Group>
         </Segment>
       </Container>
     )

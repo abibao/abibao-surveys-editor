@@ -11,6 +11,7 @@ import { Container, Form, Segment, Icon, Input, Button, Header, Card, Image, Mod
 
 // components
 import AppBar from './components/AppBar'
+import AppBarSubMenu from './components/AppBarSubMenu'
 
 import AdminStore from './libs/Store'
 import AdminActions from './libs/Actions'
@@ -102,9 +103,10 @@ class Campaigns extends Reflux.Component {
       )
     }
     let renderer = () => (
-      <Container fluid>
+      <Container fluid style={{paddingTop: '120px'}}>
         <AppBar />
-        <Segment basic style={{marginTop: '77px'}}>
+        <AppBarSubMenu />
+        <Segment basic>
           <Header as="h2" color="red">
             Listes des campagnes
             <Header.Subheader>Il y a actuellement {Object.keys(this.state.campaigns).length || 0} campagnes en ligne</Header.Subheader>
@@ -112,7 +114,7 @@ class Campaigns extends Reflux.Component {
           <Dropzone style={{display: 'none'}} ref="dropzone" multiple={false} onDrop={this.handleChangePicture} />
           <Card.Group>
             {Object.keys(this.state.campaigns).map((key) => (
-              <Card key={key}>
+              <Card key={key} color="red">
                 <Image height="140" src={window.location.origin + '/' + this.state.campaigns[key].picture} />
                 <Card.Content>
                   <Card.Header>
