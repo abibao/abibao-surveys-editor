@@ -26,7 +26,7 @@ class Service {
           type: 'query',
           name: 'sendgridGetAllTemplates'
         })
-        return Promise.resolve(response.body)
+        return Promise.resolve(response.body.templates)
       })
       .catch((error) => {
         const endtime = new Date()
@@ -37,10 +37,7 @@ class Service {
           name: 'sendgridGetAllTemplates',
           error
         })
-        // error have to be not blocking for the UI
-        return Promise.resolve({
-          templates: [{id: 'none', name: 'ERROR_SENDGRID'}]
-        })
+        return Promise.reject(error)
       })
   }
 }

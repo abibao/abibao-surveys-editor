@@ -87,6 +87,14 @@ class AdminStore extends Reflux.Store {
   onCampaignUpdatePicture (id, file) {
     this.helpers.updateCampaignPicture(id, file)
   }
+  onMailingCreate () {
+    console.log('AdminStore', 'onMailingCreate')
+    this.helpers.createMailing()
+  }
+  onTemplatesRefresh () {
+    console.log('AdminStore', 'onTemplatesRefresh')
+    this.helpers.refreshTemplates()
+  }
 }
 
 module.exports = AdminStore

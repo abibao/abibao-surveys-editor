@@ -8,10 +8,12 @@ const AdminActions = Reflux.createActions([
   'networkLogout',
   'applicationInitialize',
   'applicationCreationComplete',
+  'templatesRefresh',
   'campaignEmailing',
   'campaignCreate',
   'campaignUpdate',
-  'campaignUpdatePicture'
+  'campaignUpdatePicture',
+  'mailingCreate'
 ])
 
 export default AdminActions
