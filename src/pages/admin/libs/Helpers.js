@@ -60,7 +60,7 @@ class AdminHelpers {
     this.authenticate()
   }
   authenticate (args) {
-    console.log('AdminHelpers', 'authenticate')
+    console.log('AdminHelpers', 'authenticate', args)
     this.context.state.client.authenticate(args)
       .then((response) => {
         this.context.setState({loader: {
@@ -109,7 +109,7 @@ class AdminHelpers {
       visible: true,
       message: 'Déconnexion en cours...'
     }})
-    window.localStorage.removeItem('rememberMe')
+    // window.localStorage.removeItem('rememberMe')
     window.location = window.location.origin + '/admin/login'
   }
   initialize () {
@@ -148,7 +148,7 @@ class AdminHelpers {
       console.error(error)
       this.context.setState({token: false, loader: {visible: true, message: error.toString()}})
       if (!window.location.pathname.includes('admin/login')) {
-        window.localStorage.removeItem('rememberMe')
+        // window.localStorage.removeItem('rememberMe')
         // window.location = window.location.origin + '/admin/login'
       }
     })
@@ -157,17 +157,25 @@ class AdminHelpers {
     console.log('AdminHelpers', 'creationComplete')
     this.context.setState({initialized: true, loader: {visible: false}, campaigns: this.context.state.campaigns})
   }
-  emailingCampaign (params) {
+  emailingCampaign (key) {
     console.log('AdminHelpers', 'emailingCampaign')
-    params.emails.map((email) => {
-      this.context.state.client.service('command/campaignCreateEmailing').create({
-        email,
-        url: params.url,
-        campaign: params.campaign,
-        template: params.template,
-        categories: params.categories
-      })
-      return this
+    // get sengrid campaign
+    this.context.state.mailings.rows.map((item) => {
+      if (item.id === key) {
+        // send all campaigns
+        item.doc.emails.map((email) => {
+          return this.context.state.client.service('command/campaignCreateEmailing').create({
+            email,
+            url: window.location.origin,
+            campaign: item.doc.campaign,
+            template: item.doc.template,
+            categories: item.doc.categories
+          }).then((result) => {
+            return result
+          }).catch(console.error)
+        })
+      }
+      return false
     })
   }
   refreshTemplates () {
@@ -192,6 +200,10 @@ class AdminHelpers {
       done: false,
       created: Date.now()
     })
+  }
+  updateMailing (data) {
+    console.log('AdminHelpers', 'updateMailing')
+    this.dbs.mailings.local.put(data)
   }
   createCampaign () {
     console.log('AdminHelpers', 'createCampaign')

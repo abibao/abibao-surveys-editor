@@ -13,7 +13,8 @@ const AdminActions = Reflux.createActions([
   'campaignCreate',
   'campaignUpdate',
   'campaignUpdatePicture',
-  'mailingCreate'
+  'mailingCreate',
+  'mailingUpdate'
 ])
 
 export default AdminActions

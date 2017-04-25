@@ -20,7 +20,10 @@ class AdminStore extends Reflux.Store {
         message: 'Connexion en cours...'
       },
       campaigns: {},
-      templates: [],
+      templates: {
+        total_rows: 0,
+        rows: []
+      },
       mailings: {
         total_rows: 0,
         rows: []
@@ -59,7 +62,7 @@ class AdminStore extends Reflux.Store {
     this.helpers.disconnect()
   }
   onNetworkAuthenticate (args) {
-    console.log('AdminStore', 'onNetworkAuthenticate')
+    console.log('AdminStore', 'onNetworkAuthenticate', args)
     this.helpers.authenticate(args)
   }
   onNetworkLogout () {
@@ -74,9 +77,9 @@ class AdminStore extends Reflux.Store {
     console.log('AdminStore', 'onApplicationCreationComplete')
     this.helpers.creationComplete()
   }
-  onCampaignEmailing (params) {
+  onCampaignEmailing (id) {
     console.log('AdminStore', 'onCampaignEmailing')
-    this.helpers.emailingCampaign(params)
+    this.helpers.emailingCampaign(id)
   }
   onCampaignCreate () {
     this.helpers.createCampaign()
@@ -90,6 +93,10 @@ class AdminStore extends Reflux.Store {
   onMailingCreate () {
     console.log('AdminStore', 'onMailingCreate')
     this.helpers.createMailing()
+  }
+  onMailingUpdate (data) {
+    console.log('AdminStore', 'onMailingUpdate')
+    this.helpers.updateMailing(data)
   }
   onTemplatesRefresh () {
     console.log('AdminStore', 'onTemplatesRefresh')
