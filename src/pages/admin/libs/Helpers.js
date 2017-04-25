@@ -171,7 +171,10 @@ class AdminHelpers {
             template: item.doc.template,
             categories: item.doc.categories
           }).then((result) => {
-            return result
+            item.doc.done = true
+            return this.dbs.mailings.local.put(item.doc)
+          }).then(() => {
+            return true
           }).catch(console.error)
         })
       }

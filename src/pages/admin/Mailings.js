@@ -6,7 +6,7 @@ import Reflux from 'reflux'
 import { find, clone } from 'lodash'
 
 // semantic
-import { Container, Loader, Segment, Header, Card, Button, Modal, Form, Dropdown, Input, TextArea } from 'semantic-ui-react'
+import { Container, Loader, Segment, Header, Card, Button, Modal, Form, Dropdown, Input, TextArea, Label } from 'semantic-ui-react'
 
 // components
 import AppBar from './components/AppBar'
@@ -99,13 +99,15 @@ class Mailings extends Reflux.Component {
               <Card key={item.id} color={(item.doc.done) ? 'green' : 'red'}>
                 <Card.Content>
                   <Card.Header>
-                    {item.doc.name}
+                    <Label attached="top right">{item.doc.emails.length}</Label>
+                    {(this.state.campaigns[item.doc.campaign]) ? this.state.campaigns[item.doc.campaign].name : 'Sélectionnez une campagne'}
                   </Card.Header>
                   <Card.Meta>
-                    {this.getTemplateById(item.doc.template).doc.name}
+                    {item.doc.name}
                   </Card.Meta>
                   <Card.Description>
-                    <strong>Emails {item.doc.emails.length}</strong><br />
+                    <strong>Template</strong><br />
+                    {this.getTemplateById(item.doc.template).doc.name}<br />
                     <strong>Catégories</strong><br />{(item.doc.categories.length > 0) ? item.doc.categories.join(', ') : 'Aucune'}
                   </Card.Description>
                 </Card.Content>
@@ -124,8 +126,18 @@ class Mailings extends Reflux.Component {
             <Modal.Description className="campaigns">
               <Form>
                 <Form.Field>
-                  <label>Nom de la campagne</label>
+                  <label>Nom de la session</label>
                   <Input onChange={(e) => this.handleChangeSendgrid({key: 'name', val: e.target.value})} defaultValue={this.state.selectedMailing.name} size="large" label={{ color: 'red', icon: 'asterisk' }} labelPosition="right corner" className="form" />
+                </Form.Field>
+                <Form.Field>
+                  <label>Campagne associée</label>
+                  <Dropdown options={Object.keys(this.state.campaigns).map((key) => {
+                    return {
+                      key: this.state.campaigns[key].id,
+                      text: this.state.campaigns[key].name,
+                      value: this.state.campaigns[key].id
+                    }
+                  })} defaultValue={this.state.selectedMailing.campaign} onChange={(e, data) => this.handleChangeSendgrid({key: 'campaign', val: data.value})} selection fluid search placeholder="Sélectionnez un template sendgrid" size="large" className="form" />
                 </Form.Field>
                 <Form.Field>
                   <label>Template sendgrid</label>
