@@ -11,20 +11,39 @@ class AdminHelpers {
     console.log('AdminHelpers', 'constructor')
     this.context = context
     this.dbs = {
-      remoteMailings: new PouchDB('http://infra:infra@localhost:5984/mailing'),
-      localMailings: new PouchDB('mailing', {auto_compaction: true})
+      templates: {
+        remote: new PouchDB('http://infra:infra@localhost:5984/templates'),
+        local: new PouchDB('templates', {auto_compaction: true})
+      },
+      mailings: {
+        remote: new PouchDB('http://infra:infra@localhost:5984/mailings'),
+        local: new PouchDB('mailings', {auto_compaction: true})
+      }
     }
-    this.dbs.localMailings.sync(this.dbs.remoteMailings, {live: true, retry: true})
+    this.dbs.templates.local.sync(this.dbs.templates.remote, {live: true, retry: true})
       .on('change', ({direction, change}) => {
-        if (direction === 'pull' && change.ok === true) {
-          console.log('localDB mailings', 'on met à jour', change)
-          this.dbs.localMailings.allDocs({include_docs: true}).then((docs) => {
+        if (change.ok === true) {
+          console.log('templates.local', 'change', direction)
+          this.dbs.templates.local.allDocs({include_docs: true}).then((docs) => {
+            this.context.setState({templates: docs})
+          })
+        }
+      })
+      .on('error', (error) => {
+        console.error('...', 'local and remote templates sync failed')
+        console.error(error)
+      })
+    this.dbs.mailings.local.sync(this.dbs.mailings.remote, {live: true, retry: true})
+      .on('change', ({direction, change}) => {
+        if (change.ok === true) {
+          console.log('mailings.local', 'change', direction)
+          this.dbs.mailings.local.allDocs({include_docs: true}).then((docs) => {
             this.context.setState({mailings: docs})
           })
         }
       })
       .on('error', (error) => {
-        console.error('...', 'local and remote databases sync failed')
+        console.error('...', 'local and remote mailings sync failed')
         console.error(error)
       })
   }
@@ -41,7 +60,7 @@ class AdminHelpers {
     this.authenticate()
   }
   authenticate (args) {
-    console.log('AdminHelpers', 'authenticate')
+    console.log('AdminHelpers', 'authenticate', args)
     this.context.state.client.authenticate(args)
       .then((response) => {
         this.context.setState({loader: {
@@ -90,7 +109,7 @@ class AdminHelpers {
       visible: true,
       message: 'Déconnexion en cours...'
     }})
-    window.localStorage.removeItem('rememberMe')
+    // window.localStorage.removeItem('rememberMe')
     window.location = window.location.origin + '/admin/login'
   }
   initialize () {
@@ -110,33 +129,26 @@ class AdminHelpers {
         return this
       })
       this.context.setState({campaigns: dictionnary})
-      return this.context.state.client.service('query/sendgridGetAllTemplates').find()
+      return true
     }).then((result) => {
-      result.templates.map((template) => {
-        this.context.state.templates.push({
-          key: template.id,
-          text: template.name,
-          value: template.id
-        })
-        return this
-      })
-      this.context.setState({templates: this.context.state.templates})
       this.context.setState({loader: {
         visible: true,
         message: 'Synchronisation des data en cours...'
       }})
-      AdminActions.applicationCreationComplete()
-      // databases real time
-      this.dbs.localMailings.allDocs({include_docs: true}).then((docs) => {
+      return this.dbs.mailings.local.allDocs({include_docs: true}).then((docs) => {
         this.context.setState({mailings: docs})
-      }).catch((error) => {
-        console.error(error)
       })
+    }).then(() => {
+      return this.dbs.templates.local.allDocs({include_docs: true}).then((docs) => {
+        this.context.setState({templates: docs})
+      })
+    }).then(() => {
+      AdminActions.applicationCreationComplete()
     }).catch((error) => {
       console.error(error)
       this.context.setState({token: false, loader: {visible: true, message: error.toString()}})
       if (!window.location.pathname.includes('admin/login')) {
-        window.localStorage.removeItem('rememberMe')
+        // window.localStorage.removeItem('rememberMe')
         // window.location = window.location.origin + '/admin/login'
       }
     })
@@ -145,18 +157,56 @@ class AdminHelpers {
     console.log('AdminHelpers', 'creationComplete')
     this.context.setState({initialized: true, loader: {visible: false}, campaigns: this.context.state.campaigns})
   }
-  emailingCampaign (params) {
+  emailingCampaign (key) {
     console.log('AdminHelpers', 'emailingCampaign')
-    params.emails.map((email) => {
-      this.context.state.client.service('command/campaignCreateEmailing').create({
-        email,
-        url: params.url,
-        campaign: params.campaign,
-        template: params.template,
-        categories: params.categories
-      })
-      return this
+    // get sengrid campaign
+    this.context.state.mailings.rows.map((item) => {
+      if (item.id === key) {
+        // send all campaigns
+        item.doc.emails.map((email) => {
+          return this.context.state.client.service('command/campaignCreateEmailing').create({
+            email,
+            url: window.location.origin,
+            campaign: item.doc.campaign,
+            template: item.doc.template,
+            categories: item.doc.categories
+          }).then((result) => {
+            item.doc.done = true
+            return this.dbs.mailings.local.put(item.doc)
+          }).then(() => {
+            return true
+          }).catch(console.error)
+        })
+      }
+      return false
     })
+  }
+  refreshTemplates () {
+    console.log('AdminHelpers', 'refreshTemplates')
+    this.context.state.client.service('query/sendgridGetAllTemplates').find().then((result) => {
+      result.map((item) => {
+        item._id = item.id
+        return this.dbs.templates.local.put(item)
+      })
+    })
+  }
+  createMailing () {
+    console.log('AdminHelpers', 'createMailing')
+    this.dbs.mailings.local.put({
+      _id: uuid.v4(),
+      name: 'Nouveau mailing',
+      template: 'None',
+      campaign: 'None',
+      categories: [],
+      emails: [],
+      batch: false,
+      done: false,
+      created: Date.now()
+    })
+  }
+  updateMailing (data) {
+    console.log('AdminHelpers', 'updateMailing')
+    this.dbs.mailings.local.put(data)
   }
   createCampaign () {
     console.log('AdminHelpers', 'createCampaign')
@@ -178,7 +228,7 @@ class AdminHelpers {
   }
   updateCampaignPicture (id, file) {
     console.log('AdminHelpers', 'updateCampaignPicture')
-    this.context.setState({loader: {visible: true}})
+    this.context.setState({loader: {visible: true, message: 'Upload image en cours...'}})
     const reader = new FileReader()
     reader.readAsDataURL(file)
     reader.addEventListener('load', () => {

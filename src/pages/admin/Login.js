@@ -28,6 +28,7 @@ class Login extends Reflux.Component {
     }
     this.store = AdminStore
     this.handleSubmit = () => {
+      console.log('Login', 'handleSubmit')
       AdminActions.networkAuthenticate({strategy: 'local', email: this.state.email, password: this.state.password})
     }
   }
