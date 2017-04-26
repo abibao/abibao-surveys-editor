@@ -14,10 +14,10 @@ class AdminHelpers {
     this.dbs = {
       templates: {
         remote: new PouchDB(Config.hosts.couchdb + '/templates'),
-        local: new PouchDB(Config.hosts.couchdb + '/templates', {auto_compaction: true})
+        local: new PouchDB('templates', {auto_compaction: true})
       },
       mailings: {
-        remote: new PouchDB('http://infra:infra@localhost:5984/mailings'),
+        remote: new PouchDB(Config.hosts.couchdb + '/mailings'),
         local: new PouchDB('mailings', {auto_compaction: true})
       }
     }
