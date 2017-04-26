@@ -9,6 +9,7 @@ services:
       COUCHDB_USER: "infra"
       COUCHDB_PASSWORD: "infra"
     volumes:
+      - "./docker/couchdb/default.d:/usr/local/etc/couchdb/default.d"
       - "/home/docker/volumes/abibao-surveys-editor/couchdb/usr/local/var/lib/couchdb:/usr/local/var/lib/couchdb"
     ports:
       - "5984:5984"

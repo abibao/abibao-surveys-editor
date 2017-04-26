@@ -5,6 +5,7 @@ import {clone} from 'lodash'
 import PouchDB from 'pouchdb'
 
 import AdminActions from './Actions'
+import Config from './Config'
 
 class AdminHelpers {
   constructor (context) {
@@ -12,8 +13,8 @@ class AdminHelpers {
     this.context = context
     this.dbs = {
       templates: {
-        remote: new PouchDB('http://infra:infra@localhost:5984/templates'),
-        local: new PouchDB('templates', {auto_compaction: true})
+        remote: new PouchDB(Config.hosts.couchdb + '/templates'),
+        local: new PouchDB(Config.hosts.couchdb + '/templates', {auto_compaction: true})
       },
       mailings: {
         remote: new PouchDB('http://infra:infra@localhost:5984/mailings'),
