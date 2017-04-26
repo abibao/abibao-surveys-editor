@@ -1,13 +1,9 @@
-const auth = require('feathers-authentication')
-const permissions = require('feathers-permissions')
+// const auth = require('feathers-authentication')
+// const permissions = require('feathers-permissions')
 const local = require('feathers-authentication-local')
 
 exports.before = {
-  all: [
-    auth.hooks.authenticate('jwt'),
-    permissions.hooks.checkPermissions({ service: 'users' }),
-    permissions.hooks.isPermitted()
-  ],
+  all: [],
   find: [],
   get: [],
   create: [

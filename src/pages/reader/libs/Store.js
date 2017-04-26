@@ -2,9 +2,9 @@
 import Reflux from 'reflux'
 
 // libraries
-import Client from './../libs/ClientReader'
-import ReaderActions from './../actions/ReaderActions'
-import ReaderHelpers from './../helpers/ReaderHelpers'
+import Client from './Client'
+import ReaderActions from './Actions'
+import ReaderHelpers from './Helpers'
 
 class ReaderStore extends Reflux.Store {
   constructor () {
@@ -18,6 +18,8 @@ class ReaderStore extends Reflux.Store {
       selectedCampaign: false, // campaign id to load
       askEmail: false, // reader in ask email mode
       passwordless: false, // message email sended
+      selectedSurvey: false, // current survey to read
+      surveys: [], // sequence of surveys to run
       loader: {
         visible: true,
         message: 'Connexion en cours...'
@@ -57,6 +59,10 @@ class ReaderStore extends Reflux.Store {
   onAffectSurvey (data) {
     console.log('ReaderStore', 'onAffectSurvey')
     this.helpers.affectSurvey(data)
+  }
+  onControlMinimum (data) {
+    console.log('ReaderStore', 'onControlMinimum')
+    this.helpers.controlMinimum(data)
   }
   controlSecurity (email) {
     console.log('ReaderStore', 'onSurveyControlSecurity', email)

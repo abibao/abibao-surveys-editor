@@ -56,7 +56,6 @@ class Service {
       }
     })
     .then((result) => {
-      console.log(result)
       const endtime = new Date()
       app.info({
         env: app.get('env'),
