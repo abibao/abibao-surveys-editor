@@ -13,8 +13,8 @@ import * as Readers from './components/readers'
 // semantic
 import { Container, Loader, Header, Segment, Input, Form, Button, Message } from 'semantic-ui-react'
 
-import ReaderStore from './../../stores/ReaderStore'
-import ReaderActions from './../../actions/ReaderActions'
+import ReaderStore from './libs/Store'
+import ReaderActions from './libs/Actions'
 
 class Reader extends Reflux.Component {
   componentDidMount () {
@@ -37,9 +37,18 @@ class Reader extends Reflux.Component {
       let fingerprint = 'urn:fingerprint:individual:' + uuid.v4()
       cookie.save('individual', fingerprint, { path: '/' })
     }
+    props.location.query.isWindows = is.windows()
+    props.location.query.isMac = is.mac()
+    props.location.query.isLinux = is.linux()
     props.location.query.isMobile = is.mobile()
     props.location.query.isTablet = is.tablet()
     props.location.query.isDesktop = is.desktop()
+    props.location.query.isIE = is.ie()
+    props.location.query.isFirefox = is.firefox()
+    props.location.query.isChrome = is.chrome()
+    props.location.query.isOpera = is.opera()
+    props.location.query.isEdge = is.edge()
+    props.location.query.isSafari = is.safari()
     // time to read the survey
     super(props)
     this.state = {
@@ -60,7 +69,7 @@ class Reader extends Reflux.Component {
     }
   }
   render () {
-    console.log('Reader', 'render')
+    console.log('Reader', 'render', this.state.selectedSurvey)
     let email = () => {
       return (
         <div className="ui fluid container">

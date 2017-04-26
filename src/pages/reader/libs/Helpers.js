@@ -1,5 +1,5 @@
 // actions
-import ReaderActions from './../actions/ReaderActions'
+import ReaderActions from './Actions'
 
 class ReaderHelpers {
   constructor (context) {
@@ -68,9 +68,23 @@ class ReaderHelpers {
       }
     })
   }
+  controlMinimum (data) {
+    console.log('ReaderHelpers', 'controlMinimum')
+    this.context.setState({loader: {visible: true, message: 'Contrôle (1) en cours...'}})
+    this.context.state.client.service('command/surveyControlMinimum').create(data).then((result) => {
+      if (result) {
+        this.context.state.surveys.unshift(result)
+      }
+      this.context.state.selectedSurvey = this.context.state.surveys.shift()
+      this.context.setState({surveys: this.context.state.surveys, selectedSurvey: this.context.state.selectedSurvey, loader: {visible: false, message: ''}})
+    }).catch((error) => {
+      console.error(error)
+      this.context.setState({loader: {visible: false, message: ''}})
+    })
+  }
   controlSecurity (email) {
-    console.log('ReaderHelpers', 'control security')
-    this.context.setState({loader: {visible: true, message: ''}})
+    console.log('ReaderHelpers', 'controlSecurity')
+    this.context.setState({loader: {visible: true, message: 'Contrôle (2) en cours...'}})
     this.context.state.client.service('command/surveyControlSecurity').create({email, origin: window.location.href}).then((result) => {
       console.log('...', result)
       if (result.connected === true) {
@@ -88,18 +102,26 @@ class ReaderHelpers {
     })
   }
   affectSurvey (data) {
-    console.log('ReaderHelpers', 'affect', data.individual)
+    console.log('ReaderHelpers', 'affectSurvey', data.individual)
     this.context.state.client.service('command/individualAffectSurvey').create(data)
       .then((response) => {
-        this.context.setState({selectedSurvey: response, loader: {visible: false, message: ''}})
+        this.context.state.surveys.unshift(response)
+        if (response.campaign.reader === 'abibao') {
+          ReaderActions.controlMinimum(data)
+        } else {
+          this.context.state.selectedSurvey = this.context.state.surveys.shift()
+          this.context.setState({surveys: this.context.state.surveys, selectedSurvey: this.context.state.selectedSurvey, loader: {visible: false, message: ''}})
+        }
       })
       .catch((error) => {
+        if (error.toString().includes('ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE')) {
+          return this.context.setState({loader: {visible: true, message: 'Sondage terminé !'}})
+        }
         if (error.toString().includes('ERROR_INDIVIDUAL_CONTROL_SECURITY')) {
           console.error('we need to ask email')
-          this.context.setState({askEmail: true, loader: {visible: false, message: ''}})
-        } else {
-          console.error('...', error)
+          return this.context.setState({askEmail: true, loader: {visible: false, message: ''}})
         }
+        console.error('...', error)
       })
   }
   answerSurvey (data) {
@@ -108,6 +130,10 @@ class ReaderHelpers {
   }
   completeSurvey (data) {
     this.context.state.client.service('command/individualCompleteSurvey').create(data).then((response) => {
+      if (this.context.state.surveys.length > 0) {
+        this.context.state.selectedSurvey = this.context.state.surveys.shift()
+        this.context.setState({surveys: this.context.state.surveys, selectedSurvey: this.context.state.selectedSurvey})
+      }
     }).catch(console.error)
   }
 }

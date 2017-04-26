@@ -5,6 +5,7 @@ const ReaderActions = Reflux.createActions([
   'networkConnect',
   'networkDisconnect',
   'readerInitialize',
+  'controlMinimum',
   'controlSecurity',
   'affectSurvey',
   'answerSurvey',

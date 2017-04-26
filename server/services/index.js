@@ -12,6 +12,7 @@ const individualAnswerSurveyCommand = require('./domain/commands/individualAnswe
 const individualCompleteSurveyCommand = require('./domain/commands/individualCompleteSurveyCommand')
 const individualAffectSurveyCommand = require('./domain/commands/individualAffectSurveyCommand')
 const postOnSlackWithWebhookCommand = require('./domain/commands/postOnSlackWithWebhookCommand')
+const surveyControlMinimumCommand = require('./domain/commands/surveyControlMinimumCommand')
 const surveyControlSecurityCommand = require('./domain/commands/surveyControlSecurityCommand')
 
 // external queries
@@ -33,6 +34,7 @@ module.exports = function () {
   app.configure(individualCompleteSurveyCommand)
   app.configure(individualAffectSurveyCommand)
   app.configure(postOnSlackWithWebhookCommand)
+  app.configure(surveyControlMinimumCommand)
   app.configure(surveyControlSecurityCommand)
 
   app.configure(answerGetRandomEHOPAnswerQuery)
