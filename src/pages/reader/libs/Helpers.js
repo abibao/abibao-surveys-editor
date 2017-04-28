@@ -85,7 +85,7 @@ class ReaderHelpers {
   controlSecurity (email) {
     console.log('ReaderHelpers', 'controlSecurity')
     this.context.setState({loader: {visible: true, message: 'Contrôle (2) en cours...'}})
-    this.context.state.client.service('command/surveyControlSecurity').create({email, origin: window.location.href}).then((result) => {
+    this.context.state.client.service('command/surveyControlSecurity').create({email, location: window.location}).then((result) => {
       console.log('...', result)
       if (result.connected === true) {
         console.log('connected', result.connected)
@@ -93,7 +93,7 @@ class ReaderHelpers {
       } else {
         console.log('connected', result.connected)
         this.context.setState({passwordless: false})
-        window.location = window.location.href + '&individual=' + result.urn
+        window.location = window.location.origin + window.location.pathname + '?individual=' + result.urn + window.location.search.replace('?', '&')
       }
       this.context.setState({loader: {visible: false, message: ''}})
     }).catch((error) => {
