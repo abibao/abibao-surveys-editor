@@ -24,16 +24,22 @@ class SurveyReader extends Reflux.Component {
       ReaderActions.completeSurvey()
     }
     this.surveyValidateQuestion = (s, options) => {
-      console.log('SurveyReader', 'surveyValidateQuestion', options)
-      let answer = {
-        'individual': this.props.survey.individual,
-        'survey_id': this.props.survey.id,
-        'campaign_id': this.props.survey.campaign.id,
-        'campaign_name': this.props.survey.campaign.name,
-        question: options.name,
-        answer: options.value
+      console.log('SurveyReader', 'surveyValidateQuestion', options.name, options.value)
+      switch (options.value) {
+        case 'ABIBAO_CGU_NO':
+          console.log('...', 'CGU not accepted')
+          return false
+        default:
+          let answer = {
+            'individual': this.props.survey.individual,
+            'survey_id': this.props.survey.id,
+            'campaign_id': this.props.survey.campaign.id,
+            'campaign_name': this.props.survey.campaign.name,
+            question: options.name,
+            answer: options.value
+          }
+          ReaderActions.answerSurvey(answer)
       }
-      ReaderActions.answerSurvey(answer)
     }
   }
   render () {

@@ -102,7 +102,7 @@ class Reader extends Reflux.Component {
                 </div>
               </div>
               <div className="abibao-panel-footer" style={{textAlign: 'center'}}>
-                { this.state.passwordless && <h4 className="abibao-footer-title">'Un email <i className="hand peace icon" /> vous a été envoyé'</h4> }
+                { this.state.passwordless && <h4 className="abibao-footer-title">Un email <i className="hand peace icon" /> vous a été envoyé</h4> }
                 { !this.state.passwordless && <input onClick={this.handleSubmit} type="submit" className="abibao-button-nav" value="Suivant" />}
               </div>
             </div>
