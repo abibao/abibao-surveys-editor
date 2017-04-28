@@ -25,7 +25,7 @@ class Service {
             { 'to': [{ 'email': email }],
               'subject': 'Confirmation de votre email, pour répondre à un sondage.',
               'substitutions': {
-                '%fingerprint%': params.origin + '&individual=' + result[0].urn
+                '%fingerprint%': params.location.origin + params.location.pathname + '?individual=' + result[0].urn + params.location.search.replace('?', '&')
               }
             }
           ],

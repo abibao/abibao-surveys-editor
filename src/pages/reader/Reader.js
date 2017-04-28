@@ -11,7 +11,7 @@ import is from 'is_js'
 import * as Readers from './components/readers'
 
 // semantic
-import { Container, Loader, Header, Segment, Input, Form, Button, Message } from 'semantic-ui-react'
+import { Container, Loader, Segment, Input, Message } from 'semantic-ui-react'
 
 import ReaderStore from './libs/Store'
 import ReaderActions from './libs/Actions'
@@ -72,46 +72,42 @@ class Reader extends Reflux.Component {
     console.log('Reader', 'render', this.state.selectedSurvey)
     let email = () => {
       return (
-        <div className="ui fluid container">
-          <div className="abibao-reader">
-            <div className="abibao-panel-heading">
-              <h3 />
-            </div>
-            <div className="abibao-panel-body">
-              <div style={{background: '#e7ebee'}}>
-                <h4 className="abibao-page-title">Vous êtes quelqu'un d'incroyable !</h4>
-                <br />
-                <Container fluid style={{background: '#e7ebee'}}>
-                  <Segment basic>
-                    <Header as="h2">
-                      Le monde caritatif à besoin de gens comme vous !
-                      <Header.Subheader>Pour répondre à ce sondge et être alerté des sondages à venir, laissez nous votre e-mail :</Header.Subheader>
-                    </Header>
-                  </Segment>
-                  <Segment basic>
-                    <Form>
-                      <Form.Field>
-                        <Input disabled={this.state.loader.visible} onChange={(e) => this.handleChangeEmail(e.target.value)} type="email" placeholder={this.state.email} size="large" label={{ color: 'grey', icon: 'asterisk' }} labelPosition="right corner" className="form" />
-                      </Form.Field>
-                    </Form>
+        <form action="#">
+          <div className="ui fluid container">
+            <div className="abibao-reader">
+              <div className="abibao-panel-heading">
+                <h3 />
+              </div>
+              <div className="abibao-panel-body">
+                <div style={{background: '#e7ebee'}}>
+                  <h4 className="abibao-page-title">Ce sondage est pour une bonne cause</h4>
+                  <br />
+                  <Container fluid style={{background: '#e7ebee'}}>
                     <br />
-                    <Button loading={this.state.loader.visible} onClick={this.handleSubmit} color="grey" size="large" content="Se connecter" />
-                  </Segment>
-                  <Segment basic hidden={!this.state.passwordless}>
-                    <Message info
-                      icon="inbox"
-                      header="Message de sécurité"
-                      content="Un email d’accès vous a été envoyé" />
-                  </Segment>
-                </Container>
-                <br />
+                    <Segment basic>
+                      <h5 className="abibao-question-title">Quelle est votre adresse email ?</h5>
+                      <Input fluid disabled={this.state.loader.visible} onChange={(e) => this.handleChangeEmail(e.target.value)} type="email" placeholder={this.state.email} size="large" label={{ color: 'grey', icon: 'asterisk' }} labelPosition="right corner" className="form" />
+                    </Segment>
+                    { !this.state.passwordless && <br /> }
+                    { this.state.passwordless &&
+                      <Segment basic>
+                        <Message info
+                          icon="inbox"
+                          header="Nous sommes heureux de vous revoir !"
+                          content="Vous êtes déjà membre d'Abibao, un email vous a été envoyé avec un lien sécurisé pour accéder au sondage." />
+                      </Segment>
+                    }
+                    <br />
+                  </Container>
+                </div>
+              </div>
+              <div className="abibao-panel-footer" style={{textAlign: 'center'}}>
+                { this.state.passwordless && <h4 className="abibao-footer-title">'Un email <i className="hand peace icon" /> vous a été envoyé'</h4> }
+                { !this.state.passwordless && <input onClick={this.handleSubmit} type="submit" className="abibao-button-nav" value="Suivant" />}
               </div>
             </div>
-            <div className="abibao-panel-footer">
-              <Header as="h3" textAlign="center" style={{color: '#ffffff'}}>Vous allez reçevoir un email avec le lien du sondage</Header>
-            </div>
           </div>
-        </div>
+        </form>
       )
     }
     let loader = () => {

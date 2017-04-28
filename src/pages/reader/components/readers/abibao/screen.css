@@ -80,6 +80,14 @@ h4.abibao-page-title {
   font-size: 1.5rem !important;
   margin-bottom: 20px;
 }
+.abibao-footer-title {
+  margin: 0;
+  display: inline-block;
+  width: 100%;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.3rem !important;
+}
 
 .abibao-abibao-alert-danger {
   background: #ef9a9a;
