@@ -1,6 +1,6 @@
 {
   "name": "abibao-surveys-editor",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Frontend surveys editor",
   "author": "Gilles Perreymond",
   "scripts": {
@@ -87,12 +87,12 @@
     "reflux": "6.4.1",
     "request": "2.81.0",
     "semantic-ui-css": "2.2.10",
-    "semantic-ui-react": "0.68.0",
+    "semantic-ui-react": "0.68.2",
     "sinon": "2.1.0",
     "snazzy": "7.0.0",
     "standard": "10.0.2",
     "standard-jsx": "8.0.0",
-    "survey-react": "0.12.8"
+    "survey-react": "0.12.11"
   },
   "standard": {
     "globals": [

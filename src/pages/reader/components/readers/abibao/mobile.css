@@ -1,6 +1,10 @@
 @media screen and (max-width: 640px) {
+  div#root, .ui.container {
+    background: #e7ebee !important;
+  }
   .abibao-reader {
     height: 100%;
+    background: #e7ebee !important;
   }
   .abibao-panel-body {
     min-height: 100%;
