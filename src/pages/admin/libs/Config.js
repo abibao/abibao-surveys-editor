@@ -1,5 +1,6 @@
 let couchdbUser = 'infra'
 let couchdbPass = 'infra'
+let couchdbPort = '5984'
 
 switch (window.location.hostname) {
   case 'platform.local.abibao.com':
@@ -7,6 +8,7 @@ switch (window.location.hostname) {
   case 'platform.pprod.abibao.com':
     couchdbUser = 'rece'
     couchdbPass = 'rece'
+    couchdbPort = '59840'
     break
   case 'platform.abibao.com':
     couchdbUser = 'abibao'
@@ -15,11 +17,12 @@ switch (window.location.hostname) {
   default:
 }
 
-let couchdbUrl = '$protocol//$user:$pass@$hostname:5984'
+let couchdbUrl = '$protocol//$user:$pass@$hostname:$port'
 couchdbUrl = couchdbUrl.replace('$protocol', window.location.protocol)
 couchdbUrl = couchdbUrl.replace('$user', couchdbUser)
 couchdbUrl = couchdbUrl.replace('$pass', couchdbPass)
 couchdbUrl = couchdbUrl.replace('$hostname', window.location.hostname)
+couchdbUrl = couchdbUrl.replace('$port', couchdbPort)
 
 let Config = {
   hosts: {
