@@ -80,7 +80,7 @@ class Reader extends Reflux.Component {
     console.log('Reader', 'render', this.state.selectedSurvey)
     let email = () => {
       return (
-        <form action="#" className="ui fluid container">
+        <form action="#" onSubmit={this.handleSubmit} className="ui fluid container">
           <div className="abibao-reader">
             <div className="abibao-panel-heading">
               <h3 />
@@ -112,7 +112,7 @@ class Reader extends Reflux.Component {
             </div>
             <div className="abibao-panel-footer" style={{textAlign: 'center'}}>
               { this.state.passwordless && <h4 className="abibao-footer-title">Un email <i className="hand peace icon" /> vous a été envoyé</h4> }
-              { !this.state.passwordless && <input onClick={this.handleSubmit} type="submit" className="abibao-button-nav" value="Suivant" />}
+              { !this.state.passwordless && <input type="submit" className="abibao-button-nav" value="Suivant" />}
             </div>
           </div>
         </form>
