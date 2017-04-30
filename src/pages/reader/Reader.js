@@ -53,7 +53,7 @@ class Reader extends Reflux.Component {
     super(props)
     this.state = {
       individual: this.props.location.query.individual || cookie.load('individual'),
-      withKeyboard: window.innerWidth >= window.innerHeight,
+      withKeyboard: (is.mobile() && window.innerWidth >= window.innerHeight),
       email: 'example@domain.com',
       readers: {
         abibao: Readers.AbibaoReader,
@@ -69,8 +69,8 @@ class Reader extends Reflux.Component {
       ReaderActions.controlSecurity(this.state.email)
     }
     this.windowResizeHandler = (e) => {
-      console.log('Reader', 'windowResizeHandler', is.mobile(), window.innerWidth, window.innerHeight)
       if (is.mobile()) {
+        console.log('Reader', 'windowResizeHandler', window.innerWidth, window.innerHeight)
         this.setState({withKeyboard: window.innerWidth >= window.innerHeight})
       }
     }
