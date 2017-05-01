@@ -51,10 +51,10 @@ class Reader extends Reflux.Component {
     props.location.query.isSafari = is.safari()
     // time to read the survey
     super(props)
+    this.email = ''
     this.state = {
       individual: this.props.location.query.individual || cookie.load('individual'),
       withKeyboard: (is.mobile() && window.innerWidth >= window.innerHeight),
-      email: 'example@domain.com',
       readers: {
         abibao: Readers.AbibaoReader,
         ehop: Readers.EHOPReader
@@ -62,11 +62,12 @@ class Reader extends Reflux.Component {
     }
     this.store = ReaderStore
     this.handleChangeEmail = (email) => {
-      this.setState({email})
+      this.email = email
     }
-    this.handleSubmit = () => {
-      console.log('Reader', 'handleSubmit', this.state.email)
-      ReaderActions.controlSecurity(this.state.email)
+    this.handleSubmit = (e) => {
+      console.log('Reader', 'handleSubmit', this.email)
+      e.preventDefault()
+      ReaderActions.controlSecurity(this.email)
     }
     this.windowResizeHandler = (e) => {
       if (is.mobile()) {
@@ -80,7 +81,7 @@ class Reader extends Reflux.Component {
     console.log('Reader', 'render', this.state.selectedSurvey)
     let email = () => {
       return (
-        <form action="#" onSubmit={this.handleSubmit} className="ui fluid container">
+        <form onSubmit={this.handleSubmit} className="ui fluid container">
           <div className="abibao-reader">
             <div className="abibao-panel-heading">
               <h3 />
@@ -95,7 +96,7 @@ class Reader extends Reflux.Component {
                   <br />
                   <Segment basic>
                     <h5 className="abibao-question-title">Quelle est votre adresse email ?</h5>
-                    <Input fluid disabled={this.state.loader.visible} onChange={(e) => this.handleChangeEmail(e.target.value)} type="email" placeholder={this.state.email} size="large" label={{ color: 'grey', icon: 'asterisk' }} labelPosition="right corner" className="form" />
+                    <Input fluid disabled={this.state.loader.visible} onChange={(e) => this.handleChangeEmail(e.target.value)} type="email" placeholder="example@domain.com" size="large" label={{ color: 'grey', icon: 'asterisk' }} labelPosition="right corner" className="form" />
                   </Segment>
                   { !this.state.passwordless && <br /> }
                   { this.state.passwordless &&
