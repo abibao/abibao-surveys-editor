@@ -1,5 +1,6 @@
 const path = require('path')
 const Sequelize = require('sequelize')
+const Cradle = require('cradle')
 const serveStatic = require('feathers').static
 const compress = require('compression')
 
@@ -34,6 +35,14 @@ const bunyan = require('bunyan').createLogger({
 })
 
 app.configure(configuration(path.join(__dirname, '..')))
+
+app.cradle = new (Cradle.Connection)('http://' + app.get('couchdb').host, app.get('couchdb').port, {
+  auth: {
+    username: app.get('couchdb').user,
+    password: app.get('couchdb').pass
+  },
+  cache: true
+})
 
 app.sequelize = new Sequelize(app.get('postgres').database, app.get('postgres').username, app.get('postgres').password, {
   dialect: 'postgres',
