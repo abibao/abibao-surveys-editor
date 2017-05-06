@@ -37,7 +37,7 @@ class Mailings extends Reflux.Component {
     }
     this.getTemplateById = (id) => {
       if (this.state.templates.total_rows === 0) {
-        return 'Pas de template...'
+        return {doc: {name: 'Pas de correspondance...'}}
       }
       let template = find(this.state.templates.rows, function (item) {
         return (item.key === id)

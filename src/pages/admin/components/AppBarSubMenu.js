@@ -13,8 +13,8 @@ class AppBarSubMenu extends Reflux.Component {
     super(props)
     this.state = {
       items: {
-        '/admin/campaigns': 'Campagnes',
-        '/admin/mailings': 'Mailings'
+        'admin/campaigns': 'Campagnes',
+        'admin/mailings': 'Mailings'
       },
       activeItem: 'None'
     }
@@ -28,7 +28,17 @@ class AppBarSubMenu extends Reflux.Component {
     }
   }
   componentDidMount () {
-    this.setState({activeItem: this.state.items[window.location.pathname]})
+    console.log('AppBarSubMenu', 'componentDidMount', window.location.pathname)
+    switch (true) {
+      case window.location.pathname.includes('admin/campaigns'):
+        this.setState({activeItem: this.state.items['admin/campaigns']})
+        break
+      case window.location.pathname.includes('admin/mailings'):
+        this.setState({activeItem: this.state.items['admin/mailings']})
+        break
+      default:
+        this.setState({activeItem: 'None'})
+    }
   }
   render () {
     const { activeItem } = this.state
