@@ -1,6 +1,7 @@
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
+const _ = require('lodash')
 
 const options = {
   service: 'users'
@@ -19,22 +20,36 @@ class Service {
     request.path = '/v3/templates'
     return sendgrid.API(request)
       .then((response) => {
+        return app.service('api/templates').find({query: {}}).then((templates) => {
+          let promises = []
+          _.map(templates, (template) => {
+            promises.push(app.service('api/templates').remove(template.id))
+          })
+          return Promise.all(promises).then(() => {
+            return app.service('api/templates').create(response.body.templates).then((result) => {
+              return result
+            })
+          })
+        })
+      })
+      .then((result) => {
         const endtime = new Date()
         app.info({
           env: app.get('env'),
           exectime: endtime - starttime,
-          type: 'query',
-          name: 'sendgridGetAllTemplates'
+          type: 'command',
+          name: 'sendgridRefreshAllTemplates'
         })
-        return Promise.resolve(response.body.templates)
+        return Promise.resolve(result)
       })
       .catch((error) => {
+        console.log(error)
         const endtime = new Date()
         app.error({
           env: app.get('env'),
           exectime: endtime - starttime,
-          type: 'query',
-          name: 'sendgridGetAllTemplates',
+          type: 'command',
+          name: 'sendgridRefreshAllTemplates',
           error
         })
         return Promise.reject(error)
@@ -44,8 +59,8 @@ class Service {
 
 module.exports = function () {
   const app = this
-  app.use('query/sendgridGetAllTemplates', new Service())
-  const service = app.service('query/sendgridGetAllTemplates')
+  app.use('command/sendgridRefreshAllTemplates', new Service())
+  const service = app.service('command/sendgridRefreshAllTemplates')
   service.before({
     create: [
       auth.hooks.authenticate('jwt'),

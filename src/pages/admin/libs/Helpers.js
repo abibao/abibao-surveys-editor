@@ -184,12 +184,9 @@ class AdminHelpers {
   }
   refreshTemplates () {
     console.log('AdminHelpers', 'refreshTemplates')
-    this.context.state.client.service('query/sendgridGetAllTemplates').find().then((result) => {
-      result.map((item) => {
-        item._id = item.id
-        return this.dbs.templates.local.put(item)
-      })
-    })
+    this.context.state.client.service('command/sendgridRefreshAllTemplates').find().then((result) => {
+      console.log('...', result)
+    }).catch(console.error)
   }
   createMailing () {
     console.log('AdminHelpers', 'createMailing')

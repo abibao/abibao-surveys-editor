@@ -5,6 +5,7 @@ const campaigns = require('./data/campaigns')
 const surveys = require('./data/surveys')
 const answers = require('./data/answers')
 const individuals = require('./data/individuals')
+const templates = require('./couchdb/templates')
 
 // external commands
 const campaignCreateEmailingCommand = require('./domain/commands/campaignCreateEmailingCommand')
@@ -12,12 +13,12 @@ const individualAnswerSurveyCommand = require('./domain/commands/individualAnswe
 const individualCompleteSurveyCommand = require('./domain/commands/individualCompleteSurveyCommand')
 const individualAffectSurveyCommand = require('./domain/commands/individualAffectSurveyCommand')
 const postOnSlackWithWebhookCommand = require('./domain/commands/postOnSlackWithWebhookCommand')
+const sendgridRefreshAllTemplatesCommand = require('./domain/commands/sendgridRefreshAllTemplatesCommand')
 const surveyControlMinimumCommand = require('./domain/commands/surveyControlMinimumCommand')
 const surveyControlSecurityCommand = require('./domain/commands/surveyControlSecurityCommand')
 
 // external queries
 const answerGetRandomEHOPAnswerQuery = require('./domain/queries/answerGetRandomEHOPAnswerQuery')
-const sendgridGetAllTemplatesQuery = require('./domain/queries/sendgridGetAllTemplatesQuery')
 
 module.exports = function () {
   const app = this
@@ -28,15 +29,16 @@ module.exports = function () {
   app.configure(surveys)
   app.configure(answers)
   app.configure(individuals)
+  app.configure(templates)
 
   app.configure(campaignCreateEmailingCommand)
   app.configure(individualAnswerSurveyCommand)
   app.configure(individualCompleteSurveyCommand)
   app.configure(individualAffectSurveyCommand)
   app.configure(postOnSlackWithWebhookCommand)
+  app.configure(sendgridRefreshAllTemplatesCommand)
   app.configure(surveyControlMinimumCommand)
   app.configure(surveyControlSecurityCommand)
 
   app.configure(answerGetRandomEHOPAnswerQuery)
-  app.configure(sendgridGetAllTemplatesQuery)
 }
