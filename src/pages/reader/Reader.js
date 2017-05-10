@@ -54,7 +54,7 @@ class Reader extends Reflux.Component {
     this.email = ''
     this.state = {
       individual: this.props.location.query.individual || cookie.load('individual'),
-      withKeyboard: (is.mobile() && window.innerWidth >= window.innerHeight),
+      withKeyboard: is.mobile(),
       readers: {
         abibao: Readers.AbibaoReader,
         ehop: Readers.EHOPReader
@@ -69,13 +69,6 @@ class Reader extends Reflux.Component {
       e.preventDefault()
       ReaderActions.controlSecurity(this.email)
     }
-    this.windowResizeHandler = (e) => {
-      if (is.mobile()) {
-        console.log('Reader', 'windowResizeHandler', window.innerWidth, window.innerHeight)
-        this.setState({withKeyboard: window.innerWidth >= window.innerHeight})
-      }
-    }
-    window.onresize = this.windowResizeHandler
   }
   render () {
     console.log('Reader', 'render', this.state.selectedSurvey)
@@ -88,7 +81,7 @@ class Reader extends Reflux.Component {
             </div>
             <div className="abibao-panel-body">
               <div style={{background: '#e7ebee'}}>
-                { !this.state.withKeyboard &&
+                {!this.state.withKeyboard &&
                   <h4 className="abibao-page-title">Ce sondage est pour une bonne cause</h4>
                 }
                 <br />
@@ -98,8 +91,8 @@ class Reader extends Reflux.Component {
                     <h5 className="abibao-question-title">Quelle est votre adresse email ?</h5>
                     <Input fluid disabled={this.state.loader.visible} onChange={(e) => this.handleChangeEmail(e.target.value)} type="email" placeholder="example@domain.com" size="large" label={{ color: 'grey', icon: 'asterisk' }} labelPosition="right corner" className="form" />
                   </Segment>
-                  { !this.state.passwordless && <br /> }
-                  { this.state.passwordless &&
+                  {!this.state.passwordless && <br />}
+                  {this.state.passwordless &&
                     <Segment basic>
                       <Message info
                         icon="inbox"
@@ -112,8 +105,8 @@ class Reader extends Reflux.Component {
               </div>
             </div>
             <div className="abibao-panel-footer" style={{textAlign: 'center'}}>
-              { this.state.passwordless && <h4 className="abibao-footer-title">Un email <i className="hand peace icon" /> vous a été envoyé</h4> }
-              { !this.state.passwordless && <input type="submit" className="abibao-button-nav" value="Suivant" />}
+              {this.state.passwordless && <h4 className="abibao-footer-title">Un email <i className="hand peace icon" /> vous a été envoyé</h4>}
+              {!this.state.passwordless && <input type="submit" className="abibao-button-nav" value="Suivant" />}
             </div>
           </div>
         </form>
