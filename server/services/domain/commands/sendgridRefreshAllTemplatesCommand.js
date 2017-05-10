@@ -1,17 +1,14 @@
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
+const eraro = require('eraro')({package: 'platform.abibao.com'})
 const _ = require('lodash')
-
-const options = {
-  service: 'users'
-}
 
 class Service {
   setup (app, path) {
     this.app = app
   }
-  find () {
+  create () {
     const app = this.app
     const starttime = new Date()
     const sendgrid = require('sendgrid')(app.get('sendgrid').key)
@@ -43,7 +40,6 @@ class Service {
         return Promise.resolve(result)
       })
       .catch((error) => {
-        console.log(error)
         const endtime = new Date()
         app.error({
           env: app.get('env'),
@@ -52,13 +48,16 @@ class Service {
           name: 'sendgridRefreshAllTemplates',
           error
         })
-        return Promise.reject(error)
+        return Promise.reject(eraro(error))
       })
   }
 }
 
 module.exports = function () {
   const app = this
+  const options = {
+    service: 'users'
+  }
   app.use('command/sendgridRefreshAllTemplates', new Service())
   const service = app.service('command/sendgridRefreshAllTemplates')
   service.before({
@@ -69,3 +68,5 @@ module.exports = function () {
     ]
   })
 }
+
+module.exports.Service = Service

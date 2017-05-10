@@ -184,7 +184,7 @@ class AdminHelpers {
   }
   refreshTemplates () {
     console.log('AdminHelpers', 'refreshTemplates')
-    this.context.state.client.service('command/sendgridRefreshAllTemplates').find().then((result) => {
+    this.context.state.client.service('command/sendgridRefreshAllTemplates').create({}).then((result) => {
       console.log('...', result)
     }).catch(console.error)
   }
