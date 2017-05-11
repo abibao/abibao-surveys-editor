@@ -2,6 +2,7 @@ const Promise = require('bluebird')
 const feathers = require('feathers')
 const chai = require('chai')
 const expect = chai.expect
+const eraro = require('eraro')({package: 'platform.abibao.com'})
 
 const Service = require('../../../server/services/domain/commands/individualAffectSurveyCommand').Service
 
@@ -24,12 +25,12 @@ app.use('command/postOnSlackWithWebhook', {
 app.use('api/campaigns', {
   get (id) {
     if (id === 'abibao') {
-      return Promise.resolve({dataValues: {reader: 'abibao', id: 'urn:campaign', company: 'urn:company'}})
+      return Promise.resolve({reader: 'abibao', id: 'urn:campaign', company: 'urn:company'})
     }
     if (id === 'another') {
-      return Promise.resolve({dataValues: {reader: 'another', id: 'urn:campaign', company: 'urn:company'}})
+      return Promise.resolve({reader: 'another', id: 'urn:campaign', company: 'urn:company'})
     }
-    return Promise.resolve({code: 404})
+    return Promise.reject(eraro({}))
   }
 })
 app.use('api/individuals', {
@@ -105,7 +106,6 @@ describe('[unit] command individualAffectSurvey', function () {
       done('THEN_SHOULD_BE_NOT_INVOKE')
     }).catch((error) => {
       expect(error).to.have.property('eraro').and.equal(true)
-      expect(error).to.have.property('code').and.equal('ERROR_CAMPAIGN_NOT_FOUND')
       done()
     })
   })

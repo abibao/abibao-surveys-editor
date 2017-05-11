@@ -1,15 +1,19 @@
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
+const eraro = require('eraro')({package: 'platform.abibao.com'})
 
 class Service {
   setup (app, path) {
     this.app = app
   }
-  create (params) {
+  create (data) {
     const app = this.app
     const starttime = new Date()
-    let email = params.email.toLowerCase()
+    if (!data.email) {
+      return Promise.reject(eraro('ERROR_PARAMS_EMAIL_MANDATORY'))
+    }
+    let email = data.email.toLowerCase()
     return app.service('api/individuals').find({query: {
       email
     }})
@@ -25,7 +29,7 @@ class Service {
             { 'to': [{ 'email': email }],
               'subject': 'Confirmation de votre email, pour répondre à un sondage.',
               'substitutions': {
-                '%fingerprint%': params.location.origin + params.location.pathname + '?individual=' + result[0].urn + params.location.search.replace('?', '&')
+                '%fingerprint%': data.location.origin + data.location.pathname + '?individual=' + result[0].urn + data.location.search.replace('?', '&')
               }
             }
           ],
@@ -49,7 +53,7 @@ class Service {
           }).then((result) => {
             return {
               connected: false,
-              urn: result.dataValues.urn
+              urn: result.urn
             }
           })
         })
@@ -62,7 +66,7 @@ class Service {
         exectime: endtime - starttime,
         type: 'command',
         name: 'surveyControlSecurity',
-        params
+        data
       })
       return Promise.resolve(result)
     })
@@ -75,7 +79,7 @@ class Service {
         name: 'surveyControlSecurity',
         error
       })
-      return Promise.reject(error)
+      return Promise.reject(eraro(error))
     })
   }
 }

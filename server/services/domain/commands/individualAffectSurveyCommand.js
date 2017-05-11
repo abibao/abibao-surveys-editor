@@ -23,12 +23,8 @@ class Service {
     return app.service('api/campaigns').get(params.campaign)
       // check if campaign exists in database
       .then((result) => {
-        if (result.code === 404) {
-          throw eraro('ERROR_CAMPAIGN_NOT_FOUND')
-        } else {
-          campaign = result.dataValues
-          return true
-        }
+        campaign = result
+        return true
       })
       // is individual already in our database if reader = abibao
       .then(() => {
@@ -133,7 +129,7 @@ class Service {
           name: 'individualAffectSurvey',
           error
         })
-        return Promise.reject(error)
+        return Promise.reject(eraro(error))
       })
   }
 }
