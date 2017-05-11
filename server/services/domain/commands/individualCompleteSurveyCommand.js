@@ -1,6 +1,7 @@
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
+const eraro = require('eraro')({package: 'platform.abibao.com'})
 
 class Service {
   setup (app, path) {
@@ -32,7 +33,7 @@ class Service {
           name: 'individualCompleteSurvey',
           error
         })
-        return Promise.reject(error)
+        return Promise.reject(eraro(error))
       })
   }
 }

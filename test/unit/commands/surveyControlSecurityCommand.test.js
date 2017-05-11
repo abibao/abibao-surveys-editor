@@ -1,6 +1,7 @@
 const feathers = require('feathers')
 const chai = require('chai')
 const expect = chai.expect
+const eraro = require('eraro')({package: 'platform.abibao.com'})
 
 const Service = require('../../../server/services/domain/commands/surveyControlSecurityCommand').Service
 
@@ -26,12 +27,16 @@ app.get = (param) => {
 
 app.use('command/surveyControlSecurity', new Service())
 app.use('api/individuals', {
-  find (params) {
-    if (params.query.email === 'test@abibao.com') {
-      return Promise.resolve([{email: params.query.email, urn: 'urn:individual:test'}])
+  create (params) {
+    if (params.email === 'test@abibao.com') {
+      return Promise.resolve({urn: 'urn:individual:test'})
     } else {
-      return Promise.resolve([])
+      const error = new Error('ERROR_TEST_UNIT')
+      return Promise.reject(eraro(error))
     }
+  },
+  find (params) {
+    return Promise.resolve([])
   }
 })
 app.use('api/campaigns', {
@@ -57,13 +62,22 @@ describe('[unit] command surveyControlSecurity', function () {
       done()
     })
   })
-  it('should sucess ith email not in database', (done) => {
+  it('should fail because an error occured', (done) => {
     app.service('command/surveyControlSecurity').create({email: 'nope@abibao.com'}).then(() => {
       done('THEN_SHOULD_BE_NOT_INVOKE')
     }).catch((error) => {
       expect(error).to.have.property('eraro').and.equal(true)
-      expect(error).to.have.property('code').and.equal('ERROR_PARAMS_EMAIL_MANDATORY')
+      expect(error).to.have.property('code').and.equal('ERROR_TEST_UNIT')
       done()
+    })
+  })
+  it('should sucesss with email not in database', (done) => {
+    app.service('command/surveyControlSecurity').create({email: 'test@abibao.com'}).then((result) => {
+      expect(result).to.have.property('connected').and.equal(false)
+      expect(result).to.have.property('urn').and.equal('urn:individual:test')
+      done()
+    }).catch((error) => {
+      console.log(error)
     })
   })
 })

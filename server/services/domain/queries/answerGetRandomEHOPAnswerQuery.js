@@ -1,5 +1,6 @@
 const Promise = require('bluebird')
 const Sequelize = require('sequelize')
+const eraro = require('eraro')({package: 'platform.abibao.com'})
 
 const AnswerModel = require('./../../data/answers/model')
 
@@ -56,7 +57,7 @@ class Service {
         name: 'answerGetRandomEHOPAnswer',
         error
       })
-      return Promise.reject(error)
+      return Promise.reject(eraro(error))
     })
   }
 }

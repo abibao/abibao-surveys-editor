@@ -2,6 +2,7 @@ const Promise = require('bluebird')
 const auth = require('feathers-authentication')
 const permissions = require('feathers-permissions')
 const rp = require('request-promise')
+const eraro = require('eraro')({package: 'platform.abibao.com'})
 
 class Service {
   setup (app, path) {
@@ -15,7 +16,9 @@ class Service {
       body: params,
       json: true
     }
-    return rp(opts).then(Promise.resolve).catch(Promise.reject)
+    return rp(opts).then(Promise.resolve).catch((error) => {
+      return Promise.reject(eraro(error))
+    })
   }
 }
 
