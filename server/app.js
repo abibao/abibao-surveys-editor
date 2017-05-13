@@ -117,12 +117,4 @@ app.service('users').create({
 }).then(user => {
 }).catch(console.error)
 
-app.service('authentication').hooks({
-  before: {
-    create: [
-      auth.hooks.authenticate(['jwt', 'local'])
-    ]
-  }
-})
-
 module.exports = app

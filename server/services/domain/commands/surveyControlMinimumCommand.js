@@ -1,6 +1,5 @@
 const Promise = require('bluebird')
 const auth = require('feathers-authentication')
-const permissions = require('feathers-permissions')
 const eraro = require('eraro')({package: 'platform.abibao.com'})
 
 class Service {
@@ -65,16 +64,11 @@ class Service {
 
 module.exports = function () {
   const app = this
-  const options = {
-    service: 'users'
-  }
   app.use('command/surveyControlMinimum', new Service())
   const service = app.service('command/surveyControlMinimum')
   service.before({
     create: [
-      auth.hooks.authenticate('jwt'),
-      permissions.hooks.checkPermissions(options),
-      permissions.hooks.isPermitted()
+      auth.hooks.authenticate('jwt')
     ]
   })
 }
