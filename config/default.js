@@ -22,9 +22,9 @@ module.exports = {
   postgres: {
     host: nconf.get('ABIBAO_POSTGRES_HOST') || 'localhost',
     port: nconf.get('ABIBAO_POSTGRES_PORT') || 5432,
-    database: nconf.get('ABIBAO_POSTGRES_DB') || 'circle_test',
-    username: nconf.get('ABIBAO_POSTGRES_USER') || 'ubuntu',
-    password: nconf.get('ABIBAO_POSTGRES_PASSWORD') || '',
+    database: nconf.get('ABIBAO_POSTGRES_DB') || 'infra',
+    username: nconf.get('ABIBAO_POSTGRES_USER') || 'infra',
+    password: nconf.get('ABIBAO_POSTGRES_PASSWORD') || 'infra',
     force: false
   },
   rabbitmq: {
