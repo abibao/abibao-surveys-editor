@@ -6,8 +6,8 @@ machine:
   services:
     - docker
   pre:
-    - sudo service mysql stop
-    - sudo service postgres stop
+    - sudo service mysql stop; sleep 5
+    - sudo service postgresql stop; sleep 5
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
     - sudo pip install docker-compose
 dependencies:
