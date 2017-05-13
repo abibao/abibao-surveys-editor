@@ -1,13 +1,17 @@
+version: '2'
+
 services:
 
   couchdb:
     image: "library/couchdb:1.6"
+    privileged: true
     environment:
       COUCHDB_USER: "infra"
       COUCHDB_PASSWORD: "infra"
 
   postgres:
     image: "library/postgres:9.5-alpine"
+    privileged: true
     environment:
       POSTGRES_USER: "infra"
       POSTGRES_PASSWORD: "infra"
@@ -15,6 +19,7 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.6-management-alpine
+    privileged: true
     environment:
       RABBITMQ_DEFAULT_USER: "guest"
       RABBITMQ_DEFAULT_PASS: "guest"
