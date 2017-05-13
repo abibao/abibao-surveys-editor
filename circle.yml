@@ -13,7 +13,7 @@ dependencies:
     - node_modules
 test:
   pre:
-    - docker-compose up -f ./docker-compose-circle.yml -d
+    - docker-compose -f ./docker-compose-circle.yml up -d
   override:
     - npm install
     - npm run build
