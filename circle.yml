@@ -8,8 +8,8 @@ machine:
   pre:
     - sudo service mysql stop; sleep 5
     - sudo service postgresql stop; sleep 5
-    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
-    - sudo pip install docker-compose==1.11.2
+    - sudo pip install docker-compose==1.13.0
+    - docker-compose --version
 dependencies:
   cache_directories:
     - node_modules
