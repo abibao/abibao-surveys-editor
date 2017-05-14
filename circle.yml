@@ -6,8 +6,6 @@ machine:
   services:
     - docker
   pre:
-    - sudo service mysql stop; sleep 5
-    - sudo service postgresql stop; sleep 5
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
     - docker --version
 dependencies:
@@ -18,6 +16,8 @@ dependencies:
     - node_modules
 test:
   pre:
+    - sudo service mysql stop; sleep 5
+    - sudo service postgresql stop; sleep 5
     - docker-compose -f docker-compose-circle.yml up -d
   override:
     - npm install
