@@ -1,4 +1,5 @@
 const Promise = require('bluebird')
+const hooks = require('../hooks')
 const eraro = require('eraro')({package: 'platform.abibao.com'})
 
 class Service {
@@ -136,9 +137,8 @@ module.exports = function () {
   const app = this
   app.use('command/individualAffectSurvey', new Service())
   const service = app.service('command/individualAffectSurvey')
-  service.before({
-    create: []
-  })
+  service.before(hooks.before)
+  service.after(hooks.after)
 }
 
 module.exports.Service = Service

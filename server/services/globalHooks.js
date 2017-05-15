@@ -17,9 +17,3 @@ module.exports.urn = function () {
     return hook
   }
 }
-
-module.exports.hasRoles = function (roles) {
-  return function (hook) {
-    return hook
-  }
-}

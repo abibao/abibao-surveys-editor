@@ -1,7 +1,17 @@
+const auth = require('feathers-authentication')
 const local = require('feathers-authentication-local')
+const hooks = require('feathers-authentication-hooks')
 
 exports.before = {
-  all: [],
+  all: [
+    auth.hooks.authenticate('jwt'),
+    hooks.restrictToAuthenticated(),
+    hooks.restrictToRoles({
+      roles: ['admin'],
+      fieldName: 'permissions',
+      idField: 'id'
+    })
+  ],
   find: [],
   get: [],
   create: [

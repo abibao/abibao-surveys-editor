@@ -1,5 +1,5 @@
 const memory = require('feathers-memory')
-const hooks = require('./hooks')
+const hooks = require('../hooks')
 
 module.exports = function () {
   const app = this

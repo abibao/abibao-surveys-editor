@@ -83,7 +83,7 @@ app.use(compress())
 app.service('users').create({
   email: app.get('accounts').users.super.email,
   password: app.get('accounts').users.super.password,
-  roles: app.get('accounts').users.super.roles
+  permissions: app.get('accounts').users.super.permissions
 }).then(user => {
 }).catch(console.error)
 
@@ -91,7 +91,7 @@ app.service('users').create({
 app.service('users').create({
   email: app.get('accounts').users.reader.email,
   password: app.get('accounts').users.reader.password,
-  roles: app.get('accounts').users.reader.roles
+  permissions: app.get('accounts').users.reader.permissions
 }).then(user => {
 }).catch(console.error)
 

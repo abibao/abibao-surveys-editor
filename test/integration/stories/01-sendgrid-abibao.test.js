@@ -5,16 +5,17 @@ const chai = require('chai')
 const expect = chai.expect
 
 let token = ''
+let server = false
 
 describe('[integration] story sendgrid', function () {
   before(function (done) {
-    app.listen(app.get('port'), app.get('host'), () => {
+    server = app.listen(app.get('port'), app.get('host'), () => {
       app.bus = bus(app)
       done()
     })
   })
   after(function (done) {
-    done()
+    server.close(done)
   })
   it('should not refresh sendgrid templates because 401', (done) => {
     const opts = {
@@ -29,17 +30,19 @@ describe('[integration] story sendgrid', function () {
       done()
     })
   })
-  it('should login a administrator', (done) => {
+  it('should login as administrator', (done) => {
     const opts = {
       method: 'POST',
       uri: 'http://localhost:3000/authentication',
       body: {
+        strategy: 'local',
         email: app.get('accounts').users.super.email,
         password: app.get('accounts').users.super.password
       },
       json: true
     }
     rp(opts).then((result) => {
+      expect(result).to.have.property('accessToken')
       token = result.accessToken
       done()
     }).catch(done)
@@ -66,7 +69,7 @@ describe('[integration] story sendgrid', function () {
         authorization: token
       },
       body: {
-        email: 'gilles@abibao.com',
+        email: 'test@abibao.com',
         location: {
           origin: 'http://localhost',
           pathname: 'pathname',
