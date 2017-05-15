@@ -1,5 +1,4 @@
 const Promise = require('bluebird')
-const auth = require('feathers-authentication')
 const eraro = require('eraro')({package: 'platform.abibao.com'})
 
 class Service {
@@ -138,9 +137,7 @@ module.exports = function () {
   app.use('command/individualAffectSurvey', new Service())
   const service = app.service('command/individualAffectSurvey')
   service.before({
-    create: [
-      auth.hooks.authenticate('jwt')
-    ]
+    create: []
   })
 }
 

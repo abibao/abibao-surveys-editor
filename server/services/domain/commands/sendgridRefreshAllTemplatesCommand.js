@@ -1,5 +1,4 @@
 const Promise = require('bluebird')
-const auth = require('feathers-authentication')
 const _ = require('lodash')
 const eraro = require('eraro')({package: 'platform.abibao.com'})
 
@@ -57,9 +56,7 @@ module.exports = function () {
   app.use('command/sendgridRefreshAllTemplates', new Service())
   const service = app.service('command/sendgridRefreshAllTemplates')
   service.before({
-    create: [
-      auth.hooks.authenticate('jwt')
-    ]
+    create: []
   })
 }
 

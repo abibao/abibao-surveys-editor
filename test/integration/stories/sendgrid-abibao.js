@@ -76,7 +76,6 @@ describe('[integration] story sendgrid', function () {
       json: true
     }
     rp(opts).then((result) => {
-      console.log(result)
       expect(result).to.have.property('connected')
       done()
     }).catch(done)

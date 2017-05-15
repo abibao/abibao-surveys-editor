@@ -7,9 +7,6 @@ const compress = require('compression')
 const feathers = require('feathers')
 const socketio = require('feathers-socketio')
 const configuration = require('feathers-configuration')
-const auth = require('feathers-authentication')
-const local = require('feathers-authentication-local')
-const jwt = require('feathers-authentication-jwt')
 const hooks = require('feathers-hooks')
 const rest = require('feathers-rest')
 const logger = require('feathers-logger')
@@ -24,6 +21,7 @@ const blobService = require('feathers-blob')
 const fs = require('fs-blob-store')
 const blobStorage = fs(dirpathUpload)
 
+const authentication = require('./authentication')
 const app = feathers()
 
 // streams of loggers
@@ -75,27 +73,9 @@ app.use(compress())
   .configure(rest())
   .configure(socketio())
   .configure(hooks())
-  // Configure feathers-authentication
-  .configure(auth({
-    secret: app.get('auth').secret,
-    cookie: {
-      enabled: app.get('auth').cookie.enabled,
-      name: app.get('auth').cookie.name,
-      secure: true
-    },
-    jwt: {
-      audience: 'https://platform.abibao.com',
-      issuer: 'platform.abibao.com',
-      expiresIn: '1d'
-    },
-    session: true,
-    successRedirect: false,
-    failureRedirect: false
-  }))
-  .configure(jwt())
-  .configure(local())
   .use('/uploads', blobService({Model: blobStorage}))
   // Configure services
+  .configure(authentication)
   .configure(services)
   .configure(middlewares)
 
@@ -103,7 +83,7 @@ app.use(compress())
 app.service('users').create({
   email: app.get('accounts').users.super.email,
   password: app.get('accounts').users.super.password,
-  permissions: ['*']
+  roles: app.get('accounts').users.super.roles
 }).then(user => {
 }).catch(console.error)
 
@@ -111,9 +91,7 @@ app.service('users').create({
 app.service('users').create({
   email: app.get('accounts').users.reader.email,
   password: app.get('accounts').users.reader.password,
-  permissions: [
-    '*:create'
-  ]
+  roles: app.get('accounts').users.reader.roles
 }).then(user => {
 }).catch(console.error)
 

@@ -1,5 +1,4 @@
 const Promise = require('bluebird')
-const auth = require('feathers-authentication')
 const rp = require('request-promise')
 const eraro = require('eraro')({package: 'platform.abibao.com'})
 
@@ -26,9 +25,7 @@ module.exports = function () {
   app.use('command/postOnSlackWithWebhook', new Service())
   const service = app.service('command/postOnSlackWithWebhook')
   service.before({
-    create: [
-      auth.hooks.authenticate('jwt')
-    ]
+    create: []
   })
 }
 

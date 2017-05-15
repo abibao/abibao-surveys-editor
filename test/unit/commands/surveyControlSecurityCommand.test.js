@@ -76,8 +76,6 @@ describe('[unit] command surveyControlSecurity', function () {
       expect(result).to.have.property('connected').and.equal(false)
       expect(result).to.have.property('urn').and.equal('urn:individual:test')
       done()
-    }).catch((error) => {
-      console.log(error)
-    })
+    }).catch(done)
   })
 })

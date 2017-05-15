@@ -1,10 +1,7 @@
-const auth = require('feathers-authentication')
 const uuid = require('../../globalHooks').uuid
 
 exports.before = {
-  all: [
-    auth.hooks.authenticate('jwt')
-  ],
+  all: [],
   find: [],
   get: [],
   create: [],
