@@ -1,4 +1,3 @@
-const uuid = require('../globalHooks').uuid
 const auth = require('feathers-authentication')
 const hooks = require('feathers-authentication-hooks')
 
@@ -24,9 +23,7 @@ exports.after = {
   all: [],
   find: [],
   get: [],
-  create: [
-    uuid()
-  ],
+  create: [],
   update: [],
   patch: [],
   remove: []

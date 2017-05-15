@@ -96,7 +96,7 @@
     "sinon": "2.2.0",
     "snazzy": "7.0.0",
     "standard": "10.0.2",
-    "survey-react": "0.12.14"
+    "survey-react": "0.12.11"
   },
   "standard": {
     "globals": [

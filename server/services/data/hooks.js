@@ -14,7 +14,9 @@ exports.before = {
   ],
   find: [],
   get: [],
-  create: [],
+  create: [
+    uuid()
+  ],
   update: [],
   patch: [],
   remove: []
@@ -24,9 +26,7 @@ exports.after = {
   all: [],
   find: [],
   get: [],
-  create: [
-    uuid()
-  ],
+  create: [],
   update: [],
   patch: [],
   remove: []

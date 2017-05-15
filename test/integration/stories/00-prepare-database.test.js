@@ -128,15 +128,14 @@ describe('[integration] story prepare database', function () {
         authorization: token
       },
       body: {
-        email: 'test@abibao.com',
-        urn: 'urn:individual:test'
+        email: 'test@abibao.com'
       },
       json: true
     }
     rp(opts).then((result) => {
       expect(result).to.have.property('id')
       expect(result).to.have.property('email').to.equal('test@abibao.com')
-      expect(result).to.have.property('urn').to.equal('urn:individual:test')
+      expect(result).to.have.property('urn')
       done()
     }).catch(done)
   })
