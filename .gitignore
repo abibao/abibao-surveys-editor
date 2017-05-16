@@ -10,3 +10,4 @@ volumes
 build
 *.log
 .queues
+docker/portainer

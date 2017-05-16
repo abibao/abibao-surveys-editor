@@ -1,14 +1,20 @@
 const Promise = require('bluebird')
-const auth = require('feathers-authentication')
-const permissions = require('feathers-permissions')
+const hooks = require('../hooks')
+const eraro = require('eraro')({package: 'platform.abibao.com'})
 
 class Service {
   setup (app, path) {
     this.app = app
   }
-  create (params) {
+  create (data) {
     const app = this.app
     const starttime = new Date()
+    if (!data.individual) {
+      return Promise.reject(eraro('ERROR_PARAMS_INDIVIDUAL_MANDATORY'))
+    }
+    if (!data.params) {
+      return Promise.reject(eraro('ERROR_PARAMS_OTHERS_MANDATORY'))
+    }
     return app.service('api/campaigns').find({query: {
       position: 1,
       company: 'Abibao'
@@ -19,9 +25,9 @@ class Service {
     })
     .then((result) => {
       return app.service('command/individualAffectSurvey').create({
-        individual: params.individual,
+        individual: data.individual,
         campaign: result.id,
-        params: params.params
+        params: data.params
       })
     })
     .then((result) => {
@@ -31,7 +37,7 @@ class Service {
         exectime: endtime - starttime,
         type: 'command',
         name: 'surveyControlMinimum',
-        params
+        data
       })
       if (result.campaign.complete === true) {
         return Promise.resolve()
@@ -51,25 +57,17 @@ class Service {
       if (error.code === 'ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE') {
         return Promise.resolve()
       }
-      return Promise.reject(error)
+      return Promise.reject(eraro(error))
     })
   }
 }
 
 module.exports = function () {
   const app = this
-  const options = {
-    service: 'users'
-  }
   app.use('command/surveyControlMinimum', new Service())
   const service = app.service('command/surveyControlMinimum')
-  service.before({
-    create: [
-      auth.hooks.authenticate('jwt'),
-      permissions.hooks.checkPermissions(options),
-      permissions.hooks.isPermitted()
-    ]
-  })
+  service.before(hooks.before)
+  service.after(hooks.after)
 }
 
 module.exports.Service = Service

@@ -1,5 +1,6 @@
 const Promise = require('bluebird')
 const Sequelize = require('sequelize')
+const eraro = require('eraro')({package: 'platform.abibao.com'})
 
 const AnswerModel = require('./../../data/answers/model')
 
@@ -14,6 +15,9 @@ class Service {
   find (params) {
     const app = this.app
     const starttime = new Date()
+    if (!params.individual) {
+      return Promise.reject(eraro('ERROR_PARAMS_INDIVIDUAL_MANDATORY'))
+    }
     const Answer = AnswerModel(app)
     return Answer.findAll({
       where: { 'campaign_id': params.campaign, question: 'AGENCEDURABLE_EHOP_IDEA', individual: { $not: params.individual } },
@@ -56,7 +60,7 @@ class Service {
         name: 'answerGetRandomEHOPAnswer',
         error
       })
-      return Promise.reject(error)
+      return Promise.reject(eraro(error))
     })
   }
 }
@@ -65,3 +69,5 @@ module.exports = function () {
   const app = this
   app.use('query/answerGetRandomEHOPAnswer', new Service())
 }
+
+module.exports.Service = Service

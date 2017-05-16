@@ -1,12 +1,15 @@
 const auth = require('feathers-authentication')
-const permissions = require('feathers-permissions')
-const uuid = require('../../globalHooks').uuid
+const hooks = require('feathers-authentication-hooks')
 
 exports.before = {
   all: [
     auth.hooks.authenticate('jwt'),
-    permissions.hooks.checkPermissions({ service: 'users' }),
-    permissions.hooks.isPermitted()
+    hooks.restrictToAuthenticated(),
+    hooks.restrictToRoles({
+      roles: ['admin', 'reader'],
+      fieldName: 'permissions',
+      idField: 'id'
+    })
   ],
   find: [],
   get: [],
@@ -20,9 +23,7 @@ exports.after = {
   all: [],
   find: [],
   get: [],
-  create: [
-    uuid()
-  ],
+  create: [],
   update: [],
   patch: [],
   remove: []

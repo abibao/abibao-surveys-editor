@@ -49,7 +49,7 @@ class AdminHelpers {
       })
   }
   connect (client) {
-    console.log('AdminHelpers', 'connect', client.io.id)
+    console.log('AdminHelpers', 'client.io.id', client.io.id)
     this.context.setState({
       client,
       socket: client.io.id,
@@ -68,27 +68,30 @@ class AdminHelpers {
           visible: true,
           message: 'Authentification acceptée...'
         }})
-        console.log('...', 'response')
+        console.log('...', 'token', response.accessToken)
         this.context.setState({token: response.accessToken})
         return this.context.state.client.passport.verifyJWT(response.accessToken)
       })
-      .then(passport => {
-        let timestamp = Date.now() / 1000
-        console.log('...', 'passport', passport.exp - timestamp)
+      .then(payload => {
+        console.log('...', 'jwt payload', payload)
+        return this.context.state.client.service('users').get(payload.userId)
+      })
+      .then(user => {
+        this.context.state.client.set('user', user)
+        console.log('...', 'user', this.context.state.client.get('user'))
+        return true
+      })
+      .then(() => {
         console.log('...', 'state.initialized', this.context.state.initialized)
-        if (passport.exp < Date.now() / 1000) {
-          window.location = window.location.origin + '/admin/login'
+        if (!window.location.pathname.includes('admin/login')) {
+          AdminActions.applicationInitialize()
         } else {
-          if (!window.location.pathname.includes('admin/login')) {
-            AdminActions.applicationInitialize()
-          } else {
-            window.location = window.location.origin + '/admin/campaigns'
-          }
+          window.location = window.location.origin + '/admin/campaigns'
         }
       })
       .catch((error) => {
         console.error('...', error)
-        if (error.toString().includes('NotAuthenticated')) {
+        if (error.name === 'NotAuthenticated') {
           console.log('...', 'no jwt token found, now use strategy local')
           if (!window.location.pathname.includes('admin/login')) {
             window.location = window.location.origin + '/admin/login'
@@ -119,6 +122,7 @@ class AdminHelpers {
       visible: true,
       message: 'Chargement des data en cours...'
     }})
+    console.log('...', this.context.state.token)
     this.context.state.client.service('api/campaigns').find({
       query: {
         $sort: {company: 1, position: 1}
@@ -184,7 +188,7 @@ class AdminHelpers {
   }
   refreshTemplates () {
     console.log('AdminHelpers', 'refreshTemplates')
-    this.context.state.client.service('command/sendgridRefreshAllTemplates').find().then((result) => {
+    this.context.state.client.service('command/sendgridRefreshAllTemplates').create({}).then((result) => {
       console.log('...', result)
     }).catch(console.error)
   }

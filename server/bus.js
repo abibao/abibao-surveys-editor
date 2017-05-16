@@ -12,7 +12,6 @@ module.exports = (app) => {
   bus.listen('BUS_EVENT_BATCH_EMAILING_SENDGRID', require('./events/batchEmailingSendgridEvent'))
   // online and ready
   bus.on('ready', () => {
-    console.log('bus has just started')
     bus.publish('BUS_EVENT_IS_ALIVE', {
       name: 'abibao-platform-server'
     })

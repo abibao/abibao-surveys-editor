@@ -1,6 +1,5 @@
 const Promise = require('bluebird')
-const auth = require('feathers-authentication')
-const permissions = require('feathers-permissions')
+const hooks = require('../hooks')
 const eraro = require('eraro')({package: 'platform.abibao.com'})
 
 class Service {
@@ -23,12 +22,8 @@ class Service {
     return app.service('api/campaigns').get(params.campaign)
       // check if campaign exists in database
       .then((result) => {
-        if (result.code === 404) {
-          throw eraro('ERROR_CAMPAIGN_NOT_FOUND')
-        } else {
-          campaign = result.dataValues
-          return true
-        }
+        campaign = result
+        return true
       })
       // is individual already in our database if reader = abibao
       .then(() => {
@@ -133,25 +128,17 @@ class Service {
           name: 'individualAffectSurvey',
           error
         })
-        return Promise.reject(error)
+        return Promise.reject(eraro(error))
       })
   }
 }
 
 module.exports = function () {
   const app = this
-  const options = {
-    service: 'users'
-  }
   app.use('command/individualAffectSurvey', new Service())
   const service = app.service('command/individualAffectSurvey')
-  service.before({
-    create: [
-      auth.hooks.authenticate('jwt'),
-      permissions.hooks.checkPermissions(options),
-      permissions.hooks.isPermitted()
-    ]
-  })
+  service.before(hooks.before)
+  service.after(hooks.after)
 }
 
 module.exports.Service = Service
