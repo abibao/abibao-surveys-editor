@@ -3,6 +3,7 @@
 // react
 import React from 'react'
 import Reflux from 'reflux'
+import createReactClass from 'create-react-class'
 
 // semantic
 import { Container, Segment } from 'semantic-ui-react'
@@ -13,7 +14,7 @@ import AppBar from './components/AppBar'
 import AdminStore from './libs/Store'
 import AdminActions from './libs/Actions'
 
-const IFrameComponent = React.createClass({
+const IFrameComponent = createReactClass({
   render: function () {
     let Iframe = this.props.iframe
     return (

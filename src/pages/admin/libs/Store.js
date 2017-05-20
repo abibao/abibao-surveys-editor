@@ -104,4 +104,4 @@ class AdminStore extends Reflux.Store {
   }
 }
 
-module.exports = AdminStore
+export default AdminStore
