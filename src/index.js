@@ -22,6 +22,8 @@ import Campaigns from './pages/admin/Campaigns'
 import Mailings from './pages/admin/Mailings'
 import Editor from './pages/admin/Editor'
 
+window.Raven.config('https://f46e516689454c93a343bcb58e253bf7@sentry.io/169530').install()
+
 const routerAdmin = (
   <Router history={browserHistory}>
     <Route path="admin/login" component={Login} />

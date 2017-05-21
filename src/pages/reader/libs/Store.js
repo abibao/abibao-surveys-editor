@@ -78,4 +78,4 @@ class ReaderStore extends Reflux.Store {
   }
 }
 
-module.exports = ReaderStore
+export default ReaderStore

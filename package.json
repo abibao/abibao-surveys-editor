@@ -64,6 +64,7 @@
     "chai": "3.5.0",
     "codacy-coverage": "2.0.2",
     "colors": "1.1.2",
+    "create-react-class": "^15.5.3",
     "cucumber": "2.1.0",
     "debug": "2.6.6",
     "enzyme": "2.8.2",

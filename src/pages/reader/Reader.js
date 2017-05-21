@@ -77,7 +77,7 @@ class Reader extends Reflux.Component {
         <form onSubmit={this.handleSubmit} className="ui fluid container">
           <div className="abibao-reader">
             <div className="abibao-panel-heading">
-              <h3 />
+              <h3><span /></h3>
             </div>
             <div className="abibao-panel-body">
               <div style={{background: '#e7ebee'}}>
