@@ -19,6 +19,7 @@ test:
     - sudo service mysql stop; sleep 20
     - sudo service postgresql stop; sleep 20
     - sudo service couchdb stop; sleep 20
+    - docker-compose -f docker-compose-circle.yml down
     - docker-compose -f docker-compose-circle.yml up -d
   override:
     - npm install
