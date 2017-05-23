@@ -1,3 +1,5 @@
+/* eslint jsx-quotes: ["error", "prefer-double"] */
+
 // react
 import React from 'react'
 import Reflux from 'reflux'
@@ -5,6 +7,9 @@ import * as Survey from 'survey-react'
 
 // actions
 import ReaderActions from './../../../libs/Actions'
+
+import styles from './styles'
+import './screen.css'
 
 class SurveyReader extends Reflux.Component {
   componentDidMount () {
@@ -41,6 +46,11 @@ class SurveyReader extends Reflux.Component {
         console.error(error)
       })
     }
+    window.showRandomAnswer = function (e) {
+      window.$('.ui.sidebar')
+        .sidebar('setting', 'transition', 'overlay')
+        .sidebar('toggle')
+    }
     window.handleGetRandomAnswer = this.handleGetRandomAnswer
   }
   render () {
@@ -49,7 +59,14 @@ class SurveyReader extends Reflux.Component {
     }
     let data = new Survey.Model(this.props.survey.campaign.data)
     return (
-      <Survey.Survey onComplete={this.surveyComplete} onValidateQuestion={this.surveyValidateQuestion} model={data} />
+      <div>
+        <div className="ui sidebar">
+          PLOP
+        </div>
+        <div className="pusher">
+          <Survey.Survey onComplete={this.surveyComplete} onValidateQuestion={this.surveyValidateQuestion} model={data} css={styles} />
+        </div>
+      </div>
     )
   }
 }
