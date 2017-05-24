@@ -15,12 +15,18 @@ class Service {
   find (params) {
     const app = this.app
     const starttime = new Date()
-    if (!params.individual) {
+    if (!params.query.question) {
+      return Promise.reject(eraro('ERROR_PARAMS_QUESTION_MANDATORY'))
+    }
+    if (!params.query.individual) {
       return Promise.reject(eraro('ERROR_PARAMS_INDIVIDUAL_MANDATORY'))
+    }
+    if (!params.query.campaign) {
+      return Promise.reject(eraro('ERROR_PARAMS_CAMPAIGN_MANDATORY'))
     }
     const Answer = AnswerModel(app)
     return Answer.findAll({
-      where: { 'campaign_id': params.campaign, question: 'AGENCEDURABLE_EHOP_IDEA', individual: { $not: params.individual } },
+      where: { 'campaign_id': params.query.campaign, question: params.query.question, individual: { $not: params.query.individual } },
       attributes: [[Sequelize.fn('COUNT', Sequelize.col('question')), 'count']]
     }).then((result) => {
       let count = parseInt(result[0].dataValues.count)
@@ -34,7 +40,7 @@ class Service {
       } else {
         let offset = getRandomInt(0, count - 1)
         return Answer.findAll({
-          where: { 'campaign_id': params.campaign, question: 'AGENCEDURABLE_EHOP_IDEA', individual: { $not: params.individual } },
+          where: { 'campaign_id': params.query.campaign, question: params.query.question, individual: { $not: params.query.individual } },
           offset,
           limit: 1
         })
@@ -46,10 +52,13 @@ class Service {
         env: app.get('env'),
         exectime: endtime - starttime,
         type: 'query',
-        name: 'answerGetRandomEHOPAnswer',
+        name: 'answerGetRandomAnswer',
         params
       })
-      return Promise.resolve(result)
+      if (result.length) {
+        return Promise.resolve(result[0])
+      }
+      return Promise.resolve({})
     })
     .catch((error) => {
       const endtime = new Date()
@@ -57,7 +66,7 @@ class Service {
         env: app.get('env'),
         exectime: endtime - starttime,
         type: 'query',
-        name: 'answerGetRandomEHOPAnswer',
+        name: 'answerGetRandomAnswer',
         error
       })
       return Promise.reject(eraro(error))
@@ -67,7 +76,7 @@ class Service {
 
 module.exports = function () {
   const app = this
-  app.use('query/answerGetRandomEHOPAnswer', new Service())
+  app.use('query/answerGetRandomAnswer', new Service())
 }
 
 module.exports.Service = Service

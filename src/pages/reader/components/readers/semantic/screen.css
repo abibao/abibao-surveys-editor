@@ -1,5 +1,6 @@
 .semantic-reader * {
   font-family: 'Lato', sans-serif;
+  color: #101010;
 }
 
 .semantic-reader {
@@ -26,4 +27,17 @@
   border-radius: 0.28571429rem;
   border: 1px solid rgba(34, 36, 38, 0.15);
   width: 100%;
+}
+
+.semantic-reader .ui.inverted.green.segment {
+  background: #f0f0f0 !important;
+}
+
+.semantic-reader .ui.padded.segment {
+  padding: 0.5em;
+}
+
+.semantic-reader .title {
+  padding: 0;
+  margin: 0;
 }
