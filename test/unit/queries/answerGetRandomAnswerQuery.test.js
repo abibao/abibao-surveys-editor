@@ -3,7 +3,7 @@ const feathers = require('feathers')
 const chai = require('chai')
 const expect = chai.expect
 
-const Service = require('../../../server/services/domain/queries/answerGetRandomEHOPAnswerQuery').Service
+const Service = require('../../../server/services/domain/queries/answerGetRandomAnswerQuery').Service
 
 const app = feathers()
 
@@ -45,9 +45,9 @@ app.sequelize = {
     }
   }
 }
-app.use('query/answerGetRandomEHOPAnswer', new Service())
+app.use('query/answerGetRandomAnswer', new Service())
 
-describe('[unit] query answerGetRandomEHOPAnswer', function () {
+describe('[unit] query answerGetRandomAnswer', function () {
   before(function (done) {
     this.server = app.listen(3030)
     this.server.once('listening', () => done())
@@ -55,8 +55,17 @@ describe('[unit] query answerGetRandomEHOPAnswer', function () {
   after(function (done) {
     this.server.close(done)
   })
+  it('should fail because question is mandatory', (done) => {
+    app.service('query/answerGetRandomAnswer').find({query: {}}).then(() => {
+      done('THEN_SHOULD_BE_NOT_INVOKE')
+    }).catch((error) => {
+      expect(error).to.have.property('eraro').and.equal(true)
+      expect(error).to.have.property('code').and.equal('ERROR_PARAMS_QUESTION_MANDATORY')
+      done()
+    })
+  })
   it('should fail because individual is mandatory', (done) => {
-    app.service('query/answerGetRandomEHOPAnswer').find({}).then(() => {
+    app.service('query/answerGetRandomAnswer').find({query: {question: 'QUESTION'}}).then(() => {
       done('THEN_SHOULD_BE_NOT_INVOKE')
     }).catch((error) => {
       expect(error).to.have.property('eraro').and.equal(true)
@@ -65,7 +74,7 @@ describe('[unit] query answerGetRandomEHOPAnswer', function () {
     })
   })
   it('should fail because an error occured', (done) => {
-    app.service('query/answerGetRandomEHOPAnswer').find({individual: 'urn:individual:error'}).then(() => {
+    app.service('query/answerGetRandomAnswer').find({query: {question: 'QUESTION', campaign: 'campaign', individual: 'urn:individual:error'}}).then(() => {
       done('THEN_SHOULD_BE_NOT_INVOKE')
     }).catch((error) => {
       expect(error).to.have.property('eraro').and.equal(true)
@@ -73,15 +82,14 @@ describe('[unit] query answerGetRandomEHOPAnswer', function () {
       done()
     })
   })
-  it('should return random=false and count=0', (done) => {
-    app.service('query/answerGetRandomEHOPAnswer').find({individual: 'urn:individual:test', campaign: '000000'}).then((result) => {
-      expect(result).to.have.property('count').and.equal(0)
-      expect(result).to.have.property('random').and.equal(false)
+  it('should return an empty object', (done) => {
+    app.service('query/answerGetRandomAnswer').find({query: {question: 'QUESTION', individual: 'urn:individual:test', campaign: '000000'}}).then((result) => {
+      expect(result).not.equal(null)
       done()
     }).catch(done)
   })
   it('should return an aswer random', (done) => {
-    app.service('query/answerGetRandomEHOPAnswer').find({individual: 'urn:individual:test', campaign: '111111'}).then((result) => {
+    app.service('query/answerGetRandomAnswer').find({query: {question: 'QUESTION', individual: 'urn:individual:test', campaign: '111111'}}).then((result) => {
       done()
     }).catch(done)
   })
