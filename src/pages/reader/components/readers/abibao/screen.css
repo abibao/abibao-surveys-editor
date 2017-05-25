@@ -312,7 +312,7 @@ div.abibao-checkbox {
 }
 
 .imagepicker-item.selected {
-  border: solid #5da2c7 2px;
+  border: solid #5da2c7 4px;
 }
 
 .imagepicker-item > img {
