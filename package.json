@@ -58,7 +58,8 @@
     "serve-favicon": "2.4.2",
     "servicebus": "2.0.10",
     "servicebus-retry": "0.0.11",
-    "uuid": "3.0.1"
+    "uuid": "3.0.1",
+    "yamljs": "0.2.10"
   },
   "devDependencies": {
     "chai": "3.5.0",
