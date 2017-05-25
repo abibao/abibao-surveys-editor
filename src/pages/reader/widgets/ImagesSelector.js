@@ -1,4 +1,5 @@
 /* eslint jsx-quotes: ["error", "prefer-double"] */
+/* eslint-disable */
 
 import React from 'react'
 import { shuffle } from 'lodash'
