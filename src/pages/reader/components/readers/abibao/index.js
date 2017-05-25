@@ -11,6 +11,7 @@ import './screen.css'
 import './mobile.css'
 
 import ImagePickerWidget from './../../../widgets/ImagePicker'
+import ImagesSelectorWidget from './../../../widgets/ImagesSelector'
 
 class SurveyReader extends Reflux.Component {
   componentDidMount () {
@@ -49,7 +50,9 @@ class SurveyReader extends Reflux.Component {
       return (null)
     }
     Survey.JsonObject.metaData.addProperty('dropdown', {name: 'renderAs', default: 'standard', choices: ['standard', 'imagepicker']})
+    Survey.JsonObject.metaData.addProperty('checkbox', {name: 'renderAs', default: 'standard', choices: ['standard', 'images_selector']})
     Survey.CustomWidgetCollection.Instance.addCustomWidget(ImagePickerWidget)
+    Survey.CustomWidgetCollection.Instance.addCustomWidget(ImagesSelectorWidget)
     let data = new Survey.Model(this.props.survey.campaign.data)
     return (
       <Survey.Survey onComplete={this.surveyComplete} onValidateQuestion={this.surveyValidateQuestion} model={data} css={styles} />

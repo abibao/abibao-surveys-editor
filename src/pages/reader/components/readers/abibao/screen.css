@@ -42,11 +42,18 @@
   width: 100%;
 }
 .abibao-panel-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
   background: #5da2c7;
   padding: 20px;
   margin: 0;
+}
+
+.abibao-panel-footer input {
+  flex-basis:auto;
 }
 
 h4.abibao-page-title {
@@ -277,10 +284,6 @@ div.abibao-checkbox {
   background: #f0f0f0;
   border: solid 10px #5da2c7;
   border-radius: 100%;
-}
-
-.abibao-panel-footer .abibao-button-nav:nth-child(2) {
-  float: right;
 }
 
 .imagepicker-box {
