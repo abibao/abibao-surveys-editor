@@ -1,11 +1,17 @@
 /* eslint jsx-quotes: ["error", "prefer-double"] */
 
 import React from 'react'
+import { shuffle } from 'lodash'
 
 const ImagePickerWidget = {
   name: 'imagepicker',
+  mounted: false,
   isFit: function (question) { return question['renderAs'] === 'imagepicker' },
   render: function (question) {
+    if (this.mounted === false && question.choicesOrder === 'random') {
+      question.choicesValues = shuffle(question.choicesValues)
+    }
+    this.mounted = true
     return (
       <ul className="imagepicker-box">
         {question.choicesValues.map((item) => (
@@ -15,10 +21,6 @@ const ImagePickerWidget = {
         ))}
       </ul>
     )
-  },
-  afterRender: function (question, el) {
-  },
-  willUnmount: function (question, el) {
   }
 }
 

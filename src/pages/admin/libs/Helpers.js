@@ -91,6 +91,10 @@ class AdminHelpers {
       })
       .catch((error) => {
         console.error('...', error)
+        if (error.name === 'Forbidden') {
+          // this.context.state.client.logout()
+          return AdminActions.networkLogout()
+        }
         if (error.name === 'NotAuthenticated') {
           console.log('...', 'no jwt token found, now use strategy local')
           if (!window.location.pathname.includes('admin/login')) {
@@ -113,8 +117,12 @@ class AdminHelpers {
       visible: true,
       message: 'Déconnexion en cours...'
     }})
-    // window.localStorage.removeItem('rememberMe')
-    window.location = window.location.origin + '/admin/login'
+    this.context.state.client.logout().then(() => {
+      console.log('AdminHelpers', 'disconnect', 'client logout done')
+      if (!window.location.pathname.includes('admin/login')) {
+        window.location = window.location.origin + '/admin/login'
+      }
+    })
   }
   initialize () {
     console.log('AdminHelpers', 'initialize')
@@ -152,10 +160,6 @@ class AdminHelpers {
     }).catch((error) => {
       console.error(error)
       this.context.setState({token: false, loader: {visible: true, message: error.toString()}})
-      if (!window.location.pathname.includes('admin/login')) {
-        // window.localStorage.removeItem('rememberMe')
-        // window.location = window.location.origin + '/admin/login'
-      }
     })
   }
   creationComplete () {
