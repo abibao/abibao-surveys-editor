@@ -68,7 +68,7 @@ class Reader extends Reflux.Component {
     this.handleSubmit = (e) => {
       console.log('Reader', 'handleSubmit', this.email)
       e.preventDefault()
-      ReaderActions.controlSecurity(this.email)
+      ReaderActions.controlSecurity(this.email, this.props.params.id)
     }
   }
   render () {

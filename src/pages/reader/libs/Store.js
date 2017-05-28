@@ -64,9 +64,9 @@ class ReaderStore extends Reflux.Store {
     console.log('ReaderStore', 'onControlMinimum')
     this.helpers.controlMinimum(data)
   }
-  controlSecurity (email) {
+  controlSecurity (email, campaign) {
     console.log('ReaderStore', 'onSurveyControlSecurity', email)
-    this.helpers.controlSecurity(email)
+    this.helpers.controlSecurity(email, campaign)
   }
   onAnswerSurvey (data) {
     console.log('ReaderStore', 'onAnswerSurvey')

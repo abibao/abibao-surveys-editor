@@ -21,7 +21,11 @@ const ImagesSelectorWidget = {
           result.push(item.value)
         }
       })
-      question.value = result
+      if (result.length === 0) {
+        question.value = undefined
+      } else {
+        question.value = result
+      }
       this.react.setState({reload: true})
     }
   },

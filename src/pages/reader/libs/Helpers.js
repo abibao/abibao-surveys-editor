@@ -82,10 +82,10 @@ class ReaderHelpers {
       this.context.setState({loader: {visible: false, message: ''}})
     })
   }
-  controlSecurity (email) {
-    console.log('ReaderHelpers', 'controlSecurity')
+  controlSecurity (email, campaign) {
+    console.log('ReaderHelpers', 'controlSecurity', email)
     this.context.setState({loader: {visible: true, message: 'Contrôle (2) en cours...'}})
-    this.context.state.client.service('command/surveyControlSecurity').create({email, location: window.location}).then((result) => {
+    this.context.state.client.service('command/surveyControlSecurity').create({email, campaign, location: window.location}).then((result) => {
       console.log('...', result)
       if (result.connected === true) {
         console.log('connected', result.connected)
