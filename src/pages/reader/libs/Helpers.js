@@ -115,7 +115,8 @@ class ReaderHelpers {
       })
       .catch((error) => {
         if (error.toString().includes('ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE')) {
-          return this.context.setState({loader: {visible: true, message: 'Sondage terminé !'}})
+          console.log(data)
+          return this.context.setState({loader: {visible: true, message: 'ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE'}})
         }
         if (error.toString().includes('ERROR_INDIVIDUAL_CONTROL_SECURITY')) {
           console.error('we need to ask email')

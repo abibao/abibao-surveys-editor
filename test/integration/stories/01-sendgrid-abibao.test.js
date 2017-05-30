@@ -70,6 +70,7 @@ describe('[integration] story sendgrid', function () {
       },
       body: {
         email: 'test@abibao.com',
+        campaign: 'urn:campaign:tests',
         location: {
           origin: 'http://localhost',
           pathname: 'pathname',
