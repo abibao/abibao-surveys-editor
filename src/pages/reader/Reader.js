@@ -17,6 +17,9 @@ import { Container, Loader, Segment, Input, Message } from 'semantic-ui-react'
 import ReaderStore from './libs/Store'
 import ReaderActions from './libs/Actions'
 
+import 'github-markdown-css'
+import './markdown.css'
+
 class Reader extends Reflux.Component {
   componentDidMount () {
     console.log('Reader', 'componentDidMount')
@@ -74,6 +77,10 @@ class Reader extends Reflux.Component {
   }
   render () {
     console.log('Reader', 'render', this.state.selectedSurvey)
+    if (this.state.loader.message === 'ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE') {
+      ReaderActions.getScreenComplete(this.props.params.id)
+      return (<div />)
+    }
     let email = () => {
       return (
         <form onSubmit={this.handleSubmit} className="ui fluid container">
@@ -126,14 +133,11 @@ class Reader extends Reflux.Component {
         <CurrentReader survey={this.state.selectedSurvey} client={this.state.client} />
       </Container>
     )
-    if (this.state.loader.message === 'ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE') {
-      ReaderActions.getScreenComplete(this.props.params.id)
-    }
     if (this.state.screenComplete !== false) {
       return (
-        <Segment basic secondary style={{padding: '16px'}}>
-          <ReactMarkdown source={this.state.screenComplete} />
-        </Segment>
+        <div>
+          <ReactMarkdown className="markdown-body" source={this.state.screenComplete} />
+        </div>
       )
     }
     if (this.state.askEmail === true) {
