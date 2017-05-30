@@ -4,6 +4,9 @@ services:
 
   logstash:
     image: "library/logstash:5.4.0-alpine"
+    command: -f /etc/logstash/conf.d/
+    volumes:
+      - ./docker/logstash/config:/etc/logstash/conf.d
     ports:
       - "5000:5000"
 

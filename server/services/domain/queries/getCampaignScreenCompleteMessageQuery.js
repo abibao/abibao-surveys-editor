@@ -13,7 +13,6 @@ class Service {
     const Campaign = CampaignModel(app)
     return Campaign.findAll({where: {id: params.query.id}})
       .then((result) => {
-        console.log(result)
         const endtime = new Date()
         app.info({
           env: app.get('env'),
