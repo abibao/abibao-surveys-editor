@@ -127,7 +127,14 @@ class Reader extends Reflux.Component {
       </Container>
     )
     if (this.state.loader.message === 'ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE') {
-      return (<ReactMarkdown source={this.state.selectedSurvey.campaign.screen_complete} />)
+      ReaderActions.getScreenComplete(this.props.params.id)
+    }
+    if (this.state.screenComplete !== false) {
+      return (
+        <Segment basic secondary style={{padding: '16px'}}>
+          <ReactMarkdown source={this.state.screenComplete} />
+        </Segment>
+      )
     }
     if (this.state.askEmail === true) {
       return email()

@@ -137,6 +137,11 @@ class ReaderHelpers {
       }
     }).catch(console.error)
   }
+  getScreenComplete (id) {
+    this.context.state.client.service('query/getCampaignScreenCompleteMessage').find({query: {id}}).then((message) => {
+      this.context.setState({screenComplete: message, loader: {visible: false, message: '...'}})
+    }).catch(console.error)
+  }
 }
 
 export default ReaderHelpers
