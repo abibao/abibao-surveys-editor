@@ -3,6 +3,7 @@
 // react
 import React from 'react'
 import Reflux from 'reflux'
+import ReactMarkdown from 'react-markdown'
 import cookie from 'react-cookie'
 import uuid from 'uuid'
 import is from 'is_js'
@@ -68,7 +69,7 @@ class Reader extends Reflux.Component {
     this.handleSubmit = (e) => {
       console.log('Reader', 'handleSubmit', this.email)
       e.preventDefault()
-      ReaderActions.controlSecurity(this.email)
+      ReaderActions.controlSecurity(this.email, this.props.params.id)
     }
   }
   render () {
@@ -125,6 +126,16 @@ class Reader extends Reflux.Component {
         <CurrentReader survey={this.state.selectedSurvey} client={this.state.client} />
       </Container>
     )
+    if (this.state.loader.message === 'ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE') {
+      ReaderActions.getScreenComplete(this.props.params.id)
+    }
+    if (this.state.screenComplete !== false) {
+      return (
+        <Segment basic secondary style={{padding: '16px'}}>
+          <ReactMarkdown source={this.state.screenComplete} />
+        </Segment>
+      )
+    }
     if (this.state.askEmail === true) {
       return email()
     }

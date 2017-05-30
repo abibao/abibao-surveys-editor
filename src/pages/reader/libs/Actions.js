@@ -9,7 +9,8 @@ const ReaderActions = Reflux.createActions([
   'controlSecurity',
   'affectSurvey',
   'answerSurvey',
-  'completeSurvey'
+  'completeSurvey',
+  'getScreenComplete'
 ])
 
 export default ReaderActions

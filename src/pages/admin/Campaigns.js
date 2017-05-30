@@ -7,7 +7,7 @@ import Dropzone from 'react-dropzone'
 import {clone} from 'lodash'
 
 // semantic
-import { Container, Form, Segment, Input, Button, Header, Card, Image, Modal, Loader } from 'semantic-ui-react'
+import { Container, Form, Segment, Input, Button, Header, Card, Image, Modal, Loader, TextArea } from 'semantic-ui-react'
 
 // components
 import AppBar from './components/AppBar'
@@ -126,6 +126,10 @@ class Campaigns extends Reflux.Component {
                   <Input onChange={(e) => this.handleChangeInformation({key: 'reader', val: e.target.value})} defaultValue={this.state.selectedCampaign.reader} size="large" label={{ color: 'red', icon: 'asterisk' }} labelPosition="right corner" className="form" />
                   <label>Position de la campagne</label>
                   <Input onChange={(e) => this.handleChangeInformation({key: 'position', val: e.target.value})} defaultValue={this.state.selectedCampaign.position} size="large" className="form" />
+                </Form.Field>
+                <Form.Field>
+                  <label>Liste des catégories</label>
+                  <TextArea defaultValue={this.state.selectedCampaign.screen_complete} autoHeight onChange={(e) => this.handleChangeInformation({key: 'screen_complete', val: e.target.value})} placeholder="Texte si le sondage est terminé" size="large" className="form" />
                 </Form.Field>
               </Form>
             </Modal.Description>

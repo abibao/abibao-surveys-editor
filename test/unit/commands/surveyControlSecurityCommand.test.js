@@ -62,8 +62,17 @@ describe('[unit] command surveyControlSecurity', function () {
       done()
     })
   })
-  it('should fail because an error occured', (done) => {
+  it('should fail because email is mandatory', (done) => {
     app.service('command/surveyControlSecurity').create({email: 'nope@abibao.com'}).then(() => {
+      done('THEN_SHOULD_BE_NOT_INVOKE')
+    }).catch((error) => {
+      expect(error).to.have.property('eraro').and.equal(true)
+      expect(error).to.have.property('code').and.equal('ERROR_PARAMS_CAMPAIGN_MANDATORY')
+      done()
+    })
+  })
+  it('should fail because an error occured', (done) => {
+    app.service('command/surveyControlSecurity').create({email: 'nope@abibao.com', campaign: 'campaign'}).then(() => {
       done('THEN_SHOULD_BE_NOT_INVOKE')
     }).catch((error) => {
       expect(error).to.have.property('eraro').and.equal(true)
@@ -72,7 +81,7 @@ describe('[unit] command surveyControlSecurity', function () {
     })
   })
   it('should sucesss with email not in database', (done) => {
-    app.service('command/surveyControlSecurity').create({email: 'test@abibao.com'}).then((result) => {
+    app.service('command/surveyControlSecurity').create({email: 'test@abibao.com', campaign: 'campaign'}).then((result) => {
       expect(result).to.have.property('connected').and.equal(false)
       expect(result).to.have.property('urn').and.equal('urn:individual:test')
       done()

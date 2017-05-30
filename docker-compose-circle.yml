@@ -2,6 +2,11 @@ version: "2"
 
 services:
 
+  logstash:
+    image: "library/logstash:5.4.0-alpine"
+    ports:
+      - "5000:5000"
+
   couchdb:
     image: "library/couchdb:1.6"
     environment:

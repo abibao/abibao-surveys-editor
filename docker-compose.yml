@@ -9,7 +9,12 @@ services:
       - ./docker/portainer/data:/data
     ports:
       - "9000:9000"
-      
+
+  logstash:
+    image: "library/logstash:5.4.0-alpine"
+    ports:
+      - "5000:5000"
+
   couchdb:
     image: "library/couchdb:1.6"
     privileged: true
