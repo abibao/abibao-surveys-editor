@@ -1,8 +1,7 @@
 const Promise = require('bluebird')
-const auth = require('feathers-authentication')
-const permissions = require('feathers-permissions')
-const eraro = require('eraro')({package: 'platform.abibao.com'})
 const _ = require('lodash')
+const hooks = require('../hooks')
+const eraro = require('eraro')({package: 'platform.abibao.com'})
 
 class Service {
   setup (app, path) {
@@ -68,25 +67,17 @@ class Service {
         name: 'individualAnswerSurvey',
         error
       })
-      return Promise.reject(error)
+      return Promise.reject(eraro(error))
     })
   }
 }
 
 module.exports = function () {
   const app = this
-  const options = {
-    service: 'users'
-  }
   app.use('command/individualAnswerSurvey', new Service())
   const service = app.service('command/individualAnswerSurvey')
-  service.before({
-    create: [
-      auth.hooks.authenticate('jwt'),
-      permissions.hooks.checkPermissions(options),
-      permissions.hooks.isPermitted()
-    ]
-  })
+  service.before(hooks.before)
+  service.after(hooks.after)
 }
 
 module.exports.Service = Service

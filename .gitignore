@@ -10,3 +10,6 @@ volumes
 build
 *.log
 .queues
+docker/portainer
+batchs/dump.yml
+batchs/export

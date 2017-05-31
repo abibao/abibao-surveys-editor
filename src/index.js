@@ -11,6 +11,7 @@ import {Router, Route, browserHistory} from 'react-router'
 
 import 'semantic-ui-css/semantic.css'
 import './index.css'
+import $ from 'jquery'
 
 // reader
 import Reader from './pages/reader/Reader'
@@ -21,6 +22,9 @@ import Login from './pages/admin/Login'
 import Campaigns from './pages/admin/Campaigns'
 import Mailings from './pages/admin/Mailings'
 import Editor from './pages/admin/Editor'
+
+window.$ = $
+window.Raven.config('https://f46e516689454c93a343bcb58e253bf7@sentry.io/169530').install()
 
 const routerAdmin = (
   <Router history={browserHistory}>

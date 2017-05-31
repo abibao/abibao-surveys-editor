@@ -1,0 +1,36 @@
+version: "2"
+
+services:
+
+  logstash:
+    image: "library/logstash:5.4.0-alpine"
+    command: -f /etc/logstash/conf.d/
+    volumes:
+      - ./docker/logstash/config:/etc/logstash/conf.d
+    ports:
+      - "5000:5000"
+
+  couchdb:
+    image: "library/couchdb:1.6"
+    environment:
+      COUCHDB_USER: "infra"
+      COUCHDB_PASSWORD: "infra"
+    ports:
+      - "35984:5984"
+
+  postgres:
+    image: "library/postgres:9.5-alpine"
+    environment:
+      POSTGRES_USER: "infra"
+      POSTGRES_PASSWORD: "infra"
+      POSTGRES_DB: "infra"
+    ports:
+      - "35432:5432"
+
+  rabbitmq:
+    image: rabbitmq:3.6-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+    ports:
+      - "35672:5672"

@@ -17,6 +17,11 @@ module.exports = function (app) {
       allowNull: true,
       defaultValue: ''
     },
+    screen_complete: {
+      type: Sequelize.TEXT,
+      allowNull: true,
+      defaultValue: ''
+    },
     company: {
       type: Sequelize.STRING,
       allowNull: false

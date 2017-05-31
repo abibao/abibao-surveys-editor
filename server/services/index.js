@@ -18,6 +18,8 @@ const surveyControlMinimumCommand = require('./domain/commands/surveyControlMini
 const surveyControlSecurityCommand = require('./domain/commands/surveyControlSecurityCommand')
 
 // external queries
+const getCampaignScreenCompleteMessageQuery = require('./domain/queries/getCampaignScreenCompleteMessageQuery')
+const answerGetRandomAnswerQuery = require('./domain/queries/answerGetRandomAnswerQuery')
 const answerGetRandomEHOPAnswerQuery = require('./domain/queries/answerGetRandomEHOPAnswerQuery')
 
 module.exports = function () {
@@ -40,5 +42,7 @@ module.exports = function () {
   app.configure(surveyControlMinimumCommand)
   app.configure(surveyControlSecurityCommand)
 
+  app.configure(getCampaignScreenCompleteMessageQuery)
+  app.configure(answerGetRandomAnswerQuery)
   app.configure(answerGetRandomEHOPAnswerQuery)
 }

@@ -1,6 +1,4 @@
 --timeout 5000
 --use_strict
-test/mocks.js
-test/standard.test.js
 --recursive test/unit
 --recursive test/integration

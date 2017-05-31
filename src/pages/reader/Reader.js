@@ -3,6 +3,7 @@
 // react
 import React from 'react'
 import Reflux from 'reflux'
+import ReactMarkdown from 'react-markdown'
 import cookie from 'react-cookie'
 import uuid from 'uuid'
 import is from 'is_js'
@@ -15,6 +16,9 @@ import { Container, Loader, Segment, Input, Message } from 'semantic-ui-react'
 
 import ReaderStore from './libs/Store'
 import ReaderActions from './libs/Actions'
+
+import 'github-markdown-css'
+import './markdown.css'
 
 class Reader extends Reflux.Component {
   componentDidMount () {
@@ -57,7 +61,8 @@ class Reader extends Reflux.Component {
       withKeyboard: is.mobile(),
       readers: {
         abibao: Readers.AbibaoReader,
-        ehop: Readers.EHOPReader
+        ehop: Readers.EHOPReader,
+        semantic: Readers.SemanticReader
       }
     }
     this.store = ReaderStore
@@ -67,17 +72,21 @@ class Reader extends Reflux.Component {
     this.handleSubmit = (e) => {
       console.log('Reader', 'handleSubmit', this.email)
       e.preventDefault()
-      ReaderActions.controlSecurity(this.email)
+      ReaderActions.controlSecurity(this.email, this.props.params.id)
     }
   }
   render () {
     console.log('Reader', 'render', this.state.selectedSurvey)
+    if (this.state.loader.message === 'ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE') {
+      ReaderActions.getScreenComplete(this.props.params.id)
+      return (<div />)
+    }
     let email = () => {
       return (
         <form onSubmit={this.handleSubmit} className="ui fluid container">
           <div className="abibao-reader">
             <div className="abibao-panel-heading">
-              <h3 />
+              <h3><span /></h3>
             </div>
             <div className="abibao-panel-body">
               <div style={{background: '#e7ebee'}}>
@@ -124,6 +133,13 @@ class Reader extends Reflux.Component {
         <CurrentReader survey={this.state.selectedSurvey} client={this.state.client} />
       </Container>
     )
+    if (this.state.screenComplete !== false) {
+      return (
+        <div>
+          <ReactMarkdown className="markdown-body" source={this.state.screenComplete} />
+        </div>
+      )
+    }
     if (this.state.askEmail === true) {
       return email()
     }

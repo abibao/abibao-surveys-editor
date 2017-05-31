@@ -1,5 +1,5 @@
 const Service = require('feathers-sequelize')
-const hooks = require('./hooks')
+const hooks = require('../hooks')
 
 const CampaignModel = require('./../campaigns/model')
 

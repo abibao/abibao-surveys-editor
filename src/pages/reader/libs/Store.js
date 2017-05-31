@@ -16,6 +16,7 @@ class ReaderStore extends Reflux.Store {
       token: false, // Authentification jwt
       initialized: false, // application has finish loading or not ?
       selectedCampaign: false, // campaign id to load
+      screenComplete: false,
       askEmail: false, // reader in ask email mode
       passwordless: false, // message email sended
       selectedSurvey: false, // current survey to read
@@ -64,9 +65,9 @@ class ReaderStore extends Reflux.Store {
     console.log('ReaderStore', 'onControlMinimum')
     this.helpers.controlMinimum(data)
   }
-  controlSecurity (email) {
+  controlSecurity (email, campaign) {
     console.log('ReaderStore', 'onSurveyControlSecurity', email)
-    this.helpers.controlSecurity(email)
+    this.helpers.controlSecurity(email, campaign)
   }
   onAnswerSurvey (data) {
     console.log('ReaderStore', 'onAnswerSurvey')
@@ -76,6 +77,10 @@ class ReaderStore extends Reflux.Store {
     console.log('ReaderStore', 'onCompleteSurvey')
     this.helpers.completeSurvey(this.state.selectedSurvey)
   }
+  onGetScreenComplete (id) {
+    console.log('ReaderStore', 'onGetScreenComplete')
+    this.helpers.getScreenComplete(id)
+  }
 }
 
-module.exports = ReaderStore
+export default ReaderStore

@@ -20,13 +20,30 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
     <script src="//surveyjs.azureedge.net/0.12.11/survey.ko.min.js"></script>
     <script src="//surveyjs.azureedge.net/0.12.11/surveyeditor.min.js"></script>
+    <script src="widgets/imagepicker.js"></script>
+    <script src="widgets/images_selector.js"></script>
     <script type="text/javascript">
+      Survey.JsonObject.metaData.addProperty("checkbox", {name: "renderAs", default: "standard", choices: ["standard", "images_selector"]})
+      Survey.JsonObject.metaData.addProperty("dropdown", {name: "renderAs", default: "standard", choices: ["standard", "imagepicker"]})
+      Survey.CustomWidgetCollection.Instance.addCustomWidget(imagepickerWidget)
       var editorOptions = {showEmbededSurveyTab: false, showOptions: false}
       var campaignId = window.location.search.substring(1)
       var self = parent
       self.handleLoadData(campaignId).then(function (campaign) {
         self.handleSetData(campaign)
         var editor = new SurveyEditor.SurveyEditor("surveyEditorContainer", editorOptions)
+        editor.toolbox.addItem({
+          name: "imagepicker",
+          iconName: "icon-rating",
+          title: "Image Picker",
+          json: { "type": "dropdown",  "renderAs": "imagepicker", "choices": [] }
+        })
+        editor.toolbox.addItem({
+          name: "images_selector",
+          iconName: "icon-rating",
+          title: "Images Selector",
+          json: { "type": "checkbox",  "renderAs": "images_selector", "choices": [] }
+        })
         editor.options.generateValidJSON = true
         editor.text = JSON.stringify(campaign.data)
         editor.saveSurveyFunc = function () {

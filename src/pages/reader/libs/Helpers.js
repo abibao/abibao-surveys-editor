@@ -82,10 +82,10 @@ class ReaderHelpers {
       this.context.setState({loader: {visible: false, message: ''}})
     })
   }
-  controlSecurity (email) {
-    console.log('ReaderHelpers', 'controlSecurity')
+  controlSecurity (email, campaign) {
+    console.log('ReaderHelpers', 'controlSecurity', email)
     this.context.setState({loader: {visible: true, message: 'Contrôle (2) en cours...'}})
-    this.context.state.client.service('command/surveyControlSecurity').create({email, location: window.location}).then((result) => {
+    this.context.state.client.service('command/surveyControlSecurity').create({email, campaign, location: window.location}).then((result) => {
       console.log('...', result)
       if (result.connected === true) {
         console.log('connected', result.connected)
@@ -115,7 +115,8 @@ class ReaderHelpers {
       })
       .catch((error) => {
         if (error.toString().includes('ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE')) {
-          return this.context.setState({loader: {visible: true, message: 'Sondage terminé !'}})
+          console.log(data)
+          return this.context.setState({loader: {visible: false, message: 'ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE'}})
         }
         if (error.toString().includes('ERROR_INDIVIDUAL_CONTROL_SECURITY')) {
           console.error('we need to ask email')
@@ -134,6 +135,11 @@ class ReaderHelpers {
         this.context.state.selectedSurvey = this.context.state.surveys.shift()
         this.context.setState({surveys: this.context.state.surveys, selectedSurvey: this.context.state.selectedSurvey})
       }
+    }).catch(console.error)
+  }
+  getScreenComplete (id) {
+    this.context.state.client.service('query/getCampaignScreenCompleteMessage').find({query: {id}}).then((message) => {
+      this.context.setState({screenComplete: message, loader: {visible: false, message: '...'}})
     }).catch(console.error)
   }
 }

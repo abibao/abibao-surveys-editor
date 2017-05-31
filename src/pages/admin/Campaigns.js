@@ -7,7 +7,7 @@ import Dropzone from 'react-dropzone'
 import {clone} from 'lodash'
 
 // semantic
-import { Container, Form, Segment, Input, Button, Header, Card, Image, Modal, Loader } from 'semantic-ui-react'
+import { Container, Form, Segment, Input, Button, Header, Card, Image, Modal, Loader, TextArea } from 'semantic-ui-react'
 
 // components
 import AppBar from './components/AppBar'
@@ -120,12 +120,22 @@ class Campaigns extends Reflux.Component {
                 <Form.Field>
                   <label>Nom de la campagne</label>
                   <Input onChange={(e) => this.handleChangeInformation({key: 'name', val: e.target.value})} defaultValue={this.state.selectedCampaign.name} size="large" label={{ color: 'red', icon: 'asterisk' }} labelPosition="right corner" className="form" />
+                </Form.Field>
+                <Form.Field>
                   <label>Compagnie associée</label>
                   <Input onChange={(e) => this.handleChangeInformation({key: 'company', val: e.target.value})} defaultValue={this.state.selectedCampaign.company} size="large" label={{ color: 'red', icon: 'asterisk' }} labelPosition="right corner" className="form" />
+                </Form.Field>
+                <Form.Field>
                   <label>Reader associé</label>
                   <Input onChange={(e) => this.handleChangeInformation({key: 'reader', val: e.target.value})} defaultValue={this.state.selectedCampaign.reader} size="large" label={{ color: 'red', icon: 'asterisk' }} labelPosition="right corner" className="form" />
+                </Form.Field>
+                <Form.Field>
                   <label>Position de la campagne</label>
                   <Input onChange={(e) => this.handleChangeInformation({key: 'position', val: e.target.value})} defaultValue={this.state.selectedCampaign.position} size="large" className="form" />
+                </Form.Field>
+                <Form.Field>
+                  <label>Texte terminé</label>
+                  <TextArea defaultValue={this.state.selectedCampaign.screen_complete} autoHeight onChange={(e) => this.handleChangeInformation({key: 'screen_complete', val: e.target.value})} placeholder="Texte si le sondage est terminé" size="large" className="form" />
                 </Form.Field>
               </Form>
             </Modal.Description>
