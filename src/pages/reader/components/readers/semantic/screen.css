@@ -1,43 +1,147 @@
+/* DESKTOP */
+
+body.semantic {
+  background: #f29200;
+  height: 100%;
+  min-height: 100%;
+}
+
 .semantic-reader * {
   font-family: 'Lato', sans-serif;
   color: #101010;
 }
 
 .semantic-reader {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 0;
   background: #ffffff !important;
   max-width: 680px;
   margin: auto;
+  border-radius: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.semantic-reader a {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.semantic-reader a:hover {
+  color: #f29200;
+  text-decoration: none;
+}
+
+
+.semantic-reader .semantic-reader-container {
+  height: 100%;
+  min-height: 100%;
+  padding: 4px;
 }
 
 .semantic-reader textarea {
+  outline:none;
   background: #ffffff;
   box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
   padding: 1em 1em;
-  border-radius: 0.28571429rem;
+  border-radius: 8px;
   border: 1px solid rgba(34, 36, 38, 0.15);
   width: 100%;
 }
 
 .semantic-reader input[type=text], .semantic-reader input[type=email] {
+  outline:none;
   background: #ffffff;
   box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
-  padding: 0.5em 0.51em;
-  border-radius: 0.28571429rem;
+  padding: 0.5em 0.5em;
+  border-radius: 8px;
   border: 1px solid rgba(34, 36, 38, 0.15);
   width: 100%;
 }
 
-.semantic-reader .ui.inverted.green.segment {
-  background: #f0f0f0 !important;
+.semantic-reader .ui.header.title {
+  padding: 0;
+  padding-bottom: 12px;
+  margin: 0;
+  text-align: center;
 }
 
-.semantic-reader .ui.padded.segment {
-  padding: 0.5em;
+.semantic-reader .ui.header.orange {
+  color: #f29200 !important;
 }
 
-.semantic-reader .title {
+.semantic-reader .ui.segment.basic {
+  margin: 0;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.semantic-reader .ui.segment.basic.error {
+  padding: 16px;
+  margin-bottom: 8px;
+  border: solid 2px #cc3300;
+}
+.semantic-reader .ui.segment.basic.error > div {
+  font-size: 18px;
+  font-weight: bold;
+  color: #cc3300;
+}
+
+.semantic-reader .ui.segment.basic.footer {
+  padding: 12px;
+  display: block;
+  width: 100%;
+  height: 75px;
+}
+
+.semantic-reader .ui.button {
+  border-radius: 8px;
+}
+
+.semantic-reader .ui.button.navigation, .semantic-reader .ui.button.orange {
+  background: #f29200;
+  color: #ffffff;
+}
+
+.semantic-reader .ui.button.navigation.next {
+  float: right;
+  margin: 0 !important;
+}
+
+.semantic-reader .ui.button.navigation.complete {
+  float: right;
+  margin: 0 !important;
+}
+
+.semantic-reader .ui.button.navigation.prev {
+  float: left;
+  margin: 0 !important;
+}
+
+.semantic-reader .ui.button.navigation:hover, .semantic-reader .ui.button.orange:hover {
+  opacity: 0.75;
+}
+
+/* MOBILE */
+
+body.semantic.mobile {
+  background: #ffffff;
+  height: 100%;
+  min-height: 100%;
+}
+
+body.semantic.mobile .semantic-reader {
   padding: 0;
   margin: 0;
+  border-radius: 0;
+}
+
+body.semantic.mobile .semantic-reader .ui.segment.basic.body {
+  padding: 4px;
+}
+
+body.semantic.mobile .semantic-reader .semantic-reader-container {
+  padding: 0;
+}
+
+body.semantic.mobile .ui.header.title {
+  font-size: 20px;
 }
