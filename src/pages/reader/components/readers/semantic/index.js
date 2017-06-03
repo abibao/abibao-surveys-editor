@@ -67,7 +67,7 @@ class SurveyReader extends Reflux.Component {
     const { open } = this.state
     let data = new Survey.Model(this.props.survey.campaign.data)
     return (
-      <div>
+      <div className="semantic-reader-container">
         <Modal open={open}>
           <Modal.Header>
             Besoin d’inspiration ?

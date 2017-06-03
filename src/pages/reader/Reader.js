@@ -128,8 +128,14 @@ class Reader extends Reflux.Component {
         </Container>
       )
     }
+    if (this.state.selectedSurvey) {
+      document.body.className = this.state.selectedSurvey.campaign.reader
+      if (this.props.location.query.isMobile === true) {
+        document.body.className += ' mobile'
+      }
+    }
     let renderer = (CurrentReader) => (
-      <Container fluid>
+      <Container fluid className={this.state.selectedSurvey.campaign.reader}>
         <CurrentReader survey={this.state.selectedSurvey} client={this.state.client} />
       </Container>
     )

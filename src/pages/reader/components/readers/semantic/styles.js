@@ -1,15 +1,20 @@
 const styles = {
   'root': 'semantic-reader',
-  'navigationButton': 'ui button',
-  'header': 'ui orange inverted segment',
-  'body': 'semantic-panel-body ui green inverted segment',
-  'footer': 'ui grey inverted segment',
-  'row': 'ui padded segment basic',
+  'navigationButton': 'ui button huge navigation',
+  'header': 'ui segment basic header',
+  'body': 'ui segment basic body',
+  'footer': 'ui segment basic footer',
+  'row': 'ui segment basic row',
+  'navigation': {
+    'complete': 'ui button huge navigation complete',
+    'prev': 'ui button huge navigation prev',
+    'next': 'ui button huge navigation next'
+  },
   'question': {
-    'title': 'ui medium header'
+    'title': 'ui huge header title'
   },
   'error': {
-    'root': 'ui red inverted segment'
+    'root': 'ui segment basic error'
   }
 }
 

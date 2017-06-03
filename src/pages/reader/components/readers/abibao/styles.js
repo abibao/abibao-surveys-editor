@@ -5,9 +5,9 @@ const styles = {
   'footer': 'abibao-panel-footer',
   'navigationButton': 'abibao-button-nav',
   'navigation': {
-    'complete': '',
-    'prev': '',
-    'next': ''
+    'complete': 'abibao-button-nav complete',
+    'prev': 'abibao-button-nav prev',
+    'next': 'abibao-button-nav next'
   },
   'progress': 'abibao-progress',
   'progressBar': 'abibao-progress-bar',
