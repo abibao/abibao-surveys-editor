@@ -15,16 +15,19 @@ import AppBarSubMenu from './components/AppBarSubMenu'
 import AdminStore from './libs/Store'
 import AdminActions from './libs/Actions'
 
+import Debug from 'debug'
+const debug = Debug('abibao-platform:admin')
+
 class Mailings extends Reflux.Component {
   componentDidMount () {
-    console.log('Mailings', 'componentDidMount')
+    debug('Mailings', 'componentDidMount')
   }
   componentWillUnmount () {
   }
   componentDidUpdate (prevProps, prevState) {
   }
   constructor (props) {
-    console.log('Mailings', 'constructor')
+    debug('Mailings', 'constructor')
     super(props)
     this.state = {
       modalSendgridOpen: false,
@@ -32,7 +35,7 @@ class Mailings extends Reflux.Component {
     }
     this.store = AdminStore
     this.handleMailingCreate = () => {
-      console.log('Mailings', 'handleMailingCreate')
+      debug('Mailings', 'handleMailingCreate')
       AdminActions.mailingCreate()
     }
     this.getTemplateById = (id) => {
@@ -59,7 +62,7 @@ class Mailings extends Reflux.Component {
       })
     }
     this.handleRefreshTemplates = () => {
-      console.log('Mailings', 'handleRefreshTemplates')
+      debug('Mailings', 'handleRefreshTemplates')
       AdminActions.templatesRefresh()
     }
     this.handleChangeSendgrid = (prop) => {
@@ -77,7 +80,7 @@ class Mailings extends Reflux.Component {
     }
   }
   render () {
-    console.log('Campaigns', 'render', this.state.loader.visible)
+    debug('Campaigns', 'render', this.state.loader.visible)
     let loader = () => {
       return (
         <Container fluid className="loader-reader">

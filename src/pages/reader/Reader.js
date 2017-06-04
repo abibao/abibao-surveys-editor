@@ -20,24 +20,27 @@ import ReaderActions from './libs/Actions'
 import 'github-markdown-css'
 import './markdown.css'
 
+import Debug from 'debug'
+const debug = Debug('abibao-platform:reader')
+
 class Reader extends Reflux.Component {
   componentDidMount () {
-    console.log('Reader', 'componentDidMount')
+    debug('Reader', 'componentDidMount')
   }
   componentWillUnmount () {
   }
   componentDidUpdate (prevProps, prevState) {
     if (this.state.initialized === true && this.state.selectedCampaign === false) {
-      console.log('Reader', 'initialized')
+      debug('Reader', 'initialized')
       this.setState({selectedCampaign: this.props.params.id})
       ReaderActions.affectSurvey({individual: this.state.individual, campaign: this.props.params.id, params: this.props.location.query})
     }
   }
   constructor (props) {
-    console.log('Reader', 'constructor', props.params.id)
+    debug('Reader', 'constructor', props.params.id)
     let mycookie = cookie.load('individual')
     if (mycookie === undefined) {
-      console.log('Reader', 'make fingerprint')
+      debug('Reader', 'make fingerprint')
       let fingerprint = 'urn:fingerprint:individual:' + uuid.v4()
       cookie.save('individual', fingerprint, { path: '/' })
     }
@@ -71,13 +74,13 @@ class Reader extends Reflux.Component {
       this.email = email
     }
     this.handleSubmit = (e) => {
-      console.log('Reader', 'handleSubmit', this.email)
+      debug('Reader', 'handleSubmit', this.email)
       e.preventDefault()
       ReaderActions.controlSecurity(this.email, this.props.params.id)
     }
   }
   render () {
-    console.log('Reader', 'render', this.state.selectedSurvey)
+    debug('Reader', 'render', this.state.selectedSurvey)
     if (this.state.loader.message === 'ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE') {
       ReaderActions.getScreenComplete(this.props.params.id)
       return (<div />)

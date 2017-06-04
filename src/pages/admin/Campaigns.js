@@ -16,17 +16,20 @@ import AppBarSubMenu from './components/AppBarSubMenu'
 import AdminStore from './libs/Store'
 import AdminActions from './libs/Actions'
 
+import Debug from 'debug'
+const debug = Debug('abibao-platform:admin')
+
 class Campaigns extends Reflux.Component {
   componentDidMount () {
-    console.log('Campaigns', 'componentDidMount')
+    debug('Campaigns', 'componentDidMount')
   }
   componentWillUnmount () {
-    console.log('Campaigns', 'componentWillUnmount')
+    debug('Campaigns', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
   }
   constructor (props) {
-    console.log('Campaigns', 'constructor')
+    debug('Campaigns', 'constructor')
     super(props)
     this.state = {
       menuOpen: false,
@@ -66,7 +69,7 @@ class Campaigns extends Reflux.Component {
     }
   }
   render () {
-    console.log('Campaigns', 'render', this.state.loader.visible)
+    debug('Campaigns', 'render', this.state.loader.visible)
     let loader = () => {
       return (
         <Container fluid className="loader-reader">

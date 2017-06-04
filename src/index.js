@@ -26,6 +26,8 @@ window.$ = $
 window.ReactGA = ReactGA
 window.Raven.config('https://f46e516689454c93a343bcb58e253bf7@sentry.io/169530').install()
 
+// window.localStorage.debug = 'abibao-platform:*'
+
 function logPageView () {
   ReactGA.set({ page: window.location.pathname + window.location.search })
   ReactGA.pageview(window.location.pathname + window.location.search)

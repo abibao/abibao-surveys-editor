@@ -32,7 +32,6 @@ class AppBarSubMenu extends Reflux.Component {
     }
   }
   componentDidMount () {
-    console.log('AppBarSubMenu', 'componentDidMount', window.location.pathname)
     switch (true) {
       case window.location.pathname.includes('admin/campaigns'):
         this.setState({activeItem: this.state.items['admin/campaigns']})

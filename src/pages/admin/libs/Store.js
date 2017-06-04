@@ -6,9 +6,12 @@ import Client from './Client'
 import AdminActions from './Actions'
 import AdminnHelpers from './Helpers'
 
+import Debug from 'debug'
+const debug = Debug('abibao-platform:admin')
+
 class AdminStore extends Reflux.Store {
   constructor () {
-    console.log('AdminStore', 'constructor')
+    debug('AdminStore', 'constructor')
     super()
     this.state = {
       client: false, // feathers client
@@ -37,11 +40,11 @@ class AdminStore extends Reflux.Store {
     // listeners
     Client((app) => {
       app.io.on('connect', () => {
-        console.log('ReaderStore', 'Feathers connect')
+        debug('ReaderStore', 'Feathers connect')
         AdminActions.networkConnect(app)
       })
       app.io.on('disconnect', () => {
-        console.log('ReaderStore', 'Feathers disconnect')
+        debug('ReaderStore', 'Feathers disconnect')
         AdminActions.networkDisconnect()
       })
       app.service('api/campaigns').on('created', (campaign) => {
@@ -55,31 +58,31 @@ class AdminStore extends Reflux.Store {
     })
   }
   onNetworkConnect (client) {
-    console.log('AdminStore', 'onNetworkConnect')
+    debug('AdminStore', 'onNetworkConnect')
     this.helpers.connect(client)
   }
   onNetworkDisconnect () {
-    console.log('AdminStore', 'onNetworkDisconnect')
+    debug('AdminStore', 'onNetworkDisconnect')
     this.helpers.disconnect()
   }
   onNetworkAuthenticate (args) {
-    console.log('AdminStore', 'onNetworkAuthenticate', args)
+    debug('AdminStore', 'onNetworkAuthenticate', args)
     this.helpers.authenticate(args)
   }
   onNetworkLogout () {
-    console.log('AdminStore', 'onNetworkAuthenticate')
+    debug('AdminStore', 'onNetworkAuthenticate')
     this.helpers.disconnect()
   }
   onApplicationInitialize () {
-    console.log('AdminStore', 'onNetworkLogout')
+    debug('AdminStore', 'onNetworkLogout')
     this.helpers.initialize()
   }
   onApplicationCreationComplete () {
-    console.log('AdminStore', 'onApplicationCreationComplete')
+    debug('AdminStore', 'onApplicationCreationComplete')
     this.helpers.creationComplete()
   }
   onCampaignEmailing (id) {
-    console.log('AdminStore', 'onCampaignEmailing')
+    debug('AdminStore', 'onCampaignEmailing')
     this.helpers.emailingCampaign(id)
   }
   onCampaignCreate () {
@@ -92,15 +95,15 @@ class AdminStore extends Reflux.Store {
     this.helpers.updateCampaignPicture(id, file)
   }
   onMailingCreate () {
-    console.log('AdminStore', 'onMailingCreate')
+    debug('AdminStore', 'onMailingCreate')
     this.helpers.createMailing()
   }
   onMailingUpdate (data) {
-    console.log('AdminStore', 'onMailingUpdate')
+    debug('AdminStore', 'onMailingUpdate')
     this.helpers.updateMailing(data)
   }
   onTemplatesRefresh () {
-    console.log('AdminStore', 'onTemplatesRefresh')
+    debug('AdminStore', 'onTemplatesRefresh')
     this.helpers.refreshTemplates()
   }
   onStyleCreate () {

@@ -7,9 +7,13 @@ import PouchDB from 'pouchdb'
 import AdminActions from './Actions'
 import Config from './Config'
 
+import Debug from 'debug'
+const debug = Debug('abibao-platform:admin')
+const debugerror = Debug('abibao-platform:error')
+
 class AdminHelpers {
   constructor (context) {
-    console.log('AdminHelpers', 'constructor')
+    debug('AdminHelpers', 'constructor')
     this.context = context
     this.dbs = {
       templates: {
@@ -24,32 +28,32 @@ class AdminHelpers {
     this.dbs.templates.local.sync(this.dbs.templates.remote, {live: true, retry: true})
       .on('change', ({direction, change}) => {
         if (change.ok === true) {
-          console.log('templates.local', 'change', direction)
+          debug('templates.local', 'change', direction)
           this.dbs.templates.local.allDocs({include_docs: true}).then((docs) => {
             this.context.setState({templates: docs})
           })
         }
       })
       .on('error', (error) => {
-        console.error('...', 'local and remote templates sync failed')
-        console.error(error)
+        debugerror('...', 'local and remote templates sync failed')
+        debugerror(error)
       })
     this.dbs.mailings.local.sync(this.dbs.mailings.remote, {live: true, retry: true})
       .on('change', ({direction, change}) => {
         if (change.ok === true) {
-          console.log('mailings.local', 'change', direction)
+          debug('mailings.local', 'change', direction)
           this.dbs.mailings.local.allDocs({include_docs: true}).then((docs) => {
             this.context.setState({mailings: docs})
           })
         }
       })
       .on('error', (error) => {
-        console.error('...', 'local and remote mailings sync failed')
-        console.error(error)
+        debugerror('...', 'local and remote mailings sync failed')
+        debugerror(error)
       })
   }
   connect (client) {
-    console.log('AdminHelpers', 'client.io.id', client.io.id)
+    debug('AdminHelpers', 'client.io.id', client.io.id)
     this.context.setState({
       client,
       socket: client.io.id,
@@ -61,28 +65,28 @@ class AdminHelpers {
     this.authenticate()
   }
   authenticate (args) {
-    console.log('AdminHelpers', 'authenticate', args)
+    debug('AdminHelpers', 'authenticate', args)
     this.context.state.client.authenticate(args)
       .then((response) => {
         this.context.setState({loader: {
           visible: true,
           message: 'Authentification acceptée...'
         }})
-        console.log('...', 'token', response.accessToken)
+        debug('...', 'token', response.accessToken)
         this.context.setState({token: response.accessToken})
         return this.context.state.client.passport.verifyJWT(response.accessToken)
       })
       .then(payload => {
-        console.log('...', 'jwt payload', payload)
+        debug('...', 'jwt payload', payload)
         return this.context.state.client.service('users').get(payload.userId)
       })
       .then(user => {
         this.context.state.client.set('user', user)
-        console.log('...', 'user', this.context.state.client.get('user'))
+        debug('...', 'user', this.context.state.client.get('user'))
         return true
       })
       .then(() => {
-        console.log('...', 'state.initialized', this.context.state.initialized)
+        debug('...', 'state.initialized', this.context.state.initialized)
         if (!window.location.pathname.includes('admin/login')) {
           AdminActions.applicationInitialize()
         } else {
@@ -90,13 +94,13 @@ class AdminHelpers {
         }
       })
       .catch((error) => {
-        console.error('...', error)
+        debugerror('...', error)
         if (error.name === 'Forbidden') {
           // this.context.state.client.logout()
           return AdminActions.networkLogout()
         }
         if (error.name === 'NotAuthenticated') {
-          console.log('...', 'no jwt token found, now use strategy local')
+          debug('...', 'no jwt token found, now use strategy local')
           if (!window.location.pathname.includes('admin/login')) {
             window.location = window.location.origin + '/admin/login'
           } else {
@@ -112,25 +116,25 @@ class AdminHelpers {
       })
   }
   disconnect () {
-    console.log('AdminHelpers', 'disconnect')
+    debug('AdminHelpers', 'disconnect')
     this.context.setState({loader: {
       visible: true,
       message: 'Déconnexion en cours...'
     }})
     this.context.state.client.logout().then(() => {
-      console.log('AdminHelpers', 'disconnect', 'client logout done')
+      debug('AdminHelpers', 'disconnect', 'client logout done')
       if (!window.location.pathname.includes('admin/login')) {
         window.location = window.location.origin + '/admin/login'
       }
     })
   }
   initialize () {
-    console.log('AdminHelpers', 'initialize')
+    debug('AdminHelpers', 'initialize')
     this.context.setState({loader: {
       visible: true,
       message: 'Chargement des data en cours...'
     }})
-    console.log('...', this.context.state.token)
+    debug('...', this.context.state.token)
     this.context.state.client.service('api/campaigns').find({
       query: {
         $sort: {company: 1, position: 1}
@@ -168,16 +172,16 @@ class AdminHelpers {
     }).then(() => {
       AdminActions.applicationCreationComplete()
     }).catch((error) => {
-      console.error(error)
+      debugerror(error)
       this.context.setState({token: false, loader: {visible: true, message: error.toString()}})
     })
   }
   creationComplete () {
-    console.log('AdminHelpers', 'creationComplete')
+    debug('AdminHelpers', 'creationComplete')
     this.context.setState({initialized: true, loader: {visible: false}, campaigns: this.context.state.campaigns})
   }
   emailingCampaign (key) {
-    console.log('AdminHelpers', 'emailingCampaign')
+    debug('AdminHelpers', 'emailingCampaign')
     // get sengrid campaign
     this.context.state.mailings.rows.map((item) => {
       if (item.id === key) {
@@ -194,20 +198,20 @@ class AdminHelpers {
             return this.dbs.mailings.local.put(item.doc)
           }).then(() => {
             return true
-          }).catch(console.error)
+          }).catch(debugerror)
         })
       }
       return false
     })
   }
   refreshTemplates () {
-    console.log('AdminHelpers', 'refreshTemplates')
+    debug('AdminHelpers', 'refreshTemplates')
     this.context.state.client.service('command/sendgridRefreshAllTemplates').create({}).then((result) => {
-      console.log('...', result)
-    }).catch(console.error)
+      debug('...', result)
+    }).catch(debugerror)
   }
   createMailing () {
-    console.log('AdminHelpers', 'createMailing')
+    debug('AdminHelpers', 'createMailing')
     this.dbs.mailings.local.put({
       _id: uuid.v4(),
       name: 'Nouveau mailing',
@@ -221,11 +225,11 @@ class AdminHelpers {
     })
   }
   updateMailing (data) {
-    console.log('AdminHelpers', 'updateMailing')
+    debug('AdminHelpers', 'updateMailing')
     this.dbs.mailings.local.put(data)
   }
   createCampaign () {
-    console.log('AdminHelpers', 'createCampaign')
+    debug('AdminHelpers', 'createCampaign')
     return this.context.state.client.service('api/campaigns').create({
       name: 'Nouvelle campagne (' + uuid.v4() + ')',
       company: 'None',
@@ -234,16 +238,16 @@ class AdminHelpers {
       picture: 'images/default/campaign.png',
       data: {pages: [{name: 'page1'}]}
     }).then((campaign) => {
-    }).catch(console.error)
+    }).catch(debugerror)
   }
   updateCampaign (data) {
-    console.log('AdminHelpers', 'updateCampaign')
+    debug('AdminHelpers', 'updateCampaign')
     let newData = clone(data)
     this.context.state.client.service('api/campaigns').patch(newData.id, newData).then(() => {
-    }).catch(console.error)
+    }).catch(debugerror)
   }
   updateCampaignPicture (id, file) {
-    console.log('AdminHelpers', 'updateCampaignPicture')
+    debug('AdminHelpers', 'updateCampaignPicture')
     this.context.setState({loader: {visible: true, message: 'Upload image en cours...'}})
     const reader = new FileReader()
     reader.readAsDataURL(file)
@@ -258,25 +262,25 @@ class AdminHelpers {
           })
         }).catch((error) => {
           this.context.setState({loader: {visible: false}})
-          console.error(error)
+          debugerror(error)
         })
     }, false)
   }
   createStyle () {
-    console.log('AdminHelpers', 'createStyle')
+    debug('AdminHelpers', 'createStyle')
     return this.context.state.client.service('api/styles').create({
       name: 'style-' + uuid.v4(),
       picture: 'images/default/campaign.png',
       styles: {},
       css: ''
     }).then(() => {
-    }).catch(console.error)
+    }).catch(debugerror)
   }
   updateStyle (data) {
-    console.log('AdminHelpers', 'updateStyle')
+    debug('AdminHelpers', 'updateStyle')
     let newData = clone(data)
     this.context.state.client.service('api/styles').patch(newData.id, newData).then(() => {
-    }).catch(console.error)
+    }).catch(debugerror)
   }
 }
 
