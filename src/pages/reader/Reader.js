@@ -62,7 +62,7 @@ class Reader extends Reflux.Component {
       readers: {
         abibao: Readers.AbibaoReader,
         ehop: Readers.EHOPReader,
-        semantic: Readers.SemanticReader
+        idcoll: Readers.IDCollReader
       }
     }
     this.store = ReaderStore

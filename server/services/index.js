@@ -5,6 +5,7 @@ const campaigns = require('./data/campaigns')
 const surveys = require('./data/surveys')
 const answers = require('./data/answers')
 const individuals = require('./data/individuals')
+const styles = require('./data/styles')
 const templates = require('./couchdb/templates')
 
 // external commands
@@ -31,6 +32,7 @@ module.exports = function () {
   app.configure(surveys)
   app.configure(answers)
   app.configure(individuals)
+  app.configure(styles)
   app.configure(templates)
 
   app.configure(campaignCreateEmailingCommand)

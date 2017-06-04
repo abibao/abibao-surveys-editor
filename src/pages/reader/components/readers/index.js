@@ -1,9 +1,9 @@
 import AbibaoReader from './abibao'
-import SemanticReader from './semantic'
+import IDCollReader from './idcoll'
 import EHOPReader from './ehop'
 
 export {
   AbibaoReader,
-  SemanticReader,
+  IDCollReader,
   EHOPReader
 }

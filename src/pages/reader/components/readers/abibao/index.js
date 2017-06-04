@@ -14,7 +14,12 @@ import ImagePickerWidget from './../../../widgets/ImagePicker'
 import ImagesSelectorWidget from './../../../widgets/ImagesSelector'
 
 class SurveyReader extends Reflux.Component {
-  componentDidMount () {
+  ccomponentDidMount () {
+    // insert reader css
+    let s = document.createElement('style')
+    s.setAttribute('type', 'text/css')
+    s.appendChild(document.createTextNode(this.props.survey.style.css))
+    document.head.appendChild(s)
   }
   componentWillUnmount () {
   }

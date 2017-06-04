@@ -15,6 +15,11 @@ import './screen.css'
 
 class SurveyReader extends Reflux.Component {
   componentDidMount () {
+    // insert reader css
+    let s = document.createElement('style')
+    s.setAttribute('type', 'text/css')
+    s.appendChild(document.createTextNode(this.props.survey.style.css))
+    document.head.appendChild(s)
   }
   componentWillUnmount () {
   }
