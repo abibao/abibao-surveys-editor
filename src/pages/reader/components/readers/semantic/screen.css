@@ -1,5 +1,7 @@
 /* DESKTOP */
 
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
 body.semantic {
   background: #f29200;
   height: 100%;
@@ -30,7 +32,6 @@ body.semantic {
   text-decoration: none;
 }
 
-
 .semantic-reader .semantic-reader-container {
   height: 100%;
   min-height: 100%;
@@ -58,6 +59,7 @@ body.semantic {
 }
 
 .semantic-reader .ui.header.title {
+  font-size: 20px;
   padding: 0;
   padding-bottom: 12px;
   margin: 0;
@@ -118,6 +120,49 @@ body.semantic {
 
 .semantic-reader .ui.button.navigation:hover, .semantic-reader .ui.button.orange:hover {
   opacity: 0.75;
+}
+
+/* RADIO */
+
+.semantic-radio > label > input[type="radio"]:checked,
+.semantic-radio > label > input[type="radio"]:not(:checked) {
+	display: none;
+	margin: 0;
+	padding: 0;
+}
+div.semantic-radio {
+  height: 30px;
+  margin-bottom: 5px;
+}
+div.semantic-radio > label {
+  font-size: 16px;
+  height: 30px;
+  line-height: 15px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+}
+div.semantic-radio input[type="radio"]:not(:checked) + span:before {
+  content: '';
+  display: block;
+  width: 30px;
+	height: 30px;
+  background: #cccccc;
+  border: solid 10px #cccccc;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+div.semantic-radio input[type="radio"]:checked + span:before {
+  content: '';
+  display: block;
+  width: 30px;
+	height: 30px;
+  background: #f0f0f0;
+  border: solid 10px #f29200;
+  border-radius: 50%;
+  margin-right: 5px;
 }
 
 /* MOBILE */

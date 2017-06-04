@@ -1,17 +1,19 @@
 const styles = {
-  'root': 'semantic-reader',
-  'navigationButton': 'ui button huge navigation',
+  'root': 'abibao-reader',
   'header': 'ui segment basic header',
   'body': 'ui segment basic body',
   'footer': 'ui segment basic footer',
   'row': 'ui segment basic row',
   'navigation': {
-    'complete': 'ui button huge navigation complete',
-    'prev': 'ui button huge navigation prev',
-    'next': 'ui button huge navigation next'
+    'complete': 'navigation complete',
+    'prev': 'navigation prev',
+    'next': 'navigation next'
   },
   'radiogroup': {
-    'item': 'semantic-radio'
+    'item': 'abibao-radio'
+  },
+  'checkbox': {
+    'item': 'abibao-checkbox'
   },
   'question': {
     'title': 'ui huge header title'
