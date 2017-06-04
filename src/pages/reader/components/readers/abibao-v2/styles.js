@@ -1,5 +1,5 @@
 const styles = {
-  'root': 'abibao-reader',
+  'root': 'abibao-v2-reader',
   'header': 'ui segment basic header',
   'body': 'ui segment basic body',
   'footer': 'ui segment basic footer',
@@ -10,10 +10,10 @@ const styles = {
     'next': 'navigation next'
   },
   'radiogroup': {
-    'item': 'abibao-radio'
+    'item': 'abibao-v2-radio'
   },
   'checkbox': {
-    'item': 'abibao-checkbox'
+    'item': 'abibao-v2-checkbox'
   },
   'question': {
     'title': 'ui huge header title'
