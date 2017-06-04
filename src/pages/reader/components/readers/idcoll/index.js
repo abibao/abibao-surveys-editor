@@ -13,6 +13,10 @@ import ReaderActions from './../../../libs/Actions'
 import styles from './styles'
 import './screen.css'
 
+import Debug from 'debug'
+const debug = Debug('abibao-platform:reader')
+const debugerror = Debug('abibao-platform:error')
+
 class SurveyReader extends Reflux.Component {
   componentDidMount () {
     // insert reader css
@@ -27,10 +31,23 @@ class SurveyReader extends Reflux.Component {
   }
   constructor (props) {
     super(props)
-    console.log('SurveyReader', 'constructor')
-    this.state = { open: false, randomAnswer: {answer: 'Pas de correspondance'}, randomQuestion: '' }
+    debug('SurveyReader', 'constructor')
+    this.state = {
+      open: false,
+      data: {},
+      randomAnswer: {answer: 'Pas de correspondance'},
+      randomQuestion: ''
+    }
+    this.valueChanged = (s, options) => {
+      debug('SurveyReader', 'valueChanged')
+      this.setState({data: s.data})
+    }
+    this.afterRenderQuestion = (s, options) => {
+      debug('SurveyReader', 'afterRenderQuestion')
+      options.htmlElement.className += ' ' + options.question.name
+    }
     this.surveyComplete = () => {
-      console.log('SurveyReader', 'surveyComplete')
+      debug('SurveyReader', 'surveyComplete')
       window.ReactGA.event({
         category: 'Survey',
         action: 'Complete',
@@ -39,7 +56,7 @@ class SurveyReader extends Reflux.Component {
       ReaderActions.completeSurvey()
     }
     this.surveyValidateQuestion = (s, options) => {
-      console.log('SurveyReader', 'surveyValidateQuestion')
+      debug('SurveyReader', 'surveyValidateQuestion')
       let answer = {
         'individual': this.props.survey.individual,
         'survey_id': this.props.survey.id,
@@ -58,8 +75,11 @@ class SurveyReader extends Reflux.Component {
     this.nextAnswer = (e) => {
       this.handleGetRandomAnswer(this.state.randomQuestion)
     }
+    this.closeAnser = (e) => {
+      this.setState({open: false, randomAnswer: {answer: 'Pas de correspondance'}})
+    }
     this.handleGetRandomAnswer = (question) => {
-      console.log('SurveyReader', 'handleGetRandomAnswer', question)
+      debug('SurveyReader', 'handleGetRandomAnswer', question)
       return this.props.client.service('query/answerGetRandomAnswer').find({query: {
         campaign: this.props.survey.campaign.id,
         individual: this.props.survey.individual,
@@ -68,7 +88,7 @@ class SurveyReader extends Reflux.Component {
         this.setState({open: true, randomQuestion: question, randomAnswer: result})
       }).catch((error) => {
         this.setState({open: false, randomAnswer: {answer: 'Pas de correspondance'}})
-        console.error(error)
+        debugerror(error)
       })
     }
     window.openGetRandomAnswer = this.handleGetRandomAnswer
@@ -91,11 +111,11 @@ class SurveyReader extends Reflux.Component {
             <p>{this.state.randomAnswer.answer}</p>
           </Modal.Content>
           <Modal.Actions>
-            <Button onClick={(e) => this.setState({open: false, randomAnswer: {answer: 'Pas de correspondance'}})}>Fermer</Button>
+            <Button onClick={this.closeAnser}>Fermer</Button>
             <Button color="grey" onClick={this.nextAnswer}>Suivant</Button>
           </Modal.Actions>
         </Modal>
-        <Survey.Survey onComplete={this.surveyComplete} onValidateQuestion={this.surveyValidateQuestion} model={data} css={styles} />
+        <Survey.Survey data={this.state.data} onValueChanged={this.valueChanged} onAfterRenderQuestion={this.afterRenderQuestion} onComplete={this.surveyComplete} onValidateQuestion={this.surveyValidateQuestion} model={data} css={styles} />
       </div>
     )
   }

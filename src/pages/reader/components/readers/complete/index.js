@@ -5,6 +5,9 @@ import React from 'react'
 import Reflux from 'reflux'
 import ReactMarkdown from 'react-markdown'
 
+import Debug from 'debug'
+const debug = Debug('abibao-platform:reader')
+
 class SurveyReader extends Reflux.Component {
   componentDidMount () {
   }
@@ -14,7 +17,7 @@ class SurveyReader extends Reflux.Component {
   }
   constructor (props) {
     super(props)
-    console.log('SurveyReader', 'constructor')
+    debug('SurveyReader', 'constructor')
     this.state = {
       message: '# ' + this.props.survey.campaign.name + '\n#### Ce sondage n\'est pas disponible.'
     }

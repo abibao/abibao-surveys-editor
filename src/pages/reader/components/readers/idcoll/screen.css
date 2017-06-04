@@ -39,9 +39,10 @@ body.idcoll {
 }
 
 .idcoll-reader textarea {
-  outline:none;
+  resize: none;
+  outline: none;
   background: #ffffff;
-  box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
+  /* box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15); */
   padding: 1em 1em;
   border-radius: 8px;
   border: 1px solid rgba(34, 36, 38, 0.15);
@@ -49,7 +50,7 @@ body.idcoll {
 }
 
 .idcoll-reader input[type=text], .idcoll-reader input[type=email] {
-  outline:none;
+  outline: none;
   background: #ffffff;
   box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
   padding: 0.5em 0.5em;
@@ -122,6 +123,14 @@ body.idcoll {
   opacity: 0.75;
 }
 
+/* QUESTIONS */
+
+.idcoll-reader .AGENCEDURABLE_EHOP_IDEA {
+  background: #dddddd;
+  padding: 12px;
+  border-radius: 12px;
+}
+
 /* RADIO */
 
 .idcoll-radio > label > input[type="radio"]:checked,
@@ -188,5 +197,5 @@ body.idcoll.mobile .idcoll-reader .idcoll-reader-container {
 }
 
 body.idcoll.mobile .ui.header.title {
-  font-size: 20px;
+  font-size: 18px;
 }

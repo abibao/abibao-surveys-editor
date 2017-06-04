@@ -15,6 +15,9 @@ import './mobile.css'
 import ImagePickerWidget from './../../../widgets/ImagePicker'
 import ImagesSelectorWidget from './../../../widgets/ImagesSelector'
 
+import Debug from 'debug'
+const debug = Debug('abibao-platform:reader')
+
 class SurveyReader extends Reflux.Component {
   ccomponentDidMount () {
     // insert reader css
@@ -30,7 +33,7 @@ class SurveyReader extends Reflux.Component {
   constructor (props) {
     super(props)
     this.surveyComplete = () => {
-      console.log('SurveyReader', 'surveyComplete')
+      debug('SurveyReader', 'surveyComplete')
       window.ReactGA.event({
         category: 'Survey',
         action: 'Complete',
@@ -39,10 +42,10 @@ class SurveyReader extends Reflux.Component {
       ReaderActions.completeSurvey()
     }
     this.surveyValidateQuestion = (s, options) => {
-      console.log('SurveyReader', 'surveyValidateQuestion', options.name, options.value)
+      debug('SurveyReader', 'surveyValidateQuestion', options.name, options.value)
       switch (options.value) {
         case 'ABIBAO_CGU_NO':
-          console.log('...', 'CGU not accepted')
+          debug('...', 'CGU not accepted')
           return false
         default:
           let answer = {

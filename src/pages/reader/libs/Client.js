@@ -4,8 +4,11 @@ import socketio from 'feathers-socketio/client'
 import io from 'socket.io-client'
 import authentication from 'feathers-authentication-client'
 
+import Debug from 'debug'
+const debug = Debug('abibao-platform:reader')
+
 export default (callback) => {
-  console.log('ClientReader', 'constructor')
+  debug('ClientReader', 'constructor')
   const socket = io()
   const app = feathers()
     .configure(hooks())

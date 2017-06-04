@@ -1,13 +1,17 @@
 // actions
 import ReaderActions from './Actions'
 
+import Debug from 'debug'
+const debug = Debug('abibao-platform:reader')
+const debugerror = Debug('abibao-platform:error')
+
 class ReaderHelpers {
   constructor (context) {
-    console.log('ReaderHelpers', 'constructor')
+    debug('ReaderHelpers', 'constructor')
     this.context = context
   }
   connect (client) {
-    console.log('ReaderHelpers', 'connect', client.io.id)
+    debug('ReaderHelpers', 'connect', client.io.id)
     this.context.setState({
       client,
       socket: client.io.id,
@@ -19,7 +23,7 @@ class ReaderHelpers {
     this.authenticate()
   }
   disconnect () {
-    console.log('ReaderHelpers', 'disconnect')
+    debug('ReaderHelpers', 'disconnect')
     this.context.setState({
       selectedCampaign: false,
       initialized: false,
@@ -30,26 +34,26 @@ class ReaderHelpers {
     })
   }
   authenticate () {
-    console.log('ReaderHelpers', 'authenticate')
+    debug('ReaderHelpers', 'authenticate')
     this.context.state.client.authenticate({strategy: 'local', email: 'reader@abibao.com', password: 'password'})
       .then((response) => {
         this.context.setState({loader: {
           visible: true,
           message: 'Authentification acceptée...'
         }})
-        console.log('...', 'response')
+        debug('...', 'response')
         this.context.setState({token: response.accessToken})
         return this.context.state.client.passport.verifyJWT(response.accessToken)
       })
       .then(passport => {
-        console.log('...', 'passport')
-        console.log('...', 'state.initialized', this.context.state.initialized)
+        debug('...', 'passport')
+        debug('...', 'state.initialized', this.context.state.initialized)
         ReaderActions.readerInitialize()
       })
       .catch((error) => {
-        console.error('...', error.toString())
+        debugerror('...', error.toString())
         if (error.toString().includes('NotAuthenticated')) {
-          console.log('...', 'no jwt token found, now use strategy local')
+          debug('...', 'no jwt token found, now use strategy local')
           this.context.setState({loader: {
             visible: true,
             message: 'Authentification en cours...'
@@ -59,7 +63,7 @@ class ReaderHelpers {
       })
   }
   initialize () {
-    console.log('ReaderHelpers', 'initialize', this.context.state.selectedCampaign)
+    debug('ReaderHelpers', 'initialize', this.context.state.selectedCampaign)
     this.context.setState({
       initialized: true,
       loader: {
@@ -69,7 +73,7 @@ class ReaderHelpers {
     })
   }
   controlMinimum (data) {
-    console.log('ReaderHelpers', 'controlMinimum')
+    debug('ReaderHelpers', 'controlMinimum')
     this.context.setState({loader: {visible: true, message: 'Contrôle (1) en cours...'}})
     this.context.state.client.service('command/surveyControlMinimum').create(data).then((result) => {
       if (result) {
@@ -78,20 +82,20 @@ class ReaderHelpers {
       this.context.state.selectedSurvey = this.context.state.surveys.shift()
       this.context.setState({surveys: this.context.state.surveys, selectedSurvey: this.context.state.selectedSurvey, loader: {visible: false, message: ''}})
     }).catch((error) => {
-      console.error(error)
+      debugerror(error)
       this.context.setState({loader: {visible: false, message: ''}})
     })
   }
   controlSecurity (email, campaign) {
-    console.log('ReaderHelpers', 'controlSecurity', email)
+    debug('ReaderHelpers', 'controlSecurity', email)
     this.context.setState({loader: {visible: true, message: 'Contrôle (2) en cours...'}})
     this.context.state.client.service('command/surveyControlSecurity').create({email, campaign, location: window.location}).then((result) => {
-      console.log('...', result)
+      debug('...', result)
       if (result.connected === true) {
-        console.log('connected', result.connected)
+        debug('connected', result.connected)
         this.context.setState({passwordless: true})
       } else {
-        console.log('connected', result.connected)
+        debug('connected', result.connected)
         this.context.setState({passwordless: false})
         window.location = window.location.origin + window.location.pathname + '?individual=' + result.urn + window.location.search.replace('?', '&')
       }
@@ -105,7 +109,7 @@ class ReaderHelpers {
     })
   }
   affectSurvey (data) {
-    console.log('ReaderHelpers', 'affectSurvey', data.individual)
+    debug('ReaderHelpers', 'affectSurvey', data.individual)
     this.context.state.client.service('command/individualAffectSurvey').create(data)
       .then((response) => {
         this.context.state.surveys.unshift(response)
@@ -121,15 +125,15 @@ class ReaderHelpers {
           return this.context.setState({loader: {visible: false, message: 'ERROR_SURVEY_ABIBAO_ALREADY_COMPLETE'}})
         }
         if (error.toString().includes('ERROR_INDIVIDUAL_CONTROL_SECURITY')) {
-          console.error('we need to ask email')
+          debugerror('we need to ask email')
           return this.context.setState({askEmail: true, loader: {visible: false, message: ''}})
         }
-        console.error('...', error)
+        debugerror('...', error)
       })
   }
   answerSurvey (data) {
     this.context.state.client.service('command/individualAnswerSurvey').create(data).then((result) => {
-    }).catch(console.error)
+    }).catch(debugerror)
   }
   completeSurvey (data) {
     this.context.state.client.service('command/individualCompleteSurvey').create(data).then((response) => {
@@ -137,12 +141,12 @@ class ReaderHelpers {
         this.context.state.selectedSurvey = this.context.state.surveys.shift()
         this.context.setState({surveys: this.context.state.surveys, selectedSurvey: this.context.state.selectedSurvey})
       }
-    }).catch(console.error)
+    }).catch(debugerror)
   }
   getScreenComplete (id) {
     this.context.state.client.service('query/getCampaignScreenCompleteMessage').find({query: {id}}).then((message) => {
       this.context.setState({screenComplete: message, loader: {visible: false, message: '...'}})
-    }).catch(console.error)
+    }).catch(debugerror)
   }
 }
 
