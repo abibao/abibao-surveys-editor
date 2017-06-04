@@ -20,6 +20,7 @@ class AdminStore extends Reflux.Store {
         message: 'Connexion en cours...'
       },
       campaigns: {},
+      styles: {},
       templates: {
         total_rows: 0,
         rows: []
@@ -101,6 +102,12 @@ class AdminStore extends Reflux.Store {
   onTemplatesRefresh () {
     console.log('AdminStore', 'onTemplatesRefresh')
     this.helpers.refreshTemplates()
+  }
+  onStyleCreate () {
+    this.helpers.createStyle()
+  }
+  onStyleUpdate (data) {
+    this.helpers.updateStyle(data)
   }
 }
 

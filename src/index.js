@@ -4,10 +4,7 @@
 import React from 'react'
 import {render} from 'react-dom'
 import {Router, Route, browserHistory} from 'react-router'
-
-// *************************************
-// application: semantic-admin
-// *************************************
+import ReactGA from 'react-ga'
 
 import 'semantic-ui-css/semantic.css'
 import './index.css'
@@ -20,16 +17,25 @@ import Reader from './pages/reader/Reader'
 import PageNotFound from './pages/admin/PageNotFound'
 import Login from './pages/admin/Login'
 import Campaigns from './pages/admin/Campaigns'
+import Styles from './pages/admin/Styles'
 import Mailings from './pages/admin/Mailings'
 import Editor from './pages/admin/Editor'
 
+ReactGA.initialize('UA-77334841-5')
 window.$ = $
+window.ReactGA = ReactGA
 window.Raven.config('https://f46e516689454c93a343bcb58e253bf7@sentry.io/169530').install()
+
+function logPageView () {
+  ReactGA.set({ page: window.location.pathname + window.location.search })
+  ReactGA.pageview(window.location.pathname + window.location.search)
+}
 
 const routerAdmin = (
   <Router history={browserHistory}>
     <Route path="admin/login" component={Login} />
     <Route path="admin/campaigns" component={Campaigns} />
+    <Route path="admin/styles" component={Styles} />
     <Route path="admin/mailings" component={Mailings} />
     <Route path="admin/campaigns/:id/editor" component={Editor} />
     <Route path="*" component={PageNotFound} />
@@ -37,7 +43,7 @@ const routerAdmin = (
 )
 
 const routerReader = (
-  <Router history={browserHistory}>
+  <Router history={browserHistory} onUpdate={logPageView}>
     <Route path="reader/:id" component={Reader} />
     <Route path="*" component={PageNotFound} />
   </Router>

@@ -15,6 +15,11 @@ import './screen.css'
 
 class SurveyReader extends Reflux.Component {
   componentDidMount () {
+    // insert reader css
+    let s = document.createElement('style')
+    s.setAttribute('type', 'text/css')
+    s.appendChild(document.createTextNode(this.props.survey.style.css))
+    document.head.appendChild(s)
   }
   componentWillUnmount () {
   }
@@ -26,6 +31,11 @@ class SurveyReader extends Reflux.Component {
     this.state = { open: false, randomAnswer: {answer: 'Pas de correspondance'}, randomQuestion: '' }
     this.surveyComplete = () => {
       console.log('SurveyReader', 'surveyComplete')
+      window.ReactGA.event({
+        category: 'Survey',
+        action: 'Complete',
+        label: this.props.survey.campaign.name
+      })
       ReaderActions.completeSurvey()
     }
     this.surveyValidateQuestion = (s, options) => {
@@ -38,6 +48,11 @@ class SurveyReader extends Reflux.Component {
         question: options.name,
         answer: options.value
       }
+      window.ReactGA.event({
+        category: 'Survey',
+        action: 'Validate Question',
+        label: this.props.survey.campaign.name
+      })
       ReaderActions.answerSurvey(answer)
     }
     this.nextAnswer = (e) => {

@@ -10,6 +10,9 @@ class Service {
     const app = this.app
     const starttime = new Date()
     let campaign = {}
+    let style = {
+      id: 'none'
+    }
     let email = params.individual
     // mandatory
     if (!params.individual) {
@@ -24,6 +27,19 @@ class Service {
       .then((result) => {
         campaign = result
         return true
+      })
+      // get the reader's style
+      .then(() => {
+        app.service('api/styles').find({query: {
+          name: campaign.style
+        }}).then((result) => {
+          if (result.length === 1) {
+            style = result[0]
+          }
+          return true
+        }).catch(() => {
+          return true
+        })
       })
       // is individual already in our database if reader = abibao
       .then(() => {
@@ -106,6 +122,7 @@ class Service {
       .then((surveys) => {
         let survey = surveys[0]
         survey.campaign = campaign
+        survey.style = style
         return survey
       })
       .then((result) => {

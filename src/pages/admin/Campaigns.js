@@ -94,7 +94,7 @@ class Campaigns extends Reflux.Component {
                   </Card.Header>
                   <Card.Meta>
                     <span>
-                      {this.state.campaigns[key].company}
+                      {this.state.campaigns[key].reader} with {(!this.state.campaigns[key].style) ? 'default' : this.state.campaigns[key].style}
                     </span>
                   </Card.Meta>
                   <Card.Description>
@@ -128,6 +128,10 @@ class Campaigns extends Reflux.Component {
                 <Form.Field>
                   <label>Reader associé</label>
                   <Input onChange={(e) => this.handleChangeInformation({key: 'reader', val: e.target.value})} defaultValue={this.state.selectedCampaign.reader} size="large" label={{ color: 'red', icon: 'asterisk' }} labelPosition="right corner" className="form" />
+                </Form.Field>
+                <Form.Field>
+                  <label>Style associé</label>
+                  <Input onChange={(e) => this.handleChangeInformation({key: 'style', val: e.target.value})} defaultValue={this.state.selectedCampaign.style} size="large" className="form" />
                 </Form.Field>
                 <Form.Field>
                   <label>Position de la campagne</label>

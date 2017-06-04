@@ -1,9 +1,13 @@
+/* eslint jsx-quotes: ["error", "prefer-double"] */
+
 import AbibaoReader from './abibao'
-import SemanticReader from './semantic'
-import EHOPReader from './ehop'
+import AbibaoV2Reader from './abibao-v2'
+import IDCollReader from './idcoll'
+import Complete from './complete'
 
 export {
   AbibaoReader,
-  SemanticReader,
-  EHOPReader
+  AbibaoV2Reader,
+  IDCollReader,
+  Complete
 }

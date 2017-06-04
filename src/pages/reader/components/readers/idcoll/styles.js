@@ -1,5 +1,5 @@
 const styles = {
-  'root': 'semantic-reader',
+  'root': 'idcoll-reader',
   'navigationButton': 'ui button huge navigation',
   'header': 'ui segment basic header',
   'body': 'ui segment basic body',
@@ -11,7 +11,7 @@ const styles = {
     'next': 'ui button huge navigation next'
   },
   'radiogroup': {
-    'item': 'semantic-radio'
+    'item': 'idcoll-radio'
   },
   'question': {
     'title': 'ui huge header title'

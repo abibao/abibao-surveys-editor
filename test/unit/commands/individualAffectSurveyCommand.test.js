@@ -22,6 +22,11 @@ app.use('command/postOnSlackWithWebhook', {
   create (data) {
   }
 })
+app.use('api/styles', {
+  find (params) {
+    return Promise.resolve([])
+  }
+})
 app.use('api/campaigns', {
   get (id) {
     if (id === 'abibao') {

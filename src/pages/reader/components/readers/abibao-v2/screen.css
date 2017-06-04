@@ -1,11 +1,11 @@
 /* DESKTOP */
 
-.abibao-reader * {
+.abibao-v2-reader * {
   font-family: 'Lato', sans-serif;
   color: #6e6e6e;
 }
 
-body.abibao {
+body.abibao-v2 {
   background: #5da3c7;
   height: 100%;
   min-height: 100%;
@@ -13,12 +13,12 @@ body.abibao {
   justify-content: center;
 }
 
-.ui.fluid.container.abibao {
+.ui.fluid.container.abibao-v2 {
   display: flex;
   align-items: center;
 }
 
-.abibao-reader {
+.abibao-v2-reader {
   padding: 8px;
   padding-left: 60px;
   padding-right: 60px;
@@ -27,20 +27,20 @@ body.abibao {
   position: relative;
 }
 
-.abibao-reader .ui.segment.basic {
+.abibao-v2-reader .ui.segment.basic {
   margin: 0;
   padding: 0;
   border-radius: 0;
 }
 
-.abibao-reader .ui.segment.basic.body {
+.abibao-v2-reader .ui.segment.basic.body {
   position: relative;
   padding: 16px;
   max-width: 680px;
   background: #ffffff !important;
   border-radius: 10px;
   box-shadow: 0 3px 6px 3px rgba(0,0,0,.2);
-  max-height: calc(100% - 160px);
+  min-height: 450px;
   overflow-x: hidden;
   overflow-y: auto;
   z-index: 999;
@@ -48,7 +48,7 @@ body.abibao {
 
 /* NAVIGATION */
 
-.abibao-reader .ui.segment.basic.footer {
+.abibao-v2-reader .ui.segment.basic.footer {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -60,7 +60,7 @@ body.abibao {
   vertical-align: bottom;
 }
 
-.abibao-reader .navigation.prev, .abibao-reader .navigation.next {
+.abibao-v2-reader .navigation.prev, .abibao-v2-reader .navigation.next {
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -68,19 +68,20 @@ body.abibao {
   font-size: 40px;
   margin: 0 !important;
   padding: 0;
+  background: #5da3c7;
 }
 
-.abibao-reader .navigation.prev {
+.abibao-v2-reader .navigation.prev {
   float: left;
 }
 
-.abibao-reader .navigation.next {
+.abibao-v2-reader .navigation.next {
   float: right;
 }
 
 /* ERROR */
 
-.abibao-reader .ui.segment.basic.error {
+.abibao-v2-reader .ui.segment.basic.error {
   padding: 16px;
   margin-top: 16px;
   margin-bottom: 16px;
@@ -89,7 +90,7 @@ body.abibao {
   border-radius: 5px;
 }
 
-.abibao-reader .ui.segment.basic.error > div {
+.abibao-v2-reader .ui.segment.basic.error > div {
   font-size: 18px;
   font-weight: bold;
   color: #cc3300;
@@ -97,17 +98,17 @@ body.abibao {
 
 /* CHECKBOX */
 
-div.abibao-checkbox input[type="checkbox"]:checked,
-div.abibao-checkbox input[type="checkbox"]:not(:checked) {
+div.abibao-v2-checkbox input[type="checkbox"]:checked,
+div.abibao-v2-checkbox input[type="checkbox"]:not(:checked) {
   display: none;
 	margin: 0;
 	padding: 0;
 }
-div.abibao-checkbox {
+div.abibao-v2-checkbox {
   height: 30px;
   margin-bottom: 5px;
 }
-div.abibao-checkbox > label {
+div.abibao-v2-checkbox > label {
   font-size: 1.25em;
   height: 30px;
   line-height: 15px;
@@ -117,7 +118,7 @@ div.abibao-checkbox > label {
   align-items: center;
   cursor: pointer;
 }
-div.abibao-checkbox input[type="checkbox"]:not(:checked) + span:before {
+div.abibao-v2-checkbox input[type="checkbox"]:not(:checked) + span:before {
   content: '';
   display: block;
   width: 30px;
@@ -127,7 +128,7 @@ div.abibao-checkbox input[type="checkbox"]:not(:checked) + span:before {
   border-radius: 5px;
   margin-right: 5px;
 }
-div.abibao-checkbox input[type="checkbox"]:checked + span:before {
+div.abibao-v2-checkbox input[type="checkbox"]:checked + span:before {
   content: '';
   display: block;
   width: 30px;
@@ -140,17 +141,17 @@ div.abibao-checkbox input[type="checkbox"]:checked + span:before {
 
 /* RADIO */
 
-.abibao-radio > label > input[type="radio"]:checked,
-.abibao-radio > label > input[type="radio"]:not(:checked) {
+.abibao-v2-radio > label > input[type="radio"]:checked,
+.abibao-v2-radio > label > input[type="radio"]:not(:checked) {
 	display: none;
 	margin: 0;
 	padding: 0;
 }
-div.abibao-radio {
+div.abibao-v2-radio {
   height: 30px;
   margin-bottom: 5px;
 }
-div.abibao-radio > label {
+div.abibao-v2-radio > label {
   font-size: 1.25em;
   height: 30px;
   line-height: 15px;
@@ -160,7 +161,7 @@ div.abibao-radio > label {
   align-items: center;
   cursor: pointer;
 }
-div.abibao-radio input[type="radio"]:not(:checked) + span:before {
+div.abibao-v2-radio input[type="radio"]:not(:checked) + span:before {
   content: '';
   display: block;
   width: 30px;
@@ -170,7 +171,7 @@ div.abibao-radio input[type="radio"]:not(:checked) + span:before {
   border-radius: 50%;
   margin-right: 5px;
 }
-div.abibao-radio input[type="radio"]:checked + span:before {
+div.abibao-v2-radio input[type="radio"]:checked + span:before {
   content: '';
   display: block;
   width: 30px;

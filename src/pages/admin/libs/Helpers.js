@@ -144,6 +144,16 @@ class AdminHelpers {
       this.context.setState({campaigns: dictionnary})
       return true
     }).then((result) => {
+      return this.context.state.client.service('api/styles').find({}).then((styles) => {
+        let dictionnary = {}
+        styles.map((style) => {
+          dictionnary[style.id] = style
+          return this
+        })
+        this.context.setState({styles: dictionnary})
+        return true
+      })
+    }).then((result) => {
       this.context.setState({loader: {
         visible: true,
         message: 'Synchronisation des data en cours...'
@@ -251,6 +261,22 @@ class AdminHelpers {
           console.error(error)
         })
     }, false)
+  }
+  createStyle () {
+    console.log('AdminHelpers', 'createStyle')
+    return this.context.state.client.service('api/styles').create({
+      name: 'style-' + uuid.v4(),
+      picture: 'images/default/campaign.png',
+      styles: {},
+      css: ''
+    }).then(() => {
+    }).catch(console.error)
+  }
+  updateStyle (data) {
+    console.log('AdminHelpers', 'updateStyle')
+    let newData = clone(data)
+    this.context.state.client.service('api/styles').patch(newData.id, newData).then(() => {
+    }).catch(console.error)
   }
 }
 
