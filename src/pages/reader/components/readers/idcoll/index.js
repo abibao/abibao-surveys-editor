@@ -32,7 +32,20 @@ class SurveyReader extends Reflux.Component {
   constructor (props) {
     super(props)
     debug('SurveyReader', 'constructor')
-    this.state = { open: false, randomAnswer: {answer: 'Pas de correspondance'}, randomQuestion: '' }
+    this.state = {
+      open: false,
+      data: {},
+      randomAnswer: {answer: 'Pas de correspondance'},
+      randomQuestion: ''
+    }
+    this.valueChanged = (s, options) => {
+      debug('SurveyReader', 'valueChanged')
+      this.setState({data: s.data})
+    }
+    this.afterRenderQuestion = (s, options) => {
+      debug('SurveyReader', 'afterRenderQuestion')
+      options.htmlElement.className += ' ' + options.question.name
+    }
     this.surveyComplete = () => {
       debug('SurveyReader', 'surveyComplete')
       window.ReactGA.event({
@@ -61,6 +74,9 @@ class SurveyReader extends Reflux.Component {
     }
     this.nextAnswer = (e) => {
       this.handleGetRandomAnswer(this.state.randomQuestion)
+    }
+    this.closeAnser = (e) => {
+      this.setState({open: false, randomAnswer: {answer: 'Pas de correspondance'}})
     }
     this.handleGetRandomAnswer = (question) => {
       debug('SurveyReader', 'handleGetRandomAnswer', question)
@@ -95,11 +111,11 @@ class SurveyReader extends Reflux.Component {
             <p>{this.state.randomAnswer.answer}</p>
           </Modal.Content>
           <Modal.Actions>
-            <Button onClick={(e) => this.setState({open: false, randomAnswer: {answer: 'Pas de correspondance'}})}>Fermer</Button>
+            <Button onClick={this.closeAnser}>Fermer</Button>
             <Button color="grey" onClick={this.nextAnswer}>Suivant</Button>
           </Modal.Actions>
         </Modal>
-        <Survey.Survey onComplete={this.surveyComplete} onValidateQuestion={this.surveyValidateQuestion} model={data} css={styles} />
+        <Survey.Survey data={this.state.data} onValueChanged={this.valueChanged} onAfterRenderQuestion={this.afterRenderQuestion} onComplete={this.surveyComplete} onValidateQuestion={this.surveyValidateQuestion} model={data} css={styles} />
       </div>
     )
   }
