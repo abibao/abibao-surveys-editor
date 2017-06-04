@@ -40,7 +40,6 @@ class SurveyReader extends Reflux.Component {
     }
     this.valueChanged = (s, options) => {
       debug('SurveyReader', 'valueChanged')
-      this.setState({data: s.data})
     }
     this.afterRenderQuestion = (s, options) => {
       debug('SurveyReader', 'afterRenderQuestion')
@@ -56,7 +55,6 @@ class SurveyReader extends Reflux.Component {
       ReaderActions.completeSurvey()
     }
     this.surveyValidateQuestion = (s, options) => {
-      debug('SurveyReader', 'surveyValidateQuestion')
       let answer = {
         'individual': this.props.survey.individual,
         'survey_id': this.props.survey.id,
@@ -65,6 +63,7 @@ class SurveyReader extends Reflux.Component {
         question: options.name,
         answer: options.value
       }
+      debug('SurveyReader', 'surveyValidateQuestion', answer)
       window.ReactGA.event({
         category: 'Survey',
         action: 'Validate Question',
