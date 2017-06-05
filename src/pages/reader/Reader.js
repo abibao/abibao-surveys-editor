@@ -64,7 +64,7 @@ class Reader extends Reflux.Component {
       withKeyboard: is.mobile(),
       readers: {
         abibao: Readers.AbibaoReader,
-        'abibao-v2': Readers.AbibaoV2Reader,
+        'abibao-standalone': Readers.AbibaoStandAloneReader,
         idcoll: Readers.IDCollReader,
         complete: Readers.Complete
       }

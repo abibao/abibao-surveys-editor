@@ -1,5 +1,5 @@
 const styles = {
-  'root': 'abibao-v2-reader',
+  'root': 'abibao-standalone',
   'header': 'ui segment basic header',
   'body': 'ui segment basic body',
   'footer': 'ui segment basic footer',

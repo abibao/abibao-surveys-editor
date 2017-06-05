@@ -28,6 +28,22 @@ class Service {
         campaign = result
         return true
       })
+      // if reader = complete then no need to affect
+      .then(() => {
+        if (campaign.reader === 'complete') {
+          const endtime = new Date()
+          app.info({
+            env: app.get('env'),
+            exectime: endtime - starttime,
+            type: 'command',
+            name: 'individualAffectSurvey',
+            params
+          })
+          return Promise.resolve({})
+        } else {
+          return true
+        }
+      })
       // get the reader's style
       .then(() => {
         app.service('api/styles').find({query: {
