@@ -53,7 +53,7 @@ class Styles extends Reflux.Component {
     }
   }
   render () {
-    debug('Campaigns', 'render', this.state.loader.visible)
+    debug('Styles', 'render', this.state.loader.visible)
     let loader = () => {
       return (
         <Container fluid className="loader-reader">

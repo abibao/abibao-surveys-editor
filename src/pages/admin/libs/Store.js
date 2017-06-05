@@ -47,6 +47,14 @@ class AdminStore extends Reflux.Store {
         debug('ReaderStore', 'Feathers disconnect')
         AdminActions.networkDisconnect()
       })
+      app.service('api/styles').on('created', (style) => {
+        this.state.styles[style.id] = style
+        this.setState({styles: this.state.styles})
+      })
+      app.service('api/styles').on('patched', (style) => {
+        this.state.styles[style.id] = style
+        this.setState({styles: this.state.styles})
+      })
       app.service('api/campaigns').on('created', (campaign) => {
         this.state.campaigns[campaign.id] = campaign
         this.setState({campaigns: this.state.campaigns})
