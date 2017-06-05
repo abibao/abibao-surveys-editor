@@ -66,7 +66,7 @@ class Reader extends Reflux.Component {
         abibao: Readers.AbibaoReader,
         'abibao-standalone': Readers.AbibaoStandAloneReader,
         idcoll: Readers.IDCollReader,
-        complete: Readers.Complete
+        close: Readers.CloseReader
       }
     }
     this.store = ReaderStore

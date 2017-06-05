@@ -3,11 +3,11 @@
 import AbibaoReader from './abibao'
 import AbibaoStandAloneReader from './abibao-standalone'
 import IDCollReader from './idcoll'
-import Complete from './complete'
+import CloseReader from './close'
 
 export {
   AbibaoReader,
   AbibaoStandAloneReader,
   IDCollReader,
-  Complete
+  CloseReader
 }

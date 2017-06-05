@@ -1,22 +1,22 @@
 const styles = {
   'root': 'abibao-standalone',
-  'header': 'ui segment basic header',
-  'body': 'ui segment basic body',
-  'footer': 'ui segment basic footer',
-  'row': 'ui segment basic row',
+  'header': 'header',
+  'body': 'body',
+  'footer': 'footer',
+  'row': 'row',
   'navigation': {
     'complete': 'navigation complete',
     'prev': 'navigation prev',
     'next': 'navigation next'
   },
   'radiogroup': {
-    'item': 'abibao-v2-radio'
+    'item': 'radiogroup item'
   },
   'checkbox': {
-    'item': 'abibao-v2-checkbox'
+    'item': 'checkbox item'
   },
   'question': {
-    'title': 'ui huge header title'
+    'title': 'question title'
   },
   'error': {
     'root': 'ui segment basic error'
