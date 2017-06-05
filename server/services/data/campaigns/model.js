@@ -30,6 +30,11 @@ module.exports = function (app) {
       type: Sequelize.STRING,
       allowNull: false
     },
+    style: {
+      type: Sequelize.STRING,
+      allowNull: true,
+      defaultValue: ''
+    },
     position: {
       type: Sequelize.INTEGER,
       allowNull: true,

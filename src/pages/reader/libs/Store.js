@@ -6,9 +6,12 @@ import Client from './Client'
 import ReaderActions from './Actions'
 import ReaderHelpers from './Helpers'
 
+import Debug from 'debug'
+const debug = Debug('abibao-platform:reader')
+
 class ReaderStore extends Reflux.Store {
   constructor () {
-    console.log('ReaderStore', 'constructor')
+    debug('ReaderStore', 'constructor')
     super()
     this.state = {
       client: false, // feathers client
@@ -33,52 +36,52 @@ class ReaderStore extends Reflux.Store {
     // listeners
     Client((app) => {
       app.io.on('connect', () => {
-        console.log('ReaderStore', 'Feathers connect')
+        debug('ReaderStore', 'Feathers connect')
         ReaderActions.networkConnect(app)
       })
       app.io.on('disconnect', () => {
-        console.log('ReaderStore', 'Feathers disconnect')
+        debug('ReaderStore', 'Feathers disconnect')
         ReaderActions.networkDisconnect()
       })
     })
   }
   onNetworkConnect (client) {
-    console.log('ReaderStore', 'onNetworkConnect')
+    debug('ReaderStore', 'onNetworkConnect')
     this.helpers.connect(client)
   }
   onNetworkDisconnect () {
     this.helpers.disconnect()
   }
   onNetworkAuthenticate (args) {
-    console.log('ReaderStore', 'onNetworkAuthenticate')
+    debug('ReaderStore', 'onNetworkAuthenticate')
     this.helpers.authenticate(args)
   }
   onReaderInitialize () {
-    console.log('ReaderStore', 'onApplicationInitialize')
+    debug('ReaderStore', 'onApplicationInitialize')
     this.helpers.initialize()
   }
   onAffectSurvey (data) {
-    console.log('ReaderStore', 'onAffectSurvey')
+    debug('ReaderStore', 'onAffectSurvey')
     this.helpers.affectSurvey(data)
   }
   onControlMinimum (data) {
-    console.log('ReaderStore', 'onControlMinimum')
+    debug('ReaderStore', 'onControlMinimum')
     this.helpers.controlMinimum(data)
   }
   controlSecurity (email, campaign) {
-    console.log('ReaderStore', 'onSurveyControlSecurity', email)
+    debug('ReaderStore', 'onSurveyControlSecurity', email)
     this.helpers.controlSecurity(email, campaign)
   }
   onAnswerSurvey (data) {
-    console.log('ReaderStore', 'onAnswerSurvey')
+    debug('ReaderStore', 'onAnswerSurvey')
     this.helpers.answerSurvey(data)
   }
   onCompleteSurvey () {
-    console.log('ReaderStore', 'onCompleteSurvey')
+    debug('ReaderStore', 'onCompleteSurvey')
     this.helpers.completeSurvey(this.state.selectedSurvey)
   }
   onGetScreenComplete (id) {
-    console.log('ReaderStore', 'onGetScreenComplete')
+    debug('ReaderStore', 'onGetScreenComplete')
     this.helpers.getScreenComplete(id)
   }
 }

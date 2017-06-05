@@ -16,17 +16,20 @@ import AppBarSubMenu from './components/AppBarSubMenu'
 import AdminStore from './libs/Store'
 import AdminActions from './libs/Actions'
 
+import Debug from 'debug'
+const debug = Debug('abibao-platform:admin')
+
 class Campaigns extends Reflux.Component {
   componentDidMount () {
-    console.log('Campaigns', 'componentDidMount')
+    debug('Campaigns', 'componentDidMount')
   }
   componentWillUnmount () {
-    console.log('Campaigns', 'componentWillUnmount')
+    debug('Campaigns', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
   }
   constructor (props) {
-    console.log('Campaigns', 'constructor')
+    debug('Campaigns', 'constructor')
     super(props)
     this.state = {
       menuOpen: false,
@@ -66,7 +69,7 @@ class Campaigns extends Reflux.Component {
     }
   }
   render () {
-    console.log('Campaigns', 'render', this.state.loader.visible)
+    debug('Campaigns', 'render', this.state.loader.visible)
     let loader = () => {
       return (
         <Container fluid className="loader-reader">
@@ -94,7 +97,7 @@ class Campaigns extends Reflux.Component {
                   </Card.Header>
                   <Card.Meta>
                     <span>
-                      {this.state.campaigns[key].company}
+                      {this.state.campaigns[key].reader} with {(!this.state.campaigns[key].style) ? 'default' : this.state.campaigns[key].style}
                     </span>
                   </Card.Meta>
                   <Card.Description>
@@ -128,6 +131,10 @@ class Campaigns extends Reflux.Component {
                 <Form.Field>
                   <label>Reader associé</label>
                   <Input onChange={(e) => this.handleChangeInformation({key: 'reader', val: e.target.value})} defaultValue={this.state.selectedCampaign.reader} size="large" label={{ color: 'red', icon: 'asterisk' }} labelPosition="right corner" className="form" />
+                </Form.Field>
+                <Form.Field>
+                  <label>Style associé</label>
+                  <Input onChange={(e) => this.handleChangeInformation({key: 'style', val: e.target.value})} defaultValue={this.state.selectedCampaign.style} size="large" className="form" />
                 </Form.Field>
                 <Form.Field>
                   <label>Position de la campagne</label>

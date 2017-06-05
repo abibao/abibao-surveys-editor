@@ -10,7 +10,6 @@ import ReaderActions from './../../../libs/Actions'
 
 import styles from './styles'
 import './screen.css'
-import './mobile.css'
 
 import ImagePickerWidget from './../../../widgets/ImagePicker'
 import ImagesSelectorWidget from './../../../widgets/ImagesSelector'
@@ -34,11 +33,6 @@ class SurveyReader extends Reflux.Component {
     super(props)
     this.surveyComplete = () => {
       debug('SurveyReader', 'surveyComplete')
-      window.ReactGA.event({
-        category: 'Survey',
-        action: 'Complete',
-        label: this.props.survey.campaign.name
-      })
       ReaderActions.completeSurvey()
     }
     this.surveyValidateQuestion = (s, options) => {
@@ -56,11 +50,6 @@ class SurveyReader extends Reflux.Component {
             question: options.name,
             answer: options.value
           }
-          window.ReactGA.event({
-            category: 'Survey',
-            action: 'Validate Question',
-            label: this.props.survey.campaign.name
-          })
           ReaderActions.answerSurvey(answer)
       }
     }

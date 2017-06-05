@@ -10,17 +10,20 @@ import { Container, Button, Input, Segment, Grid, Header, Icon, Loader } from 's
 import AdminStore from './libs/Store'
 import AdminActions from './libs/Actions'
 
+import Debug from 'debug'
+const debug = Debug('abibao-platform:admin')
+
 class Login extends Reflux.Component {
   componentDidMount () {
-    console.log('Login', 'componentDidMount')
+    debug('Login', 'componentDidMount')
   }
   componentWillUnmount () {
-    console.log('Login', 'componentWillUnmount')
+    debug('Login', 'componentWillUnmount')
   }
   componentDidUpdate (prevProps, prevState) {
   }
   constructor (props) {
-    console.log('Login', 'constructor')
+    debug('Login', 'constructor')
     super(props)
     this.state = {
       email: 'administrator@abibao.com',
@@ -28,12 +31,12 @@ class Login extends Reflux.Component {
     }
     this.store = AdminStore
     this.handleSubmit = () => {
-      console.log('Login', 'handleSubmit')
+      debug('Login', 'handleSubmit')
       AdminActions.networkAuthenticate({strategy: 'local', email: this.state.email, password: this.state.password})
     }
   }
   render () {
-    console.log('Login', 'render')
+    debug('Login', 'render')
     let loader = () => {
       return (
         <Container fluid className="loader-reader">

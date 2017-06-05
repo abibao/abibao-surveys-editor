@@ -14,6 +14,7 @@ class AppBarSubMenu extends Reflux.Component {
     this.state = {
       items: {
         'admin/campaigns': 'Campagnes',
+        'admin/styles': 'Styles',
         'admin/mailings': 'Mailings'
       },
       activeItem: 'None'
@@ -22,16 +23,21 @@ class AppBarSubMenu extends Reflux.Component {
       if (name === 'Campagnes') {
         browserHistory.push('/admin/campaigns')
       }
+      if (name === 'Styles') {
+        browserHistory.push('/admin/styles')
+      }
       if (name === 'Mailings') {
         browserHistory.push('/admin/mailings')
       }
     }
   }
   componentDidMount () {
-    console.log('AppBarSubMenu', 'componentDidMount', window.location.pathname)
     switch (true) {
       case window.location.pathname.includes('admin/campaigns'):
         this.setState({activeItem: this.state.items['admin/campaigns']})
+        break
+      case window.location.pathname.includes('admin/styles'):
+        this.setState({activeItem: this.state.items['admin/styles']})
         break
       case window.location.pathname.includes('admin/mailings'):
         this.setState({activeItem: this.state.items['admin/mailings']})
@@ -45,6 +51,7 @@ class AppBarSubMenu extends Reflux.Component {
     return (
       <Menu fixed="top" color="red" pointing style={{marginTop: '77px'}}>
         <Menu.Item name="Campagnes" active={activeItem === 'Campagnes'} onClick={this.handleItemClick} />
+        <Menu.Item name="Styles" active={activeItem === 'Styles'} onClick={this.handleItemClick} />
         <Menu.Item name="Mailings" active={activeItem === 'Mailings'} onClick={this.handleItemClick} />
       </Menu>
     )
