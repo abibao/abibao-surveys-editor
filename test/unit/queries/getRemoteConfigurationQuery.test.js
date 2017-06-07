@@ -37,7 +37,6 @@ describe('[unit] query getRemoteConfiguration', function () {
     app.service('query/getRemoteConfiguration').find({}).then((result) => {
       expect(result).to.have.property('env')
       expect(result).to.have.property('analytics')
-      expect(result).to.have.property('couchdb')
       done()
     }).catch(done)
   })

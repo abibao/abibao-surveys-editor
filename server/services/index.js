@@ -21,7 +21,7 @@ const surveyControlSecurityCommand = require('./domain/commands/surveyControlSec
 // external queries
 const getCampaignScreenCompleteMessageQuery = require('./domain/queries/getCampaignScreenCompleteMessageQuery')
 const answerGetRandomAnswerQuery = require('./domain/queries/answerGetRandomAnswerQuery')
-const answerGetRandomEHOPAnswerQuery = require('./domain/queries/answerGetRandomEHOPAnswerQuery')
+const getRemoteConfigurationQuery = require('./domain/queries/getRemoteConfigurationQuery')
 
 module.exports = function () {
   const app = this
@@ -46,5 +46,5 @@ module.exports = function () {
 
   app.configure(getCampaignScreenCompleteMessageQuery)
   app.configure(answerGetRandomAnswerQuery)
-  app.configure(answerGetRandomEHOPAnswerQuery)
+  app.configure(getRemoteConfigurationQuery)
 }

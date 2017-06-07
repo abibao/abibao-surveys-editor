@@ -17,7 +17,6 @@ class Service {
     })
     return Promise.resolve({
       env: app.get('env'),
-      couchdb: app.get('couchdb'),
       analytics: app.get('analytics')
     })
   }
