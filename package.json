@@ -63,7 +63,7 @@
     "yamljs": "0.2.10"
   },
   "devDependencies": {
-    "chai": "4.0.1",
+    "chai": "4.0.2",
     "codacy-coverage": "2.0.2",
     "colors": "1.1.2",
     "create-react-class": "15.5.3",
@@ -100,7 +100,8 @@
     "sinon": "2.3.2",
     "snazzy": "7.0.0",
     "standard": "10.0.2",
-    "survey-react": "0.12.16"
+    "survey-react": "0.12.16",
+    "thinky": "2.3.8"
   },
   "standard": {
     "globals": [
