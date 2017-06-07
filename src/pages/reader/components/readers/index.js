@@ -1,13 +1,13 @@
 /* eslint jsx-quotes: ["error", "prefer-double"] */
 
 import AbibaoReader from './abibao'
-import AbibaoV2Reader from './abibao-v2'
+import AbibaoStandAloneReader from './abibao-standalone'
 import IDCollReader from './idcoll'
-import Complete from './complete'
+import CloseReader from './close'
 
 export {
   AbibaoReader,
-  AbibaoV2Reader,
+  AbibaoStandAloneReader,
   IDCollReader,
-  Complete
+  CloseReader
 }

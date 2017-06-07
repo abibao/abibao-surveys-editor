@@ -21,7 +21,9 @@ import Styles from './pages/admin/Styles'
 import Mailings from './pages/admin/Mailings'
 import Editor from './pages/admin/Editor'
 
-ReactGA.initialize('UA-77334841-5')
+$.get(window.location.origin + '/query/getRemoteConfiguration').then((result) => {
+  ReactGA.initialize(result.analytics)
+})
 window.$ = $
 window.ReactGA = ReactGA
 window.Raven.config('https://f46e516689454c93a343bcb58e253bf7@sentry.io/169530').install()

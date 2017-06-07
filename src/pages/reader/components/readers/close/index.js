@@ -19,7 +19,7 @@ class SurveyReader extends Reflux.Component {
     super(props)
     debug('SurveyReader', 'constructor')
     this.state = {
-      message: '# ' + this.props.survey.campaign.name + '\n#### Ce sondage n\'est pas disponible.'
+      message: '# ' + this.props.survey.campaign.name + '\n#### Ce sondage n\'est plus disponible.'
     }
   }
   render () {

@@ -37,7 +37,7 @@ module.exports = function (app) {
     }
   }, {
     timestamps: true,
-    paranoid: true,
+    paranoid: false,
     underscored: false,
     freezeTableName: true,
     tableName: 'answers'

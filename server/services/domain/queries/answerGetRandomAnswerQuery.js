@@ -1,6 +1,7 @@
 const Promise = require('bluebird')
 const Sequelize = require('sequelize')
 const eraro = require('eraro')({package: 'platform.abibao.com'})
+const hooks = require('../hooks')
 
 const AnswerModel = require('./../../data/answers/model')
 
@@ -77,6 +78,9 @@ class Service {
 module.exports = function () {
   const app = this
   app.use('query/answerGetRandomAnswer', new Service())
+  const service = app.service('query/answerGetRandomAnswer')
+  service.before(hooks.before)
+  service.after(hooks.after)
 }
 
 module.exports.Service = Service

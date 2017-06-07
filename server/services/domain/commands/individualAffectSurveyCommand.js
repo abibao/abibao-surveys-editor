@@ -96,28 +96,36 @@ class Service {
           if (params.createdAt) {
             data.createdAt = params.createdAt
           }
-          return app.service('api/surveys').create(data).then(() => {
-            const message = {
-              'username': 'individualCreateSurveyCommand',
-              'text': '[' + new Date() + '] - [' + email + '] can access a new survey (' + campaign.name + ')'
-            }
-            if (params.silence) {
-            } else {
-              app.service('command/postOnSlackWithWebhook').create(message)
-            }
+          if (campaign.reader !== 'close') {
+            return app.service('api/surveys').create(data).then(() => {
+              const message = {
+                'username': 'individualCreateSurveyCommand',
+                'text': '[' + new Date() + '] - [' + email + '] can access a new survey (' + campaign.name + ')'
+              }
+              if (params.silence) {
+              } else {
+                app.service('command/postOnSlackWithWebhook').create(message)
+              }
+              return true
+            })
+          } else {
             return true
-          })
+          }
         } else {
           return true
         }
       })
       .then(() => {
-        return app.service('api/surveys').find({query: {
-          individual: params.individual,
-          campaign: campaign.id,
-          company: campaign.company,
-          complete: false
-        }})
+        if (campaign.reader !== 'close') {
+          return app.service('api/surveys').find({query: {
+            individual: params.individual,
+            campaign: campaign.id,
+            company: campaign.company,
+            complete: false
+          }})
+        } else {
+          return [{}]
+        }
       })
       .then((surveys) => {
         let survey = surveys[0]
