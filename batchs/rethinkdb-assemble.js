@@ -1,7 +1,7 @@
 const glob = require('glob')
 const path = require('path')
-const YAML = require('yamljs')
-const async = require('async')
+// const YAML = require('yamljs')
+// const async = require('async')
 
 let dirpath = path.resolve('./batchs/prod/rethinkdb/individuals')
 let patterns = dirpath + '/**/*.yml'

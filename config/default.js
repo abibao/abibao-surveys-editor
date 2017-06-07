@@ -9,6 +9,7 @@ module.exports = {
   env: nconf.get('ABIBAO_ENV') || 'deve',
   host: nconf.get('ABIBAO_SERVICE_HOST') || '0.0.0.0',
   port: nconf.get('ABIBAO_SERVICE_PORT') || 3000,
+  analytics: nconf.get('ABIBAO_GOOGLE_ANALYTICS') || 'UA-77334841-5',
   logstash: {
     host: nconf.get('ABIBAO_LOGSTASH_HOST') || 'localhost',
     port: nconf.get('ABIBAO_LOGSTASH_PORT') || 5000
