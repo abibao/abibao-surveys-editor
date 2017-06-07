@@ -1,5 +1,6 @@
 const Promise = require('bluebird')
 const eraro = require('eraro')({package: 'platform.abibao.com'})
+const hooks = require('../hooks')
 
 const CampaignModel = require('./../../data/campaigns/model')
 
@@ -40,6 +41,9 @@ class Service {
 module.exports = function () {
   const app = this
   app.use('query/getCampaignScreenCompleteMessage', new Service())
+  const service = app.service('query/getCampaignScreenCompleteMessage')
+  service.before(hooks.before)
+  service.after(hooks.after)
 }
 
 module.exports.Service = Service

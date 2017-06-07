@@ -1,0 +1,28 @@
+/* DESKTOP */
+
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+body.abibao-standalone {
+  background: #5da3c7;
+  height: 100%;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.abibao-standalone * {
+  font-family: 'Raleway', sans-serif;
+  color: #ffffff;
+  font-weight: normal;
+}
+
+.abibao-standalone h1 {
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.abibao-standalone .question.title {
+  display: none;
+}
+
+/* MOBILE */

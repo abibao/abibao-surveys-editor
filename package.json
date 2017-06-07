@@ -1,6 +1,6 @@
 {
   "name": "abibao-surveys-editor",
-  "version": "1.4.7",
+  "version": "1.5.0",
   "description": "Abibao surveys platform.",
   "author": "Gilles Perreymond",
   "scripts": {
@@ -42,7 +42,7 @@
     "feathers-logger": "0.2.3",
     "feathers-memory": "1.1.0",
     "feathers-permissions": "0.1.1",
-    "feathers-rest": "1.7.2",
+    "feathers-rest": "1.7.3",
     "feathers-sequelize": "2.0.0",
     "feathers-socketio": "2.0.0",
     "fs-blob-store": "5.2.1",
@@ -55,7 +55,7 @@
     "request": "2.81.0",
     "request-promise": "4.2.1",
     "sendgrid": "5.1.1",
-    "sequelize": "3.30.4",
+    "sequelize": "4.0.0",
     "serve-favicon": "2.4.3",
     "servicebus": "2.0.10",
     "servicebus-retry": "0.0.11",
@@ -63,7 +63,7 @@
     "yamljs": "0.2.10"
   },
   "devDependencies": {
-    "chai": "4.0.1",
+    "chai": "4.0.2",
     "codacy-coverage": "2.0.2",
     "colors": "1.1.2",
     "create-react-class": "15.5.3",
@@ -84,14 +84,14 @@
     "pouchdb": "6.2.0",
     "progress": "2.0.0",
     "react": "15.5.4",
-    "react-addons-test-utils": "15.4.2",
+    "react-addons-test-utils": "15.5.1",
     "react-cookie": "1.0.4",
-    "react-dom": "15.4.2",
+    "react-dom": "15.5.4",
     "react-dropzone": "3.12.2",
     "react-ga": "2.2.0",
     "react-markdown": "2.5.0",
     "react-router": "3.0.2",
-    "react-scripts": "0.9.5",
+    "react-scripts": "1.0.7",
     "reflux": "6.4.1",
     "request": "2.81.0",
     "selenium-webdriver": "3.4.0",
@@ -100,7 +100,8 @@
     "sinon": "2.3.2",
     "snazzy": "7.0.0",
     "standard": "10.0.2",
-    "survey-react": "0.12.16"
+    "survey-react": "0.12.16",
+    "thinky": "2.3.8"
   },
   "standard": {
     "globals": [
