@@ -6,7 +6,7 @@
   "scripts": {
     "build": "react-scripts build",
     "test": "NODE_ENV=test && ./npm-scripts/test.sh",
-    "test:e2e": "./node_modules/.bin/cucumber.js",
+    "test:e2e": "NODE_ENV=test && ./npm-scripts/test-e2e.sh",
     "test:react": "react-scripts test --env=jsdom",
     "test:standard": "node_modules/.bin/standard --verbose | snazzy",
     "test:unit": "node_modules/.bin/_mocha --recursive test/unit",

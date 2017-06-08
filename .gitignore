@@ -10,6 +10,7 @@ volumes
 build
 *.log
 .queues
+screenshots
 docker/portainer
 batchs/dump.yml
 batchs/export
