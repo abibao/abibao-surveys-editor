@@ -1,4 +1,4 @@
-const glob = require('glob')
+const glob = require('glob-promise')
 const path = require('path')
 const YAML = require('yamljs')
 const async = require('async')

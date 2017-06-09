@@ -3,7 +3,7 @@ const path = require('path')
 const YAML = require('yamljs')
 const pg = require('pg')
 const map = require('lodash').map
-const glob = require('glob')
+const glob = require('glob-promise')
 
 fse.ensureDirSync(path.resolve('./batchs/export/individuals'))
 let conf = YAML.load(path.resolve('./batchs/dump.yml'))

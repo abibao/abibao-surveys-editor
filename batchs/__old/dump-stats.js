@@ -1,6 +1,6 @@
 const fse = require('fs-extra')
 const path = require('path')
-const glob = require('glob')
+const glob = require('glob-promise')
 const YAML = require('yamljs')
 const _ = require('lodash')
 const async = require('async')
