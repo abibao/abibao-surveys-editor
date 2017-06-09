@@ -1,8 +1,10 @@
 .*
 *.log
-coverage/
-src/
-node_modules/
-github/
-.git/
+coverage
+src
+node_modules
+github
+.git
 docker
+test
+screenshots

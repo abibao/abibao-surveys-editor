@@ -12,8 +12,7 @@ COPY build /usr/app/build
 
 RUN apk add --update make gcc g++ python git
 
-RUN npm install --production  && \
-    npm uninstall -g npm
+RUN npm install --production
 
 RUN apk del make gcc g++ python git && \
     rm -rf /tmp/* /var/cache/apk/* /root/.npm /root/.node-gyp
