@@ -3,7 +3,7 @@ const eraro = require('eraro')({package: 'platform.abibao.com'})
 const uuid = require('uuid')
 
 module.exports = function (message) {
-  console.log('BUS_EVENT_BATCH_EMAILING_SENDGRID')
+  console.log('BUS_EVENT_BATCH_EMAILING_SENDGRID', message)
   // couchdb
   const NodeCouchDb = require('node-couchdb')
   const couch = new NodeCouchDb({

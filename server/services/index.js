@@ -1,50 +1,25 @@
+const glob = require('glob-promise')
+const path = require('path')
+const _ = require('lodash')
+
 // internal services
 const users = require('./memory/users')
-const entities = require('./data/entities')
-const campaigns = require('./data/campaigns')
-const surveys = require('./data/surveys')
-const answers = require('./data/answers')
-const individuals = require('./data/individuals')
-const styles = require('./data/styles')
-const templates = require('./couchdb/templates')
-
-// external commands
-const campaignCreateEmailingCommand = require('./domain/commands/campaignCreateEmailingCommand')
-const individualAnswerSurveyCommand = require('./domain/commands/individualAnswerSurveyCommand')
-const individualCompleteSurveyCommand = require('./domain/commands/individualCompleteSurveyCommand')
-const individualAffectSurveyCommand = require('./domain/commands/individualAffectSurveyCommand')
-const postOnSlackWithWebhookCommand = require('./domain/commands/postOnSlackWithWebhookCommand')
-const sendgridRefreshAllTemplatesCommand = require('./domain/commands/sendgridRefreshAllTemplatesCommand')
-const surveyControlMinimumCommand = require('./domain/commands/surveyControlMinimumCommand')
-const surveyControlSecurityCommand = require('./domain/commands/surveyControlSecurityCommand')
-
-// external queries
-const getCampaignScreenCompleteMessageQuery = require('./domain/queries/getCampaignScreenCompleteMessageQuery')
-const answerGetRandomAnswerQuery = require('./domain/queries/answerGetRandomAnswerQuery')
-const getRemoteConfigurationQuery = require('./domain/queries/getRemoteConfigurationQuery')
 
 module.exports = function () {
   const app = this
 
   app.configure(users)
-  app.configure(entities)
-  app.configure(campaigns)
-  app.configure(surveys)
-  app.configure(answers)
-  app.configure(individuals)
-  app.configure(styles)
-  app.configure(templates)
 
-  app.configure(campaignCreateEmailingCommand)
-  app.configure(individualAnswerSurveyCommand)
-  app.configure(individualCompleteSurveyCommand)
-  app.configure(individualAffectSurveyCommand)
-  app.configure(postOnSlackWithWebhookCommand)
-  app.configure(sendgridRefreshAllTemplatesCommand)
-  app.configure(surveyControlMinimumCommand)
-  app.configure(surveyControlSecurityCommand)
-
-  app.configure(getCampaignScreenCompleteMessageQuery)
-  app.configure(answerGetRandomAnswerQuery)
-  app.configure(getRemoteConfigurationQuery)
+  const patterns = [
+    path.resolve(__dirname, 'couchdb/**/index.js'),
+    path.resolve(__dirname, 'data/**/index.js'),
+    path.resolve(__dirname, 'domain/commands/**/*.js'),
+    path.resolve(__dirname, 'domain/queries/**/*.js')
+  ]
+  _.map(patterns, (pattern) => {
+    let services = glob.sync(pattern)
+    _.map(services, (service) => {
+      app.configure(require(service))
+    })
+  })
 }
