@@ -1,4 +1,4 @@
-const glob = require('glob')
+const glob = require('glob-promise')
 const async = require('async')
 const _ = require('lodash')
 const path = require('path')

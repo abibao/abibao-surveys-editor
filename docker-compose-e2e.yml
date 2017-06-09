@@ -1,0 +1,96 @@
+version: '2'
+
+services:
+
+  web:
+    image: library/node:6-alpine
+    privileged: true
+    working_dir: /code
+    environment:
+      ABIBAO_LOGSTASH_HOST: logstash
+      ABIBAO_COUCHDB_HOST: couchdb
+      ABIBAO_POSTGRES_HOST: postgres
+      ABIBAO_RABBITMQ_HOST: rabbitmq
+    volumes:
+      - .:/code
+    networks:
+      - selenium_grid_internal
+    command: "node server/start.js"
+
+  logstash:
+    image: "library/logstash:5.4.0-alpine"
+    command: -f /etc/logstash/conf.d/
+    volumes:
+      - ./docker/logstash/config:/etc/logstash/conf.d
+    networks:
+      - selenium_grid_internal
+
+  couchdb:
+    image: "library/couchdb:1.6"
+    environment:
+      COUCHDB_USER: "infra"
+      COUCHDB_PASSWORD: "infra"
+    networks:
+      - selenium_grid_internal
+
+  postgres:
+    image: "library/postgres:9.5-alpine"
+    environment:
+      POSTGRES_USER: "infra"
+      POSTGRES_PASSWORD: "infra"
+      POSTGRES_DB: "infra"
+    networks:
+      - selenium_grid_internal
+
+  rabbitmq:
+    image: rabbitmq:3.6-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+    networks:
+      - selenium_grid_internal
+
+  selenium_hub:
+    image: selenium/hub
+    container_name: selenium_hub
+    privileged: true
+    ports:
+      - 4444:4444
+    environment:
+      - GRID_TIMEOUT=120000
+      - GRID_BROWSER_TIMEOUT=120000
+    networks:
+      - selenium_grid_internal
+
+  nodechrome:
+    image: selenium/node-chrome
+    privileged: true
+    depends_on:
+      - selenium_hub
+    ports:
+      - 5900
+    environment:
+      - no_proxy=localhost
+      - TZ=Europe/Paris
+      - HUB_PORT_4444_TCP_ADDR=selenium_hub
+      - HUB_PORT_4444_TCP_PORT=4444
+    networks:
+      - selenium_grid_internal
+
+  nodefirefox:
+    image: selenium/node-firefox
+    privileged: true
+    depends_on:
+      - selenium_hub
+    ports:
+      - 5900
+    environment:
+      - no_proxy=localhost
+      - TZ=Europe/Paris
+      - HUB_PORT_4444_TCP_ADDR=selenium_hub
+      - HUB_PORT_4444_TCP_PORT=4444
+    networks:
+      - selenium_grid_internal
+
+networks:
+  selenium_grid_internal:
