@@ -50,6 +50,7 @@
     "lodash": "4.17.4",
     "nconf": "0.8.4",
     "node-couchdb": "1.1.1",
+    "passport": "0.3.2",
     "pg": "6.2.4",
     "pg-hstore": "2.3.2",
     "request": "2.81.0",
