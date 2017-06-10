@@ -4,7 +4,8 @@ const YAML = require('yamljs')
 const pg = require('pg')
 const map = require('lodash').map
 
-fse.ensureDirSync(path.resolve('./batchs/export/answers'))
+fse.ensureDirSync(path.resolve('./batchs/collector/postgres/answers'))
+fse.emptyDirSync(path.resolve('./batchs/collector/postgres/answers'))
 let conf = YAML.load(path.resolve('./batchs/dump.yml'))
 
 const pool = new pg.Pool(conf.postgres)
@@ -38,7 +39,7 @@ const dumpAnswers = (offset) => {
         delete item.deletedAt
         let filepath = ''
         // by question
-        filepath = path.resolve('./batchs/export/answers', item.campaign_id, item.question, year.toString(), ('0' + (month + 1)).slice(-2), ('0' + day).slice(-2), item.individual + '.yml')
+        filepath = path.resolve('./batchs/collector/postgres/answers', item.campaign_id, item.question, year.toString(), ('0' + (month + 1)).slice(-2), ('0' + day).slice(-2), item.individual + '.yml')
         fse.ensureFileSync(filepath)
         fse.writeFileSync(filepath, YAML.stringify(item, 5))
       })

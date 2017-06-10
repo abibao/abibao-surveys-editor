@@ -14,5 +14,5 @@ build
 screenshots
 docker/portainer
 batchs/dump.yml
-batchs/export
-batchs/prod
+collector
+enrich

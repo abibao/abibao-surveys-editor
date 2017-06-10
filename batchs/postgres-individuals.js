@@ -3,9 +3,9 @@ const path = require('path')
 const YAML = require('yamljs')
 const pg = require('pg')
 const map = require('lodash').map
-const glob = require('glob-promise')
 
-fse.ensureDirSync(path.resolve('./batchs/export/individuals'))
+fse.ensureDirSync(path.resolve('./batchs/collector/postgres/individuals'))
+fse.emptyDirSync(path.resolve('./batchs/collector/postgres/individuals'))
 let conf = YAML.load(path.resolve('./batchs/dump.yml'))
 
 const pool = new pg.Pool(conf.postgres)
@@ -38,7 +38,7 @@ const dump = (offset) => {
         let day = new Date(item.updatedAt).getUTCDate()
         let filepath = ''
         // by question
-        filepath = path.resolve('./batchs/export/individuals', year.toString(), ('0' + (month + 1)).slice(-2), ('0' + day).slice(-2), item.email + '.yml')
+        filepath = path.resolve('./batchs/collector/postgres/individuals', year.toString(), ('0' + (month + 1)).slice(-2), ('0' + day).slice(-2), item.email + '.yml')
         fse.ensureFileSync(filepath)
         fse.writeFileSync(filepath, YAML.stringify(item, 5))
       })
