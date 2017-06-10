@@ -2,7 +2,7 @@ machine:
   timezone:
     Europe/Paris
   node:
-    version: 6.9.5
+    version: 8
   services:
     - docker
   pre:
@@ -12,8 +12,6 @@ dependencies:
   pre:
     - curl -L https://github.com/docker/compose/releases/download/1.13.0/docker-compose-`uname -s`-`uname -m` > ../bin/docker-compose && chmod +x ../bin/docker-compose
     - docker-compose --version
-  cache_directories:
-    - node_modules
 test:
   pre:
     - sudo service mysql stop; sleep 5

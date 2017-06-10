@@ -55,7 +55,7 @@ class Editor extends Reflux.Component {
   }
   render () {
     let renderer = () => (
-      <Container className="editor" fluid style={{paddingTop: '80px'}}>
+      <Container className="editor" fluid>
         <AppBar />
         <Segment basic className="editor">
           <IFrameComponent iframe="iframe" campaign={this.state.selectedCampaign} src={'/editor.html?' + this.props.params.id} />

@@ -52,7 +52,7 @@ console.log(options)
 var r = require('thinky')(options).r
 
 // select files cache
-var cacheDir = path.resolve(__dirname, envValue, 'rethinkdb')
+var cacheDir = path.resolve(__dirname, 'collector/rethinkdb')
 fse.ensureDirSync(cacheDir)
 fse.emptyDirSync(cacheDir)
 

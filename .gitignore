@@ -1,4 +1,5 @@
 npm-debug.log
+package-lock.json
 nconf.json
 node_modules
 coverage
@@ -10,7 +11,8 @@ volumes
 build
 *.log
 .queues
+screenshots
 docker/portainer
 batchs/dump.yml
-batchs/export
-batchs/prod
+collector
+enrich

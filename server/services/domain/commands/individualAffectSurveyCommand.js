@@ -13,7 +13,6 @@ class Service {
     let style = {
       id: 'none'
     }
-    let email = params.individual
     // mandatory
     if (!params.individual) {
       return Promise.reject(eraro('ERROR_PARAMS_INDIVIDUAL_MANDATORY'))
@@ -21,6 +20,7 @@ class Service {
     if (!params.campaign) {
       return Promise.reject(eraro('ERROR_PARAMS_CAMPAIGN_MANDATORY'))
     }
+    let email = params.individual
     // logical traitment
     return app.service('api/campaigns').get(params.campaign)
       // check if campaign exists in database

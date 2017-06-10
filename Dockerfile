@@ -12,7 +12,7 @@ COPY build /usr/app/build
 
 RUN apk add --update make gcc g++ python git
 
-RUN npm install --production  && \
+RUN npm install --production && \
     npm uninstall -g npm
 
 RUN apk del make gcc g++ python git && \
