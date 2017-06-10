@@ -2,7 +2,7 @@ const glob = require('glob-promise')
 const path = require('path')
 const _ = require('lodash')
 const fse = require('fs-extra')
-// const YAML = require('yamljs')
+const YAML = require('yamljs')
 // const async = require('async')
 
 const exportPath = path.resolve('./batchs/export/assemble')
@@ -35,14 +35,6 @@ const execStep01 = (message) => {
     dot: true
   })
   console.log('individuals from rethinkdb:', individuals.length)
-
-  dirpath = path.resolve('./batchs/prod/rethinkdb/surveys')
-  patterns = dirpath + '/**/*.yml'
-  let surveys = glob.sync(patterns, {
-    nodir: false,
-    dot: true
-  })
-  console.log('surveys from rethinkdb:', surveys.length)
   bus.send('BATCH_ASSEMBLE_STEP_02', {individuals})
 }
 
@@ -62,6 +54,17 @@ const execStep02Individual = (message) => {
     dot: true
   })
   console.log('individual:', basename, 'surveys:', surveys.length)
+  let individualContent = YAML.load(individual)
+  _.map(surveys, (survey) => {
+    let surveyContent = YAML.load(survey)
+    individualContent.anwers = _.merge(individualContent.anwers, surveyContent.answers)
+    let year = new Date(individualContent.createdAt).getUTCFullYear()
+    let month = new Date(individualContent.createdAt).getUTCMonth()
+    let day = new Date(individualContent.createdAt).getUTCDate()
+    fse.ensureDirSync(path.resolve(exportPath, year.toString(), ('0' + (month + 1)).slice(-2), ('0' + day).slice(-2)))
+    fse.writeFileSync(path.resolve(exportPath, year.toString(), ('0' + (month + 1)).slice(-2), ('0' + day).slice(-2), individualContent.email + '.yml'), YAML.stringify(individualContent, 5))
+    console.log('...', surveyContent.id, Object.keys(surveyContent.answers).length)
+  })
 }
 
 /*
