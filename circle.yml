@@ -20,6 +20,7 @@ test:
     - docker-compose -f docker-compose-circle.yml down
     - docker-compose -f docker-compose-circle.yml up -d
   override:
+    - npm install
     - npm run build
     - npm test
 deployment:
