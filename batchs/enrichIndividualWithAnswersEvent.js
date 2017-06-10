@@ -64,7 +64,7 @@ const execStep02Individual = (message) => {
     let month = new Date(individualContent.createdAt).getUTCMonth()
     let day = new Date(individualContent.createdAt).getUTCDate()
     fse.ensureDirSync(path.resolve(exportPath, year.toString(), ('0' + (month + 1)).slice(-2), ('0' + day).slice(-2)))
-    fse.writeFileSync(path.resolve(exportPath, year.toString(), ('0' + (month + 1)).slice(-2), ('0' + day).slice(-2), individualContent.email + '.yml'), YAML.stringify(individualContent, 5))
+    fse.writeFileSync(path.resolve(exportPath, year.toString(), ('0' + (month + 1)).slice(-2), ('0' + day).slice(-2), individualContent.id + '.yml'), YAML.stringify(individualContent, 5))
     console.log('...', surveyContent.id, Object.keys(surveyContent.answers).length)
   })
 }

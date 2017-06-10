@@ -39,7 +39,7 @@ const dumpAnswers = (offset) => {
         delete item.deletedAt
         let filepath = ''
         // by question
-        filepath = path.resolve('./batchs/collector/postgres/answers', item.campaign_id, item.question, year.toString(), ('0' + (month + 1)).slice(-2), ('0' + day).slice(-2), item.individual + '.yml')
+        filepath = path.resolve('./batchs/collector/postgres/answers', year.toString(), ('0' + (month + 1)).slice(-2), ('0' + day).slice(-2), item.id + '.yml')
         fse.ensureFileSync(filepath)
         fse.writeFileSync(filepath, YAML.stringify(item, 5))
       })
