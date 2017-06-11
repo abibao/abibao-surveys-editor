@@ -12,8 +12,7 @@
     "test:unit": "node_modules/.bin/_mocha --recursive test/unit",
     "test:coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- --opts .mocharc",
     "start": "react-scripts start",
-    "start:server": "NODE_ENV=development node_modules/.bin/nodemon --config nodemon.json server/start.js",
-    "start:server:debug": "DEBUG=feathers* node server/start.js"
+    "start:server": "NODE_ENV=development node_modules/.bin/nodemon --config nodemon.json server/start.js"
   },
   "proxy": "http://localhost:3000",
   "dependencies": {
@@ -46,13 +45,10 @@
     "feathers-socketio": "2.0.0",
     "fs-blob-store": "5.2.1",
     "glob-promise": "3.1.0",
-    "joi": "10.5.2",
     "lodash": "4.17.4",
     "nconf": "0.8.4",
     "node-couchdb": "1.1.1",
     "passport": "0.3.2",
-    "pg": "6.2.4",
-    "pg-hstore": "2.3.2",
     "request": "2.81.0",
     "request-promise": "4.2.1",
     "sendgrid": "5.1.1",
@@ -60,8 +56,7 @@
     "serve-favicon": "2.4.3",
     "servicebus": "2.0.10",
     "servicebus-retry": "0.0.11",
-    "uuid": "3.0.1",
-    "yamljs": "0.2.10"
+    "uuid": "3.0.1"
   },
   "devDependencies": {
     "chai": "4.0.2",
