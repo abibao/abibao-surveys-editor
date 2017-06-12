@@ -69,30 +69,47 @@ h1.ui.error404 {
 /**
 READER COMPONENT **/
 .ui.container.loader-reader {
+  margin: 0;
+  padding: 0;
   height: 100%;
+  width: 100%;
+  border: solid green 2px!important;
 }
 
 /**
 LOGIN COMPONENT **/
 
-.ui.container.login {
-  height: 100%;
+.ui.fluid.container.login {
+  margin: 0!important;
+  padding: 0!important;
+  height: 100%!important;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.ui.segment.login {
-	text-align: center;
-	margin: auto;
-	max-width: 320px;
+.header-login {
+  padding: 20px!important;;
+  margin: 0!important;
+  width: 100%;
 }
-.ui.segment.login label {
-	text-align: left;
+.content-login {
+  text-align: center;
+  padding: 20px!important;;
+  margin: 0!important;
+  width: 100%;
 }
-.ui.button.login {
-	margin: auto;
-	width: 150px;
+.footer-login {
+  text-align: center;
+  padding: 20px!important;;
+  margin: 0!important;
+  width: 100%;
 }
+/*
 h2.ui.login {
   letter-spacing: 1rem;
-}
+} */
 
 /**
 CAMPAIGNS COMPONENT **/

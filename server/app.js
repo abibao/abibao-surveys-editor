@@ -13,6 +13,7 @@ const logger = require('feathers-logger')
 
 const cors = require('cors')
 const bodyParser = require('body-parser')
+
 const middlewares = require('./middlewares')
 const services = require('./services')
 

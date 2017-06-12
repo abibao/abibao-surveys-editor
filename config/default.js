@@ -2,6 +2,7 @@
 
 const path = require('path')
 const nconf = require('nconf')
+const GoogleStrategy = require('passport-google-oauth20').Strategy
 
 nconf.argv().env().file({ file: 'nconf.json' })
 
@@ -63,13 +64,22 @@ module.exports = {
     }
   },
   authentication: {
-    secret: '148fc7815e552128cc7d64850750e34a0cbfbfaabc50ced3e9a330bf40a95392e2fe',
+    secret: nconf.get('ABIBAO_AUTH_SECRET') || '148fc7815e552128cc7d64850750e34a0cbfbfaabc50ced3e9a330bf40a95392e2fe',
     strategies: [
       'jwt',
-      'local'
+      'local',
+      'oauth2'
     ],
     path: '/authentication',
     service: 'users',
+    oauth2: {
+      name: 'google',
+      Strategy: GoogleStrategy,
+      clientID: nconf.get('ABIBAO_GOOGLE_CLIENT_ID') || '10370308640-lfult5ck78v8pu6jknjevp0mqv61tt2e.apps.googleusercontent.com',
+      clientSecret: nconf.get('ABIBAO_GOOGLE_CLIENT_SECRET') || 'yZeuRmhZhGCdh0E7jcLR94ck',
+      scope: ['profile'],
+      callbackURL: nconf.get('ABIBAO_GOOGLE_CALLBACK_URL') || 'http://localhost:4000/auth/google/callback'
+    },
     jwt: {
       header: {
         type: 'access'
