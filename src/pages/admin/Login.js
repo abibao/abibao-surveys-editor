@@ -3,13 +3,13 @@
 // react
 import React from 'react'
 import Reflux from 'reflux'
-import {browserHistory} from 'react-router'
+import GoogleLogin from 'react-google-login'
 
 // semantic
-import { Container, Button, Segment, Header, Icon, Loader } from 'semantic-ui-react'
+import { Container, Segment, Header, Icon } from 'semantic-ui-react'
 
 import AdminStore from './libs/Store'
-// import AdminActions from './libs/Actions'
+import AdminActions from './libs/Actions'
 
 import Debug from 'debug'
 const debug = Debug('abibao-platform:admin')
@@ -17,6 +17,7 @@ const debug = Debug('abibao-platform:admin')
 class Login extends Reflux.Component {
   componentDidMount () {
     debug('Login', 'componentDidMount')
+    console.log(this.props)
   }
   componentWillUnmount () {
     debug('Login', 'componentWillUnmount')
@@ -26,36 +27,17 @@ class Login extends Reflux.Component {
   constructor (props) {
     debug('Login', 'constructor')
     super(props)
-    this.state = {
-      email: 'administrator@abibao.com',
-      password: ''
-    }
     this.store = AdminStore
-    this.handleSubmit = () => {
-      debug('Login', 'handleSubmit')
-      browserHistory.push('/auth/google')
-      // AdminActions.networkAuthenticate({strategy: 'local', email: this.state.email, password: this.state.password})
+    this.onSuccessGoogle = (response) => {
+      debug('onSuccessGoogle', response)
+      AdminActions.networkAuthenticate({strategy: 'google', accessToken: response.accessToken})
+    }
+    this.onFailureGoogle = (error) => {
+      console.log('onFailureGoogle', error)
     }
   }
   render () {
     debug('Login', 'render')
-    /*
-    <Segment loading={this.state.loader.visible} className="login">
-      <Header as="h4" textAlign="left">Votre Email</Header>
-      <Input fluid size="large" value={this.state.email} onChange={(e) => this.setState({email: e.target.value})} placeholder="Saisissez votre email" className="login" />
-      <Header as="h4" textAlign="left">Votre mot de passe</Header>
-      <Input fluid size="large" value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} placeholder="Saisissez votre mot de passe" type="password" className="login" />
-      <br />
-      <Button onClick={this.handleSubmit} size="large" className="login" color="red">Login</Button>
-    </Segment>
-    */
-    let loader = () => {
-      return (
-        <Container fluid className="loader-reader">
-          <Loader active size="huge">{this.state.loader.message}</Loader>
-        </Container>
-      )
-    }
     let renderer = () => (
       <Container fluid className="login">
         <Header as="h2" color="red" icon className="header-login">
@@ -63,10 +45,12 @@ class Login extends Reflux.Component {
           ABIBAO
           <Header.Subheader>PLATFORM</Header.Subheader>
         </Header>
-        <Segment basic loading={this.state.loader.visible} className="content-login">
-          <Button onClick={this.handleSubmit} size="huge" color="google plus">
-            <Icon name="google plus" /> Google Plus
-          </Button>
+        <Segment basic className="content-login">
+          <GoogleLogin
+            clientId="10370308640-lfult5ck78v8pu6jknjevp0mqv61tt2e.apps.googleusercontent.com"
+            uxMode="popup"
+            onSuccess={this.onSuccessGoogle}
+            onFailure={this.onFailureGoogle} />
         </Segment>
         <Header as="h4" color="red" className="footer-login">
           Plateforme de gestion de sondages
@@ -74,9 +58,6 @@ class Login extends Reflux.Component {
         </Header>
       </Container>
     )
-    if (this.state.loader.visible === true) {
-      return loader()
-    }
     return renderer()
   }
 }

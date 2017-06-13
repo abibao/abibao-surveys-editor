@@ -73,7 +73,6 @@ READER COMPONENT **/
   padding: 0;
   height: 100%;
   width: 100%;
-  border: solid green 2px!important;
 }
 
 /**
@@ -98,6 +97,7 @@ LOGIN COMPONENT **/
 }
 .header-login .sub.header {
   letter-spacing: 0.8rem;
+  margin: 0!important;
 }
 .content-login {
   text-align: center;

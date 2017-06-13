@@ -59,9 +59,9 @@ const corsOptions = {
 }
 
 app.use(compress())
-  .options('*', cors(corsOptions))
   .use('/', serveStatic(app.get('public')))
   .use('/wp_content', serveStatic(dirpathUpload))
+  .use('/oauth2/google/callback', serveStatic(app.get('public')))
   .use('/admin/styles', serveStatic(app.get('public')))
   .use('/admin/mailings', serveStatic(app.get('public')))
   .use('/admin/campaigns', serveStatic(app.get('public')))
