@@ -82,19 +82,19 @@ app.use(compress())
   .configure(middlewares)
 
 // create super user
-app.service('users').create({
+/* app.service('users').create({
   email: app.get('accounts').users.super.email,
   password: app.get('accounts').users.super.password,
   permissions: app.get('accounts').users.super.permissions
 }).then(user => {
-}).catch(console.error)
+}).catch(console.error) */
 
 // create reader user
-app.service('users').create({
+/* app.service('users').create({
   email: app.get('accounts').users.reader.email,
   password: app.get('accounts').users.reader.password,
   permissions: app.get('accounts').users.reader.permissions
 }).then(user => {
-}).catch(console.error)
+}).catch(console.error) */
 
 module.exports = app

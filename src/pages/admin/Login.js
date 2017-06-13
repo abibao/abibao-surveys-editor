@@ -64,12 +64,12 @@ class Login extends Reflux.Component {
           <Header.Subheader>PLATFORM</Header.Subheader>
         </Header>
         <Segment basic loading={this.state.loader.visible} className="content-login">
-          <Button onClick={this.handleSubmit} color="google plus">
+          <Button onClick={this.handleSubmit} size="huge" color="google plus">
             <Icon name="google plus" /> Google Plus
           </Button>
         </Segment>
         <Header as="h4" color="red" className="footer-login">
-          Plateforme de gestion des campagnes de sondages
+          Plateforme de gestion de sondages
           <Header.Subheader>© 2015-2017 Abibao Inc.</Header.Subheader>
         </Header>
       </Container>

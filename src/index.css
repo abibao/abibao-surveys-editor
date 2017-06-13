@@ -90,9 +90,14 @@ LOGIN COMPONENT **/
   justify-content: center;
 }
 .header-login {
-  padding: 20px!important;;
+  text-align: center;
+  letter-spacing: 1rem;
+  padding: 20px!important;
   margin: 0!important;
   width: 100%;
+}
+.header-login .sub.header {
+  letter-spacing: 0.8rem;
 }
 .content-login {
   text-align: center;
@@ -106,10 +111,6 @@ LOGIN COMPONENT **/
   margin: 0!important;
   width: 100%;
 }
-/*
-h2.ui.login {
-  letter-spacing: 1rem;
-} */
 
 /**
 CAMPAIGNS COMPONENT **/

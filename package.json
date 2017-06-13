@@ -14,7 +14,7 @@
     "start": "react-scripts start",
     "start:server": "NODE_ENV=development node_modules/.bin/nodemon --config nodemon.json server/start.js"
   },
-  "proxy": "http://localhost:3000",
+  "proxy": "http://localhost:3000/",
   "dependencies": {
     "bluebird": "3.5.0",
     "body-parser": "1.17.2",
@@ -27,6 +27,7 @@
     "cradle": "0.7.1",
     "cryptr": "2.0.0",
     "eraro": "0.4.1",
+    "express-list-endpoints": "^3.0.0",
     "feathers": "2.1.3",
     "feathers-authentication": "1.2.4",
     "feathers-authentication-hooks": "0.1.4",
@@ -51,6 +52,7 @@
     "node-couchdb": "1.1.1",
     "passport": "0.3.2",
     "passport-google-oauth20": "1.0.0",
+    "pg": "^6.2.4",
     "request": "2.81.0",
     "request-promise": "4.2.1",
     "sendgrid": "5.1.1",
@@ -64,7 +66,7 @@
     "chai": "4.0.2",
     "codacy-coverage": "2.0.2",
     "colors": "1.1.2",
-    "create-react-class": "15.5.3",
+    "create-react-class": "15.5.4",
     "debug": "2.6.8",
     "enzyme": "2.8.2",
     "eslint-config-standard": "10.2.1",
