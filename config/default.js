@@ -6,20 +6,35 @@ const Verifier = require('feathers-authentication-oauth2').Verifier
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 
 class CustomVerifier extends Verifier {
-  // The verify function has the exact same inputs and
-  // return values as a vanilla passport strategy
   verify (req, accessToken, refreshToken, profile, done) {
-    console.log('CustomVerifier')
-    // do your custom stuff. You can call internal Verifier methods
-    // and reference this.app and this.options. This method must be implemented.
-    let user = {}
-    // the 'user' variable can be any truthy value
-    done(null, user)
+    const email = profile.emails[0].value
+    if (email !== 'gperreymond@gmail.com') {
+      return req.res.redirect('http://localhost:4000/admin/login?error=NotAuthenticated')
+    }
+    delete profile.emails
+    delete profile._raw
+    delete profile._json
+    profile.email = email
+    profile.password = accessToken
+    profile.permissions = ['admin']
+    this.app.service('users').create(profile).then((user) => {
+      return this.app.passport.createJWT({
+        userId: user.id
+      }, {
+        secret: this.app.get('authentication').secret,
+        jwt: this.app.get('authentication').jwt
+      }).then((accessToken) => {
+        done(null, profile, {accessToken})
+      })
+    }).catch((error) => {
+      console.log(error)
+      done(error)
+    })
   }
 }
 
-const handlerGoogle = () => {
-  console.log('handlerGoogle')
+const handlerGoogle = (req, res) => {
+  res.redirect('http://localhost:4000/admin/login?accessToken=' + req.payload.accessToken)
 }
 
 nconf.argv().env().file({ file: 'nconf.json' })
@@ -68,6 +83,15 @@ module.exports = {
     secret: nconf.get('ABIBAO_CRYPTR_SECRET') || 'secret key'
   },
   accounts: {
+    admins: [
+      'gperreymond@gmail.com',
+      'boitaumail@gmail.com'
+    ],
+    super: {
+      email: nconf.get('ABIBAO_SUPERU_EMAIL') || 'administrator@abibao.com',
+      password: nconf.get('ABIBAO_SUPERU_PASSWORD') || '9SY2wVpace53jFahtCzBsU5GMVkusfh8Gue4s2AC',
+      permissions: ['admin']
+    },
     users: {
       reader: {
         email: nconf.get('ABIBAO_READER_EMAIL') || 'reader@abibao.com',
@@ -79,11 +103,7 @@ module.exports = {
   authentication: {
     secret: nconf.get('ABIBAO_AUTH_SECRET') || '148fc7815e552128cc7d64850750e34a0cbfbfaabc50ced3e9a330bf40a95392e2fe',
     shouldSetupSuccessRoute: false,
-    strategies: [
-      'jwt',
-      'local',
-      'oauth2'
-    ],
+    strategies: ['jwt', 'oauth2', 'local'],
     path: '/authentication',
     service: 'users',
     oauth2: {
@@ -91,8 +111,11 @@ module.exports = {
       Strategy: GoogleStrategy,
       Verifier: CustomVerifier,
       callbackURL: 'http://localhost:3000/auth/google/callback',
+      entity: 'user',
+      service: 'users',
+      passReqToCallback: true,
       handler: handlerGoogle,
-      scope: 'profile',
+      scope: ['profile', 'email'],
       clientID: nconf.get('ABIBAO_GOOGLE_CLIENT_ID') || '10370308640-lfult5ck78v8pu6jknjevp0mqv61tt2e.apps.googleusercontent.com',
       clientSecret: nconf.get('ABIBAO_GOOGLE_CLIENT_SECRET') || 'yZeuRmhZhGCdh0E7jcLR94ck'
     },

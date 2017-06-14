@@ -9,8 +9,8 @@ module.exports = function () {
 
   // Set up authentication with the secret
   app.configure(auth(config))
-  app.configure(oauth2(config.oauth2))
   app.configure(jwt())
+  app.configure(oauth2(config.oauth2))
   app.configure(local(config.local))
 
   // The `authentication` service is used to create a JWT.

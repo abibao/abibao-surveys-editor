@@ -3,12 +3,12 @@
 // react
 import React from 'react'
 import Reflux from 'reflux'
+import cookie from 'react-cookie'
 
 // semantic
 import { Container, Segment, Header, Icon } from 'semantic-ui-react'
 
 import AdminStore from './libs/Store'
-import AdminActions from './libs/Actions'
 
 import Debug from 'debug'
 const debug = Debug('abibao-platform:admin')
@@ -26,12 +26,9 @@ class Login extends Reflux.Component {
     debug('Login', 'constructor')
     super(props)
     this.store = AdminStore
-    this.onSuccessGoogle = (response) => {
-      debug('onSuccessGoogle', response)
-      AdminActions.networkAuthenticate({strategy: 'jwt', accessToken: response.tokenId})
-    }
-    this.onFailureGoogle = (error) => {
-      console.log('onFailureGoogle', error)
+    if (this.props.location && this.props.location.query.accessToken) {
+      let accessToken = this.props.location.query.accessToken
+      cookie.save('rememberMe', accessToken, { path: '/' })
     }
   }
   render () {
@@ -52,6 +49,9 @@ class Login extends Reflux.Component {
         </Header>
       </Container>
     )
+    if (this.props.location && this.props.location.query.accessToken) {
+      return (<h2>Controle en cours...</h2>)
+    }
     return renderer()
   }
 }

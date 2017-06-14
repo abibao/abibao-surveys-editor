@@ -68,14 +68,6 @@ class AdminHelpers {
     debug('AdminHelpers', 'authenticate', args)
     this.context.state.client.authenticate(args)
       .then((response) => {
-        console.log(response)
-      })
-      .catch(console.error)
-  }
-  authenticate2 (args) {
-    debug('AdminHelpers', 'authenticate2', args)
-    this.context.state.client.authenticate(args)
-      .then((response) => {
         this.context.setState({loader: {
           visible: true,
           message: 'Authentification acceptée...'
@@ -108,7 +100,7 @@ class AdminHelpers {
           return AdminActions.networkLogout()
         }
         if (error.name === 'NotAuthenticated') {
-          debug('...', 'no jwt token found, now use strategy local')
+          debug('...', 'no jwt token found')
           if (!window.location.pathname.includes('admin/login')) {
             window.location = window.location.origin + '/admin/login'
           } else {
