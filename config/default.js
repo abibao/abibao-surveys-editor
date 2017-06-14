@@ -2,6 +2,25 @@
 
 const path = require('path')
 const nconf = require('nconf')
+const Verifier = require('feathers-authentication-oauth2').Verifier
+const GoogleStrategy = require('passport-google-oauth20').Strategy
+
+class CustomVerifier extends Verifier {
+  // The verify function has the exact same inputs and
+  // return values as a vanilla passport strategy
+  verify (req, accessToken, refreshToken, profile, done) {
+    console.log('CustomVerifier')
+    // do your custom stuff. You can call internal Verifier methods
+    // and reference this.app and this.options. This method must be implemented.
+    let user = {}
+    // the 'user' variable can be any truthy value
+    done(null, user)
+  }
+}
+
+const handlerGoogle = () => {
+  console.log('handlerGoogle')
+}
 
 nconf.argv().env().file({ file: 'nconf.json' })
 
@@ -59,17 +78,29 @@ module.exports = {
   },
   authentication: {
     secret: nconf.get('ABIBAO_AUTH_SECRET') || '148fc7815e552128cc7d64850750e34a0cbfbfaabc50ced3e9a330bf40a95392e2fe',
+    shouldSetupSuccessRoute: false,
     strategies: [
       'jwt',
-      'local'
+      'local',
+      'oauth2'
     ],
     path: '/authentication',
     service: 'users',
+    oauth2: {
+      name: 'google',
+      Strategy: GoogleStrategy,
+      Verifier: CustomVerifier,
+      callbackURL: 'http://localhost:3000/auth/google/callback',
+      handler: handlerGoogle,
+      scope: 'profile',
+      clientID: nconf.get('ABIBAO_GOOGLE_CLIENT_ID') || '10370308640-lfult5ck78v8pu6jknjevp0mqv61tt2e.apps.googleusercontent.com',
+      clientSecret: nconf.get('ABIBAO_GOOGLE_CLIENT_SECRET') || 'yZeuRmhZhGCdh0E7jcLR94ck'
+    },
     jwt: {
       header: {
         type: 'access'
       },
-      audience: 'https://api.abibao.com',
+      audience: 'accounts.abibao.com',
       subject: 'anonymous',
       issuer: 'feathers',
       algorithm: 'HS256',

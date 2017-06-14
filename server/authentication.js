@@ -1,6 +1,7 @@
 const auth = require('feathers-authentication')
 const jwt = require('feathers-authentication-jwt')
 const local = require('feathers-authentication-local')
+const oauth2 = require('feathers-authentication-oauth2')
 
 module.exports = function () {
   const app = this
@@ -8,6 +9,7 @@ module.exports = function () {
 
   // Set up authentication with the secret
   app.configure(auth(config))
+  app.configure(oauth2(config.oauth2))
   app.configure(jwt())
   app.configure(local(config.local))
 

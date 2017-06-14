@@ -68,6 +68,14 @@ class AdminHelpers {
     debug('AdminHelpers', 'authenticate', args)
     this.context.state.client.authenticate(args)
       .then((response) => {
+        console.log(response)
+      })
+      .catch(console.error)
+  }
+  authenticate2 (args) {
+    debug('AdminHelpers', 'authenticate2', args)
+    this.context.state.client.authenticate(args)
+      .then((response) => {
         this.context.setState({loader: {
           visible: true,
           message: 'Authentification acceptée...'

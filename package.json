@@ -50,7 +50,7 @@
     "nconf": "0.8.4",
     "node-couchdb": "1.1.1",
     "passport": "0.3.2",
-    "passport-google-oauth20": "1.0.0",
+    "passport-google-oauth20": "^1.0.0",
     "pg": "6.2.4",
     "request": "2.81.0",
     "request-promise": "4.2.1",

@@ -3,7 +3,6 @@
 // react
 import React from 'react'
 import Reflux from 'reflux'
-import GoogleLogin from 'react-google-login'
 
 // semantic
 import { Container, Segment, Header, Icon } from 'semantic-ui-react'
@@ -17,7 +16,6 @@ const debug = Debug('abibao-platform:admin')
 class Login extends Reflux.Component {
   componentDidMount () {
     debug('Login', 'componentDidMount')
-    console.log(this.props)
   }
   componentWillUnmount () {
     debug('Login', 'componentWillUnmount')
@@ -30,7 +28,7 @@ class Login extends Reflux.Component {
     this.store = AdminStore
     this.onSuccessGoogle = (response) => {
       debug('onSuccessGoogle', response)
-      AdminActions.networkAuthenticate({strategy: 'google', accessToken: response.accessToken})
+      AdminActions.networkAuthenticate({strategy: 'jwt', accessToken: response.tokenId})
     }
     this.onFailureGoogle = (error) => {
       console.log('onFailureGoogle', error)
@@ -46,11 +44,7 @@ class Login extends Reflux.Component {
           <Header.Subheader>PLATFORM</Header.Subheader>
         </Header>
         <Segment basic className="content-login">
-          <GoogleLogin
-            clientId="10370308640-lfult5ck78v8pu6jknjevp0mqv61tt2e.apps.googleusercontent.com"
-            uxMode="popup"
-            onSuccess={this.onSuccessGoogle}
-            onFailure={this.onFailureGoogle} />
+          <a href="http://localhost:3000/auth/google" className="button">Login With Google</a>
         </Segment>
         <Header as="h4" color="red" className="footer-login">
           Plateforme de gestion de sondages
