@@ -5,11 +5,11 @@ const nconf = require('nconf')
 const Verifier = require('feathers-authentication-oauth2').Verifier
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 
-class CustomVerifier extends Verifier {
+class GoogleVerifier extends Verifier {
   verify (req, accessToken, refreshToken, profile, done) {
     const email = profile.emails[0].value
     if (email !== 'gperreymond@gmail.com') {
-      return req.res.redirect('http://localhost:4000/admin/login?error=NotAuthenticated')
+      return req.res.redirect(this.app.get('domains').admin + '/admin/login?error=NotAuthorized')
     }
     delete profile.emails
     delete profile._raw
@@ -24,7 +24,7 @@ class CustomVerifier extends Verifier {
         secret: this.app.get('authentication').secret,
         jwt: this.app.get('authentication').jwt
       }).then((accessToken) => {
-        done(null, profile, {accessToken})
+        done(null, profile, {accessToken, domain: this.app.get('domains').admin})
       })
     }).catch((error) => {
       console.log(error)
@@ -33,8 +33,8 @@ class CustomVerifier extends Verifier {
   }
 }
 
-const handlerGoogle = (req, res) => {
-  res.redirect('http://localhost:4000/admin/login?accessToken=' + req.payload.accessToken)
+const GoogleHandler = (req, res) => {
+  res.redirect(req.payload.domain + '/admin/login?accessToken=' + req.payload.accessToken)
 }
 
 nconf.argv().env().file({ file: 'nconf.json' })
@@ -43,6 +43,11 @@ module.exports = {
   env: nconf.get('ABIBAO_ENV') || 'deve',
   host: nconf.get('ABIBAO_SERVICE_HOST') || 'localhost',
   port: nconf.get('ABIBAO_SERVICE_PORT') || 3000,
+  domains: {
+    api: nconf.get('ABIBAO_DOMAIN_API') || 'http://localhost:3000',
+    admin: nconf.get('ABIBAO_DOMAIN_ADMIN') || 'http://localhost:4000',
+    reader: nconf.get('ABIBAO_DOMAIN_READER') || 'http://localhost:4000'
+  },
   analytics: nconf.get('ABIBAO_GOOGLE_ANALYTICS') || 'UA-77334841-5',
   logstash: {
     host: nconf.get('ABIBAO_LOGSTASH_HOST') || 'localhost',
@@ -83,16 +88,16 @@ module.exports = {
     secret: nconf.get('ABIBAO_CRYPTR_SECRET') || 'secret key'
   },
   accounts: {
-    admins: [
+    administrators: [
       'gperreymond@gmail.com',
       'boitaumail@gmail.com'
     ],
-    super: {
-      email: nconf.get('ABIBAO_SUPERU_EMAIL') || 'administrator@abibao.com',
-      password: nconf.get('ABIBAO_SUPERU_PASSWORD') || '9SY2wVpace53jFahtCzBsU5GMVkusfh8Gue4s2AC',
-      permissions: ['admin']
-    },
     users: {
+      super: {
+        email: nconf.get('ABIBAO_SUPERU_EMAIL') || 'administrator@abibao.com',
+        password: nconf.get('ABIBAO_SUPERU_PASSWORD') || '9SY2wVpace53jFahtCzBsU5GMVkusfh8Gue4s2AC',
+        permissions: ['admin']
+      },
       reader: {
         email: nconf.get('ABIBAO_READER_EMAIL') || 'reader@abibao.com',
         password: nconf.get('ABIBAO_READER_PASSWORD') || 'password',
@@ -109,12 +114,12 @@ module.exports = {
     oauth2: {
       name: 'google',
       Strategy: GoogleStrategy,
-      Verifier: CustomVerifier,
-      callbackURL: 'http://localhost:3000/auth/google/callback',
+      Verifier: GoogleVerifier,
+      callbackURL: nconf.get('ABIBAO_DOMAIN_API') ? nconf.get('ABIBAO_DOMAIN_API') + '/auth/google/callback' : 'http://localhost:3000/auth/google/callback',
       entity: 'user',
       service: 'users',
       passReqToCallback: true,
-      handler: handlerGoogle,
+      handler: GoogleHandler,
       scope: ['profile', 'email'],
       clientID: nconf.get('ABIBAO_GOOGLE_CLIENT_ID') || '10370308640-lfult5ck78v8pu6jknjevp0mqv61tt2e.apps.googleusercontent.com',
       clientSecret: nconf.get('ABIBAO_GOOGLE_CLIENT_SECRET') || 'yZeuRmhZhGCdh0E7jcLR94ck'

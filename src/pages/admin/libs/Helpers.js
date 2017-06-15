@@ -3,6 +3,7 @@
 import uuid from 'uuid'
 import {clone} from 'lodash'
 import PouchDB from 'pouchdb'
+import cookie from 'react-cookies'
 
 import AdminActions from './Actions'
 import Config from './Config'
@@ -96,23 +97,23 @@ class AdminHelpers {
       .catch((error) => {
         debugerror('...', error)
         if (error.name === 'Forbidden') {
-          // this.context.state.client.logout()
           return AdminActions.networkLogout()
         }
         if (error.name === 'NotAuthenticated') {
           debug('...', 'no jwt token found')
+          this.context.setState({
+            initialized: false,
+            loader: {
+              visible: false,
+              message: ''
+            }
+          })
           if (!window.location.pathname.includes('admin/login')) {
             window.location = window.location.origin + '/admin/login'
-          } else {
-            this.context.setState({
-              initialized: false,
-              loader: {
-                visible: false,
-                message: ''
-              }
-            })
           }
         }
+        debug('...', 'AnotherError', error)
+        return AdminActions.networkLogout()
       })
   }
   disconnect () {
@@ -122,7 +123,14 @@ class AdminHelpers {
       message: 'Déconnexion en cours...'
     }})
     this.context.state.client.logout().then(() => {
+      cookie.remove('rememberMe', { path: '/' })
       debug('AdminHelpers', 'disconnect', 'client logout done')
+      this.context.setState({
+        loader: {
+          visible: false,
+          message: ''
+        }
+      })
       if (!window.location.pathname.includes('admin/login')) {
         window.location = window.location.origin + '/admin/login'
       }

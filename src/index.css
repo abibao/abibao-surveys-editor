@@ -90,14 +90,14 @@ LOGIN COMPONENT **/
 }
 .header-login {
   text-align: center;
-  letter-spacing: 1rem;
+  font-size: 40px!important;
   padding: 20px!important;
   margin: 0!important;
   width: 100%;
 }
 .header-login .sub.header {
-  letter-spacing: 0.8rem;
   margin: 0!important;
+  font-size: 30px!important;
 }
 .content-login {
   text-align: center;
