@@ -2,13 +2,20 @@
 
 const path = require('path')
 const nconf = require('nconf')
+const _ = require('lodash')
 const Verifier = require('feathers-authentication-oauth2').Verifier
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 
 class GoogleVerifier extends Verifier {
   verify (req, accessToken, refreshToken, profile, done) {
     const email = profile.emails[0].value
-    if (email !== 'gperreymond@gmail.com') {
+    let authorized = false
+    _.map(this.app.get('accounts').administrators, (item) => {
+      if (item === email) {
+        authorized = true
+      }
+    })
+    if (authorized === false) {
       return req.res.redirect(this.app.get('domains').admin + '/admin/login?error=NotAuthorized')
     }
     delete profile.emails
