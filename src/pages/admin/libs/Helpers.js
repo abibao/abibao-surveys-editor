@@ -84,6 +84,7 @@ class AdminHelpers {
       .then(user => {
         this.context.state.client.set('user', user)
         debug('...', 'user', this.context.state.client.get('user'))
+        this.context.setState({currentUser: user})
         return true
       })
       .then(() => {
@@ -118,12 +119,15 @@ class AdminHelpers {
   }
   disconnect () {
     debug('AdminHelpers', 'disconnect')
-    this.context.setState({loader: {
-      visible: true,
-      message: 'Déconnexion en cours...'
-    }})
+    cookie.remove('rememberMe', { path: '/' })
+    this.context.setState({
+      currentUser: false,
+      loader: {
+        visible: true,
+        message: 'Déconnexion en cours...'
+      }
+    })
     this.context.state.client.logout().then(() => {
-      cookie.remove('rememberMe', { path: '/' })
       debug('AdminHelpers', 'disconnect', 'client logout done')
       this.context.setState({
         loader: {

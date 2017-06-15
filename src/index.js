@@ -16,6 +16,7 @@ import Reader from './pages/reader/Reader'
 // admin
 import PageNotFound from './pages/admin/PageNotFound'
 import Login from './pages/admin/Login'
+import Logout from './pages/admin/Logout'
 import Campaigns from './pages/admin/Campaigns'
 import Styles from './pages/admin/Styles'
 import Mailings from './pages/admin/Mailings'
@@ -44,6 +45,7 @@ const routerError = (
 const routerAdmin = (
   <Router history={browserHistory}>
     <Route path="admin/login" component={Login} />
+    <Route path="admin/logout" component={Logout} />
     <Route path="admin/campaigns" component={Campaigns} />
     <Route path="admin/styles" component={Styles} />
     <Route path="admin/mailings" component={Mailings} />

@@ -18,12 +18,17 @@ class GoogleVerifier extends Verifier {
     if (authorized === false) {
       return req.res.redirect(this.app.get('domains').admin + '/admin/login?error=NotAuthorized')
     }
-    delete profile.emails
-    delete profile._raw
-    delete profile._json
+    //
+    profile.picture = profile.photos[0].value || 'default.jpg'
     profile.email = email
     profile.password = accessToken
     profile.permissions = ['admin']
+    //
+    delete profile.photos
+    delete profile.emails
+    delete profile._rawj
+    delete profile._json
+    //
     this.app.service('users').create(profile).then((user) => {
       return this.app.passport.createJWT({
         userId: user.id

@@ -13,6 +13,14 @@ html * {
 /**
 MENU COMPONENT **/
 
+.icon.admin-appbar {
+  border: solid #e0e0e0 2px;
+  box-shadow: 0 3px 6px 3px rgba(0,0,0,.2);
+  width: 42x!important;
+  height: 42px!important;
+  background: #101010;
+  margin-left: 10px;
+}
 .ui.inverted.menu {
   background: #555555;
   border-bottom: solid #888888 2px;
