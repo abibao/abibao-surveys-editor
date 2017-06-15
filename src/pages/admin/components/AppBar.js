@@ -5,16 +5,14 @@ import React from 'react'
 import Reflux from 'reflux'
 
 // semantic
-import { Header, Icon, Menu, Button } from 'semantic-ui-react'
+import { Header, Icon, Image, Menu } from 'semantic-ui-react'
 
-import AdminActions from './../libs/Actions'
+import AdminStore from './../libs/Store'
 
 class AppBar extends Reflux.Component {
   constructor (props) {
     super(props)
-    this.handleLogout = () => {
-      AdminActions.networkLogout()
-    }
+    this.store = AdminStore
   }
   render () {
     return (
@@ -32,7 +30,8 @@ class AppBar extends Reflux.Component {
         </Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item>
-            <Button onClick={this.handleLogout} size="large">Logout</Button>
+            <Image className="icon admin-appbar" shape="circular" src={this.state.currentUser.picture} />
+            <a href="/admin/logout"><Image className="icon admin-appbar" shape="circular" src="/images/unplug-icon.png" /></a>
           </Menu.Item>
         </Menu.Menu>
       </Menu>
