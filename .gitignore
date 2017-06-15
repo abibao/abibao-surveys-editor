@@ -13,6 +13,4 @@ build
 .queues
 screenshots
 docker/portainer
-batchs/dump.yml
-collector
-enrich
+batchs/

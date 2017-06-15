@@ -35,6 +35,12 @@ function logPageView () {
   ReactGA.pageview(window.location.pathname + window.location.search)
 }
 
+const routerError = (
+  <Router history={browserHistory}>
+    <Route path="*" component={PageNotFound} />
+  </Router>
+)
+
 const routerAdmin = (
   <Router history={browserHistory}>
     <Route path="admin/login" component={Login} />
@@ -49,12 +55,6 @@ const routerAdmin = (
 const routerReader = (
   <Router history={browserHistory} onUpdate={logPageView}>
     <Route path="reader/:id" component={Reader} />
-    <Route path="*" component={PageNotFound} />
-  </Router>
-)
-
-const routerError = (
-  <Router history={browserHistory}>
     <Route path="*" component={PageNotFound} />
   </Router>
 )

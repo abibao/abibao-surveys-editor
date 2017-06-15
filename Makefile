@@ -1,7 +1,7 @@
 NODECHROME=2
 NODEFIREFOX=2
 
-.PHONY: default up down collectors test test-e2e
+.PHONY: default up down kill_ports test test-e2e
 
 default: up
 
@@ -11,10 +11,8 @@ up:
 down:
 	docker-compose -f docker-compose.yml down;
 
-collectors:
-	node batchs/rethinkdb-export all prod;
-	node batchs/postgres-individuals;
-	node batch/postgres-answers;
+kill_ports:
+	sudo kill `sudo lsof -t -i:5432`;
 
 test:
 	rm -rf coverage;
