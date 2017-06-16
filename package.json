@@ -74,7 +74,7 @@
     "eslint-plugin-promise": "3.5.0",
     "eslint-plugin-standard": "3.0.1",
     "feathers-authentication-client": "0.3.2",
-    "github-markdown-css": "2.7.0",
+    "github-markdown-css": "^2.7.0",
     "is_js": "0.9.0",
     "istanbul": "0.4.5",
     "mocha": "3.4.2",
