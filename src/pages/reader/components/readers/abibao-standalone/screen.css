@@ -7,16 +7,25 @@ body.abibao-standalone {
   height: 100%;
   min-height: 100%;
   display: flex;
+  font-size: 16px;
   justify-content: center;
 }
 
 .abibao-standalone * {
   font-family: 'Raleway', sans-serif;
-  color: #ffffff;
+  color: #333333;
   font-weight: normal;
 }
 
+.abibao-standalone .body {
+  padding: 10px;
+  margin: 0;
+  background: #ffffff;
+  border-radius: 10px;
+}
+
 .abibao-standalone h1 {
+  color: #5da3c7;
   font-weight: bold;
   font-size: 30px;
 }
