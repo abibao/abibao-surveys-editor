@@ -50,7 +50,7 @@
     "nconf": "0.8.4",
     "node-couchdb": "1.1.1",
     "passport": "0.3.2",
-    "passport-google-oauth20": "^1.0.0",
+    "passport-google-oauth20": "1.0.0",
     "pg": "6.2.4",
     "request": "2.81.0",
     "request-promise": "4.2.1",
@@ -59,7 +59,7 @@
     "serve-favicon": "2.4.3",
     "servicebus": "2.0.10",
     "servicebus-retry": "0.0.11",
-    "uuid": "3.0.1"
+    "uuid": "3.1.0"
   },
   "devDependencies": {
     "chai": "4.0.2",
@@ -74,7 +74,7 @@
     "eslint-plugin-promise": "3.5.0",
     "eslint-plugin-standard": "3.0.1",
     "feathers-authentication-client": "0.3.2",
-    "github-markdown-css": "^2.7.0",
+    "github-markdown-css": "2.8.0",
     "is_js": "0.9.0",
     "istanbul": "0.4.5",
     "mocha": "3.4.2",
