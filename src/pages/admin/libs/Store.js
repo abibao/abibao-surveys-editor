@@ -15,6 +15,7 @@ class AdminStore extends Reflux.Store {
     super()
     this.state = {
       client: false, // feathers client
+      currentUser: false,
       socket: false, // socketIO token
       token: false, // Authentification jwt
       initialized: false, // application has finish loading or not ?

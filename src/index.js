@@ -16,6 +16,7 @@ import Reader from './pages/reader/Reader'
 // admin
 import PageNotFound from './pages/admin/PageNotFound'
 import Login from './pages/admin/Login'
+import Logout from './pages/admin/Logout'
 import Campaigns from './pages/admin/Campaigns'
 import Styles from './pages/admin/Styles'
 import Mailings from './pages/admin/Mailings'
@@ -35,9 +36,16 @@ function logPageView () {
   ReactGA.pageview(window.location.pathname + window.location.search)
 }
 
+const routerError = (
+  <Router history={browserHistory}>
+    <Route path="*" component={PageNotFound} />
+  </Router>
+)
+
 const routerAdmin = (
   <Router history={browserHistory}>
     <Route path="admin/login" component={Login} />
+    <Route path="admin/logout" component={Logout} />
     <Route path="admin/campaigns" component={Campaigns} />
     <Route path="admin/styles" component={Styles} />
     <Route path="admin/mailings" component={Mailings} />
@@ -49,12 +57,6 @@ const routerAdmin = (
 const routerReader = (
   <Router history={browserHistory} onUpdate={logPageView}>
     <Route path="reader/:id" component={Reader} />
-    <Route path="*" component={PageNotFound} />
-  </Router>
-)
-
-const routerError = (
-  <Router history={browserHistory}>
     <Route path="*" component={PageNotFound} />
   </Router>
 )

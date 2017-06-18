@@ -4,7 +4,7 @@
 import React from 'react'
 import Reflux from 'reflux'
 import ReactMarkdown from 'react-markdown'
-import cookie from 'react-cookie'
+import cookie from 'react-cookies'
 import uuid from 'uuid'
 import is from 'is_js'
 

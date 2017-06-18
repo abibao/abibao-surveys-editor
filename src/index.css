@@ -13,6 +13,14 @@ html * {
 /**
 MENU COMPONENT **/
 
+.icon.admin-appbar {
+  border: solid #e0e0e0 2px;
+  box-shadow: 0 3px 6px 3px rgba(0,0,0,.2);
+  width: 42x!important;
+  height: 42px!important;
+  background: #101010;
+  margin-left: 10px;
+}
 .ui.inverted.menu {
   background: #555555;
   border-bottom: solid #888888 2px;
@@ -69,29 +77,47 @@ h1.ui.error404 {
 /**
 READER COMPONENT **/
 .ui.container.loader-reader {
+  margin: 0;
+  padding: 0;
   height: 100%;
+  width: 100%;
 }
 
 /**
 LOGIN COMPONENT **/
 
-.ui.container.login {
-  height: 100%;
+.ui.fluid.container.login {
+  margin: 0!important;
+  padding: 0!important;
+  height: 100%!important;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.ui.segment.login {
-	text-align: center;
-	margin: auto;
-	max-width: 320px;
+.header-login {
+  text-align: center;
+  font-size: 40px!important;
+  padding: 20px!important;
+  margin: 0!important;
+  width: 100%;
 }
-.ui.segment.login label {
-	text-align: left;
+.header-login .sub.header {
+  margin: 0!important;
+  font-size: 30px!important;
 }
-.ui.button.login {
-	margin: auto;
-	width: 150px;
+.content-login {
+  text-align: center;
+  padding: 20px!important;;
+  margin: 0!important;
+  width: 100%;
 }
-h2.ui.login {
-  letter-spacing: 1rem;
+.footer-login {
+  text-align: center;
+  padding: 20px!important;;
+  margin: 0!important;
+  width: 100%;
 }
 
 /**

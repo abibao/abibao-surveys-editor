@@ -31,6 +31,7 @@ describe('[integration] story prepare database', function () {
     rp(opts).then((result) => {
       expect(result).to.have.property('accessToken')
       token = result.accessToken
+      expect(token).to.be.a('string')
       done()
     }).catch(done)
   })

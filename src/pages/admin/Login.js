@@ -3,12 +3,13 @@
 // react
 import React from 'react'
 import Reflux from 'reflux'
+import cookie from 'react-cookies'
 
 // semantic
-import { Container, Button, Input, Segment, Grid, Header, Icon, Loader } from 'semantic-ui-react'
+import { Container, Segment, Header, Button, Icon, Loader } from 'semantic-ui-react'
 
+import Config from './libs/Config'
 import AdminStore from './libs/Store'
-import AdminActions from './libs/Actions'
 
 import Debug from 'debug'
 const debug = Debug('abibao-platform:admin')
@@ -26,13 +27,17 @@ class Login extends Reflux.Component {
     debug('Login', 'constructor')
     super(props)
     this.state = {
-      email: 'administrator@abibao.com',
-      password: ''
+      working: false
     }
     this.store = AdminStore
-    this.handleSubmit = () => {
-      debug('Login', 'handleSubmit')
-      AdminActions.networkAuthenticate({strategy: 'local', email: this.state.email, password: this.state.password})
+    if (this.props.location && this.props.location.query.accessToken) {
+      this.setState({loader: {visible: true, message: 'Controle en cours...'}})
+      let accessToken = this.props.location.query.accessToken
+      cookie.save('rememberMe', accessToken, { path: '/' })
+    }
+    this.handleGoogleLogin = () => {
+      this.setState({working: true})
+      window.location = Config.auth.google
     }
   }
   render () {
@@ -46,37 +51,20 @@ class Login extends Reflux.Component {
     }
     let renderer = () => (
       <Container fluid className="login">
-        <Grid container className="login">
-          <Grid.Row verticalAlign="bottom">
-            <Grid.Column textAlign="center" verticalAlign="bottom">
-              <Header as="h2" color="red" icon className="login">
-                <Icon name="unlock alternate" size="large" />
-                ABIBAO
-                <Header.Subheader>PLATFORM</Header.Subheader>
-              </Header>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row verticalAlign="middle" color="red">
-            <Grid.Column>
-              <Segment loading={this.state.loader.visible} className="login">
-                <Header as="h4" textAlign="left">Votre Email</Header>
-                <Input fluid size="large" value={this.state.email} onChange={(e) => this.setState({email: e.target.value})} placeholder="Saisissez votre email" className="login" />
-                <Header as="h4" textAlign="left">Votre mot de passe</Header>
-                <Input fluid size="large" value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} placeholder="Saisissez votre mot de passe" type="password" className="login" />
-                <br />
-                <Button onClick={this.handleSubmit} size="large" className="login" color="red">Login</Button>
-              </Segment>
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row verticalAlign="top">
-            <Grid.Column textAlign="center" verticalAlign="top">
-              <Header as="h4" color="red">
-                Plateforme de gestion des campagnes de sondages
-                <Header.Subheader>© 2015-2017 Abibao Inc.</Header.Subheader>
-              </Header>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+        <Header as="h2" color="red" icon className="header-login">
+          <Icon name="unlock alternate" size="large" />
+          ABIBAO
+          <Header.Subheader>PLATFORM</Header.Subheader>
+        </Header>
+        <Segment basic className="content-login">
+          <Button loading={this.state.working} onClick={this.handleGoogleLogin} color="google plus" size="huge">
+            <Icon name="google" /> Connexion
+          </Button>
+        </Segment>
+        <Header as="h4" color="red" className="footer-login">
+          Plateforme de gestion de sondages
+          <Header.Subheader>© 2015-2017 Abibao Inc.</Header.Subheader>
+        </Header>
       </Container>
     )
     if (this.state.loader.visible === true) {

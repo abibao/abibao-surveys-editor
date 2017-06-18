@@ -3,6 +3,7 @@
 import uuid from 'uuid'
 import {clone} from 'lodash'
 import PouchDB from 'pouchdb'
+import cookie from 'react-cookies'
 
 import AdminActions from './Actions'
 import Config from './Config'
@@ -83,6 +84,7 @@ class AdminHelpers {
       .then(user => {
         this.context.state.client.set('user', user)
         debug('...', 'user', this.context.state.client.get('user'))
+        this.context.setState({currentUser: user})
         return true
       })
       .then(() => {
@@ -96,33 +98,43 @@ class AdminHelpers {
       .catch((error) => {
         debugerror('...', error)
         if (error.name === 'Forbidden') {
-          // this.context.state.client.logout()
           return AdminActions.networkLogout()
         }
         if (error.name === 'NotAuthenticated') {
-          debug('...', 'no jwt token found, now use strategy local')
+          debug('...', 'no jwt token found')
+          this.context.setState({
+            initialized: false,
+            loader: {
+              visible: false,
+              message: ''
+            }
+          })
           if (!window.location.pathname.includes('admin/login')) {
             window.location = window.location.origin + '/admin/login'
-          } else {
-            this.context.setState({
-              initialized: false,
-              loader: {
-                visible: false,
-                message: ''
-              }
-            })
           }
         }
+        debug('...', 'AnotherError', error)
+        return AdminActions.networkLogout()
       })
   }
   disconnect () {
     debug('AdminHelpers', 'disconnect')
-    this.context.setState({loader: {
-      visible: true,
-      message: 'Déconnexion en cours...'
-    }})
+    cookie.remove('rememberMe', { path: '/' })
+    this.context.setState({
+      currentUser: false,
+      loader: {
+        visible: true,
+        message: 'Déconnexion en cours...'
+      }
+    })
     this.context.state.client.logout().then(() => {
       debug('AdminHelpers', 'disconnect', 'client logout done')
+      this.context.setState({
+        loader: {
+          visible: false,
+          message: ''
+        }
+      })
       if (!window.location.pathname.includes('admin/login')) {
         window.location = window.location.origin + '/admin/login'
       }

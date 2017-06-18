@@ -15,7 +15,7 @@ import Debug from 'debug'
 const debug = Debug('abibao-platform:reader')
 
 class SurveyReader extends Reflux.Component {
-  ccomponentDidMount () {
+  componentDidMount () {
     // insert reader css
     let s = document.createElement('style')
     s.setAttribute('type', 'text/css')
