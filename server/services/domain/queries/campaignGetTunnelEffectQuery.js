@@ -3,13 +3,6 @@ const _ = require('lodash')
 const eraro = require('eraro')({package: 'platform.abibao.com'})
 // const hooks = require('../hooks')
 
-let querySQL = '' +
-  'SELECT COUNT (DISTINCT individual), question, (COUNT (DISTINCT individual)*100.0)/(SELECT COUNT (DISTINCT individual) ' +
-  "FROM public.answers WHERE campaign_name='CAMPAIGN_NAME' " +
-  "AND question='CAMPAIGN_FIRST_QUESTION' GROUP BY campaign_name,question) AS pourcentage " +
-  "FROM public.answers AS pourcentage WHERE campaign_name='CAMPAIGN_NAME' AND question not LIKE '%question%' " +
-  'GROUP BY campaign_name,question ORDER BY COUNT DESC'
-
 class Service {
   setup (app, path) {
     this.app = app
@@ -45,6 +38,12 @@ class Service {
             }
           })
         })
+        let querySQL = '' +
+          'SELECT COUNT (DISTINCT individual), question, (COUNT (DISTINCT individual)*100.0)/(SELECT COUNT (DISTINCT individual) ' +
+          "FROM public.answers WHERE campaign_name='CAMPAIGN_NAME' " +
+          "AND question='CAMPAIGN_FIRST_QUESTION' GROUP BY campaign_name,question) AS pourcentage " +
+          "FROM public.answers AS pourcentage WHERE campaign_name='CAMPAIGN_NAME' AND question not LIKE '%question%' " +
+          'GROUP BY campaign_name,question ORDER BY COUNT DESC'
         querySQL = _.replace(querySQL, /CAMPAIGN_NAME/g, campaign.name)
         querySQL = _.replace(querySQL, /CAMPAIGN_FIRST_QUESTION/g, campaign.questions[0])
         return app.sequelize.query(querySQL, {type: app.sequelize.QueryTypes.SELECT}).then((result) => {
