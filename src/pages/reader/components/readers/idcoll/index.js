@@ -24,8 +24,6 @@ class SurveyReader extends Reflux.Component {
     s.setAttribute('type', 'text/css')
     s.appendChild(document.createTextNode(this.props.survey.style.css))
     document.head.appendChild(s)
-    // semantic embed
-    window.$('.ui.embed').embed()
   }
   componentWillUnmount () {
   }
@@ -46,6 +44,7 @@ class SurveyReader extends Reflux.Component {
     this.afterRenderQuestion = (s, options) => {
       debug('SurveyReader', 'afterRenderQuestion')
       options.htmlElement.className += ' ' + options.question.name
+      this.checkEmbed()
     }
     this.surveyComplete = () => {
       debug('SurveyReader', 'surveyComplete')
@@ -91,6 +90,17 @@ class SurveyReader extends Reflux.Component {
         this.setState({open: false, randomAnswer: {answer: 'Pas de correspondance'}})
         debugerror(error)
       })
+    }
+    // check embed access
+    this.checkEmbed = () => {
+      console.log('checkEmbed')
+      if (window.$ && window.$('.ui.embed').embed) {
+        window.$('.ui.embed').embed()
+      } else {
+        setTimeout(() => {
+          this.checkEmbed()
+        }, 250)
+      }
     }
     window.openGetRandomAnswer = this.handleGetRandomAnswer
     window.jQuery = window.$

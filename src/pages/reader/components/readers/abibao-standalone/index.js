@@ -21,8 +21,6 @@ class SurveyReader extends Reflux.Component {
     s.setAttribute('type', 'text/css')
     s.appendChild(document.createTextNode(this.props.survey.style.css))
     document.head.appendChild(s)
-    // semantic embed
-    window.$('.ui.embed').embed()
   }
   componentWillUnmount () {
   }
