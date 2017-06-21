@@ -25,8 +25,6 @@ class SurveyReader extends Reflux.Component {
     s.setAttribute('type', 'text/css')
     s.appendChild(document.createTextNode(this.props.survey.style.css))
     document.head.appendChild(s)
-    // semantic embed
-    window.$('.ui.embed').embed()
   }
   componentWillUnmount () {
   }
@@ -34,6 +32,22 @@ class SurveyReader extends Reflux.Component {
   }
   constructor (props) {
     super(props)
+    // check embed access
+    this.checkEmbed = () => {
+      console.log('checkEmbed')
+      if (window.$ && window.$('.ui.embed').embed) {
+        window.$('.ui.embed').embed()
+      } else {
+        setTimeout(() => {
+          this.checkEmbed()
+        }, 250)
+      }
+    }
+    this.afterRenderQuestion = (s, options) => {
+      debug('SurveyReader', 'afterRenderQuestion')
+      options.htmlElement.className += ' ' + options.question.name
+      this.checkEmbed()
+    }
     this.surveyComplete = () => {
       debug('SurveyReader', 'surveyComplete')
       window.ReactGA.event({
@@ -66,6 +80,8 @@ class SurveyReader extends Reflux.Component {
           ReaderActions.answerSurvey(answer)
       }
     }
+    window.jQuery = window.$
+    window.jQuery.getScript('//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js')
   }
   render () {
     if (!this.props.survey) {
@@ -77,7 +93,7 @@ class SurveyReader extends Reflux.Component {
     Survey.CustomWidgetCollection.Instance.addCustomWidget(ImagesSelectorWidget)
     let data = new Survey.Model(this.props.survey.campaign.data)
     return (
-      <Survey.Survey onComplete={this.surveyComplete} onValidateQuestion={this.surveyValidateQuestion} model={data} css={styles} />
+      <Survey.Survey onAfterRenderQuestion={this.afterRenderQuestion} onComplete={this.surveyComplete} onValidateQuestion={this.surveyValidateQuestion} model={data} css={styles} />
     )
   }
 }

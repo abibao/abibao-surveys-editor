@@ -76,6 +76,9 @@ class Reader extends Reflux.Component {
     this.handleSubmit = (e) => {
       debug('Reader', 'handleSubmit', this.email)
       e.preventDefault()
+      if (!this.email) {
+        return false
+      }
       ReaderActions.controlSecurity(this.email, this.props.params.id)
     }
   }

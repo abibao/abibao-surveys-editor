@@ -133,8 +133,8 @@ module.exports = {
       passReqToCallback: true,
       handler: GoogleHandler,
       scope: ['profile', 'email'],
-      clientID: nconf.get('ABIBAO_GOOGLE_CLIENT_ID') || '10370308640-lfult5ck78v8pu6jknjevp0mqv61tt2e.apps.googleusercontent.com',
-      clientSecret: nconf.get('ABIBAO_GOOGLE_CLIENT_SECRET') || 'yZeuRmhZhGCdh0E7jcLR94ck'
+      clientID: nconf.get('ABIBAO_GOOGLE_CLIENT_ID') || '10370308640-t9s5mm5dk2mmerjoecql4uc8eb520ub6.apps.googleusercontent.com',
+      clientSecret: nconf.get('ABIBAO_GOOGLE_CLIENT_SECRET') || 'ExbftaUix_chjykO5949OHxC'
     },
     jwt: {
       header: {
