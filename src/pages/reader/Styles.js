@@ -10,7 +10,7 @@ const styles = {
     'next': 'sui button nav next'
   },
   'progress': 'sui progress',
-  'progressBar': 'sui progress bar',
+  'progressBar': 'sui progress-bar',
   'pageTitle': 'sui page title',
   'row': 'sui row',
   'question': {

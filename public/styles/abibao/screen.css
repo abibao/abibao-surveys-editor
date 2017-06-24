@@ -99,6 +99,35 @@ body.abibao {
   color: #cc3300;
 }
 
+/* PROGRESS BAR */
+
+body.abibao .reader-abibao .sui.rating.root {
+  padding: 5px !important;
+}
+
+body.abibao .reader-abibao .sui.progress {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 50px !important;
+  height: 50px !important;
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  z-index: 9999;
+  border-radius: 50%;
+  background: #d2dadf;
+  border: solid 4px #f0f3f4;
+  border-top-color: #f0f3f4;
+  border-right-color: #f0f3f4;
+  border-bottom-color: #f0f3f4;
+  border-left-color: #f0f3f4;
+  transform: rotate(45deg);
+}
+
+body.abibao .reader-abibao .sui.progress-bar {
+  display: none;
+}
+
 /* RADIOGROUP */
 
 .reader-abibao .sui.radiogroup.item > label > input[type="radio"]:checked,
