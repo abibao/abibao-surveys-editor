@@ -25,6 +25,8 @@
     <script type="text/javascript">
       Survey.JsonObject.metaData.addProperty("checkbox", {name: "renderAs", default: "standard", choices: ["standard", "images_selector"]})
       Survey.JsonObject.metaData.addProperty("dropdown", {name: "renderAs", default: "standard", choices: ["standard", "imagepicker"]})
+      Survey.JsonObject.metaData.addProperty("checkbox", {name: "min:number", default: 0});
+      Survey.JsonObject.metaData.addProperty("checkbox", {name: "max:number", default: 0});
       Survey.CustomWidgetCollection.Instance.addCustomWidget(imagepickerWidget)
       var editorOptions = {showEmbededSurveyTab: false, showOptions: false}
       var campaignId = window.location.search.substring(1)
