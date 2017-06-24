@@ -149,6 +149,8 @@ class SurveyPlayer extends Reflux.Component {
     const { open } = this.state
     Survey.JsonObject.metaData.addProperty('dropdown', {name: 'renderAs', default: 'standard', choices: ['standard', 'imagepicker']})
     Survey.JsonObject.metaData.addProperty('checkbox', {name: 'renderAs', default: 'standard', choices: ['standard', 'images_selector']})
+    Survey.JsonObject.metaData.addProperty('checkbox', {name: 'min:number', default: 0})
+    Survey.JsonObject.metaData.addProperty('checkbox', {name: 'max:number', default: 0})
     Survey.CustomWidgetCollection.Instance.addCustomWidget(ImagePickerWidget)
     Survey.CustomWidgetCollection.Instance.addCustomWidget(ImagesSelectorWidget)
     let data = new Survey.Model(this.props.survey.campaign.data)
