@@ -60,6 +60,27 @@ class SurveyPlayer extends Reflux.Component {
       debug('SurveyPlayer', 'afterRenderQuestion')
       options.htmlElement.className += ' ' + options.question.name
       this.checkEmbed()
+      console.log(s.currentPageNo, s.PageCount, window.$('body.abibao.mobile .reader-abibao .sui.progress').css('background-image'))
+      // progress bar for player: abibao
+      let percent = (s.currentPageNo / s.PageCount) * 100
+      if (percent < 25) {
+        window.$('body.abibao.mobile .reader-abibao .sui.progress').css('border-top-color', '#e2e7e9')
+      }
+      if (percent >= 25) {
+        window.$('body.abibao.mobile .reader-abibao .sui.progress').css('border-top-color', '#d48d2c')
+        window.$('body.abibao.mobile .reader-abibao .sui.progress').css('border-right-color', '#e2e7e9')
+      }
+      if (percent >= 50) {
+        window.$('body.abibao.mobile .reader-abibao .sui.progress').css('border-right-color', '#d48d2c')
+        window.$('body.abibao.mobile .reader-abibao .sui.progress').css('border-bottom-color', '#e2e7e9')
+      }
+      if (percent >= 75) {
+        window.$('body.abibao.mobile .reader-abibao .sui.progress').css('border-bottom-color', '#d48d2c')
+        window.$('body.abibao.mobile .reader-abibao .sui.progress').css('border-left-color', '#e2e7e9')
+      }
+      if (percent === 100) {
+        window.$('body.abibao.mobile .reader-abibao .sui.progress').css('border-left-color', '#d48d2c')
+      }
     }
     this.valueChanged = (s, options) => {
       debug('SurveyPlayer', 'valueChanged')
