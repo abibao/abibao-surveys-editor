@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+body.idcoll {
+  background: #f29200;
+  height: 100%;
+  min-height: 100%;
+}
+
+.reader-idcoll * {
+  font-family: 'Lato', sans-serif;
+  color: #101010;
+  box-sizing: border-box;
+}
+
+.reader-idcoll a {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.reader-idcoll a:hover {
+  color: #f29200;
+  text-decoration: none;
+}
+
+.reader-idcoll textarea {
+  resize: none;
+  outline: none;
+  background: #ffffff;
+  /* box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15); */
+  padding: 1em 1em;
+  border-radius: 8px;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  width: 100%;
+}
+
+.reader-idcoll input[type=text], reader-idcoll input[type=number], .reader-idcoll input[type=email] {
+  outline: none;
+  background: #ffffff;
+  box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
+  padding: 0.5em 0.5em;
+  border-radius: 8px;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  width: 100%;
+}
+
+.reader-idcoll .sui.root {
+  padding: 0;
+  background: #ffffff !important;
+  max-width: 680px;
+  margin: auto;
+  border-radius: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.reader-idcoll .sui.body {
+  height: 100%;
+  min-height: 100%;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.reader-idcoll .sui.question.title {
+  font-size: 20px;
+  padding: 0;
+  padding-bottom: 12px;
+  margin: 0;
+  text-align: center;
+}
+
+.reader-idcoll .sui.row {
+  margin: 0;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.reader-idcoll .ui.button.orange {
+  background: #f29200;
+  color: #ffffff;
+}
+
+.reader-idcoll .sui.button {
+  border-radius: 8px;
+  background: #f29200;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  min-height: 1em;
+  outline: none;
+  border: none;
+  vertical-align: baseline;
+  padding: .78571429em 1.5em;
+  text-transform: none;
+  text-shadow: none;
+  font-weight: 700;
+  line-height: 1em;
+  font-size: 1.42857143rem;
+  font-style: normal;
+  text-align: center;
+  text-decoration: none;
+}
+
+.reader-idcoll .sui.button.nav.next {
+  float: right;
+  margin: 0 !important;
+}
+
+.reader-idcoll .sui.button.nav.complete {
+  float: right;
+  margin: 0 !important;
+}
+
+.reader-idcoll .sui.button.nav.prev {
+  float: left;
+  margin: 0 !important;
+}
+
+.reader-idcoll .sui.button.nav:hover, .reader-idcoll .ui.button.orange:hover {
+  opacity: 0.75;
+}
+
+.reader-idcoll .ui.header.orange {
+  color: #f29200 !important;
+}
+
+.reader-idcoll .sui.footer {
+  padding: 12px;
+  display: block;
+  width: 100%;
+  height: 75px;
+}
+
+/* QUESTIONS */
+
+.reader-idcoll .AGENCEDURABLE_EHOP_IDEA {
+  background: #dddddd;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.reader-idcoll .sui.error.root {
+  background: #f0f0ef !important;
+  padding: 16px;
+  margin-bottom: 8px;
+  border: solid 2px #cc3300;
+}
+
+.reader-idcoll .sui.error.item {
+  font-size: 18px;
+  font-weight: bold;
+  color: #cc3300;
+}
+
+/* RADIO */
+
+.reader-idcoll .sui.radiogroup.item > label > input[type="radio"]:checked,
+.reader-idcoll .sui.radiogroup.item > label > input[type="radio"]:not(:checked) {
+	display: none;
+	margin: 0;
+	padding: 0;
+}
+
+.reader-idcoll .sui.radiogroup.item {
+  height: 30px;
+  margin-bottom: 5px;
+}
+
+.reader-idcoll .sui.radiogroup.item > label {
+  font-size: 16px;
+  height: 30px;
+  line-height: 15px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+}
+
+.reader-idcoll .sui.radiogroup.item input[type="radio"]:not(:checked) + span:before {
+  content: '';
+  display: block;
+  width: 30px;
+	height: 30px;
+  background: #cccccc;
+  border: solid 10px #cccccc;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.reader-idcoll .sui.radiogroup.item input[type="radio"]:checked + span:before {
+  content: '';
+  display: block;
+  width: 30px;
+	height: 30px;
+  background: #f0f0f0;
+  border: solid 10px #f29200;
+  border-radius: 50%;
+  margin-right: 5px;
+}
