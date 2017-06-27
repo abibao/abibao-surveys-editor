@@ -48,7 +48,6 @@ class SurveyPlayer extends Reflux.Component {
     }
     // check embed access
     this.checkEmbed = () => {
-      console.log('checkEmbed')
       if (window.$ && window.$('.ui.embed').embed) {
         window.$('.ui.embed').embed()
       } else {
@@ -61,7 +60,6 @@ class SurveyPlayer extends Reflux.Component {
       debug('SurveyPlayer', 'afterRenderQuestion')
       options.htmlElement.className += ' ' + options.question.name
       this.checkEmbed()
-      console.log(s.currentPageNo, s.PageCount, window.$('body.abibao.mobile .reader-abibao .sui.progress').css('background-image'))
       // progress bar for player: abibao
       let percent = (s.currentPageNo / s.PageCount) * 100
       if (percent < 25) {

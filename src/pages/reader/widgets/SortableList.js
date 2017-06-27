@@ -1,6 +1,7 @@
 /* eslint jsx-quotes: ["error", "prefer-double"] */
 
 import React from 'react'
+import Sortable from 'sortablejs'
 import { shuffle } from 'lodash'
 
 const SortableList = {
@@ -12,31 +13,44 @@ const SortableList = {
       question.choicesValues = shuffle(question.choicesValues)
     }
     this.mounted = true
-    this.dropHandler = (e) => {
-      console.log(e)
-      e.preventDefault()
-      const data = e.dataTransfer.getData('text')
-      e.target.appendChild(document.getElementById(data))
-    }
-    this.drapoverHandler = (e) => {
-      e.preventDefault()
-      e.dataTransfer.dropEffect = 'move'
-    }
-    this.dragstartHandler = (e) => {
-      console.log(e.target)
-      e.dataTransfer.setData('text/plain', e.target)
-      e.dropEffect = 'move'
-    }
     return (
       <div className="sortablejs-container">
-        <ul className="sortablejs-drop" onDrop={this.dropHandler} onDragOver={this.drapoverHandler} />
-        <ul className="sortablejs-drag">
+        <ul id="sortDrop" className="sortablejs-drop" />
+        <ul id="sortDrag" className="sortablejs-drag">
           {question.choicesValues.map((item) => (
-            <li draggable="true" onDragStart={this.dragstartHandler} key={item.value}>{item.text}</li>
+            <li data-value={item.value} data-text={item.text} key={item.value}>{item.text}</li>
           ))}
         </ul>
       </div>
     )
+  },
+  afterRender: function (question, el) {
+    var source = document.getElementById('sortDrag')
+    var target = document.getElementById('sortDrop')
+    Sortable.create(source, {
+      animation: 150,
+      group: {
+        name: 'top3',
+        pull: true,
+        put: true
+      }
+    })
+    Sortable.create(target, {
+      animation: 150,
+      group: {
+        name: 'top3',
+        pull: true,
+        put: true
+      },
+      onSort: function (e) {
+        var result = []
+        for (var i = 0; i < e.to.children.length; i++) {
+          result.push(e.to.children[i].dataset.value)
+        }
+        console.log(result)
+        question.value = result
+      }
+    })
   }
 }
 

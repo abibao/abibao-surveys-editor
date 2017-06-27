@@ -336,6 +336,61 @@ body.abibao .reader-abibao .sui.progress-bar {
   margin: 0 !important;
 }
 
+/* SORTABLE */
+
+.reader-abibao .sortablejs-container {
+  width: 100%;
+}
+
+.reader-abibao .sortablejs-drop {
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+  margin-bottom: 20px;
+  list-style-type: none;
+  min-height: 60px;
+  border-radius: 5px;
+  background: #f0f0f0;
+}
+
+.reader-abibao .sortablejs-drop > li {
+  width: 100%;
+  height: auto;
+  font-size: 20px;
+  line-height: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #ffffff;
+  box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
+  border-radius: 5px;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+}
+
+.reader-abibao .sortablejs-drag {
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+  margin-bottom: 20px;
+  list-style-type: none;
+  min-height: 60px;
+  border-radius: 5px;
+  background: #f0f0f0;
+}
+
+.reader-abibao .sortablejs-drag > li {
+  width: 100%;
+  height: auto;
+  font-size: 20px;
+  line-height: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #ffffff;
+  box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
+  border-radius: 5px;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  list-style-type: none;
+}
+
 /* IMAGE */
 
 .reader-abibao .imagepicker-box {
