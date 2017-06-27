@@ -99,6 +99,7 @@
     "semantic-ui-react": "0.70.0",
     "sinon": "2.3.5",
     "snazzy": "7.0.0",
+    "sortablejs": "1.6.0",
     "standard": "10.0.2",
     "survey-react": "0.12.18",
     "thinky": "2.3.8"

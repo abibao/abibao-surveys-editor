@@ -14,6 +14,7 @@ import ReaderActions from './libs/Actions'
 import Styles from './Styles'
 import ImagePickerWidget from './widgets/ImagePicker'
 import ImagesSelectorWidget from './widgets/ImagesSelector'
+import SortableListWidget from './widgets/SortableList'
 
 import Debug from 'debug'
 const debug = Debug('abibao-platform:player')
@@ -47,7 +48,6 @@ class SurveyPlayer extends Reflux.Component {
     }
     // check embed access
     this.checkEmbed = () => {
-      console.log('checkEmbed')
       if (window.$ && window.$('.ui.embed').embed) {
         window.$('.ui.embed').embed()
       } else {
@@ -60,7 +60,6 @@ class SurveyPlayer extends Reflux.Component {
       debug('SurveyPlayer', 'afterRenderQuestion')
       options.htmlElement.className += ' ' + options.question.name
       this.checkEmbed()
-      console.log(s.currentPageNo, s.PageCount, window.$('body.abibao.mobile .reader-abibao .sui.progress').css('background-image'))
       // progress bar for player: abibao
       let percent = (s.currentPageNo / s.PageCount) * 100
       if (percent < 25) {
@@ -148,11 +147,12 @@ class SurveyPlayer extends Reflux.Component {
     }
     const { open } = this.state
     Survey.JsonObject.metaData.addProperty('dropdown', {name: 'renderAs', default: 'standard', choices: ['standard', 'imagepicker']})
-    Survey.JsonObject.metaData.addProperty('checkbox', {name: 'renderAs', default: 'standard', choices: ['standard', 'images_selector']})
+    Survey.JsonObject.metaData.addProperty('checkbox', {name: 'renderAs', default: 'standard', choices: ['standard', 'images_selector', 'sortablejs']})
     Survey.JsonObject.metaData.addProperty('checkbox', {name: 'min:number', default: 0})
     Survey.JsonObject.metaData.addProperty('checkbox', {name: 'max:number', default: 0})
     Survey.CustomWidgetCollection.Instance.addCustomWidget(ImagePickerWidget)
     Survey.CustomWidgetCollection.Instance.addCustomWidget(ImagesSelectorWidget)
+    Survey.CustomWidgetCollection.Instance.addCustomWidget(SortableListWidget)
     let data = new Survey.Model(this.props.survey.campaign.data)
     return (
       <div className="reader-container">
