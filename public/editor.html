@@ -22,12 +22,16 @@
     <script src="//surveyjs.azureedge.net/0.12.18/surveyeditor.min.js"></script>
     <script src="widgets/imagepicker.js"></script>
     <script src="widgets/images_selector.js"></script>
+    <script src="widgets/sortablejs.js"></script>
     <script type="text/javascript">
-      Survey.JsonObject.metaData.addProperty("checkbox", {name: "renderAs", default: "standard", choices: ["standard", "images_selector"]})
+      //
       Survey.JsonObject.metaData.addProperty("dropdown", {name: "renderAs", default: "standard", choices: ["standard", "imagepicker"]})
+      Survey.JsonObject.metaData.addProperty("checkbox", {name: "renderAs", default: "standard", choices: ["standard", "images_selector", "sortablejs"]})
+      //
       Survey.JsonObject.metaData.addProperty("checkbox", {name: "min:number", default: 0});
       Survey.JsonObject.metaData.addProperty("checkbox", {name: "max:number", default: 0});
       Survey.CustomWidgetCollection.Instance.addCustomWidget(imagepickerWidget)
+      //
       var editorOptions = {showEmbededSurveyTab: false, showOptions: false}
       var campaignId = window.location.search.substring(1)
       var self = parent
@@ -36,13 +40,19 @@
         var editor = new SurveyEditor.SurveyEditor("surveyEditorContainer", editorOptions)
         editor.toolbox.addItem({
           name: "imagepicker",
-          iconName: "icon-rating",
+          iconName: "icon-matrix",
           title: "Image Picker",
           json: { "type": "dropdown",  "renderAs": "imagepicker", "choices": [] }
         })
         editor.toolbox.addItem({
-          name: "images_selector",
+          name: "sortablejs",
           iconName: "icon-rating",
+          title: "Sortable List",
+          json: { "type": "checkbox",  "renderAs": "sortablejs", "choices": [] }
+        })
+        editor.toolbox.addItem({
+          name: "images_selector",
+          iconName: "icon-checkbox",
           title: "Images Selector",
           json: { "type": "checkbox",  "renderAs": "images_selector", "choices": [] }
         })

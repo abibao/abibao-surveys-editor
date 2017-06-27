@@ -1,17 +1,17 @@
-body.abibao.mobile {
+body.abibao-test.mobile {
   background: #e7ebee;
 }
-body.abibao.mobile #root {
+body.abibao-test.mobile #root {
   margin: 0;
   padding: 0;
 }
 
-body.abibao.mobile > .ui.fluid.container {
+body.abibao-test > .ui.fluid.container {
   margin: 0;
   padding: 0;
 }
 
-body.abibao.mobile .reader-abibao .sui.root {
+body.abibao-test.mobile .reader-abibao .sui.root {
   padding: 0;
   margin: 0;
   width: 100%;
@@ -22,38 +22,38 @@ body.abibao.mobile .reader-abibao .sui.root {
   box-shadow: none;
 }
 
-body.abibao.mobile .reader-abibao {
+body.abibao-test.mobile .reader-abibao {
   margin: 0;
   padding: 0;
 }
 
-body.abibao.mobile .reader-abibao > div {
+body.abibao-test.mobile .reader-abibao > div {
   margin: 0;
   padding: 0;
 }
 
-body.abibao.mobile .reader-abibao .sui.root {
+body.abibao-test.mobile .reader-abibao .sui.root {
   margin: 0;
   padding: 0;
   margin: auto;
   box-shadow: none;
 }
 
-body.abibao.mobile .reader-abibao .sui.body {
+body.abibao-test.mobile .reader-abibao .sui.body {
   border-radius: 0;
   padding-top: 70px;
   padding-bottom: 70px;
   box-shadow: none;
 }
 
-body.abibao.mobile .reader-abibao .sui.root.main:before {
+body.abibao-test.mobile .reader-abibao .sui.root.main:before {
   height: 60px;
   background-color: #ffffff;
   position: fixed;
   z-index: 9990;
 }
 
-body.abibao.mobile .reader-abibao .sui.footer {
+body.abibao-test.mobile .reader-abibao .sui.footer {
   padding: 5px;
   height: 60px;
   border-radius: 0;
@@ -63,12 +63,12 @@ body.abibao.mobile .reader-abibao .sui.footer {
   bottom: 0;
 }
 
-body.abibao.mobile .reader-abibao .sui.page.title {
+body.abibao-test.mobile .reader-abibao .sui.page.title {
   padding: 20px;
 }
 
 /* FONT SIZE */
 
-body.abibao.mobile .reader-abibao .sui.page.title > span {
+body.abibao-test.mobile .reader-abibao .sui.page.title > span {
   font-size: 1.8rem;
 }

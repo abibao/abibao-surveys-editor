@@ -14,6 +14,7 @@ import ReaderActions from './libs/Actions'
 import Styles from './Styles'
 import ImagePickerWidget from './widgets/ImagePicker'
 import ImagesSelectorWidget from './widgets/ImagesSelector'
+import SortableListWidget from './widgets/SortableList'
 
 import Debug from 'debug'
 const debug = Debug('abibao-platform:player')
@@ -148,11 +149,12 @@ class SurveyPlayer extends Reflux.Component {
     }
     const { open } = this.state
     Survey.JsonObject.metaData.addProperty('dropdown', {name: 'renderAs', default: 'standard', choices: ['standard', 'imagepicker']})
-    Survey.JsonObject.metaData.addProperty('checkbox', {name: 'renderAs', default: 'standard', choices: ['standard', 'images_selector']})
+    Survey.JsonObject.metaData.addProperty('checkbox', {name: 'renderAs', default: 'standard', choices: ['standard', 'images_selector', 'sortablejs']})
     Survey.JsonObject.metaData.addProperty('checkbox', {name: 'min:number', default: 0})
     Survey.JsonObject.metaData.addProperty('checkbox', {name: 'max:number', default: 0})
     Survey.CustomWidgetCollection.Instance.addCustomWidget(ImagePickerWidget)
     Survey.CustomWidgetCollection.Instance.addCustomWidget(ImagesSelectorWidget)
+    Survey.CustomWidgetCollection.Instance.addCustomWidget(SortableListWidget)
     let data = new Survey.Model(this.props.survey.campaign.data)
     return (
       <div className="reader-container">
