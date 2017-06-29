@@ -34,6 +34,14 @@ module.exports = function (app) {
     answer: {
       type: Sequelize.TEXT,
       allowNull: false
+    },
+    position: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
+      validate: {
+        min: 0
+      }
     }
   }, {
     timestamps: true,
