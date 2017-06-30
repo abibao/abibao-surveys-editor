@@ -39,6 +39,7 @@ class Service {
       if (_.isArray(params.answer)) {
         _.map(params.answer, (answer) => {
           let newParams = _.clone(params)
+          newParams.position = _.indexOf(params.answer, answer)
           newParams.answer = answer
           answersToCreate.push(newParams)
         })

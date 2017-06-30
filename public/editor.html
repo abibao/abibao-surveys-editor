@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="//cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.3/es6-shim.js" type="text/javascript"></script>
     <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="//surveyjs.azureedge.net/0.12.17/surveyeditor.css" type="text/css" rel="stylesheet" />
+    <link href="//surveyjs.azureedge.net/0.12.18/surveyeditor.css" type="text/css" rel="stylesheet" />
     <link href="//getbootstrap.com/dist/css/bootstrap.css" type="text/css" rel="stylesheet" />
     <link href="/editor/styles.css" type="text/css" rel="stylesheet" />
     <link href="/editor/main.css" type="text/css" rel="stylesheet" />
@@ -15,17 +15,23 @@
   <body>
     <div id="surveyEditorContainer"></div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
-    <script src="//surveyjs.azureedge.net/0.12.17/survey.ko.min.js"></script>
-    <script src="//surveyjs.azureedge.net/0.12.17/surveyeditor.min.js"></script>
+    <script src="//surveyjs.azureedge.net/0.12.18/survey.ko.min.js"></script>
+    <script src="//surveyjs.azureedge.net/0.12.18/surveyeditor.min.js"></script>
     <script src="widgets/imagepicker.js"></script>
     <script src="widgets/images_selector.js"></script>
+    <script src="widgets/sortablejs.js"></script>
     <script type="text/javascript">
-      Survey.JsonObject.metaData.addProperty("checkbox", {name: "renderAs", default: "standard", choices: ["standard", "images_selector"]})
+      //
       Survey.JsonObject.metaData.addProperty("dropdown", {name: "renderAs", default: "standard", choices: ["standard", "imagepicker"]})
+      Survey.JsonObject.metaData.addProperty("checkbox", {name: "renderAs", default: "standard", choices: ["standard", "images_selector", "sortablejs"]})
+      //
+      Survey.JsonObject.metaData.addProperty("checkbox", {name: "min:number", default: 0});
+      Survey.JsonObject.metaData.addProperty("checkbox", {name: "max:number", default: 0});
       Survey.CustomWidgetCollection.Instance.addCustomWidget(imagepickerWidget)
+      //
       var editorOptions = {showEmbededSurveyTab: false, showOptions: false}
       var campaignId = window.location.search.substring(1)
       var self = parent
@@ -34,13 +40,19 @@
         var editor = new SurveyEditor.SurveyEditor("surveyEditorContainer", editorOptions)
         editor.toolbox.addItem({
           name: "imagepicker",
-          iconName: "icon-rating",
+          iconName: "icon-matrix",
           title: "Image Picker",
           json: { "type": "dropdown",  "renderAs": "imagepicker", "choices": [] }
         })
         editor.toolbox.addItem({
-          name: "images_selector",
+          name: "sortablejs",
           iconName: "icon-rating",
+          title: "Sortable List",
+          json: { "type": "checkbox",  "renderAs": "sortablejs", "choices": [] }
+        })
+        editor.toolbox.addItem({
+          name: "images_selector",
+          iconName: "icon-checkbox",
           title: "Images Selector",
           json: { "type": "checkbox",  "renderAs": "images_selector", "choices": [] }
         })

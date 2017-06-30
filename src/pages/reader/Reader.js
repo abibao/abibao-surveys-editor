@@ -8,8 +8,10 @@ import cookie from 'react-cookies'
 import uuid from 'uuid'
 import is from 'is_js'
 
+import './main.css'
+
 // components
-import * as Readers from './components/readers'
+import Player from './Player'
 
 // semantic
 import { Container, Loader, Segment, Input, Message } from 'semantic-ui-react'
@@ -17,6 +19,7 @@ import { Container, Loader, Segment, Input, Message } from 'semantic-ui-react'
 import ReaderStore from './libs/Store'
 import ReaderActions from './libs/Actions'
 
+// styles
 import 'github-markdown-css'
 import './markdown.css'
 
@@ -61,13 +64,7 @@ class Reader extends Reflux.Component {
     this.email = ''
     this.state = {
       individual: this.props.location.query.individual || cookie.load('individual'),
-      withKeyboard: is.mobile(),
-      readers: {
-        abibao: Readers.AbibaoReader,
-        'abibao-standalone': Readers.AbibaoStandAloneReader,
-        idcoll: Readers.IDCollReader,
-        close: Readers.CloseReader
-      }
+      withKeyboard: is.mobile()
     }
     this.store = ReaderStore
     this.handleChangeEmail = (email) => {
@@ -76,6 +73,9 @@ class Reader extends Reflux.Component {
     this.handleSubmit = (e) => {
       debug('Reader', 'handleSubmit', this.email)
       e.preventDefault()
+      if (!this.email) {
+        return false
+      }
       ReaderActions.controlSecurity(this.email, this.props.params.id)
     }
   }
@@ -87,22 +87,19 @@ class Reader extends Reflux.Component {
     }
     let email = () => {
       return (
-        <form onSubmit={this.handleSubmit} className="ui fluid container">
-          <div className="abibao-reader">
-            <div className="abibao-panel-heading">
-              <h3><span /></h3>
-            </div>
-            <div className="abibao-panel-body">
-              <div style={{background: '#e7ebee'}}>
+        <form onSubmit={this.handleSubmit} className={is.mobile() ? 'global-mobile' : ''}>
+          <div className="global reader">
+            <div className="global body">
+              <div>
                 {!this.state.withKeyboard &&
-                  <h4 className="abibao-page-title">Ce sondage est pour une bonne cause</h4>
+                  <h4 className="global page title">Ce sondage est pour une bonne cause</h4>
                 }
                 <br />
-                <Container fluid style={{background: '#e7ebee'}}>
+                <Container fluid>
                   <br />
                   <Segment basic>
-                    <h5 className="abibao-question-title">Quelle est votre adresse email ?</h5>
-                    <Input fluid disabled={this.state.loader.visible} onChange={(e) => this.handleChangeEmail(e.target.value)} type="email" placeholder="example@domain.com" size="large" label={{ color: 'grey', icon: 'asterisk' }} labelPosition="right corner" className="form" />
+                    <h5 className="global question title">Quelle est votre adresse email ?</h5>
+                    <Input fluid disabled={this.state.loader.visible} onChange={(e) => this.handleChangeEmail(e.target.value)} type="email" placeholder="example@domain.com" size="large" />
                   </Segment>
                   {!this.state.passwordless && <br />}
                   {this.state.passwordless &&
@@ -117,9 +114,9 @@ class Reader extends Reflux.Component {
                 </Container>
               </div>
             </div>
-            <div className="abibao-panel-footer" style={{textAlign: 'center'}}>
-              {this.state.passwordless && <h4 className="abibao-footer-title">Un email <i className="hand peace icon" /> vous a été envoyé</h4>}
-              {!this.state.passwordless && <input type="submit" className="abibao-button-nav" value="Suivant" />}
+            <div className="global footer" style={{textAlign: 'center'}}>
+              {this.state.passwordless && <h4>Un email <i className="hand peace icon" /> vous a été envoyé</h4>}
+              {!this.state.passwordless && <input type="submit" className="global button nav" value="Suivant" />}
             </div>
           </div>
         </form>
@@ -138,11 +135,6 @@ class Reader extends Reflux.Component {
         document.body.className += ' mobile'
       }
     }
-    let renderer = (CurrentReader) => (
-      <Container fluid className={this.state.selectedSurvey.campaign.reader}>
-        <CurrentReader survey={this.state.selectedSurvey} client={this.state.client} />
-      </Container>
-    )
     if (this.state.screenComplete !== false) {
       return (
         <div>
@@ -156,9 +148,11 @@ class Reader extends Reflux.Component {
     if (this.state.loader.visible === true) {
       return loader()
     } else {
-      const label = this.state.selectedSurvey.campaign.reader
-      const reader = this.state.readers[label]
-      return renderer(reader)
+      return (
+        <div className={'reader-' + this.state.selectedSurvey.campaign.reader}>
+          <Player survey={this.state.selectedSurvey} client={this.state.client} />
+        </div>
+      )
     }
   }
 }
