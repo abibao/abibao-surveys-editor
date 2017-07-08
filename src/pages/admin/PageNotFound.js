@@ -11,6 +11,7 @@ class PageNotFound extends Reflux.Component {
   componentDidMount () {
   }
   componentWillUnmount () {
+    Reflux.Component.prototype.componentWillUnmount.call(this)
   }
   componentDidUpdate (prevProps, prevState) {
   }

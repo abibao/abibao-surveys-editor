@@ -44,6 +44,7 @@ class AdminHelpers {
         if (change.ok === true) {
           debug('mailings.local', 'change', direction)
           this.dbs.mailings.local.allDocs({include_docs: true}).then((docs) => {
+            console.log(docs)
             this.context.setState({mailings: docs})
           })
         }
@@ -257,6 +258,13 @@ class AdminHelpers {
     let newData = clone(data)
     this.context.state.client.service('api/campaigns').patch(newData.id, newData).then(() => {
     }).catch(debugerror)
+  }
+  updateCampaignData (campaign) {
+    debug('AdminHelpers', 'updateCampaignData')
+    AdminActions.campaignUpdate({
+      id: campaign.id,
+      data: campaign.data
+    })
   }
   updateCampaignPicture (id, file) {
     debug('AdminHelpers', 'updateCampaignPicture')
