@@ -24,6 +24,7 @@ class Styles extends Reflux.Component {
   }
   componentWillUnmount () {
     debug('Styles', 'componentWillUnmount')
+    Reflux.Component.prototype.componentWillUnmount.call(this)
   }
   componentDidUpdate (prevProps, prevState) {
   }

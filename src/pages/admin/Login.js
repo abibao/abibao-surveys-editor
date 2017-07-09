@@ -20,6 +20,7 @@ class Login extends Reflux.Component {
   }
   componentWillUnmount () {
     debug('Login', 'componentWillUnmount')
+    Reflux.Component.prototype.componentWillUnmount.call(this)
   }
   componentDidUpdate (prevProps, prevState) {
   }

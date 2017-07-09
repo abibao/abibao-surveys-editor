@@ -25,6 +25,7 @@ class Campaigns extends Reflux.Component {
   }
   componentWillUnmount () {
     debug('Campaigns', 'componentWillUnmount')
+    Reflux.Component.prototype.componentWillUnmount.call(this)
   }
   componentDidUpdate (prevProps, prevState) {
   }

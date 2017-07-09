@@ -27,6 +27,7 @@ class Editor extends Reflux.Component {
   componentDidMount () {
   }
   componentWillUnmount () {
+    Reflux.Component.prototype.componentWillUnmount.call(this)
   }
   componentDidUpdate (prevProps, prevState) {
     if (this.state.selectedCampaign === false && this.state.campaigns[this.props.params.id]) {
@@ -47,7 +48,7 @@ class Editor extends Reflux.Component {
     }
     this.handleSaveData = (data) => {
       this.state.selectedCampaign.data = JSON.parse(data)
-      AdminActions.campaignUpdate(this.state.selectedCampaign)
+      AdminActions.campaignUpdateData(this.state.selectedCampaign)
     }
     window.handleSetData = this.handleSetData
     window.handleLoadData = this.handleLoadData

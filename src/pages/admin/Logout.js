@@ -19,6 +19,7 @@ class Logout extends Reflux.Component {
   }
   componentWillUnmount () {
     debug('Logout', 'componentWillUnmount')
+    Reflux.Component.prototype.componentWillUnmount.call(this)
   }
   componentDidUpdate (prevProps, prevState) {
     if (this.state.currentUser !== false) {
