@@ -1,8 +1,7 @@
 const Promise = require('bluebird')
 const eraro = require('eraro')({package: 'platform.abibao.com'})
 const hooks = require('../hooks')
-
-const CampaignModel = require('./../../data/campaigns/model')
+const map = require('lodash').map
 
 class Service {
   setup (app, path) {
@@ -11,18 +10,24 @@ class Service {
   find (params) {
     const app = this.app
     const starttime = new Date()
-    const Campaign = CampaignModel(app)
-    return Campaign.findAll({where: {id: params.query.id}})
+    if (!params.query.view) {
+      return Promise.reject(eraro('ERROR_PARAMS_VIEW_MANDATORY'))
+    }
+    return app.sequelize.query('SELECT * FROM ' + params.query.view)
       .then((result) => {
         const endtime = new Date()
         app.info({
           env: app.get('env'),
           exectime: endtime - starttime,
           type: 'query',
-          name: 'getCampaignScreenCompleteMessage',
+          name: 'resolveViewFromPostgres',
           params
         })
-        return Promise.resolve(result[0]['screen_complete'])
+        let emails = []
+        map(result[0], (item) => {
+          emails.push(item.email)
+        })
+        return Promise.resolve(emails)
       })
       .catch((error) => {
         const endtime = new Date()
@@ -30,7 +35,7 @@ class Service {
           env: app.get('env'),
           exectime: endtime - starttime,
           type: 'query',
-          name: 'getCampaignScreenCompleteMessage',
+          name: 'resolveViewFromPostgres',
           error
         })
         return Promise.reject(eraro(error))
@@ -40,8 +45,8 @@ class Service {
 
 module.exports = function () {
   const app = this
-  app.use('query/getCampaignScreenCompleteMessage', new Service())
-  const service = app.service('query/getCampaignScreenCompleteMessage')
+  app.use('query/resolveViewFromPostgres', new Service())
+  const service = app.service('query/resolveViewFromPostgres')
   service.before(hooks.before)
   service.after(hooks.after)
 }
