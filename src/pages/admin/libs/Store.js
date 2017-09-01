@@ -103,6 +103,9 @@ class AdminStore extends Reflux.Store {
   onCampaignUpdatePicture (id, file) {
     this.helpers.updateCampaignPicture(id, file)
   }
+  onCampaignUpdateData (data) {
+    this.helpers.updateCampaignData(data)
+  }
   onMailingCreate () {
     debug('AdminStore', 'onMailingCreate')
     this.helpers.createMailing()

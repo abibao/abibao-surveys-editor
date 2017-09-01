@@ -1,7 +1,9 @@
 /* global FileReader */
 
 import uuid from 'uuid'
-import {clone} from 'lodash'
+import {clone, merge} from 'lodash'
+import {map} from 'async'
+import is from 'is_js'
 import PouchDB from 'pouchdb'
 import cookie from 'react-cookies'
 
@@ -44,6 +46,7 @@ class AdminHelpers {
         if (change.ok === true) {
           debug('mailings.local', 'change', direction)
           this.dbs.mailings.local.allDocs({include_docs: true}).then((docs) => {
+            console.log(docs)
             this.context.setState({mailings: docs})
           })
         }
@@ -195,22 +198,39 @@ class AdminHelpers {
   emailingCampaign (key) {
     debug('AdminHelpers', 'emailingCampaign')
     // get sengrid campaign
+    let emails = []
     this.context.state.mailings.rows.map((item) => {
       if (item.id === key) {
-        // send all campaigns
-        item.doc.emails.map((email) => {
-          return this.context.state.client.service('command/campaignCreateEmailing').create({
-            email,
-            url: window.location.origin,
-            campaign: item.doc.campaign,
-            template: item.doc.template,
-            categories: item.doc.categories
-          }).then((result) => {
-            item.doc.done = true
-            return this.dbs.mailings.local.put(item.doc)
-          }).then(() => {
-            return true
-          }).catch(debugerror)
+        // get emails from view
+        map(item.doc.emails, (email, next) => {
+          if (is.email(email) === false) {
+            return this.context.state.client.service('query/resolveViewFromPostgres').find({query: {view: email}}).then((result) => {
+              emails = merge(emails, result)
+              next()
+            }).catch(debugerror)
+          } else {
+            emails.push(email)
+            next()
+          }
+        }, (error, result) => {
+          if (error) {
+            debugerror(error)
+          }
+          debug('AdminHelpers emails.length=%s', emails.length)
+          emails.map((email) => {
+            return this.context.state.client.service('command/campaignCreateEmailing').create({
+              email,
+              url: window.location.origin,
+              campaign: item.doc.campaign,
+              template: item.doc.template,
+              categories: item.doc.categories
+            }).then((result) => {
+              item.doc.done = true
+              return this.dbs.mailings.local.put(item.doc)
+            }).then(() => {
+              return true
+            }).catch(debugerror)
+          })
         })
       }
       return false
@@ -257,6 +277,13 @@ class AdminHelpers {
     let newData = clone(data)
     this.context.state.client.service('api/campaigns').patch(newData.id, newData).then(() => {
     }).catch(debugerror)
+  }
+  updateCampaignData (campaign) {
+    debug('AdminHelpers', 'updateCampaignData')
+    AdminActions.campaignUpdate({
+      id: campaign.id,
+      data: campaign.data
+    })
   }
   updateCampaignPicture (id, file) {
     debug('AdminHelpers', 'updateCampaignPicture')

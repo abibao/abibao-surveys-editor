@@ -23,6 +23,7 @@ class Mailings extends Reflux.Component {
     debug('Mailings', 'componentDidMount')
   }
   componentWillUnmount () {
+    Reflux.Component.prototype.componentWillUnmount.call(this)
   }
   componentDidUpdate (prevProps, prevState) {
   }
@@ -43,7 +44,7 @@ class Mailings extends Reflux.Component {
         return {doc: {name: 'Pas de correspondance...'}}
       }
       let template = find(this.state.templates.rows, function (item) {
-        return (item.key === id)
+        return (item.doc.id === id)
       })
       return template || {doc: {name: 'Pas de correspondance...'}}
     }

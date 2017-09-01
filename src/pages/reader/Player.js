@@ -35,6 +35,7 @@ class SurveyPlayer extends Reflux.Component {
     document.head.appendChild(cssOverride)
   }
   componentWillUnmount () {
+    Reflux.Component.prototype.componentWillUnmount.call(this)
   }
   componentDidUpdate (prevProps, prevState) {
   }

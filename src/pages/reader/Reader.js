@@ -31,6 +31,7 @@ class Reader extends Reflux.Component {
     debug('Reader', 'componentDidMount')
   }
   componentWillUnmount () {
+    Reflux.Component.prototype.componentWillUnmount.call(this)
   }
   componentDidUpdate (prevProps, prevState) {
     if (this.state.initialized === true && this.state.selectedCampaign === false) {
