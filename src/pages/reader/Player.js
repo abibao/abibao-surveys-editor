@@ -65,21 +65,34 @@ class SurveyPlayer extends Reflux.Component {
       let percent = (s.currentPageNo / s.PageCount) * 100
       if (percent < 25) {
         window.$('body.abibao .reader-abibao .sui.progress').css('border-top-color', '#e2e7e9')
+        // test
+        window.$('body.abibao-test .reader-abibao-test .sui.progress').css('border-top-color', '#e2e7e9')
       }
       if (percent >= 25) {
         window.$('body.abibao .reader-abibao .sui.progress').css('border-top-color', '#d48d2c')
         window.$('body.abibao .reader-abibao .sui.progress').css('border-right-color', '#e2e7e9')
+        // test
+        window.$('body.abibao-test .reader-abibao-test .sui.progress').css('border-top-color', '#d48d2c')
+        window.$('body.abibao-test .reader-abibao-test .sui.progress').css('border-right-color', '#e2e7e9')
       }
       if (percent >= 50) {
         window.$('body.abibao .reader-abibao .sui.progress').css('border-right-color', '#d48d2c')
         window.$('body.abibao .reader-abibao .sui.progress').css('border-bottom-color', '#e2e7e9')
+        // test
+        window.$('body.abibao-test .reader-abibao-test .sui.progress').css('border-right-color', '#d48d2c')
+        window.$('body.abibao-test .reader-abibao-test .sui.progress').css('border-bottom-color', '#e2e7e9')
       }
       if (percent >= 75) {
         window.$('body.abibao .reader-abibao .sui.progress').css('border-bottom-color', '#d48d2c')
         window.$('body.abibao .reader-abibao .sui.progress').css('border-left-color', '#e2e7e9')
+        // test
+        window.$('body.abibao-test .reader-abibao-test .sui.progress').css('border-bottom-color', '#d48d2c')
+        window.$('body.abibao-test .reader-abibao-test .sui.progress').css('border-left-color', '#e2e7e9')
       }
       if (percent === 100) {
         window.$('body.abibao .reader-abibao .sui.progress').css('border-left-color', '#d48d2c')
+        // test
+        window.$('body.abibao-test .reader-abibao-test .sui.progress').css('border-left-color', '#d48d2c')
       }
     }
     this.valueChanged = (s, options) => {
