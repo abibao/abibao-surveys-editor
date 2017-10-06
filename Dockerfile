@@ -1,4 +1,4 @@
-FROM library/node:6-alpine
+FROM library/node:8-alpine
 
 MAINTAINER Gilles Perreymond <gperreymond@gmail.com>
 
@@ -12,7 +12,7 @@ COPY build /usr/app/build
 
 RUN apk add --update make gcc g++ python git
 
-RUN npm install --production && \
+RUN yarn install --production && \
     npm uninstall -g npm
 
 RUN apk del make gcc g++ python git && \
