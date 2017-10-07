@@ -52,7 +52,7 @@ const GoogleHandler = (req, res) => {
 nconf.argv().env().file({ file: 'nconf.json' })
 
 module.exports = {
-  env: nconf.get('ABIBAO_ENV') || 'deve',
+  env: nconf.get('ABIBAO_ENV') || 'development',
   host: nconf.get('ABIBAO_SERVICE_HOST') || 'localhost',
   port: nconf.get('ABIBAO_SERVICE_PORT') || 3000,
   domains: {
@@ -82,8 +82,8 @@ module.exports = {
   rabbitmq: {
     host: nconf.get('ABIBAO_RABBITMQ_HOST') || 'localhost',
     port: nconf.get('ABIBAO_RABBITMQ_PORT') || 5672,
-    user: nconf.get('ABIBAO_RABBITMQ_USER') || 'guest',
-    pass: nconf.get('ABIBAO_RABBITMQ_PASSWORD') || 'guest'
+    user: nconf.get('ABIBAO_RABBITMQ_USER') || 'infra',
+    pass: nconf.get('ABIBAO_RABBITMQ_PASSWORD') || 'infra'
   },
   sendgrid: {
     key: nconf.get('ABIBAO_SENDGRID_KEY') || 'sendgrid',
