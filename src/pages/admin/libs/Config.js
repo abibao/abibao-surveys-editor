@@ -1,19 +1,20 @@
+let couchdbHostname = 'localhost'
 let couchdbUser = 'infra'
 let couchdbPass = 'infra'
-let couchdbPort = '5984'
 let googleAuthURL = 'http://localhost:3000/auth/google'
 
 switch (window.location.hostname) {
   case 'platform.pprod.abibao.com':
   case 'pprod.id-coll.com':
     googleAuthURL = window.location.origin + '/auth/google'
+    couchdbHostname = 'couchdb-rece.internal.abibao.com'
     couchdbUser = 'rece'
     couchdbPass = 'rece'
-    couchdbPort = '59840'
     break
   case 'platform.abibao.com':
   case 'id-coll.com':
     googleAuthURL = window.location.origin + '/auth/google'
+    couchdbHostname = 'couchdb-platform.internal.abibao.com'
     couchdbUser = 'abibao'
     couchdbPass = 'xCEu8rQW9Hnacu6dKu37f46Xm2mPr2'
     break
@@ -21,12 +22,11 @@ switch (window.location.hostname) {
     break
 }
 
-let couchdbUrl = '$protocol//$user:$pass@$hostname:$port'
+let couchdbUrl = '$protocol//$user:$pass@$hostname'
 couchdbUrl = couchdbUrl.replace('$protocol', window.location.protocol)
 couchdbUrl = couchdbUrl.replace('$user', couchdbUser)
 couchdbUrl = couchdbUrl.replace('$pass', couchdbPass)
-couchdbUrl = couchdbUrl.replace('$hostname', window.location.hostname)
-couchdbUrl = couchdbUrl.replace('$port', couchdbPort)
+couchdbUrl = couchdbUrl.replace('$hostname', couchdbHostname)
 
 let Config = {
   auth: {
