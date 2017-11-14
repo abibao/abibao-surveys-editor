@@ -22,8 +22,7 @@ switch (window.location.hostname) {
     break
 }
 
-let couchdbUrl = '$protocol//$user:$pass@$hostname'
-couchdbUrl = couchdbUrl.replace('$protocol', window.location.protocol)
+let couchdbUrl = 'http://$user:$pass@$hostname'
 couchdbUrl = couchdbUrl.replace('$user', couchdbUser)
 couchdbUrl = couchdbUrl.replace('$pass', couchdbPass)
 couchdbUrl = couchdbUrl.replace('$hostname', couchdbHostname)
