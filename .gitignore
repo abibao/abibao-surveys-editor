@@ -1,5 +1,6 @@
 npm-debug.log
 package-lock.json
+yarn.lock
 nconf.json
 node_modules
 coverage
@@ -11,6 +12,5 @@ volumes
 build
 *.log
 .queues
-screenshots
-docker/portainer
-batchs/
+/batchs/
+/data-persist/

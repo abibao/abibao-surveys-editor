@@ -2,39 +2,88 @@ version: "3.2"
 
 services:
 
-  api:
-    image: library/node:8-alpine
-    working_dir: /code
-    networks:
-      - proxy
+  nginx-proxy:
+    image: jwilder/nginx-proxy:alpine
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - $PWD/data-persist/nginx/certs:/etc/nginx/certs:ro
+      - $PWD/data-persist/nginx/vhost:/etc/nginx/vhost.d
+      - $PWD/data-persist/nginx/html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  portainer:
+    image: portainer/portainer
     environment:
-      VIRTUAL_HOST: abibao.api.127.0.0.1.xip.io
+      VIRTUAL_HOST: portainer.abibao.com.local.apvo.net
       VIRTUAL_PORT: 9000
-      LETSENCRYPT_HOST: abibao.api.127.0.0.1.xip.io
-      LETSENCRYPT_EMAIL: team@abibao.com
-      NODE_ENV: development
-      ABIBAO_ENV: development
-      ABIBAO_SERVICE_HOST: '0.0.0.0'
-      ABIBAO_SERVICE_PORT: 9000
-      ABIBAO_DOMAIN_API: http://abibao.api.127.0.0.1.xip.io
-      ABIBAO_DOMAIN_ADMIN: http://abibao.platform.127.0.0.1.xip.io
-      ABIBAO_DOMAIN_READER: http://abibao.platform.127.0.0.1.xip.io
-      ABIBAO_COUCHDB_HOST: couchdb
-      ABIBAO_COUCHDB_PASSWORD: C15F3DC1ABA345CEA4A4AC08F2135431
-      ABIBAO_POSTGRES_HOST: postgres
-      ABIBAO_POSTGRES_PASSWORD: 809292EEB67D4ADE80A00388ABD1C740
-      ABIBAO_POSTGRES_DB: platform_deve
-      ABIBAO_RABBITMQ_HOST: rabbitmq
-      ABIBAO_RABBITMQ_PASSWORD: 5B7FA6D23E834EB3B7289CEEB016575F
-      ABIBAO_LOGSTASH_HOST: logstash
-      ABIBAO_SLACK_WEBHOOK: https://hooks.slack.com/services/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
-      ABIBAO_SENDGRID_KEY: "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"
-      ABIBAO_SENDGRID_TEMPLATE_PASSWORDLESS: "5cac2df5-d2e9-417b-884a-084ad0cbd8b1"
+    volumes:
+      - $PWD/data-persist/portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  logstash:
+    image: library/logstash:5.6-alpine
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    volumes:
+      - $PWD/infra/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - $PWD/infra/logstash/pipeline:/usr/share/logstash/pipeline:ro
+
+  couchdb:
+    image: library/couchdb:1.6
+    environment:
+      VIRTUAL_HOST: couchdb.abibao.com.local.apvo.net
+      VIRTUAL_PORT: 5984
+      COUCHDB_USER: infra
+      COUCHDB_PASSWORD: infra
+
+  postgres:
+    image: library/postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: infra
+      POSTGRES_PASSWORD: infra
+
+  memcached:
+    image: library/memcached:1.5-alpine
+
+  rabbitmq:
+    image: rabbitmq:3.6-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: infra
+      RABBITMQ_DEFAULT_PASS: infra
+
+  platform-api:
+    image: library/node:8-alpine
+    environment:
+      VIRTUAL_HOST: api.abibao.com.local.apvo.net
+      VIRTUAL_PORT: 3000
+    working_dir: /code
+    depends_on:
+      - rabbitmq
+      - postgres
+      - logstash
+      - couchdb
     volumes:
       - .:/code
-    command: "yarn run start:server"
+    command: "npm run start:server"
 
-networks:
-  proxy:
-    external:
-      name: communs_default
+  platform-web:
+    image: library/node:8-alpine
+    environment:
+      VIRTUAL_HOST: platform.abibao.com.local.apvo.net
+      VIRTUAL_PORT: 4000
+    working_dir: /code
+    depends_on:
+      - rabbitmq
+      - postgres
+      - logstash
+      - couchdb
+    volumes:
+      - .:/code
+    command: "npm start"

@@ -1,18 +1,19 @@
 {
   "name": "abibao-surveys-editor",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Abibao surveys platform.",
   "author": "Gilles Perreymond",
   "scripts": {
     "build": "react-scripts build",
-    "test": "NODE_ENV=test && make test",
-    "test:e2e": "NODE_ENV=test && make test-e2e",
+    "test": "./test/run.sh",
     "test:react": "react-scripts test --env=jsdom",
     "test:standard": "node_modules/.bin/standard --verbose | snazzy",
     "test:unit": "node_modules/.bin/_mocha --recursive test/unit",
     "test:coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- --opts .mocharc",
     "start": "react-scripts start",
-    "start:server": "DEBUG=feathers:* node_modules/.bin/nodemon --config nodemon.json server/start.js"
+    "start:server": "DEBUG=feathers:* node_modules/.bin/nodemon --config nodemon.json server/start.js",
+    "docker:api": "docker-compose exec platform-api npm run start:server",
+    "docker:web": "docker-compose exec platform-web npm run start"
   },
   "dependencies": {
     "bluebird": "3.5.1",

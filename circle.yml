@@ -6,15 +6,12 @@ machine:
   services:
     - docker
 dependencies:
-  pre:
-    - npm uninstall -g npm
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
   override:
-    - yarn install
+    - npm install
 test:
   override:
-    - yarn run build
-    - yarn test
+    - npm run build
+    - npm test
 deployment:
   prod:
     branch: master

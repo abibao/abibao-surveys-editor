@@ -56,23 +56,23 @@ module.exports = {
   host: nconf.get('ABIBAO_SERVICE_HOST') || 'localhost',
   port: nconf.get('ABIBAO_SERVICE_PORT') || 3000,
   domains: {
-    api: nconf.get('ABIBAO_DOMAIN_API') || 'http://localhost:3000',
-    admin: nconf.get('ABIBAO_DOMAIN_ADMIN') || 'http://localhost:4000',
-    reader: nconf.get('ABIBAO_DOMAIN_READER') || 'http://localhost:4000'
+    api: nconf.get('ABIBAO_DOMAIN_API') || 'http://api.abibao.com.local.apvo.net',
+    admin: nconf.get('ABIBAO_DOMAIN_ADMIN') || 'http://platform.abibao.com.local.apvo.net',
+    reader: nconf.get('ABIBAO_DOMAIN_READER') || 'http://platform.abibao.com.local.apvo.net'
   },
   analytics: nconf.get('ABIBAO_GOOGLE_ANALYTICS') || 'UA-77334841-5',
   logstash: {
-    host: nconf.get('ABIBAO_LOGSTASH_HOST') || 'localhost',
+    host: nconf.get('ABIBAO_LOGSTASH_HOST') || 'logstash',
     port: nconf.get('ABIBAO_LOGSTASH_PORT') || 5000
   },
   couchdb: {
-    host: nconf.get('ABIBAO_COUCHDB_HOST') || 'localhost',
+    host: nconf.get('ABIBAO_COUCHDB_HOST') || 'couchdb',
     port: nconf.get('ABIBAO_COUCHDB_PORT') || 5984,
     user: nconf.get('ABIBAO_COUCHDB_USER') || 'infra',
     pass: nconf.get('ABIBAO_COUCHDB_PASSWORD') || 'infra'
   },
   postgres: {
-    host: nconf.get('ABIBAO_POSTGRES_HOST') || 'localhost',
+    host: nconf.get('ABIBAO_POSTGRES_HOST') || 'postgres',
     port: nconf.get('ABIBAO_POSTGRES_PORT') || 5432,
     database: nconf.get('ABIBAO_POSTGRES_DB') || 'infra',
     username: nconf.get('ABIBAO_POSTGRES_USER') || 'infra',
@@ -80,24 +80,24 @@ module.exports = {
     force: false
   },
   rabbitmq: {
-    host: nconf.get('ABIBAO_RABBITMQ_HOST') || 'localhost',
+    host: nconf.get('ABIBAO_RABBITMQ_HOST') || 'rabbitmq',
     port: nconf.get('ABIBAO_RABBITMQ_PORT') || 5672,
     user: nconf.get('ABIBAO_RABBITMQ_USER') || 'infra',
     pass: nconf.get('ABIBAO_RABBITMQ_PASSWORD') || 'infra'
   },
   sendgrid: {
-    key: nconf.get('ABIBAO_SENDGRID_KEY') || 'sendgrid',
+    key: nconf.get('ABIBAO_SENDGRID_KEY') || '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',
     templates: {
-      passwordless: nconf.get('ABIBAO_SENDGRID_TEMPLATE_PASSWORDLESS') || 'sendgrid'
+      passwordless: nconf.get('ABIBAO_SENDGRID_TEMPLATE_PASSWORDLESS') || '5cac2df5-d2e9-417b-884a-084ad0cbd8b1'
     }
   },
   slack: {
-    webhook: nconf.get('ABIBAO_SLACK_WEBHOOK') || 'http://localhost'
+    webhook: nconf.get('ABIBAO_SLACK_WEBHOOK') || 'https://hooks.slack.com/services/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'
   },
   public: path.resolve(__dirname, '..', nconf.get('ABIBAO_WWW_DIRPATH') || 'public'),
   corsWhitelist: ['localhost', 'accounts.google.com'],
   cryptr: {
-    secret: nconf.get('ABIBAO_CRYPTR_SECRET') || 'secret key'
+    secret: nconf.get('ABIBAO_CRYPTR_SECRET') || '!abibao#cryptr#secret!'
   },
   accounts: {
     administrators: [
