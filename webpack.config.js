@@ -15,7 +15,7 @@ module.exports = {
     }
   },
   output: {
-    path: path.resolve(__dirname, 'public/assets/js'),
+    path: path.resolve(__dirname, 'public/dist'),
     filename: '[name].min.js'
   },
   module: {
@@ -35,6 +35,6 @@ module.exports = {
       NODE_ENV: 'development',
       DEBUG: true
     }),
-    new ExtractTextPlugin('../css/bundle.min.css')
+    new ExtractTextPlugin('bundle.min.css')
   ]
 }

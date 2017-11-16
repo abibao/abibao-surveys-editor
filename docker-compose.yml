@@ -74,13 +74,11 @@ services:
     command: "tail -F -n0 /etc/hosts"
 
   platform-dashboard:
-    image: library/node:8-alpine
+    image: pierrezemb/gostatic
     environment:
       VIRTUAL_HOST: platform.abibao.com.local.apvo.net
-      VIRTUAL_PORT: 4000
-    working_dir: /code
+      VIRTUAL_PORT: 8043
     expose:
-      - 4000
+      - 8043
     volumes:
-      - .:/code
-    command: "node_modules/.bin/static public --host-address 0.0.0.0 -p 4000 --gzip"
+      - $PWD/public:/srv/http

@@ -7,13 +7,13 @@ import '@/styles/main.css'
 
 import Homepage from '@/pages/Homepage'
 
-if (process.env.DEBUG === true) window.localStorage.debug = 'nova:admin:*'
+if (process.env.DEBUG === true) window.localStorage.debug = 'abibao:*'
 
 Vue.use(VueRouter)
 Vue.config.productionTip = false
 
 const routes = [
-  { path: '/admin', component: Homepage }
+  { path: '/', component: Homepage }
 ]
 
 const router = new VueRouter({

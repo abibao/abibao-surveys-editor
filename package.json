@@ -6,7 +6,6 @@
   "scripts": {
     "test": "./test/run.sh",
     "test:standard": "node_modules/.bin/standard --verbose | snazzy",
-    "test:unit": "node_modules/.bin/mocha --recursive test/unit",
     "test:coverage": "node_modules/.bin/nyc --report-dir coverage --clean -r lcov -r text -r json-summary -r json -r html node_modules/.bin/mocha --opts .mocharc",
     "start:dashboard": "./node_modules/.bin/webpack --watch",
     "start:server": "DEBUG=feathers:* node_modules/.bin/nodemon --config nodemon.json server/start.js",

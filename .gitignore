@@ -14,3 +14,4 @@ build
 .queues
 /batchs/
 /.nyc_output/
+/public/dist/

@@ -5,13 +5,7 @@ machine:
     version: 8
   services:
     - docker
-dependencies:
-  override:
-    - npm install
-test:
-  override:
-    - npm run build
-    - npm test
+
 deployment:
   prod:
     branch: master
