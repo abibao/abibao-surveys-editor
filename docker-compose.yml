@@ -10,9 +10,6 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - $PWD/data-persist/nginx/certs:/etc/nginx/certs:ro
-      - $PWD/data-persist/nginx/vhost:/etc/nginx/vhost.d
-      - $PWD/data-persist/nginx/html:/usr/share/nginx/html
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
   portainer:
@@ -20,20 +17,13 @@ services:
     environment:
       VIRTUAL_HOST: portainer.abibao.com.local.apvo.net
       VIRTUAL_PORT: 9000
+    expose:
+      - 9000
     volumes:
-      - $PWD/data-persist/portainer:/data
       - /var/run/docker.sock:/var/run/docker.sock
     deploy:
       placement:
         constraints: [node.role == manager]
-
-  logstash:
-    image: library/logstash:5.6-alpine
-    environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-    volumes:
-      - $PWD/infra/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - $PWD/infra/logstash/pipeline:/usr/share/logstash/pipeline:ro
 
   couchdb:
     image: library/couchdb:1.6
@@ -42,12 +32,16 @@ services:
       VIRTUAL_PORT: 5984
       COUCHDB_USER: infra
       COUCHDB_PASSWORD: infra
+    expose:
+      - 5984
 
   postgres:
     image: library/postgres:9.6-alpine
     environment:
       POSTGRES_USER: infra
       POSTGRES_PASSWORD: infra
+    expose:
+      - 5432
 
   memcached:
     image: library/memcached:1.5-alpine
@@ -55,8 +49,13 @@ services:
   rabbitmq:
     image: rabbitmq:3.6-management-alpine
     environment:
+      VIRTUAL_HOST: rabbitmq.abibao.com.local.apvo.net
+      VIRTUAL_PORT: 15672
       RABBITMQ_DEFAULT_USER: infra
       RABBITMQ_DEFAULT_PASS: infra
+    expose:
+      - 15672
+      - 5672
 
   platform-api:
     image: library/node:8-alpine
@@ -67,23 +66,21 @@ services:
     depends_on:
       - rabbitmq
       - postgres
-      - logstash
       - couchdb
+    expose:
+      - 3000
     volumes:
       - .:/code
-    command: "npm run start:server"
+    command: "tail -F -n0 /etc/hosts"
 
-  platform-web:
+  platform-dashboard:
     image: library/node:8-alpine
     environment:
       VIRTUAL_HOST: platform.abibao.com.local.apvo.net
       VIRTUAL_PORT: 4000
     working_dir: /code
-    depends_on:
-      - rabbitmq
-      - postgres
-      - logstash
-      - couchdb
+    expose:
+      - 4000
     volumes:
       - .:/code
-    command: "npm start"
+    command: "node_modules/.bin/static public --host-address 0.0.0.0 -p 4000 --gzip"

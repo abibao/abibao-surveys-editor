@@ -1,4 +1,2 @@
 --timeout 5000
---use_strict
 --recursive test/unit
---recursive test/integration

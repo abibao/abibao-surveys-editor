@@ -27,7 +27,9 @@ const app = feathers()
 
 // streams of loggers
 let streams = []
-streams.push(require('./streams/logstash'))
+if (process.NODE_ENV === 'production') {
+  streams.push(require('./streams/logstash'))
+}
 const bunyan = require('bunyan').createLogger({
   name: 'abiao-surveys-editor',
   streams

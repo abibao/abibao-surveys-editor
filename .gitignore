@@ -13,4 +13,4 @@ build
 *.log
 .queues
 /batchs/
-/data-persist/
+/.nyc_output/

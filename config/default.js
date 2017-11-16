@@ -53,7 +53,7 @@ nconf.argv().env().file({ file: 'nconf.json' })
 
 module.exports = {
   env: nconf.get('ABIBAO_ENV') || 'development',
-  host: nconf.get('ABIBAO_SERVICE_HOST') || 'localhost',
+  host: nconf.get('ABIBAO_SERVICE_HOST') || '0.0.0.0',
   port: nconf.get('ABIBAO_SERVICE_PORT') || 3000,
   domains: {
     api: nconf.get('ABIBAO_DOMAIN_API') || 'http://api.abibao.com.local.apvo.net',
