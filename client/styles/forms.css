@@ -1,0 +1,59 @@
+input[type=text].border {
+  margin: 0;
+  outline: none;
+  border: none;
+  background: #f6f6f6;
+  border-radius: 5px;
+  border-bottom: dashed 1px #e0e0e0;
+  padding: 8px;
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: normal;
+  width: 100%
+}
+input[type=text].border:hover, textarea.border:hover {
+  border-bottom: dashed 1px #909090;
+}
+input[type=text].border:focus, textarea.border:focus {
+  border-bottom: dashed 1px #5da3c7;
+}
+input[type=text].border.large {
+  font-size: 20px;
+  line-height: 20px;
+  font-weight: bold;
+}
+textarea.border {
+  margin: 0;
+  outline: none;
+  border: none;
+  resize: none;
+  background: #f6f6f6;
+  border-radius: 5px;
+  border-bottom: dashed 1px #e0e0e0;
+  padding: 8px;
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: normal;
+  width: 100%
+}
+
+.form-field {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.form-field > a > img {
+  border-radius: 5px;
+}
+.form-field > label {
+  display: block;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 640px) {
+  .form-field > a > img {
+    width: 100%;
+  }
+}

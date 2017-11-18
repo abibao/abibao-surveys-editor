@@ -1,0 +1,70 @@
+.page {
+  display: block;
+  border: solid 1px rgba(0,0,0,0);
+}
+
+.button.logout {
+  background: transparent;
+  border: solid 4px #c64e4e;
+  color: #c64e4e;
+  box-shadow: none;
+  height: 50px;
+}
+
+.button.create {
+  background: transparent;
+  border: solid 4px #ffffff;
+  color: #ffffff;
+  box-shadow: none;
+  width: 50px;
+  height: 50px;
+}
+
+.content.header {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content.subheader {
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: auto;
+  margin-top: 90px;
+}
+
+.content.body {
+  padding: 0;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-content: stretch;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.content.jumbotron {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 10px;
+  background-color: #5da3c7;
+  color: #ffffff;
+}
+
+.content.row {
+  margin: 10px;
+}
+
+@media screen and (max-width: 640px) {
+  .content.body {
+    width: calc(100% - 20px);
+  }
+}

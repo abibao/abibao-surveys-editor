@@ -5,7 +5,13 @@ export default {
   data: function () {
     return {
       initialized: false,
-      user: false
+      user: false,
+      data: {
+        campaigns: { total: 0 },
+        media: { total: 0 },
+        emailings: { total: 0 },
+        styles: { total: 0 }
+      }
     }
   },
   beforeMount: function () {

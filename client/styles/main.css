@@ -3,7 +3,7 @@
 }
 
 html, body, #root {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: 400;
   height: 100%;
@@ -18,12 +18,18 @@ button:focus {
   outline:0;
 }
 
-a, h1, h2, h3, h4, h5, h6, p, blockquote {
-  font-family: 'Lato', sans-serif;
+hr.light-blue {
+  background: #e3eefb;
+  height: 2px;
+}
+hr.grey {
+  background: #e3eefb;
+  height: 2px;
+}
+
+a, h1, h2, h3, h4, h5, h6, p, label, blockquote, input[type=text], textarea {
+  font-family: 'Roboto', sans-serif;
   font-style: normal;
-  font-weight: 200;
-  font-size: 16px;
-  line-height: 16px;
   padding: 0;
   margin: 0;
   padding-top: 5px;
@@ -32,48 +38,15 @@ a, h1, h2, h3, h4, h5, h6, p, blockquote {
 }
 
 a, a:visited {
-  color: #242628;
+  color: #77b382;
 }
 a:hover {
-  color: #5da3c7;
+  opacity: 0.75;
 }
 
 hr {
   outline: none;
   border: none;
-}
-
-h1 {
-  font-size: 32px;
-  line-height: 32px;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-h2 {
-  font-size: 28px;
-  line-height: 28px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-h3 {
-  font-size: 26px;
-  line-height: 26px;
-  font-weight: 600;
-}
-h4 {
-  font-size: 24px;
-  line-height: 24px;
-  font-weight: 400;
-}
-h5 {
-  font-size: 24px;
-  line-height: 24px;
-  font-weight: 200;
-}
-p {
-  font-size: 20px;
-  line-height: 20px;
-  font-weight: 200;
 }
 
 div {
@@ -91,3 +64,5 @@ div {
 @import './header.css';
 @import './buttons.css';
 @import './containers.css';
+@import './forms.css';
+@import './tooltip.css';
