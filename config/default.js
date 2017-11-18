@@ -16,7 +16,7 @@ class GoogleVerifier extends Verifier {
       }
     })
     if (authorized === false) {
-      return req.res.redirect(this.app.get('domains').admin + '/admin/login?error=NotAuthorized')
+      return req.res.redirect(this.app.get('domains').admin + '/login?error=NotAuthorized')
     }
     //
     profile.picture = profile.photos[0].value || 'default.jpg'
@@ -46,7 +46,7 @@ class GoogleVerifier extends Verifier {
 }
 
 const GoogleHandler = (req, res) => {
-  res.redirect(req.payload.domain + '/admin/login?accessToken=' + req.payload.accessToken)
+  res.redirect(req.payload.domain + '/login?accessToken=' + req.payload.accessToken)
 }
 
 nconf.argv().env().file({ file: 'nconf.json' })
@@ -127,14 +127,14 @@ module.exports = {
       name: 'google',
       Strategy: GoogleStrategy,
       Verifier: GoogleVerifier,
-      callbackURL: nconf.get('ABIBAO_DOMAIN_API') ? nconf.get('ABIBAO_DOMAIN_API') + '/auth/google/callback' : 'http://localhost:3000/auth/google/callback',
+      callbackURL: nconf.get('ABIBAO_DOMAIN_API') ? nconf.get('ABIBAO_DOMAIN_API') + '/auth/google/callback' : 'http://api.abibao.com.local.apvo.net/auth/google/callback',
       entity: 'user',
       service: 'users',
       passReqToCallback: true,
       handler: GoogleHandler,
       scope: ['profile', 'email'],
-      clientID: nconf.get('ABIBAO_GOOGLE_CLIENT_ID') || '10370308640-t9s5mm5dk2mmerjoecql4uc8eb520ub6.apps.googleusercontent.com',
-      clientSecret: nconf.get('ABIBAO_GOOGLE_CLIENT_SECRET') || 'ExbftaUix_chjykO5949OHxC'
+      clientID: nconf.get('ABIBAO_GOOGLE_CLIENT_ID') || '10370308640-lfult5ck78v8pu6jknjevp0mqv61tt2e.apps.googleusercontent.com',
+      clientSecret: nconf.get('ABIBAO_GOOGLE_CLIENT_SECRET') || 'yZeuRmhZhGCdh0E7jcLR94ck'
     },
     jwt: {
       header: {

@@ -1,0 +1,45 @@
+.content.full {
+  max-width: 100%;
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: -1000;
+}
+
+.content.login {
+  max-width: 350px;
+  width: 350px;
+  z-index: 0;
+}
+
+button {
+  margin-top: 10px;
+  width: 100%;
+}
+
+h1.title {
+  margin: 0;
+  padding: 0;
+  padding-left: 20px;
+  font-size: 32px;
+  line-height: 32px;
+  font-weight: 200;
+  max-width: 350px;
+  width: 350px;
+}
+
+h3.title {
+  margin: 0;
+  padding: 0;
+  padding-left: 20px;
+  margin-bottom: 20px;
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: 200;
+  max-width: 350px;
+  width: 350px;
+}

@@ -1,0 +1,46 @@
+.black-text {
+  color: #242628;
+}
+.dark-red-text {
+  color: #c64e4e;
+}
+.purple-text {
+  color: #cc6699;
+}
+.light-blue-text {
+  color: #e3eefb;
+}
+.dark-blue-text {
+  color: #5da3c7;
+}
+.dark-green-text {
+  color: #77b382;
+}
+.orange-text {
+  color: #dda055;
+}
+
+.dark-red, .button.dark-red {
+  background-color: #c64e4e;
+  color: #ffffff;
+}
+.purple {
+  background-color: #cc6699;
+  color: #ffffff;
+}
+.light-blue {
+  background-color: #e3eefb;
+  color: #242628;
+}
+.dark-blue {
+  background-color: #5da3c7;
+  color: #ffffff;
+}
+.dark-green {
+  background-color: #77b382;
+  color: #ffffff;
+}
+.orange {
+  background-color: #dda055;
+  color: #ffffff;
+}

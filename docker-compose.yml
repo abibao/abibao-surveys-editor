@@ -74,11 +74,14 @@ services:
     command: "tail -F -n0 /etc/hosts"
 
   platform-dashboard:
-    image: pierrezemb/gostatic
+    image: library/node:8-alpine
     environment:
       VIRTUAL_HOST: platform.abibao.com.local.apvo.net
       VIRTUAL_PORT: 8043
     expose:
       - 8043
+    command: "node /code/webpack.server-static.js"
     volumes:
-      - $PWD/public:/srv/http
+      - $PWD/node_modules:/code/node_modules:ro
+      - $PWD/public:/code/public:ro
+      - $PWD/webpack.server-static.js:/code/webpack.server-static.js:ro

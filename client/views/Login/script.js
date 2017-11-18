@@ -1,20 +1,21 @@
 import Debug from 'debug'
+import authGoogle from './methods/authGoogle'
+import authGoogleUpsertCookie from './methods/authGoogleUpsertCookie'
 
 export default {
-  name: 'ui-homepage',
+  name: 'ui-login',
   data: function () {
     return {
-      initialized: false,
-      user: false
+      initialized: false
     }
   },
   beforeMount: function () {
     this.debug('beforeMount')
+    this.authGoogleUpsertCookie()
   },
   mounted: function () {
     this.debug('mounted')
-    this.user = this.$route.meta.user
-    this.initialized = true
+    this.initialized = !this.$route.query.accessToken
   },
   updated: function () {
     this.debug('updated')
@@ -23,6 +24,8 @@ export default {
     this.debug('destroyed')
   },
   methods: {
-    debug: Debug('abibao:platform:ui-homepage')
+    debug: Debug('abibao:platform:ui-login'),
+    authGoogle,
+    authGoogleUpsertCookie
   }
 }
