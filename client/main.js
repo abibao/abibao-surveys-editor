@@ -5,6 +5,7 @@ import VueFeathers from 'vue-feathers'
 import VueCookie from 'vue-cookie'
 import VueModal from 'vue-js-modal'
 import VueTooltip from 'v-tooltip'
+import VueSelect from 'vue-select'
 
 import is from 'is_js'
 
@@ -22,6 +23,8 @@ Vue.use(VueFeathers, feathers)
 Vue.use(VueCookie)
 Vue.use(VueModal)
 Vue.use(VueTooltip)
+
+Vue.component('v-select', VueSelect)
 
 Vue.config.productionTip = false
 

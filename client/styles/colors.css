@@ -24,23 +24,23 @@
   background-color: #c64e4e;
   color: #ffffff;
 }
-.purple {
+.purple, button.purple {
   background-color: #cc6699;
   color: #ffffff;
 }
-.light-blue {
+.light-blue, button.light-blue {
   background-color: #e3eefb;
   color: #242628;
 }
-.dark-blue {
+.dark-blue, button.dark-blue {
   background-color: #5da3c7;
   color: #ffffff;
 }
-.dark-green {
+.dark-green, button.dark-green {
   background-color: #77b382;
   color: #ffffff;
 }
-.orange {
+.orange, button.orange {
   background-color: #dda055;
   color: #ffffff;
 }

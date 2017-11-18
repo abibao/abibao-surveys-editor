@@ -15,7 +15,11 @@ export default {
   },
   mounted: function () {
     this.debug('mounted')
-    this.initialized = !this.$route.query.accessToken
+    if (this.$route.query) {
+      this.initialized = !this.$route.query.accessToken
+    } else {
+      this.initialized = true
+    }
   },
   updated: function () {
     this.debug('updated')

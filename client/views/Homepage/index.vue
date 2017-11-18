@@ -6,7 +6,7 @@
           <h1 class="header dark-red-text">Abibao</h1>
           <h4 class="header black-text">Surveys Platform</h4>
         </div>
-        <button type="button" class="button logout">Logout</button>
+        <button v-on:click="logout" type="button" class="button logout">Logout</button>
       </div>
     </header>
     <div class="content no-border subheader">

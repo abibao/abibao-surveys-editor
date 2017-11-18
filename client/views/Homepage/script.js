@@ -1,4 +1,5 @@
 import Debug from 'debug'
+import logout from './methods/logout'
 
 export default {
   name: 'ui-homepage',
@@ -29,6 +30,7 @@ export default {
     this.debug('destroyed')
   },
   methods: {
-    debug: Debug('abibao:platform:ui-homepage')
+    debug: Debug('abibao:platform:ui-homepage'),
+    logout
   }
 }

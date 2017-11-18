@@ -1,4 +1,8 @@
 import Debug from 'debug'
+import logout from './methods/logout'
+import changeState from './methods/changeState'
+import getEntities from './methods/getEntities'
+import getCampaigns from './methods/getCampaigns'
 
 export default {
   name: 'ui-campaigns',
@@ -10,6 +14,10 @@ export default {
         STATE_CREATE: 'STATE_CREATE'
       },
       user: false,
+      data: {
+        campaigns: { total: 0, dataProvider: [] },
+        entities: { total: 0, dataProvider: [] }
+      },
       isMobile: process.env.isMobile,
       currentState: 'STATE_LIST'
     }
@@ -21,6 +29,8 @@ export default {
     this.debug('mounted')
     this.user = this.$route.meta.user
     if (this.$route.query.state === 'create') this.currentState = this.states.STATE_CREATE
+    this.getEntities()
+    this.getCampaigns()
     this.initialized = true
   },
   updated: function () {
@@ -31,13 +41,9 @@ export default {
   },
   methods: {
     debug: Debug('abibao:platform:ui-campaigns'),
-    stateCreate () {
-      this.$router.push('campaigns?state=create')
-      this.currentState = this.states.STATE_CREATE
-    },
-    stateList () {
-      this.$router.push('campaigns')
-      this.currentState = this.states.STATE_LIST
-    }
+    logout,
+    changeState,
+    getEntities,
+    getCampaigns
   }
 }

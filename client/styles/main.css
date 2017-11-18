@@ -22,6 +22,10 @@ hr.light-blue {
   background: #e3eefb;
   height: 2px;
 }
+hr.dark-red {
+  background: #c64e4e;
+  height: 2px;
+}
 hr.grey {
   background: #e3eefb;
   height: 2px;
@@ -38,7 +42,7 @@ a, h1, h2, h3, h4, h5, h6, p, label, blockquote, input[type=text], textarea {
 }
 
 a, a:visited {
-  color: #77b382;
+  color: #dda055;
 }
 a:hover {
   opacity: 0.75;

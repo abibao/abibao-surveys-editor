@@ -24,6 +24,7 @@
   line-height: 20px;
   outline: none;
   border: none;
+  height: 50px;
 }
 .button:hover {
   opacity: 0.75;
