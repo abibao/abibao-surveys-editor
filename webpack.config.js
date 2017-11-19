@@ -5,12 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   entry: {
-    bundle: path.resolve(__dirname, 'client/main.js'),
-    'vendors': [
-      'debug', 'is_js',
-      'vue', 'vuex', 'vue-router', 'vue-feathers', 'vue-cookie', 'v-tooltip', 'vue-select',
-      'feathers/client', 'feathers-hooks', 'feathers-authentication/client', 'feathers-socketio/client', 'socket.io-client'
-    ]
+    bundle: path.resolve(__dirname, 'client/main.js')
   },
   resolve: {
     extensions: ['.js', '.vue', '.json', '.css'],
@@ -36,11 +31,6 @@ module.exports = {
     }]
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'bundle',
-      filename: 'bundle.min.js',
-      minChunks: Infinity
-    }),
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
       DEBUG: true

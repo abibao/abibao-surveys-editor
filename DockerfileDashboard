@@ -1,0 +1,21 @@
+FROM library/node:8-alpine
+
+MAINTAINER Gilles Perreymond <gperreymond@gmail.com>
+
+RUN mkdir -p /usr/app
+WORKDIR /usr/app
+
+COPY static/package.json /usr/app/package.json
+COPY static/index.js /usr/app/index.js
+COPY public /code/public
+
+RUN apk add --update make gcc g++ python git
+
+RUN npm install --production && \
+    npm uninstall -g npm
+
+RUN apk del make gcc g++ python git && \
+    rm -rf /tmp/* /var/cache/apk/* /root/.npm /root/.node-gyp
+
+EXPOSE 8043
+CMD ["node", "index.js"]
