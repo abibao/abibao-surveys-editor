@@ -3,6 +3,7 @@ import logout from './methods/logout'
 import changeState from './methods/changeState'
 import getEntities from './methods/getEntities'
 import getCampaigns from './methods/getCampaigns'
+import createCampaign from './methods/createCampaign'
 
 export default {
   name: 'ui-campaigns',
@@ -15,6 +16,7 @@ export default {
       },
       user: false,
       data: {
+        newCampaign: {},
         campaigns: { total: 0, dataProvider: [] },
         entities: { total: 0, dataProvider: [] }
       },
@@ -44,6 +46,13 @@ export default {
     logout,
     changeState,
     getEntities,
-    getCampaigns
+    getCampaigns,
+    createCampaign,
+    updateNewCampaign (key, value) {
+      this.data.newCampaign[key] = value
+    },
+    updateNewCampaignEntity (entity) {
+      this.data.newCampaign['company'] = entity.id
+    }
   }
 }

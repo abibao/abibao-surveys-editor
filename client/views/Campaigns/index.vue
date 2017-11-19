@@ -30,18 +30,18 @@
         <br />
         <div class="form-field">
           <label>Nom <span>*</span></label>
-          <input type="text" class="border" placeholder="Même une campagne doit avoir un nom" />
+          <input @keyup="e => updateNewCampaign('name', e.currentTarget.value)" type="text" class="border" placeholder="Même une campagne doit avoir un nom" />
         </div>
         <div class="form-field">
           <label>Compagnie <span>*</span></label>
-          <v-select :searchable="false" :options="data.entities.dataProvider" label="name" placeholder="Une campagne n'est rien sans attache."></v-select>
+          <v-select :on-change="updateNewCampaignEntity" :searchable="false" :options="data.entities.dataProvider" label="name" placeholder="Une campagne n'est rien sans attache."></v-select>
         </div>
         <div class="form-field">
           <label>Description</label>
           <textarea rows="4" class="border" placeholder="Une bonne description est parfois nécessaire." />
         </div>
         <div>
-          <button type="button" class="button orange">Sauver</button>
+          <button v-on:click="createCampaign" type="button" class="button orange">Créer</button>
         </div>
       </div>
     </div>

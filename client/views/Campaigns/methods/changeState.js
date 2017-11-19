@@ -3,5 +3,6 @@ export default function (path, state) {
   this.$router.push(path)
   this.getEntities()
   this.getCampaigns()
+  this.data.newCampaign = {}
   this.currentState = state
 }

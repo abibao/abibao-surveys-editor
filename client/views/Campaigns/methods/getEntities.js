@@ -1,19 +1,19 @@
-export default function () {
+export default async function () {
   this.debug('getEntities')
-  this.$feathers.service('api/entities').find({})
-    .then(entities => {
-      this.debug('entities %o', entities)
-      this.data.entities = {
-        total: entities.length,
-        dataProvider: entities
-      }
+  try {
+    const entities = await this.$feathers.service('api/entities').find({}).catch((error) => {
+      throw error
     })
-    .catch((error) => {
-      this.debug('entities error %o', error)
-      this.data.entities = {
-        total: 0,
-        dataProvider: []
-      }
-      console.log(error)
-    })
+    this.debug('getEntities %o', entities)
+    this.data.entities = {
+      total: entities.length,
+      dataProvider: entities
+    }
+  } catch (error) {
+    this.debug('getEntities error %o', error)
+    this.data.entities = {
+      total: 0,
+      dataProvider: []
+    }
+  }
 }
