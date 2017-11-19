@@ -58,7 +58,8 @@ module.exports = {
   domains: {
     api: nconf.get('ABIBAO_DOMAIN_API') || 'http://api.abibao.com.local.apvo.net',
     admin: nconf.get('ABIBAO_DOMAIN_ADMIN') || 'http://platform.abibao.com.local.apvo.net',
-    reader: nconf.get('ABIBAO_DOMAIN_READER') || 'http://platform.abibao.com.local.apvo.net'
+    reader: nconf.get('ABIBAO_DOMAIN_READER') || 'http://platform.abibao.com.local.apvo.net',
+    couchdb: nconf.get('ABIBAO_DOMAIN_COUCHDB') || 'http://couchdb.abibao.com.local.apvo.net'
   },
   analytics: nconf.get('ABIBAO_GOOGLE_ANALYTICS') || 'UA-77334841-5',
   logstash: {

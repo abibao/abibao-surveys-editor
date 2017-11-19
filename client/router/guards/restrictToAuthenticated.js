@@ -18,7 +18,13 @@ export default async function (to, from, next) {
       throw error
     })
     debug('user is %o', user)
+    const config = await feathers.service('query/getRemoteConfiguration').find().catch((error) => {
+      error.code = 401
+      throw error
+    })
     to.meta.user = user
+    to.meta.config = config
+    debug('config is %o', config)
     next()
   } catch (error) {
     debug('not authenticate error %o', error)

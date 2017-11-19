@@ -15,10 +15,13 @@ class Service {
       name: 'getRemoteConfiguration',
       params
     })
-    return Promise.resolve({
+    let remoteConfig = {
       env: app.get('env'),
-      analytics: app.get('analytics')
-    })
+      analytics: app.get('analytics'),
+      domains: app.get('domains'),
+      couchdb: app.get('couchdb')
+    }
+    return Promise.resolve(remoteConfig)
   }
 }
 
