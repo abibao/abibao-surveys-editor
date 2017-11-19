@@ -48,6 +48,11 @@ export default {
     getEntities,
     getCampaigns,
     createCampaign,
+    getCompanyPicture (value) {
+      if (value === 'images/default/campaign.png') {
+        return window.location.origin + '/assets/' + value
+      }
+    },
     getCompanyName (id) {
       const result = this.data.entities.dataProvider.map(item => {
         if (item.id === id) return item

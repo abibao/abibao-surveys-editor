@@ -26,7 +26,7 @@
       <!-- STATE_LIST -->
       <div v-if="currentState==='STATE_LIST'" class="content row cards no-border">
         <div class="content card" v-for="campaign in data.campaigns.dataProvider">
-          <img class="picture" src="https://platform.pprod.abibao.com/images/default/campaign.png" height="100">
+          <img class="picture" :src="getCompanyPicture(campaign.picture)" height="100">
           <h2 class="dark-blue-text">{{getCompanyName(campaign.company).name}}</h2>
           <h3>{{campaign.name}}</h3>
           <h6>Mise à jour <strong>{{Math.floor((Date.now() - Date.parse(campaign.updatedAt)) / 86400000)}} jour(s)</strong></h6>
