@@ -13,16 +13,82 @@
   box-shadow: none
 }
 
-.modal {
-  background: #ffffff;
-  padding: 20px;
-  box-shadow: 0 0 1px 0 rgba(61, 119, 180, 0.12), 0 0.25rem 12px 0 rgba(91, 139, 199, 0.24);
+.content.cards {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+}
+.content.card {
+  padding: 10px;
+  margin: 15px;
+  position: relative;
+  width: 190px;
+  height: 200px;
+  border: solid #ffffff 2px;
+}
+.content.card h2 {
+  padding: 0;
+  position: absolute;
+  bottom: 60px;
+}
+.content.card h3 {
+  padding: 0;
+  width: calc(100% - 10px);
+  display: inline-block; ;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  position: absolute;
+  bottom: 25px;
+}
+.content.card h6 {
+  padding: 0;
+  position: absolute;
+  bottom: 10px;
+}
+.content.card .picture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
   border-radius: 8px;
-  transition: all 0.3s ease;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  width: 100%;
+  opacity: 0.9;
+}
+
+@media screen and (max-width: 800px) and (min-width: 640px) {
+  .content.card {
+    width: calc(50% - 30px);
+  }
 }
 
 @media screen and (max-width: 640px) {
-  .modal {
-    max-width: 100%;
+  .content.card {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    width: 100%;
+    height: 50px;
+  }
+  .content.card h2 {
+    display: none;
+  }
+  .content.card h3 {
+    bottom: 20px;
+  }
+  .content.card h6 {
+    bottom: 5px;
+  }
+  .content.card .picture {
+    width: 100%;
+    height: 50px;
+    border-radius: 8px;
+    opacity: 0.75;
   }
 }

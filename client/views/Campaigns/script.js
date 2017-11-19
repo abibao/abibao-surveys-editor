@@ -48,6 +48,12 @@ export default {
     getEntities,
     getCampaigns,
     createCampaign,
+    getCompanyName (id) {
+      const result = this.data.entities.dataProvider.map(item => {
+        if (item.id === id) return item
+      })
+      return result[0]
+    },
     updateNewCampaign (key, value) {
       this.data.newCampaign[key] = value
     },

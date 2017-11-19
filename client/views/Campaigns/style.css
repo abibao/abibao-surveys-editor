@@ -1,3 +1,7 @@
+header {
+  position: fixed;
+  z-index: 9999;
+}
 .page {
   display: block;
   border: solid 1px rgba(0,0,0,0);
@@ -61,6 +65,10 @@
 
 .content.row {
   margin: 10px;
+}
+
+.spacer {
+  padding: 20px;
 }
 
 @media screen and (max-width: 640px) {

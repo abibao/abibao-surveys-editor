@@ -11,6 +11,7 @@ export default async function () {
       throw error
     })
     this.debug('createCampaigns %o', result)
+    this.changeState('campaigns', 'STATE_LIST')
   } catch (error) {
     this.debug('createCampaigns error %o', error)
   }

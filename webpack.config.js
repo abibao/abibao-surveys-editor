@@ -8,7 +8,7 @@ module.exports = {
     bundle: path.resolve(__dirname, 'client/main.js'),
     'vendors': [
       'debug', 'is_js',
-      'vue', 'vuex', 'vue-router', 'vue-feathers', 'vue-cookie', 'vue-js-modal', 'v-tooltip', 'vue-select',
+      'vue', 'vuex', 'vue-router', 'vue-feathers', 'vue-cookie', 'v-tooltip', 'vue-select',
       'feathers/client', 'feathers-hooks', 'feathers-authentication/client', 'feathers-socketio/client', 'socket.io-client'
     ]
   },
