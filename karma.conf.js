@@ -9,7 +9,7 @@ module.exports = function (config) {
       'test/unit-client/setup.js',
       'test/unit-client/**/*.spec.js'
     ],
-    reporters: ['coverage-istanbul'],
+    reporters: ['spec', 'coverage-istanbul'],
     preprocessors: {
       'test/unit-client/setup.js': ['webpack'],
       'test/unit-client/**/*.spec.js': ['webpack']

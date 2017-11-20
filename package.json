@@ -6,7 +6,7 @@
   "scripts": {
     "test": "./test/run.sh",
     "test:standard": "node_modules/.bin/standard --verbose | snazzy",
-    "test:server": "node_modules/.bin/nyc --report-dir coverage-server --clean -r html -r lcovonly -r text node_modules/.bin/mocha --opts .mocharc",
+    "test:server": "node_modules/.bin/nyc --report-dir coverage-server --clean -r html -r lcovonly -r text node_modules/.bin/mocha --recursive test/unit-server",
     "test:client": "cross-env BABEL_ENV=test node_modules/.bin/karma start karma.conf.js",
     "start:dashboard": "./node_modules/.bin/webpack --watch",
     "start:server": "DEBUG=feathers:* node_modules/.bin/nodemon --config nodemon.json server/start.js",
