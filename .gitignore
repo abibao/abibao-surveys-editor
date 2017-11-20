@@ -4,6 +4,8 @@ yarn.lock
 nconf.json
 node_modules
 coverage
+coverage-client
+coverage-server
 *~
 dist
 .DS_Store

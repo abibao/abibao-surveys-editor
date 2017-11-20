@@ -1,4 +1,5 @@
 #!/bin/sh
 
 npm run test:standard;
-npm run test:coverage;
+npm run test:server;
+npm run test:client;

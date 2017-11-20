@@ -1,6 +1,8 @@
 .*
 *.log
 coverage
+coverage-client
+coverage-server
 src
 node_modules
 github
