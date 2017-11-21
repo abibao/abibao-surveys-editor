@@ -10,7 +10,6 @@ export default async function () {
       dataProvider: campaigns
     }
   } catch (error) {
-    console.log(error.toString())
     this.debug('getCampaigns error %o', error)
     this.data.campaigns = {
       total: 0,

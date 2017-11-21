@@ -29,7 +29,10 @@
         <label>{{data.styles.total}} styles en cours</label>
       </div>
       <div class="statistic">
-        <h2 class="dark-blue-text">Media</h2>
+        <div class="header">
+          <h2 class="dark-blue-text">Media</h2>
+          <router-link to="media"><i class="fa fa-cog fa-2x" aria-hidden="true"></i></router-link>
+        </div>
         <hr />
         <h4>Gestion des media de la plateforme</h4>
         <label>{{data.media.total}} media en cours</label>
