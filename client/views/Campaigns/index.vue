@@ -16,7 +16,6 @@
       <div class="content jumbotron">
         <div clas="article">
           <h2 class="light-blue-text">Campagnes</h2>
-          <h4 v-if="isMobile===false">Bienvenue sur l'espace campagnes</h4>
         </div>
         <div>
           <button v-if="currentState==='STATE_LIST'" v-tooltip="'Créer une campagne'" v-on:click="changeState('campaigns?state=create', 'STATE_CREATE')" type="button" class="button create"><i class="fa fa-plus" aria-hidden="true"></i></button>

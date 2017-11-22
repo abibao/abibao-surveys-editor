@@ -1,13 +1,39 @@
+/* global FileReader */
+
 import Debug from 'debug'
+import Dropzone from 'vue-fineuploader/dropzone'
+
+import getMedia from './methods/getMedia'
 import logout from './methods/logout'
 
 export default {
   name: 'ui-media',
+  components: {
+    'v-uploader': Dropzone
+  },
   data: function () {
     return {
       initialized: false,
       user: false,
+      uploader: {
+        methods: {
+          addFiles: (files) => {
+            const reader = new FileReader()
+            reader.readAsDataURL(files[0])
+            reader.addEventListener('load', () => {
+              this.$feathers.service('uploads')
+                .create({uri: reader.result})
+                .then((response) => {
+                  console.log(response)
+                }).catch((error) => {
+                  console.log(error)
+                })
+            }, false)
+          }
+        }
+      },
       data: {
+        media: { total: 0, dataProvider: [] }
       }
     }
   },
@@ -17,6 +43,7 @@ export default {
   mounted: function () {
     this.debug('mounted')
     this.user = this.$route.meta.user
+    this.getMedia()
     this.initialized = true
   },
   updated: function () {
@@ -27,6 +54,7 @@ export default {
   },
   methods: {
     debug: Debug('abibao:platform:ui-media'),
+    getMedia,
     logout
   }
 }

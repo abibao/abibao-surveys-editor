@@ -20,7 +20,6 @@ export default {
         campaigns: { total: 0, dataProvider: [] },
         entities: { total: 0, dataProvider: [] }
       },
-      isMobile: process.env.isMobile,
       currentState: 'STATE_LIST'
     }
   },

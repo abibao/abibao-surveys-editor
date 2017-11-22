@@ -42,3 +42,29 @@ header {
   margin: auto;
   margin-top: 20px;
 }
+
+.content.row {
+  margin: 10px;
+}
+
+.content.jumbotron {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 10px;
+  background-color: #5da3c7;
+  color: #ffffff;
+}
+
+.fine-uploader-dropzone-container {
+  padding: 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 900px;
+  margin: 10px;
+  background-color: #ffffff;
+  border: dashed 2px #e3eefb;
+}

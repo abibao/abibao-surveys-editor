@@ -23,9 +23,9 @@
 }
 .content.card {
   padding: 10px;
-  margin: 15px;
+  margin: 10px;
   position: relative;
-  width: 190px;
+  width: 200px;
   height: 200px;
   border: solid #ffffff 2px;
 }
