@@ -11,6 +11,7 @@ import is from 'is_js'
 import store from '@/store'
 import feathers from '@/feathers'
 import router from '@/router'
+import AppBar from '@/components/AppBar'
 
 import 'normalize.css'
 import '@/styles/main.css'
@@ -23,6 +24,7 @@ Vue.use(VueCookie)
 Vue.use(VueTooltip)
 
 Vue.component('v-select', VueSelect)
+Vue.component('ui-appbar', AppBar)
 
 Vue.config.productionTip = false
 

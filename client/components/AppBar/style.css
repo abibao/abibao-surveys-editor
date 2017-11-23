@@ -1,0 +1,23 @@
+header {
+  position: fixed;
+  z-index: 9999;
+}
+
+.button.logout {
+  background: transparent;
+  border: solid 4px #c64e4e;
+  color: #c64e4e;
+  box-shadow: none;
+  height: 50px;
+}
+
+.content.header {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
