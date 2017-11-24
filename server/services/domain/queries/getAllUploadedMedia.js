@@ -19,7 +19,9 @@ class Service {
       params
     })
     const dirpath = path.resolve(__dirname, '../../../uploads')
-    const files = glob.sync(dirpath + '/**/*.*')
+    const files = glob.sync(dirpath + '/**/*.*').map(file => {
+      return app.get('domains').api + '/wp_content/' + path.basename(file)
+    })
     return Promise.resolve(files)
   }
 }

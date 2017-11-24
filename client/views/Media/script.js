@@ -23,10 +23,10 @@ export default {
             reader.addEventListener('load', () => {
               this.$feathers.service('uploads')
                 .create({uri: reader.result})
-                .then((response) => {
-                  console.log(response)
+                .then(() => {
+                  this.getMedia()
                 }).catch((error) => {
-                  console.log(error)
+                  console.error(error)
                 })
             }, false)
           }

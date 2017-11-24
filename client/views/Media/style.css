@@ -15,10 +15,6 @@
   margin-top: 20px;
 }
 
-.content.row {
-  margin: 10px;
-}
-
 .content.jumbotron {
   display: flex;
   justify-content: space-between;
